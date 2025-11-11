@@ -9,11 +9,10 @@
 #include <stdint.h>
 #include "core/types.h"
 
-/*
- * UART 2 (RB6/RX2, RB7/TX2) pour communication Bluetooth via module HC-05
-*/
+// UART 2 (RB6/RX2, RB7/TX2) pour communication Bluetooth
 app_err_t uart_bt_init(uint32_t baud);
 
+// Envoi des données capteurs via Bluetooth
 app_err_t uart_bt_send_sensor_data(const sensor_data_t* data);
 
 #endif // UART_BT_H

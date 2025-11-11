@@ -1,6 +1,8 @@
 ﻿// ===============================================
 // File:   spi_bus.h
-// Desc:   Header file for spi_bus.h
+// Desc:   Driver SPI pour PIC18F26K83
+//         Communication avec EEPROM M93C66
+// Groupe: G0 (Coordinateurs)
 // ===============================================
 
 #ifndef SPI_BUS_H
@@ -9,9 +11,7 @@
 #include <stdint.h>
 #include "core/types.h"
 
-/*
- * SPI RC3/RC4/RC5 + SS=RB3 (EEPROM)
- */
-app_err_t spi_bus_init(uint32_t hz);
+// Initialisation du bus SPI1 en mode Master
+app_err_t spi_bus_init();
 
 #endif // SPI_BUS_H

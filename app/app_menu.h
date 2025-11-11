@@ -10,6 +10,7 @@
 void app_init(void);
 
 // scheduler: tasks menu, bt_task, acquisitions périodiques
+// utilisé les fonctions de configuration dans datalogger.h
 void app_loop(void);
 
 #endif // APP_MENU_H
