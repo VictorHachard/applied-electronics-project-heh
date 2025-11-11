@@ -7,7 +7,7 @@
 #define RTC_DS1307_H
 
 #include <stdint.h>
-#include "core/types.h"
+#include "../core/types.h"
 
 app_err_t rtc_init(void);
 

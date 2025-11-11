@@ -1,6 +1,7 @@
 ﻿// ===============================================
 // File:   types.h
-// Desc:   Header file for types.h
+// Desc:   Structures de données et codes d'erreur
+// Groupe: G0 (Coordinateurs)
 // ===============================================
 
 #ifndef TYPES_H
@@ -68,7 +69,7 @@ typedef struct {
 typedef struct {
   int16_t  t_c_x100;   // Température en °C×100  [-4000 .. +8750]
   uint16_t rh_x100;    // Humidité en %×100      [0 .. 10000]
-  int32_t  p_pa;       // Pression en Pascal     [80000 .. 120000]
+  int32_t  p_pa;       // Pression en Pascal     [30000 .. 110000]
 } sensor_data_t;
 
 /* CODE D'ERREUR GÉNÉRAL APPLICATIF
@@ -79,6 +80,7 @@ typedef enum {
   APP_EBUS,              // I2C bus error
   APP_EDEV,              // device not found
   APP_EPARAM,            // invalid parameter
+  APP_ENCONF,            // empty configuration
   APP_EFULL              // log storage full
 } app_err_t;
 

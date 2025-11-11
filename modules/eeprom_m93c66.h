@@ -7,7 +7,7 @@
 #define EEPROM_M93C66_H
 
 #include <stdint.h>
-#include "core/types.h"
+#include "../core/types.h"
 
 void eeprom_init(void);
 

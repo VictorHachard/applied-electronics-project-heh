@@ -8,15 +8,22 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "core/types.h"
+#include "../core/types.h"
+
+// Attention : la strucure de données est une proposition de G0 elle peut etre modifier car on a rechechit 10minutes
 
 typedef struct {
   uint16_t sample_period_s; // Δt
-  uint16_t max_records;     // borne anti-débordement
   bool     running;
 } dl_cfg_t;
 
 void dl_init(const dl_cfg_t *cfg);
+
+app_err_t dl_get_config(dl_cfg_t *cfg);
+
+uint16_t dl_get_sample_period_s(void);
+
+bool dl_is_running(void);
 
 void dl_start(void);
 
@@ -119,6 +126,8 @@ typedef struct __attribute__((packed)) {
     uint8_t count;         // nombre de mesures enregistrées (0–255)
 } dl_header_t;
 
+// Écrire un enregistrement à la fin du log
+// Verifie l'espace disponible avant d'écrire et verifie le flag running
 app_err_t dl_push_record(const sensor_data_t *rec);
 
 uint16_t dl_count(void);
