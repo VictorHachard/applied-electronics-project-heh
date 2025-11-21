@@ -4,3 +4,5 @@
 // ===============================================
 
 #include "eeprom_m93c66.h"
+
+void eeprom_init(void) {}

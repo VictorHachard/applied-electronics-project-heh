@@ -4,3 +4,7 @@
 // ===============================================
 
 #include "rtc_ds1307.h"
+
+app_err_t rtc_init(void) {
+    return APP_OK;
+}

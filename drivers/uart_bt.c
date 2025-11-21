@@ -4,3 +4,8 @@
 // ===============================================
 
 #include "uart_bt.h"
+
+app_err_t uart_bt_init(uint32_t baud) {
+    (void)baud;
+    return APP_OK;
+}

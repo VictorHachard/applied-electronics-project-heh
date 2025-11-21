@@ -4,3 +4,7 @@
 // ===============================================
 
 #include "bluetooth_proto.h"
+
+app_err_t bluetooth_init(void) {
+    return APP_OK;
+}

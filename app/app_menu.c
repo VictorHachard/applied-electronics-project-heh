@@ -4,3 +4,9 @@
 // ===============================================
 
 #include "app_menu.h"
+
+void app_init(void) {
+}
+
+void app_loop(void) {
+}
