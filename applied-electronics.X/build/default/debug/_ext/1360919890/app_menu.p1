@@ -1,0 +1,21 @@
+Version 4.0 HI-TECH Software Intermediate Code
+"8 ../app/app_menu.c
+[; ;../app/app_menu.c: 8: void app_init(void) {
+[v _app_init `(v ~T0 @X0 1 ef ]
+{
+[e :U _app_init ]
+[f ]
+"9
+[; ;../app/app_menu.c: 9: }
+[e :UE 1 ]
+}
+"11
+[; ;../app/app_menu.c: 11: void app_loop(void) {
+[v _app_loop `(v ~T0 @X0 1 ef ]
+{
+[e :U _app_loop ]
+[f ]
+"12
+[; ;../app/app_menu.c: 12: }
+[e :UE 2 ]
+}

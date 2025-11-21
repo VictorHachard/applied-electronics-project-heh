@@ -1,0 +1,110 @@
+Version 4.0 HI-TECH Software Intermediate Code
+"15 ../modules/datalogger.h
+[; ;../modules/datalogger.h: 15: typedef struct {
+[s S5 `us 1 `a 1 ]
+[n S5 . sample_period_s running ]
+"8 ../modules/datalogger.c
+[; ;../modules/datalogger.c: 8: app_err_t dl_get_config(dl_cfg_t *cfg) {
+[c E57 0 1 2 3 4 5 .. ]
+[n E57 . APP_OK APP_EBUS APP_EDEV APP_EPARAM APP_ENCONF APP_EFULL  ]
+"69 ../modules/../core/types.h
+[; ;../modules/../core/types.h: 69: typedef struct {
+[s S4 `s 1 `us 1 `l 1 ]
+[n S4 . t_c_x100 rh_x100 p_pa ]
+"8 ../modules/datalogger.c
+[; ;../modules/datalogger.c: 8: app_err_t dl_get_config(dl_cfg_t *cfg) {
+[v _dl_get_config `(E57 ~T0 @X0 1 ef1`*S5 ]
+{
+[e :U _dl_get_config ]
+[v _cfg `*S5 ~T0 @X0 1 r1 ]
+[f ]
+"9
+[; ;../modules/datalogger.c: 9:     if (cfg) {
+[e $ ! != _cfg -> -> 0 `i `*S5 9  ]
+{
+"10
+[; ;../modules/datalogger.c: 10:         cfg->sample_period_s = 10;
+[e = . *U _cfg 0 -> -> 10 `i `us ]
+"11
+[; ;../modules/datalogger.c: 11:         cfg->running = 0;
+[e = . *U _cfg 1 -> -> 0 `i `a ]
+"12
+[; ;../modules/datalogger.c: 12:     }
+}
+[e :U 9 ]
+"13
+[; ;../modules/datalogger.c: 13:     return APP_OK;
+[e ) . `E57 0 ]
+[e $UE 8  ]
+"14
+[; ;../modules/datalogger.c: 14: }
+[e :UE 8 ]
+}
+"16
+[; ;../modules/datalogger.c: 16: void dl_init(const dl_cfg_t *cfg) {
+[v _dl_init `(v ~T0 @X0 1 ef1`*CS5 ]
+{
+[e :U _dl_init ]
+[v _cfg `*CS5 ~T0 @X0 1 r1 ]
+[f ]
+"17
+[; ;../modules/datalogger.c: 17:     (void)cfg;
+[e _cfg ]
+"18
+[; ;../modules/datalogger.c: 18: }
+[e :UE 10 ]
+}
+"20
+[; ;../modules/datalogger.c: 20: uint16_t dl_get_sample_period_s(void) {
+[v _dl_get_sample_period_s `(us ~T0 @X0 1 ef ]
+{
+[e :U _dl_get_sample_period_s ]
+[f ]
+"21
+[; ;../modules/datalogger.c: 21:     return 10;
+[e ) -> -> 10 `i `us ]
+[e $UE 11  ]
+"22
+[; ;../modules/datalogger.c: 22: }
+[e :UE 11 ]
+}
+"24
+[; ;../modules/datalogger.c: 24: _Bool dl_is_running(void) {
+[v _dl_is_running `(a ~T0 @X0 1 ef ]
+{
+[e :U _dl_is_running ]
+[f ]
+"25
+[; ;../modules/datalogger.c: 25:     return 0;
+[e ) -> -> 0 `i `a ]
+[e $UE 12  ]
+"26
+[; ;../modules/datalogger.c: 26: }
+[e :UE 12 ]
+}
+"28
+[; ;../modules/datalogger.c: 28: app_err_t dl_push_record(const sensor_data_t *data) {
+[v _dl_push_record `(E57 ~T0 @X0 1 ef1`*CS4 ]
+{
+[e :U _dl_push_record ]
+[v _data `*CS4 ~T0 @X0 1 r1 ]
+[f ]
+"29
+[; ;../modules/datalogger.c: 29:     (void)data;
+[e _data ]
+"30
+[; ;../modules/datalogger.c: 30:     return APP_OK;
+[e ) . `E57 0 ]
+[e $UE 13  ]
+"31
+[; ;../modules/datalogger.c: 31: }
+[e :UE 13 ]
+}
+"33
+[; ;../modules/datalogger.c: 33: void dl_stop(void) {}
+[v _dl_stop `(v ~T0 @X0 1 ef ]
+{
+[e :U _dl_stop ]
+[f ]
+[e :UE 14 ]
+}

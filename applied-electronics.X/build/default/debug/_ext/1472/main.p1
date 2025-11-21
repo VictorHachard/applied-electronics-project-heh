@@ -1,0 +1,89 @@
+Version 4.0 HI-TECH Software Intermediate Code
+[p mainexit ]
+"13 ../app/app_main.h
+[; ;../app/app_main.h: 13: void app_main_init(void);
+[v _app_main_init `(v ~T0 @X0 0 ef ]
+"17
+[; ;../app/app_main.h: 17: void app_main_loop(void);
+[v _app_main_loop `(v ~T0 @X0 0 ef ]
+"12 ../main.c
+[p x FEXTOSC  =  OFF     ]
+"13
+[p x RSTOSC  =  HFINTOSC_64MHZ ]
+"16
+[p x CLKOUTEN  =  OFF    ]
+"17
+[p x PR1WAY  =  OFF      ]
+"18
+[p x CSWEN  =  ON        ]
+"19
+[p x FCMEN  =  ON        ]
+"22
+[p x MCLRE  =  EXTMCLR   ]
+"23
+[p x PWRTS  =  PWRT_OFF  ]
+"24
+[p x MVECEN  =  OFF      ]
+"25
+[p x IVT1WAY  =  OFF     ]
+"26
+[p x LPBOREN  =  OFF     ]
+"27
+[p x BOREN  =  SBORDIS   ]
+"30
+[p x BORV  =  VBOR_2P45  ]
+"31
+[p x ZCD  =  OFF         ]
+"32
+[p x PPS1WAY  =  OFF     ]
+"33
+[p x STVREN  =  ON       ]
+"34
+[p x DEBUG  =  OFF       ]
+"35
+[p x XINST  =  OFF       ]
+"38
+[p x WDTCPS  =  WDTCPS_31 ]
+"39
+[p x WDTE  =  OFF        ]
+"42
+[p x WDTCWS  =  WDTCWS_7 ]
+"43
+[p x WDTCCS  =  SC       ]
+"46
+[p x BBSIZE  =  BBSIZE_512 ]
+"47
+[p x BBEN  =  OFF        ]
+"48
+[p x SAFEN  =  OFF       ]
+"49
+[p x WRTAPP  =  OFF      ]
+"52
+[p x WRTB  =  OFF        ]
+"53
+[p x WRTC  =  OFF        ]
+"54
+[p x WRTD  =  OFF        ]
+"55
+[p x WRTSAF  =  OFF      ]
+"56
+[p x LVP  =  OFF         ]
+"59
+[p x CP  =  OFF          ]
+[v $root$_main `(v ~T0 @X0 0 e ]
+"75
+[; ;../main.c: 75: void main(void) {
+[v _main `(v ~T0 @X0 1 ef ]
+{
+[e :U _main ]
+[f ]
+"76
+[; ;../main.c: 76:     app_main_init();
+[e ( _app_main_init ..  ]
+"77
+[; ;../main.c: 77:     app_main_loop();
+[e ( _app_main_loop ..  ]
+"78
+[; ;../main.c: 78: }
+[e :UE 1 ]
+}

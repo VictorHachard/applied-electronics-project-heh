@@ -1,0 +1,52 @@
+Version 4.0 HI-TECH Software Intermediate Code
+"8 ../modules/sht30.c
+[; ;../modules/sht30.c: 8: app_err_t sht30_init(void) {
+[c E57 0 1 2 3 4 5 .. ]
+[n E57 . APP_OK APP_EBUS APP_EDEV APP_EPARAM APP_ENCONF APP_EFULL  ]
+"53 ../modules/../core/types.h
+[; ;../modules/../core/types.h: 53: typedef struct {
+[s S3 `us 1 `s 1 ]
+[n S3 . rh_x100 temp_c_x100 ]
+"8 ../modules/sht30.c
+[; ;../modules/sht30.c: 8: app_err_t sht30_init(void) {
+[v _sht30_init `(E57 ~T0 @X0 1 ef ]
+{
+[e :U _sht30_init ]
+[f ]
+"9
+[; ;../modules/sht30.c: 9:     return APP_OK;
+[e ) . `E57 0 ]
+[e $UE 5  ]
+"10
+[; ;../modules/sht30.c: 10: }
+[e :UE 5 ]
+}
+"12
+[; ;../modules/sht30.c: 12: app_err_t sht30_read(sht30_data_t *data) {
+[v _sht30_read `(E57 ~T0 @X0 1 ef1`*S3 ]
+{
+[e :U _sht30_read ]
+[v _data `*S3 ~T0 @X0 1 r1 ]
+[f ]
+"13
+[; ;../modules/sht30.c: 13:     if (data) {
+[e $ ! != _data -> -> 0 `i `*S3 7  ]
+{
+"14
+[; ;../modules/sht30.c: 14:         data->rh_x100 = 0;
+[e = . *U _data 0 -> -> 0 `i `us ]
+"15
+[; ;../modules/sht30.c: 15:         data->temp_c_x100 = 0;
+[e = . *U _data 1 -> -> 0 `i `s ]
+"16
+[; ;../modules/sht30.c: 16:     }
+}
+[e :U 7 ]
+"17
+[; ;../modules/sht30.c: 17:     return APP_OK;
+[e ) . `E57 0 ]
+[e $UE 6  ]
+"18
+[; ;../modules/sht30.c: 18: }
+[e :UE 6 ]
+}

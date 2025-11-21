@@ -1,0 +1,52 @@
+Version 4.0 HI-TECH Software Intermediate Code
+"8 ../modules/bmp280.c
+[; ;../modules/bmp280.c: 8: app_err_t bmp280_init(void) {
+[c E57 0 1 2 3 4 5 .. ]
+[n E57 . APP_OK APP_EBUS APP_EDEV APP_EPARAM APP_ENCONF APP_EFULL  ]
+"35 ../modules/../core/types.h
+[; ;../modules/../core/types.h: 35: typedef struct {
+[s S2 `l 1 `s 1 ]
+[n S2 . pressure_pa temp_c_x100 ]
+"8 ../modules/bmp280.c
+[; ;../modules/bmp280.c: 8: app_err_t bmp280_init(void) {
+[v _bmp280_init `(E57 ~T0 @X0 1 ef ]
+{
+[e :U _bmp280_init ]
+[f ]
+"9
+[; ;../modules/bmp280.c: 9:     return APP_OK;
+[e ) . `E57 0 ]
+[e $UE 5  ]
+"10
+[; ;../modules/bmp280.c: 10: }
+[e :UE 5 ]
+}
+"12
+[; ;../modules/bmp280.c: 12: app_err_t bmp280_read(bmp280_data_t *data) {
+[v _bmp280_read `(E57 ~T0 @X0 1 ef1`*S2 ]
+{
+[e :U _bmp280_read ]
+[v _data `*S2 ~T0 @X0 1 r1 ]
+[f ]
+"13
+[; ;../modules/bmp280.c: 13:     if (data) {
+[e $ ! != _data -> -> 0 `i `*S2 7  ]
+{
+"14
+[; ;../modules/bmp280.c: 14:         data->pressure_pa = 0;
+[e = . *U _data 0 -> -> 0 `i `l ]
+"15
+[; ;../modules/bmp280.c: 15:         data->temp_c_x100 = 0;
+[e = . *U _data 1 -> -> 0 `i `s ]
+"16
+[; ;../modules/bmp280.c: 16:     }
+}
+[e :U 7 ]
+"17
+[; ;../modules/bmp280.c: 17:     return APP_OK;
+[e ) . `E57 0 ]
+[e $UE 6  ]
+"18
+[; ;../modules/bmp280.c: 18: }
+[e :UE 6 ]
+}
