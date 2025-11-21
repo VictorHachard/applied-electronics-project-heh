@@ -22,7 +22,23 @@
                    └────────────────┘
 ```
 
-## Arborescence du projet
+## Organisation des fichiers
+
+### Séparation .h / .c
+
+Chaque module est divisé en deux fichiers :
+
+| Fichier | Contenu | Visible par |
+|---------|---------|-------------|
+| `.h` (header) | Prototypes des fonctions, types, constantes | Tous les modules |
+| `.c` (source) | Implémentation des fonctions | Uniquement ce module |
+
+**Avantages :**
+- Chaque groupe travaille sur son `.c` sans conflit
+- Les autres groupes voient seulement les prototypes dans le `.h`
+- Compilation modulaire (modification d'un `.c` ne recompile pas tout)
+
+### Arborescence
 
 ```c
 /firmware
@@ -42,6 +58,7 @@
     uart_bt.h            // (G5) Communication Bluetooth via UART2
     uart_bt.c
     lcd.h                // (Fourni) Affichage LCD 2x16
+    lcd.c
   
   /modules
     rtc_ds1307.h         // (G1) Horloge temps réel
@@ -67,9 +84,122 @@
   main.c                 // (G0) Point d'entrée du programme
 ```
 
+## Flux d'exécution
+
+### Point d'entrée : main.c
+
+```c
+void main(void) {
+    app_main_init();    // 1. Initialisation complète
+    app_main_loop();    // 2. Boucle infinie (ne retourne jamais)
+}
+```
+
+Le fichier `main.c` est volontairement **minimaliste**. Toute la logique est dans `app_main.c`.
+
+### Séquence d'initialisation
+
+```
+main()
+  │
+  └──► app_main_init()
+         │
+         ├──► board_init()           // Config matérielle
+         │      ├── configure_pins()    (TRIS, ANSEL)
+         │      └── configure_pps()     (routage périphériques)
+         │
+         ├──► Lcd_Init()             // Affichage
+         │
+         ├──► i2c_bus_init()         // Bus I2C
+         ├──► spi_bus_init()         // Bus SPI
+         ├──► uart_pc_init(9600)     // UART1
+         ├──► uart_bt_init(9600)     // UART2
+         │
+         ├──► rtc_init()             // RTC DS1307
+         ├──► bmp280_init()          // Capteur pression
+         ├──► sht30_init()           // Capteur humidité
+         ├──► eeprom_init()          // EEPROM
+         │
+         ├──► dl_get_config()        // Charger config datalogger
+         │      └── dl_init() si vide
+         │
+         ├──► bluetooth_init()       // Bluetooth
+         ├──► app_init()             // Menu (G1)
+         │
+         └──► isr_init()             // Interruptions (Timer0)
+```
+
+**Ordre important :**
+1. **board** en premier (configure les broches)
+2. **LCD** ensuite (afficher les erreurs)
+3. **Drivers** (I2C, SPI, UART)
+4. **Modules** qui utilisent les drivers
+5. **ISR** en dernier (active les interruptions)
+
+### Boucle principale : app_main_loop()
+
+```
+app_main_loop()
+  │
+  └──► while(1) {
+         │
+         ├──► Vérifier g_timer0_flag    // Tick toutes les 10ms
+         │      └── g_tick_counter++
+         │
+         ├──► Mettre à jour la config   // Toutes les 100ms
+         │      └── g_sensor_period_ticks = dl_get_sample_period_s() × 100
+         │
+         ├──► Acquisition capteurs      // Selon période configurée
+         │      ├── bmp280_read()
+         │      ├── sht30_read()
+         │      └── if (dl_is_running())
+         │            └── dl_push_record()
+         │
+         └──► app_loop()                // Menu et boutons (G1)
+       }
+```
+
 ## Types de données partagés
 
 Dans le fichier `core/types.h` il y a des définitions de types partagés entre plusieurs modules.
+
+```c
+// Heure et date (RTC)
+typedef struct {
+  uint8_t hour, min, sec;   // 0-23, 0-59, 0-59
+  uint8_t day, month;       // 1-31, 1-12
+  uint16_t year;            // 2000-2099
+} rtc_time_t;
+
+// Données BMP280
+typedef struct {
+  int32_t pressure_pa;      // Pression en Pa × 100
+  int16_t temp_c_x100;      // Température en °C × 100
+} bmp280_data_t;
+
+// Données SHT30
+typedef struct {
+  uint16_t rh_x100;         // Humidité en % × 100
+  int16_t temp_c_x100;      // Température en °C × 100
+} sht30_data_t;
+
+// Données complètes (pour affichage et stockage)
+typedef struct {
+  int16_t  t_c_x100;        // Température
+  uint16_t rh_x100;         // Humidité
+  int32_t  p_pa;            // Pression
+} sensor_data_t;
+
+// Codes d'erreur
+typedef enum {
+  APP_OK = 0,               // Succès
+  APP_EBUS,                 // Erreur bus I2C/SPI
+  APP_EDEV,                 // Périphérique non trouvé
+  APP_EPARAM,               // Paramètre invalide
+  APP_ENCONF,               // Configuration vide
+  APP_EFULL                 // Mémoire pleine
+} app_err_t;
+```
 
 ## Répartition par groupe
 
