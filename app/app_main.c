@@ -170,7 +170,13 @@ void app_main_init(void) {
         // Configuration vide, initialiser avec valeurs par défaut
         current_cfg.sample_period_s = 10; // 10 secondes
         current_cfg.running = false;
-        dl_init(&current_cfg);
+        err = dl_set_config(&current_cfg);
+        if (err != APP_OK) {
+            Lcd_Clear();
+            Lcd_Set_Cursor(0, 0);
+            Lcd_Write_String("DL Config Err");
+            while(1);  // Bloquer l'exécution
+        }
     } else if (err != APP_OK) {
         Lcd_Clear();
         Lcd_Set_Cursor(0, 0);
@@ -226,7 +232,13 @@ void app_main_loop(void) {
 
         // TÂCHE PÉRIODIQUE : Mise à jour de la configuration
         if (g_tick_counter % CONFIG_UPDATE_TICKS == 0) {
-            uint16_t period_s = dl_get_sample_period_s();
+            dl_cfg_t current_cfg;
+            err = dl_get_config(&current_cfg);
+            if (err != APP_OK) {
+                // Erreur de lecture de la configuration
+                continue;  // Ignorer cette itération
+            }
+            uint8_t period_s = current_cfg.sample_period_s;
             
             // Convertir en ticks de 10ms
             if (period_s > 0) {
@@ -260,7 +272,13 @@ void app_main_loop(void) {
                 }
                 
                 // Enregistrement dans le datalogger
-                if (dl_is_running()) {
+                dl_cfg_t current_cfg;
+                err = dl_get_config(&current_cfg);
+                if (err != APP_OK) {
+                    // Erreur de lecture de la configuration
+                    continue;  // Ignorer cette itération
+                }
+                if (current_cfg.running) {
                     err = dl_push_record(&sensor_data);
                     if (err == APP_EFULL) {
                         // Mémoire pleine, arrêter le datalogger
