@@ -14,9 +14,8 @@
  * Représentation du temps réel (date + heure)
  */
 typedef struct {
-  uint8_t hour, min, sec; // 0..23, 0..59, 0..59
+  uint8_t hour, min; // 0..23, 0..59
   uint8_t day, month;     // 1..12
-  uint16_t year;          // 20xx
 } rtc_time_t;
 
 /* STRUCTURE DE DONNÉES : bmp280_data_t
