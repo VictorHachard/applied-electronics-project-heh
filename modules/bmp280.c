@@ -228,8 +228,8 @@ app_err_t bmp280_read(bmp280_data_t* data)
 
     // 3) Compensation température
     int32_t T = bmp280_compensate_T_int32(rawT, &cal, &t_fine);
-    data->temp_c_x100 = (int16_t)T*100;
-
+    data->temp_c_x100 = T;
+    
     // 4) Compensation pression (INT64 VERSION)
     int32_t P = bmp280_compensate_P_int32(rawP, &cal, &t_fine);
     data->pressure_pa = (int32_t)P;
