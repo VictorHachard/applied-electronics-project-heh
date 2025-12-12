@@ -19,7 +19,11 @@ typedef struct {
   bool running;             // état du datalogger
 } dl_cfg_t;
 
-app_err_t dl_set_config(const dl_cfg_t *cfg);
+app_err_t dl_reset_config(void);
+
+app_err_t dl_set_sample_period_s(uint8_t period_s);
+
+app_err_t dl_set_running(rtc_time_t *start_time, bool running);
 
 app_err_t dl_get_config(dl_cfg_t *cfg);
 
