@@ -80,6 +80,7 @@ typedef enum {
   APP_EDEV,              // device not found
   APP_EPARAM,            // invalid parameter
   APP_ENCONF,            // empty configuration
+  APP_EIO,               // I/O error
   APP_EFULL              // log storage full
 } app_err_t;
 

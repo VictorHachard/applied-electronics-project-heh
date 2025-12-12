@@ -43,6 +43,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 // ===============================================
 // VARIABLES GLOBALES DU SCHEDULER
@@ -52,8 +53,7 @@ static uint16_t g_tick_counter = 0;      // Compteur de ticks (incrémenté par 
 static uint16_t g_sensor_counter = 0;    // Compteur pour acquisition capteurs
 
 // Configuration du scheduler (en ticks de 10ms)
-#define TICK_PERIOD_MS        10         // Période du Timer0 en ms
-#define CONFIG_UPDATE_TICKS   10         // Recalcul config toutes les 100ms (10 * 10ms)
+#define CONFIG_UPDATE_TICKS   10         // Recalcul config toutes les 10s (10 * 1s)
 
 // Période d'acquisition dynamique (mise à jour depuis le datalogger)
 static uint16_t g_sensor_period_ticks = 0;
@@ -162,22 +162,8 @@ void app_main_init(void) {
     eeprom_init();
     
     // ÉTAPE 5 : Initialisation des modules applicatifs
-    // Datalogger (configuration par défaut)
-    // Verifier si une configuration existe en EEPROM (APP_ENCONF)
-    dl_cfg_t current_cfg;
-    err = dl_get_config(&current_cfg);
-    if (err == APP_ENCONF) {
-        // Configuration vide, initialiser avec valeurs par défaut
-        current_cfg.sample_period_s = 10; // 10 secondes
-        current_cfg.running = false;
-        err = dl_set_config(&current_cfg);
-        if (err != APP_OK) {
-            Lcd_Clear();
-            Lcd_Set_Cursor(0, 0);
-            Lcd_Write_String("DL Config Err");
-            while(1);  // Bloquer l'exécution
-        }
-    } else if (err != APP_OK) {
+    err = dl_reset_config();
+    if (err != APP_OK) {
         Lcd_Clear();
         Lcd_Set_Cursor(0, 0);
         Lcd_Write_String("DL Config Err");
@@ -221,6 +207,9 @@ void app_main_init(void) {
 void app_main_loop(void) {
     sensor_data_t sensor_data;  // Données capteurs
     app_err_t err;
+
+    static uint16_t last_config_update_tick = 0;
+    static uint16_t last_sensor_read_tick = 0;
     
     // Boucle infinie
     while (1) {
@@ -228,10 +217,17 @@ void app_main_loop(void) {
         if (g_timer0_flag) {
             g_timer0_flag = 0;  // Effacer le flag
             g_tick_counter++;   // Incrémenter le compteur global
+            // Lcd_Clear();
+            // Lcd_Set_Cursor(0, 0);
+            // char buffer[16];
+            // sprintf(buffer, "Tick: %u", g_tick_counter);
+            // Lcd_Write_String(buffer);
         }
 
         // TÂCHE PÉRIODIQUE : Mise à jour de la configuration
-        if (g_tick_counter % CONFIG_UPDATE_TICKS == 0) {
+        if (g_tick_counter % CONFIG_UPDATE_TICKS == 0 &&
+            g_tick_counter != last_config_update_tick) {
+            last_config_update_tick = g_tick_counter;
             dl_cfg_t current_cfg;
             err = dl_get_config(&current_cfg);
             if (err != APP_OK) {
@@ -239,10 +235,17 @@ void app_main_loop(void) {
                 continue;  // Ignorer cette itération
             }
             uint8_t period_s = current_cfg.sample_period_s;
-            
-            // Convertir en ticks de 10ms
+            // Lcd_Clear();
+            // Lcd_Set_Cursor(0, 0);
+            // char buffer[16];
+            // sprintf(buffer, "Period: %us", period_s);
+            // Lcd_Write_String(buffer);
+
+            period_s = 10;
+
+            // Convertir en ticks de 1s
             if (period_s > 0) {
-                g_sensor_period_ticks = (period_s * 1000) / TICK_PERIOD_MS;
+                g_sensor_period_ticks = period_s;  // 1 tick = 1s
             } else {
                 // Période invalide, désactiver l'acquisition
                 g_sensor_period_ticks = 0;
@@ -250,7 +253,9 @@ void app_main_loop(void) {
         }
         
         // TÂCHE PÉRIODIQUE : Acquisition des capteurs
-        if (g_sensor_period_ticks > 0) {
+        if (g_sensor_period_ticks > 0 &&
+            g_tick_counter != last_sensor_read_tick) {
+            last_sensor_read_tick = g_tick_counter;
             g_sensor_counter++;
             
             if (g_sensor_counter >= g_sensor_period_ticks) {
@@ -259,37 +264,59 @@ void app_main_loop(void) {
                 // Lire les capteurs BMP280 et SHT30
                 bmp280_data_t bmp_data;
                 sht30_data_t sht_data;
-                
+            
                 err = bmp280_read(&bmp_data);
                 if (err == APP_OK) {
                     sensor_data.p_pa = bmp_data.pressure_pa;
                     sensor_data.t_c_x100 = bmp_data.temp_c_x100;
+                } else {
+                    Lcd_Clear();
+                    Lcd_Set_Cursor(0, 0);
+                    Lcd_Write_String("BMP Read Err");
+                    while(1);  // Bloquer l'exécution
                 }
-                
+
                 err = sht30_read(&sht_data);
                 if (err == APP_OK) {
                     sensor_data.rh_x100 = sht_data.rh_x100;
+                } else {
+                    Lcd_Clear();
+                    Lcd_Set_Cursor(0, 0);
+                    Lcd_Write_String("SHT Read Err");
+                    while(1);  // Bloquer l'exécution
                 }
+
+                // print on lcd the sensor data
+                Lcd_Clear();
+                Lcd_Set_Cursor(0, 0);
+                Lcd_Write_String("T:");
+                char buffer[16];
+                sprintf(buffer, "%.2fC ", sensor_data.t_c_x100 / 100.0);
+                Lcd_Write_String(buffer);
+                Lcd_Write_String("RH:");
+                sprintf(buffer, "%.2f%% ", sensor_data.rh_x100 / 100.0);
+                Lcd_Write_String(buffer);
+                Lcd_Set_Cursor(1, 0);
+                Lcd_Write_String("P:");
+                sprintf(buffer, "%.2fPa", sensor_data.p_pa / 100.0);
+                Lcd_Write_String(buffer);
                 
-                // Enregistrement dans le datalogger
-                dl_cfg_t current_cfg;
-                err = dl_get_config(&current_cfg);
-                if (err != APP_OK) {
-                    // Erreur de lecture de la configuration
-                    continue;  // Ignorer cette itération
-                }
-                if (current_cfg.running) {
-                    err = dl_push_record(&sensor_data);
-                    if (err == APP_EFULL) {
-                        // Mémoire pleine, arrêter le datalogger
-                        dl_stop();
-                    } if (err != APP_OK) {
-                        Lcd_Clear();
-                        Lcd_Set_Cursor(0, 0);
-                        Lcd_Write_String("DL Write Err");
-                        while(1);  // Bloquer l'exécution
-                    }
-                }
+                // // Enregistrement dans le datalogger
+                // dl_cfg_t current_cfg;
+                // err = dl_get_config(&current_cfg);
+                // if (err != APP_OK) {
+                //     // Erreur de lecture de la configuration
+                //     continue;  // Ignorer cette itération
+                // }
+                // if (current_cfg.running) {
+                //     err = dl_push_record(&sensor_data);
+                //     if (err == APP_EFULL) {
+                //         Lcd_Clear();
+                //         Lcd_Set_Cursor(0, 0);
+                //         Lcd_Write_String("DL Write Err");
+                //         while(1);  // Bloquer l'exécution
+                //     }
+                // }
                 
                 // bluetooth_send_sensor_data(&sensor_data);
             }

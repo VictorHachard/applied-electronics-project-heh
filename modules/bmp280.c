@@ -212,6 +212,11 @@ app_err_t bmp280_read_calibration(bmp280_calib_t *cal)
 app_err_t bmp280_read(bmp280_data_t* data)
 {
     app_err_t err;
+
+    err = bmp280_init();
+    if (err != APP_OK)
+        return err;
+    
     int32_t rawT, rawP;
     int32_t t_fine;
     bmp280_calib_t cal;

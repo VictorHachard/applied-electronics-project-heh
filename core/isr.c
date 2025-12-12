@@ -21,7 +21,7 @@ volatile uint8_t g_uart2_rx_flag = 0; // Flag UART2 RX (Bluetooth)
 // ===============================================
 // Initialise les interruptions globales et périphériques
 //
-//   - Timer0 : tick périodique (≈10 ms)
+//   - Timer0 : tick périodique (1s)
 //   - UART1  : (à activer plus tard si besoin)
 //   - UART2  : (à activer plus tard si besoin)
 // ===============================================
@@ -31,16 +31,20 @@ void isr_init(void) {
 
     // --- Timer0 ---
     T0CON0bits.T0EN    = 0;      // OFF pendant la config
-    T0CON0bits.T016BIT = 0;      // 8-bit
+    T0CON0bits.T016BIT = 1;      // 16-bit MODE
     T0CON1bits.T0CS    = 0b010;  // Fosc/4
+    T0CON1bits.T0ASYNC = 1;      // Synchrone
     T0CON1bits.T0CKPS  = 0b1000; // Prescaler 1:256
 
-    // Préchargement pour ~10 ms (approx) comme tu avais
-    TMR0H = 256 - (625 / 256);
-    TMR0L = 0;
+    // Préchargement pour 1 seconde avec Fosc = 64 MHz
+    // Fosc/4 = 16 MHz, prescaler 1:256 = 62500 Hz
+    // Pour 1s : 62500 cycles
+    // Précharge = 65536 - 62500 = 3036 = 0x0BDC
+    TMR0H = 0x0B;
+    TMR0L = 0xDC;
 
     PIR3bits.TMR0IF = 0;   // Clear flag
-    PIE3bits.TMR0IE = 1;   // Enable IT Timer0 (TMR0 est dans PIR3/PIE3)
+    PIE3bits.TMR0IE = 1;   // Enable IT Timer0
 
     T0CON0bits.T0EN = 1;   // Start Timer0
 
@@ -65,6 +69,11 @@ void __interrupt() isr_handler(void) {
     // ------------------------
     if (PIR3bits.TMR0IF) {
         PIR3bits.TMR0IF = 0;   // Effacer le flag
+
+        // Recharger pour la prochaine seconde
+        TMR0H = 0x0B;
+        TMR0L = 0xDC;
+
         g_timer0_flag = 1;     // Indiquer au main loop qu’un tick est arrivé
     }
 
