@@ -79,6 +79,7 @@ typedef enum {
   APP_EBUS,              // I2C bus error
   APP_EDEV,              // device not found
   APP_EPARAM,            // invalid parameter
+  APP_ENOENT,             // data not found 
   APP_ENCONF,            // empty configuration
   APP_EIO,               // I/O error
   APP_EFULL              // log storage full

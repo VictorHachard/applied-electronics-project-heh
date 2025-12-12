@@ -72,56 +72,6 @@ app_err_t sensor_reduce(const sensor_data_t* in, sensor_reduced_t* out);
  */
 void sensor_dereduce(const sensor_reduced_t* in, sensor_data_t* out);
 
-/* STRUCTURE DE DONNÉES : dl_header_t
- * ------------------------------------------------------------
- * L’en-tête (header) du datalogger est stocké au début de l’EEPROM
- * et décrit les paramètres de la session d’enregistrement.
- * Il tient sur 6 octets, tous codés en 8 bits.
- *
- * ┌──────────────┬────────┬──────────────────────────────┬─────────────────────────────┬───────────────┐
- * │   Champ      │ Octets │ Encodage / Format            │ Signification               │ Plage / Unité │
- * ├──────────────┼────────┼──────────────────────────────┼─────────────────────────────┼───────────────┤
- * │ t0_min_le[3] │   3    │ t0_min = minute de départ    │ Horodatage de départ        │ 0 .. 16 777 215 min |
- * │ dt_s         │   1    │ Période d’échantillonnage    │ Intervalle entre mesures    │ 1 .. 255 s     |
- * │ flags        │   1    │ Bits d’options (voir ci-dessous) │ Activation pression, unités… │ 0x00 .. 0xFF   |
- * │ count        │   1    │ Nombre de mesures valides     │ Nb d’échantillons écrits    │ 0 .. 255       |
- * └──────────────┴────────┴──────────────────────────────┴─────────────────────────────┴───────────────┘
- *
- * Détails :
- * - t0_min_le[3] est un entier 24 bits little endian :
- *      t0_min = t0_min_le[0] | (t0_min_le[1] << 8) | (t0_min_le[2] << 16)
- *   → représente le nombre total de minutes écoulées depuis une référence
- *     (par exemple 0 = 00:00 au jour du démarrage).
- *
- * - dt_s : définit la période d’échantillonnage en secondes.
- *     Exemple : dt_s = 10 → un log toutes les 10 secondes.
- *
- * - flags : permet d’activer des options de session.
- *     Bit 0 : HAS_PRESSURE → 1 si la pression est enregistrée
- *     Bit 1 : UNUSED (réservé)
- *     Bit 2–7 : futurs usages (CRC, format, unités, etc.)
- *
- * - count : indique combien d’échantillons ont été écrits
- *     (sert à calculer la prochaine adresse libre en EEPROM).
- *
- * Exemple :
- *   t0_min_le = {0x34, 0x12, 0x00}   → t0_min = 0x001234 = 4660 min
- *   dt_s = 10                        → intervalle de 10 s
- *   flags = 0x01                     → pression activée
- *   count = 15                       → 15 mesures loguées
- *
- * Adresse EEPROM :
- *   Base header  : 0x000
- *   Base records : 0x006 (après les 6 octets du header)
- *
- */
-typedef struct __attribute__((packed)) {
-    uint8_t t0_min_le[3];  // minute de départ (24-bit LE)
-    uint8_t dt_s;          // période d’échantillonnage en secondes (1–255)
-    uint8_t flags;         // options : bit0 = HAS_PRESSURE, autres réservés
-    uint8_t count;         // nombre de mesures enregistrées (0–255)
-} dl_header_t;
-
 // Écrire un enregistrement à la fin du log
 // Verifie l'espace disponible avant d'écrire et verifie le flag running
 app_err_t dl_push_record(const sensor_data_t *rec);

@@ -4,6 +4,9 @@
 // ===============================================
 
 #include "datalogger.h"
+#include "../modules/eeprom_m93c66.h"
+#include <stdint.h>
+#include <stdbool.h>
 
 app_err_t dl_get_config(dl_cfg_t *cfg) {
     if (cfg) {
