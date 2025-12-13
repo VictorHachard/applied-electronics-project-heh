@@ -15,6 +15,4 @@ app_err_t eeprom_write_record(uint16_t addr, uint8_t val);
 
 app_err_t eeprom_read_record(uint16_t addr, uint8_t *val);
 
-app_err_t eeprom_chip_erase(void);
-
 #endif // EEPROM_M93C66_H
