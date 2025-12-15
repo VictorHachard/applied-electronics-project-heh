@@ -13,7 +13,7 @@
 // Attention : la strucure de données est une proposition de G0 elle peut etre modifier car on a rechechit 10minutes
 
 typedef struct {
-  uint8_t sample_period_s;  // Δt
+  uint8_t sample_period_min;  // Δt
   uint8_t data_count;       // nombre de données enregistrées
   rtc_time_t start_time;    // heure de début
   bool running;             // état du datalogger
@@ -21,7 +21,7 @@ typedef struct {
 
 app_err_t dl_reset_config(void);
 
-app_err_t dl_set_sample_period_s(uint8_t period_s);
+app_err_t dl_set_sample_period_min(uint8_t period_s);
 
 app_err_t dl_set_running(rtc_time_t *start_time);
 

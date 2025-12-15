@@ -15,6 +15,7 @@
 #define BMP280_ADDR_READ    0xED
 
 // Registres importants
+#define BMP280_REG_ID         0xD0
 #define BMP280_REG_STATUS     0xF3
 #define BMP280_REG_CTRL_MEAS  0xF4
 #define BMP280_REG_CONFIG     0xF5
@@ -45,6 +46,22 @@ app_err_t bmp280_init(void)
 {
     app_err_t err;
     uint8_t buf[2];
+
+    uint8_t chip_id;
+
+    // Vérifier la présence du BMP280 en lisant le registre ID
+    uint8_t reg_id = BMP280_REG_ID;
+    err = i2c2_write_read(BMP280_ADDR_WRITE, &reg_id, 1, BMP280_ADDR_READ, &chip_id, 1);
+    if (err != APP_OK) {
+        // Module non présent ou erreur I2C
+        return APP_EDEV;
+    }
+
+    // Vérifier que l'ID est correct (0x58 pour BMP280)
+    if (chip_id != 0x58) {
+        // Mauvais chip ID, ce n'est pas un BMP280
+        return APP_EDEV;
+    }
 
     // ------------------------------
     // REGISTRE 0xF4 : ctrl_meas

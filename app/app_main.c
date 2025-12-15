@@ -142,7 +142,12 @@ void app_main_init(void) {
     
     // Capteur BMP280 (pression + température)
     err = bmp280_init();
-    if (err != APP_OK) {
+    if (err == APP_EDEV) {
+        Lcd_Clear();
+        Lcd_Set_Cursor(0, 0);
+        Lcd_Write_String("BMP280 Not Found");
+        while(1);  // Bloquer l'exécution
+    } else if (err != APP_OK) {
         Lcd_Clear();
         Lcd_Set_Cursor(0, 0);
         Lcd_Write_String("BMP280 Init Err");
@@ -151,7 +156,12 @@ void app_main_init(void) {
     
     // Capteur SHT30 (humidité + température)
     err = sht30_init();
-    if (err != APP_OK) {
+    if (err == APP_EDEV) {
+        Lcd_Clear();
+        Lcd_Set_Cursor(0, 0);
+        Lcd_Write_String("SHT30 Not Found");
+        while(1);  // Bloquer l'exécution
+    } else if (err != APP_OK) {
         Lcd_Clear();
         Lcd_Set_Cursor(0, 0);
         Lcd_Write_String("SHT30 Init Err");

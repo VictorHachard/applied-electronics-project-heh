@@ -75,14 +75,18 @@ typedef struct {
  *
  */
 typedef enum {
-  APP_OK = 0,            // success
-  APP_EBUS,              // I2C bus error
-  APP_EDEV,              // device not found
-  APP_EPARAM,            // invalid parameter
-  APP_ENOENT,             // data not found 
-  APP_ENCONF,            // empty configuration
-  APP_EIO,               // I/O error
-  APP_EFULL              // log storage full
+    APP_OK = 0,           // Succès
+    APP_ERR = 1,          // Erreur générique
+    APP_EPARAM = 2,       // Paramètre invalide
+    APP_EBUS = 3,         // Erreur bus (I2C, SPI, UART)
+    APP_EDEV = 4,         // Erreur device (capteur ne répond pas)
+    APP_EIO = 5,          // Erreur I/O (CRC, timeout)
+    APP_EFULL = 6,        // Mémoire pleine (datalogger)
+    APP_ENOENT = 7,       // Élément non trouvé
+    APP_ENCONF = 8,       // Configuration invalide
+    APP_ERR_PARAM = 9,    // Alias pour compatibilité
+    APP_ENOTCONFIG = 10,  // Datalogger non configuré
+    APP_ENOTRUNNING = 11  // Datalogger non démarré
 } app_err_t;
 
 #endif // TYPES_H

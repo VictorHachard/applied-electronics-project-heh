@@ -19,6 +19,10 @@
 #define SHT30_CMD_MSB     0x24
 #define SHT30_CMD_LSB     0x00
 
+// Read status register command
+#define SHT30_STATUS_MSB  0xF3
+#define SHT30_STATUS_LSB  0x2D
+
 // Typical max measurement time for high repeatability ~15 ms
 #define SHT30_MEAS_DELAY_MS  15
 
@@ -37,7 +41,61 @@ static uint8_t sht30_crc8(const uint8_t *data, uint8_t len)
 
 app_err_t sht30_init(void)
 {
-    // I2C init is assumed to be done elsewhere
+    // Vérifier la présence du SHT30 en lisant le registre de status
+    uint8_t status_buf[3];
+    
+    I2C2CON0bits.RSEN = 0;
+    I2C2CNT           = 2;
+    I2C2ADB1          = SHT30_ADDR_WRITE;
+    I2C2TXB           = SHT30_STATUS_MSB;
+
+    I2C2CON0bits.S = 1;
+    while (!I2C2PIRbits.SCIF);
+    I2C2PIRbits.SCIF = 0;
+
+    while (!I2C2STAT1bits.TXBE);
+    I2C2TXB = SHT30_STATUS_LSB;
+
+    while (!I2C2PIRbits.PCIF);
+    I2C2PIRbits.PCIF = 0;
+
+    __delay_ms(1);
+
+    // Essayer de lire le status (3 bytes)
+    I2C2CNT  = 3;
+    I2C2ADB1 = SHT30_ADDR_READ;
+
+    I2C2CON0bits.S = 1;
+    while (!I2C2PIRbits.SCIF);
+    I2C2PIRbits.SCIF = 0;
+
+    I2C2CON1bits.ACKCNT = 0;
+
+    // Si le module n'est pas présent, cette lecture échouera
+    uint16_t timeout = 1000;
+    while (!I2C2STAT1bits.RXBF && timeout--) {
+        if (timeout == 0) {
+            // Timeout - module non présent
+            I2C2CON0bits.P = 1;  // Envoyer STOP
+            while (!I2C2PIRbits.PCIF);
+            I2C2PIRbits.PCIF = 0;
+            return APP_EDEV;
+        }
+    }
+    
+    status_buf[0] = I2C2RXB;
+
+    while (!I2C2STAT1bits.RXBF);
+    status_buf[1] = I2C2RXB;
+
+    I2C2CON1bits.ACKCNT = 1;
+    while (!I2C2STAT1bits.RXBF);
+    status_buf[2] = I2C2RXB;
+
+    while (!I2C2PIRbits.PCIF);
+    I2C2PIRbits.PCIF = 0;
+
+    // Si on arrive ici, le module a répondu
     return APP_OK;
 }
 
