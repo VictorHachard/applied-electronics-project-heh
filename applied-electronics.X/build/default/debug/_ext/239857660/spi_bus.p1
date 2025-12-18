@@ -1,8 +1,8 @@
 Version 4.0 HI-TECH Software Intermediate Code
 "24 ../drivers/spi_bus.c
 [; ;../drivers/spi_bus.c: 24: app_err_t spi_bus_init() {
-[c E57 0 1 2 3 4 5 .. ]
-[n E57 . APP_OK APP_EBUS APP_EDEV APP_EPARAM APP_ENCONF APP_EFULL  ]
+[c E55 0 1 2 3 4 5 6 7 8 9 10 11 .. ]
+[n E55 . APP_OK APP_ERR APP_EPARAM APP_EBUS APP_EDEV APP_EIO APP_EFULL APP_ENOENT APP_ENCONF APP_ERR_PARAM APP_ENOTCONFIG APP_ENOTRUNNING  ]
 "42843 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 42843: extern volatile unsigned char SPI1CON0 __attribute__((address(0x3D14)));
 [v _SPI1CON0 `Vuc ~T0 @X0 0 e@15636 ]
@@ -3083,7 +3083,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; <" TOSU equ 03FFFh ;# ">
 "24 ../drivers/spi_bus.c
 [; ;../drivers/spi_bus.c: 24: app_err_t spi_bus_init() {
-[v _spi_bus_init `(E57 ~T0 @X0 1 ef ]
+[v _spi_bus_init `(E55 ~T0 @X0 1 ef ]
 {
 [e :U _spi_bus_init ]
 [f ]
@@ -3113,7 +3113,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = . . _LATBbits 0 3 -> -> 1 `i `uc ]
 "39
 [; ;../drivers/spi_bus.c: 39:     return APP_OK;
-[e ) . `E57 0 ]
+[e ) . `E55 0 ]
 [e $UE 3254  ]
 "40
 [; ;../drivers/spi_bus.c: 40: }

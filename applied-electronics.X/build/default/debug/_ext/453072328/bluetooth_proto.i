@@ -130,21 +130,20 @@ typedef uint32_t uint_fast32_t;
 # 1 "../modules/../core/types.h" 1
 # 16 "../modules/../core/types.h"
 typedef struct {
-  uint8_t hour, min, sec;
+  uint8_t hour, min;
   uint8_t day, month;
-  uint16_t year;
 } rtc_time_t;
-# 35 "../modules/../core/types.h"
+# 34 "../modules/../core/types.h"
 typedef struct {
   int32_t pressure_pa;
   int16_t temp_c_x100;
 } bmp280_data_t;
-# 53 "../modules/../core/types.h"
+# 52 "../modules/../core/types.h"
 typedef struct {
   uint16_t rh_x100;
   int16_t temp_c_x100;
 } sht30_data_t;
-# 69 "../modules/../core/types.h"
+# 68 "../modules/../core/types.h"
 typedef struct {
   int16_t t_c_x100;
   uint16_t rh_x100;
@@ -155,12 +154,18 @@ typedef struct {
 
 
 typedef enum {
-  APP_OK = 0,
-  APP_EBUS,
-  APP_EDEV,
-  APP_EPARAM,
-  APP_ENCONF,
-  APP_EFULL
+    APP_OK = 0,
+    APP_ERR = 1,
+    APP_EPARAM = 2,
+    APP_EBUS = 3,
+    APP_EDEV = 4,
+    APP_EIO = 5,
+    APP_EFULL = 6,
+    APP_ENOENT = 7,
+    APP_ENCONF = 8,
+    APP_ERR_PARAM = 9,
+    APP_ENOTCONFIG = 10,
+    APP_ENOTRUNNING = 11
 } app_err_t;
 # 11 "../modules/bluetooth_proto.h" 2
 

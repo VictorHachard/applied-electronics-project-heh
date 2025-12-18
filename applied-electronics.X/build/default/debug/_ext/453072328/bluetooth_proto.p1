@@ -1,17 +1,17 @@
 Version 4.0 HI-TECH Software Intermediate Code
 "8 ../modules/bluetooth_proto.c
 [; ;../modules/bluetooth_proto.c: 8: app_err_t bluetooth_init(void) {
-[c E57 0 1 2 3 4 5 .. ]
-[n E57 . APP_OK APP_EBUS APP_EDEV APP_EPARAM APP_ENCONF APP_EFULL  ]
+[c E55 0 1 2 3 4 5 6 7 8 9 10 11 .. ]
+[n E55 . APP_OK APP_ERR APP_EPARAM APP_EBUS APP_EDEV APP_EIO APP_EFULL APP_ENOENT APP_ENCONF APP_ERR_PARAM APP_ENOTCONFIG APP_ENOTRUNNING  ]
 "8 ../modules/bluetooth_proto.c
 [; ;../modules/bluetooth_proto.c: 8: app_err_t bluetooth_init(void) {
-[v _bluetooth_init `(E57 ~T0 @X0 1 ef ]
+[v _bluetooth_init `(E55 ~T0 @X0 1 ef ]
 {
 [e :U _bluetooth_init ]
 [f ]
 "9
 [; ;../modules/bluetooth_proto.c: 9:     return APP_OK;
-[e ) . `E57 0 ]
+[e ) . `E55 0 ]
 [e $UE 5  ]
 "10
 [; ;../modules/bluetooth_proto.c: 10: }

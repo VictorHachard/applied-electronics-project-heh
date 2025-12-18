@@ -1,0 +1,23 @@
+Version 4.0 HI-TECH Software Intermediate Code
+"8 ../drivers/uart_pc.c
+[; ;../drivers/uart_pc.c: 8: app_err_t uart_pc_init(uint32_t baud) {
+[c E55 0 1 2 3 4 5 6 7 .. ]
+[n E55 . APP_OK APP_EBUS APP_EDEV APP_EPARAM APP_ENOENT APP_ENCONF APP_EIO APP_EFULL  ]
+"8 ../drivers/uart_pc.c
+[; ;../drivers/uart_pc.c: 8: app_err_t uart_pc_init(uint32_t baud) {
+[v _uart_pc_init `(E55 ~T0 @X0 1 ef1`ul ]
+{
+[e :U _uart_pc_init ]
+[v _baud `ul ~T0 @X0 1 r1 ]
+[f ]
+"9
+[; ;../drivers/uart_pc.c: 9:     (void)baud;
+[e _baud ]
+"10
+[; ;../drivers/uart_pc.c: 10:     return APP_OK;
+[e ) . `E55 0 ]
+[e $UE 5  ]
+"11
+[; ;../drivers/uart_pc.c: 11: }
+[e :UE 5 ]
+}

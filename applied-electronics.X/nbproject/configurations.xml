@@ -16,6 +16,8 @@
       <logicalFolder name="app" displayName="app" projectFiles="true">
         <itemPath>../app/app_main.c</itemPath>
         <itemPath>../app/app_menu.c</itemPath>
+        <itemPath>../app/buttons.c</itemPath>
+        <itemPath>../app/menu.c</itemPath>
       </logicalFolder>
       <logicalFolder name="core" displayName="core" projectFiles="true">
         <itemPath>../core/board.c</itemPath>
@@ -54,7 +56,7 @@
         <targetDevice>PIC18F26K83</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>noID</platformTool>
+        <platformTool>PICkit3PlatformTool</platformTool>
         <languageToolchain>XC8</languageToolchain>
         <languageToolchainVersion>3.10</languageToolchainVersion>
         <platform>3</platform>

@@ -132,21 +132,20 @@ typedef uint32_t uint_fast32_t;
 # 1 "../modules/../core/types.h" 1
 # 16 "../modules/../core/types.h"
 typedef struct {
-  uint8_t hour, min, sec;
+  uint8_t hour, min;
   uint8_t day, month;
-  uint16_t year;
 } rtc_time_t;
-# 35 "../modules/../core/types.h"
+# 34 "../modules/../core/types.h"
 typedef struct {
   int32_t pressure_pa;
   int16_t temp_c_x100;
 } bmp280_data_t;
-# 53 "../modules/../core/types.h"
+# 52 "../modules/../core/types.h"
 typedef struct {
   uint16_t rh_x100;
   int16_t temp_c_x100;
 } sht30_data_t;
-# 69 "../modules/../core/types.h"
+# 68 "../modules/../core/types.h"
 typedef struct {
   int16_t t_c_x100;
   uint16_t rh_x100;
@@ -157,36 +156,40 @@ typedef struct {
 
 
 typedef enum {
-  APP_OK = 0,
-  APP_EBUS,
-  APP_EDEV,
-  APP_EPARAM,
-  APP_ENCONF,
-  APP_EFULL
+    APP_OK = 0,
+    APP_ERR = 1,
+    APP_EPARAM = 2,
+    APP_EBUS = 3,
+    APP_EDEV = 4,
+    APP_EIO = 5,
+    APP_EFULL = 6,
+    APP_ENOENT = 7,
+    APP_ENCONF = 8,
+    APP_ERR_PARAM = 9,
+    APP_ENOTCONFIG = 10,
+    APP_ENOTRUNNING = 11
 } app_err_t;
 # 12 "../modules/datalogger.h" 2
 
 
 
 typedef struct {
-  uint16_t sample_period_s;
+  uint8_t sample_period_min;
+  uint8_t data_count;
+  rtc_time_t start_time;
   _Bool running;
 } dl_cfg_t;
 
-void dl_init(const dl_cfg_t *cfg);
+app_err_t dl_reset_config(void);
+
+app_err_t dl_set_sample_period_min(uint8_t period_s);
+
+app_err_t dl_set_running(rtc_time_t *start_time);
+
+app_err_t dl_stop(void);
 
 app_err_t dl_get_config(dl_cfg_t *cfg);
-
-uint16_t dl_get_sample_period_s(void);
-
-_Bool dl_is_running(void);
-
-void dl_start(void);
-
-void dl_stop(void);
-
-void dl_clear(void);
-# 62 "../modules/datalogger.h"
+# 60 "../modules/datalogger.h"
 typedef struct {
   uint8_t t8;
   uint8_t rh8;
@@ -203,46 +206,306 @@ app_err_t sensor_reduce(const sensor_data_t* in, sensor_reduced_t* out);
 
 
 void sensor_dereduce(const sensor_reduced_t* in, sensor_data_t* out);
-# 122 "../modules/datalogger.h"
-typedef struct __attribute__((packed)) {
-    uint8_t t0_min_le[3];
-    uint8_t dt_s;
-    uint8_t flags;
-    uint8_t count;
-} dl_header_t;
 
 
 
 app_err_t dl_push_record(const sensor_data_t *rec);
 
-uint16_t dl_count(void);
-
 app_err_t dl_read(uint16_t index, sensor_data_t *rec);
 # 7 "../modules/datalogger.c" 2
+# 1 "../modules/../modules/eeprom_m93c66.h" 1
+# 12 "../modules/../modules/eeprom_m93c66.h"
+void eeprom_init(void);
 
-app_err_t dl_get_config(dl_cfg_t *cfg) {
-    if (cfg) {
-        cfg->sample_period_s = 10;
-        cfg->running = 0;
-    }
-    return APP_OK;
+app_err_t eeprom_write_record(uint16_t addr, uint8_t val);
+
+app_err_t eeprom_read_record(uint16_t addr, uint8_t *val);
+# 8 "../modules/datalogger.c" 2
+# 30 "../modules/datalogger.c"
+static uint8_t G_data_count = 0;
+
+
+
+
+static int16_t clamp_i16(int16_t v, int16_t lo, int16_t hi)
+{
+  if (v < lo) return lo;
+  if (v > hi) return hi;
+  return v;
 }
 
-void dl_init(const dl_cfg_t *cfg) {
-    (void)cfg;
+static int32_t clamp_i32(int32_t v, int32_t lo, int32_t hi)
+{
+  if (v < lo) return lo;
+  if (v > hi) return hi;
+  return v;
 }
 
-uint16_t dl_get_sample_period_s(void) {
-    return 10;
+static uint16_t clamp_u16(uint16_t v, uint16_t lo, uint16_t hi)
+{
+  if (v < lo) return lo;
+  if (v > hi) return hi;
+  return v;
 }
 
-_Bool dl_is_running(void) {
-    return 0;
+static uint32_t udiv_round(uint32_t n, uint32_t d)
+{
+  return (n + (d / 2u)) / d;
 }
 
-app_err_t dl_push_record(const sensor_data_t *data) {
-    (void)data;
-    return APP_OK;
+
+
+
+
+app_err_t dl_reset_config(void)
+{
+  app_err_t err;
+
+
+  err = eeprom_write_record(0u, 0xFF);
+  if (err != APP_OK) return err;
+
+  err = eeprom_write_record(1u, 0);
+  if (err != APP_OK) return err;
+
+  err = eeprom_write_record(2u, 0);
+  if (err != APP_OK) return err;
+
+  err = eeprom_write_record(3u, 0);
+  if (err != APP_OK) return err;
+
+  err = eeprom_write_record(4u, 0);
+  if (err != APP_OK) return err;
+
+  err = eeprom_write_record(5u, 0);
+  if (err != APP_OK) return err;
+
+  err = eeprom_write_record(6u, 0);
+  if (err != APP_OK) return err;
+
+  G_data_count = 0;
+  return APP_OK;
 }
 
-void dl_stop(void) {}
+app_err_t dl_set_sample_period_min(uint8_t period_min)
+{
+
+  if (period_min == 0 || period_min == 0xFF) {
+    return APP_ENCONF;
+  }
+  return eeprom_write_record(0u, period_min);
+}
+
+app_err_t dl_stop(void)
+{
+  return eeprom_write_record(6u, 0);
+}
+
+app_err_t dl_set_running(rtc_time_t *start_time)
+{
+  if (!start_time) return APP_EPARAM;
+
+  app_err_t err;
+  uint8_t period;
+
+
+  err = eeprom_read_record(0u, &period);
+  if (err != APP_OK) return err;
+
+  if (period == 0 || period == 0xFF) {
+    return APP_ENOTCONFIG;
+  }
+
+
+  err = eeprom_write_record(1u, start_time->day);
+  if (err != APP_OK) return err;
+
+  err = eeprom_write_record(2u, start_time->month);
+  if (err != APP_OK) return err;
+
+  err = eeprom_write_record(3u, start_time->hour);
+  if (err != APP_OK) return err;
+
+  err = eeprom_write_record(4u, start_time->min);
+  if (err != APP_OK) return err;
+
+
+  err = eeprom_write_record(5u, 0);
+  if (err != APP_OK) return err;
+
+  G_data_count = 0;
+
+
+  err = eeprom_write_record(6u, 1);
+  if (err != APP_OK) return err;
+
+  return APP_OK;
+}
+
+app_err_t dl_get_config(dl_cfg_t *cfg)
+{
+  if (!cfg) return APP_EPARAM;
+
+  app_err_t err;
+  uint8_t x;
+
+  err = eeprom_read_record(0u, &x);
+  if (err != APP_OK) return err;
+  cfg->sample_period_min = x;
+
+  err = eeprom_read_record(1u, &x);
+  if (err != APP_OK) return err;
+  cfg->start_time.day = x;
+
+  err = eeprom_read_record(2u, &x);
+  if (err != APP_OK) return err;
+  cfg->start_time.month = x;
+
+  err = eeprom_read_record(3u, &x);
+  if (err != APP_OK) return err;
+  cfg->start_time.hour = x;
+
+  err = eeprom_read_record(4u, &x);
+  if (err != APP_OK) return err;
+  cfg->start_time.min = x;
+
+  err = eeprom_read_record(5u, &x);
+  if (err != APP_OK) return err;
+  cfg->data_count = x;
+
+  err = eeprom_read_record(6u, &x);
+  if (err != APP_OK) return err;
+  cfg->running = (x != 0);
+
+  G_data_count = cfg->data_count;
+
+  return APP_OK;
+}
+
+
+
+
+
+app_err_t sensor_reduce(const sensor_data_t* in, sensor_reduced_t* out)
+{
+  if (!in || !out) return APP_EPARAM;
+
+
+  int16_t t = in->t_c_x100;
+  t = clamp_i16(t, -4000, 8750);
+  uint16_t t_shift = (uint16_t)(t + 4000);
+  uint8_t t8 = (uint8_t)udiv_round((uint32_t)t_shift, 50u);
+  out->t8 = t8;
+
+
+  uint16_t rh = clamp_u16(in->rh_x100, 0, 10000);
+  uint8_t rh8 = (uint8_t)udiv_round((uint32_t)rh, 50u);
+  if (rh8 > 200u) rh8 = 200u;
+  out->rh8 = rh8;
+
+
+  int32_t p_pa = clamp_i32(in->p_pa, 30000, 110000);
+  int32_t p_hPa = (p_pa + 50) / 100;
+  if (p_hPa < 800) p_hPa = 800;
+  if (p_hPa > 1200) p_hPa = 1200;
+
+  uint8_t p8 = (uint8_t)udiv_round((uint32_t)(p_hPa - 800), 2u);
+  if (p8 > 200u) p8 = 200u;
+  out->p8 = p8;
+
+  return APP_OK;
+}
+
+void sensor_dereduce(const sensor_reduced_t* in, sensor_data_t* out)
+{
+  if (!in || !out) return;
+
+  out->t_c_x100 = (int16_t)((int32_t)in->t8 * 50 - 4000);
+  out->rh_x100 = (uint16_t)((uint32_t)in->rh8 * 50);
+  out->p_pa = ((int32_t)in->p8 * 2 + 800) * 100;
+}
+
+
+
+
+
+app_err_t dl_push_record(const sensor_data_t *rec)
+{
+  if (!rec) return APP_EPARAM;
+
+  app_err_t err;
+  uint8_t running = 0;
+
+
+  err = eeprom_read_record(6u, &running);
+  if (err != APP_OK) return err;
+
+  if (running == 0) {
+    return APP_ENOTRUNNING;
+  }
+
+
+  uint8_t count = 0;
+  err = eeprom_read_record(5u, &count);
+  if (err != APP_OK) return err;
+
+  if (count >= (uint8_t)((256u - 7u) / 3u)) return APP_EFULL;
+
+
+  sensor_reduced_t r;
+  err = sensor_reduce(rec, &r);
+  if (err != APP_OK) return err;
+
+
+  uint16_t base = (uint16_t)(7u + ((uint16_t)count * 3u));
+
+  err = eeprom_write_record(base + 0u, r.t8);
+  if (err != APP_OK) return err;
+
+  err = eeprom_write_record(base + 1u, r.rh8);
+  if (err != APP_OK) return err;
+
+  err = eeprom_write_record(base + 2u, r.p8);
+  if (err != APP_OK) return err;
+
+
+  count++;
+  err = eeprom_write_record(5u, count);
+  if (err != APP_OK) return err;
+
+  G_data_count = count;
+
+  return APP_OK;
+}
+
+app_err_t dl_read(uint16_t index, sensor_data_t *rec)
+{
+  if (!rec) return APP_EPARAM;
+
+  uint8_t count = 0;
+  app_err_t err = eeprom_read_record(5u, &count);
+  if (err != APP_OK) return err;
+
+  if (index >= count) return APP_ENOENT;
+
+  uint16_t base = (uint16_t)(7u + (index * 3u));
+
+  sensor_reduced_t r;
+  err = eeprom_read_record(base + 0u, &r.t8);
+  if (err != APP_OK) return err;
+
+  err = eeprom_read_record(base + 1u, &r.rh8);
+  if (err != APP_OK) return err;
+
+  err = eeprom_read_record(base + 2u, &r.p8);
+  if (err != APP_OK) return err;
+
+  sensor_dereduce(&r, rec);
+  return APP_OK;
+}
+
+app_err_t dl_get_record_count(uint8_t *count)
+{
+  if (!count) return APP_EPARAM;
+  return eeprom_read_record(5u, count);
+}

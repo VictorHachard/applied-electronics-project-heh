@@ -147,7 +147,7 @@ app_main_loop()
          │      └── g_tick_counter++
          │
          ├──► Mettre à jour la config   // Toutes les 100ms
-         │      └── g_sensor_period_ticks = dl_get_sample_period_s() × 100
+         │      └── g_sensor_period_ticks = dl_get_sample_period_min() × 100
          │
          ├──► Acquisition capteurs      // Selon période configurée
          │      ├── bmp280_read()

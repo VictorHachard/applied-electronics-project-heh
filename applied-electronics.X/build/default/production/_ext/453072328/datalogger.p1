@@ -1,0 +1,900 @@
+Version 4.0 HI-TECH Software Intermediate Code
+"76 ../modules/datalogger.c
+[; ;../modules/datalogger.c: 76: app_err_t dl_reset_config(void)
+[c E55 0 1 2 3 4 5 6 7 .. ]
+[n E55 . APP_OK APP_EBUS APP_EDEV APP_EPARAM APP_ENOENT APP_ENCONF APP_EIO APP_EFULL  ]
+"14 ../modules/../modules/eeprom_m93c66.h
+[; ;../modules/../modules/eeprom_m93c66.h: 14: app_err_t eeprom_write_record(uint16_t addr, uint8_t val);
+[v _eeprom_write_record `(E55 ~T0 @X0 0 ef2`us`uc ]
+"16 ../modules/../core/types.h
+[; ;../modules/../core/types.h: 16: typedef struct {
+[s S1 `uc 1 `uc 1 `uc 1 `uc 1 ]
+[n S1 . hour min day month ]
+"15 ../modules/datalogger.h
+[; ;../modules/datalogger.h: 15: typedef struct {
+[s S5 `uc 1 `uc 1 `S1 1 `a 1 ]
+[n S5 . sample_period_s data_count start_time running ]
+"16 ../modules/../modules/eeprom_m93c66.h
+[; ;../modules/../modules/eeprom_m93c66.h: 16: app_err_t eeprom_read_record(uint16_t addr, uint8_t *val);
+[v _eeprom_read_record `(E55 ~T0 @X0 0 ef2`us`*uc ]
+"68 ../modules/../core/types.h
+[; ;../modules/../core/types.h: 68: typedef struct {
+[s S4 `s 1 `us 1 `l 1 ]
+[n S4 . t_c_x100 rh_x100 p_pa ]
+"58 ../modules/datalogger.h
+[; ;../modules/datalogger.h: 58: typedef struct {
+[s S6 `uc 1 `uc 1 `uc 1 ]
+[n S6 . t8 rh8 p8 ]
+"38 ../modules/datalogger.c
+[; ;../modules/datalogger.c: 38: static uint8_t G_data_count = 0;
+[v _G_data_count `uc ~T0 @X0 1 s ]
+[i _G_data_count
+-> -> 0 `i `uc
+]
+"43
+[; ;../modules/datalogger.c: 43: static int16_t clamp_i16(int16_t v, int16_t lo, int16_t hi)
+[v _clamp_i16 `(s ~T0 @X0 1 sf3`s`s`s ]
+"44
+[; ;../modules/datalogger.c: 44: {
+{
+[e :U _clamp_i16 ]
+"43
+[; ;../modules/datalogger.c: 43: static int16_t clamp_i16(int16_t v, int16_t lo, int16_t hi)
+[v _v `s ~T0 @X0 1 r1 ]
+[v _lo `s ~T0 @X0 1 r2 ]
+[v _hi `s ~T0 @X0 1 r3 ]
+"44
+[; ;../modules/datalogger.c: 44: {
+[f ]
+"45
+[; ;../modules/datalogger.c: 45:   if (v < lo) return lo;
+[e $ ! < -> _v `i -> _lo `i 8  ]
+[e ) _lo ]
+[e $UE 7  ]
+[e :U 8 ]
+"46
+[; ;../modules/datalogger.c: 46:   if (v > hi) return hi;
+[e $ ! > -> _v `i -> _hi `i 9  ]
+[e ) _hi ]
+[e $UE 7  ]
+[e :U 9 ]
+"47
+[; ;../modules/datalogger.c: 47:   return v;
+[e ) _v ]
+[e $UE 7  ]
+"48
+[; ;../modules/datalogger.c: 48: }
+[e :UE 7 ]
+}
+"50
+[; ;../modules/datalogger.c: 50: static int32_t clamp_i32(int32_t v, int32_t lo, int32_t hi)
+[v _clamp_i32 `(l ~T0 @X0 1 sf3`l`l`l ]
+"51
+[; ;../modules/datalogger.c: 51: {
+{
+[e :U _clamp_i32 ]
+"50
+[; ;../modules/datalogger.c: 50: static int32_t clamp_i32(int32_t v, int32_t lo, int32_t hi)
+[v _v `l ~T0 @X0 1 r1 ]
+[v _lo `l ~T0 @X0 1 r2 ]
+[v _hi `l ~T0 @X0 1 r3 ]
+"51
+[; ;../modules/datalogger.c: 51: {
+[f ]
+"52
+[; ;../modules/datalogger.c: 52:   if (v < lo) return lo;
+[e $ ! < _v _lo 11  ]
+[e ) _lo ]
+[e $UE 10  ]
+[e :U 11 ]
+"53
+[; ;../modules/datalogger.c: 53:   if (v > hi) return hi;
+[e $ ! > _v _hi 12  ]
+[e ) _hi ]
+[e $UE 10  ]
+[e :U 12 ]
+"54
+[; ;../modules/datalogger.c: 54:   return v;
+[e ) _v ]
+[e $UE 10  ]
+"55
+[; ;../modules/datalogger.c: 55: }
+[e :UE 10 ]
+}
+"57
+[; ;../modules/datalogger.c: 57: static uint16_t clamp_u16(uint16_t v, uint16_t lo, uint16_t hi)
+[v _clamp_u16 `(us ~T0 @X0 1 sf3`us`us`us ]
+"58
+[; ;../modules/datalogger.c: 58: {
+{
+[e :U _clamp_u16 ]
+"57
+[; ;../modules/datalogger.c: 57: static uint16_t clamp_u16(uint16_t v, uint16_t lo, uint16_t hi)
+[v _v `us ~T0 @X0 1 r1 ]
+[v _lo `us ~T0 @X0 1 r2 ]
+[v _hi `us ~T0 @X0 1 r3 ]
+"58
+[; ;../modules/datalogger.c: 58: {
+[f ]
+"59
+[; ;../modules/datalogger.c: 59:   if (v < lo) return lo;
+[e $ ! < -> _v `ui -> _lo `ui 14  ]
+[e ) _lo ]
+[e $UE 13  ]
+[e :U 14 ]
+"60
+[; ;../modules/datalogger.c: 60:   if (v > hi) return hi;
+[e $ ! > -> _v `ui -> _hi `ui 15  ]
+[e ) _hi ]
+[e $UE 13  ]
+[e :U 15 ]
+"61
+[; ;../modules/datalogger.c: 61:   return v;
+[e ) _v ]
+[e $UE 13  ]
+"62
+[; ;../modules/datalogger.c: 62: }
+[e :UE 13 ]
+}
+"67
+[; ;../modules/datalogger.c: 67: static uint32_t udiv_round(uint32_t n, uint32_t d)
+[v _udiv_round `(ul ~T0 @X0 1 sf2`ul`ul ]
+"68
+[; ;../modules/datalogger.c: 68: {
+{
+[e :U _udiv_round ]
+"67
+[; ;../modules/datalogger.c: 67: static uint32_t udiv_round(uint32_t n, uint32_t d)
+[v _n `ul ~T0 @X0 1 r1 ]
+[v _d `ul ~T0 @X0 1 r2 ]
+"68
+[; ;../modules/datalogger.c: 68: {
+[f ]
+"69
+[; ;../modules/datalogger.c: 69:   return (n + (d / 2u)) / d;
+[e ) / + _n / _d -> -> 2 `ui `ul _d ]
+[e $UE 16  ]
+"70
+[; ;../modules/datalogger.c: 70: }
+[e :UE 16 ]
+}
+"76
+[; ;../modules/datalogger.c: 76: app_err_t dl_reset_config(void)
+[v _dl_reset_config `(E55 ~T0 @X0 1 ef ]
+"77
+[; ;../modules/datalogger.c: 77: {
+{
+[e :U _dl_reset_config ]
+[f ]
+"78
+[; ;../modules/datalogger.c: 78:   app_err_t err;
+[v _err `E55 ~T0 @X0 1 a ]
+"80
+[; ;../modules/datalogger.c: 80:   err = eeprom_write_record(0u, (uint8_t)300u);
+[e = _err ( _eeprom_write_record (2 , -> -> 0 `ui `us -> -> 300 `ui `uc ]
+"81
+[; ;../modules/datalogger.c: 81:   if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 18  ]
+[e ) _err ]
+[e $UE 17  ]
+[e :U 18 ]
+"83
+[; ;../modules/datalogger.c: 83:   err = eeprom_write_record(1u, 0);
+[e = _err ( _eeprom_write_record (2 , -> -> 1 `ui `us -> -> 0 `i `uc ]
+"84
+[; ;../modules/datalogger.c: 84:   if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 19  ]
+[e ) _err ]
+[e $UE 17  ]
+[e :U 19 ]
+"86
+[; ;../modules/datalogger.c: 86:   err = eeprom_write_record(2u, 0);
+[e = _err ( _eeprom_write_record (2 , -> -> 2 `ui `us -> -> 0 `i `uc ]
+"87
+[; ;../modules/datalogger.c: 87:   if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 20  ]
+[e ) _err ]
+[e $UE 17  ]
+[e :U 20 ]
+"89
+[; ;../modules/datalogger.c: 89:   err = eeprom_write_record(3u, 0);
+[e = _err ( _eeprom_write_record (2 , -> -> 3 `ui `us -> -> 0 `i `uc ]
+"90
+[; ;../modules/datalogger.c: 90:   if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 21  ]
+[e ) _err ]
+[e $UE 17  ]
+[e :U 21 ]
+"92
+[; ;../modules/datalogger.c: 92:   err = eeprom_write_record(4u, 0);
+[e = _err ( _eeprom_write_record (2 , -> -> 4 `ui `us -> -> 0 `i `uc ]
+"93
+[; ;../modules/datalogger.c: 93:   if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 22  ]
+[e ) _err ]
+[e $UE 17  ]
+[e :U 22 ]
+"95
+[; ;../modules/datalogger.c: 95:   err = eeprom_write_record(5u, 0);
+[e = _err ( _eeprom_write_record (2 , -> -> 5 `ui `us -> -> 0 `i `uc ]
+"96
+[; ;../modules/datalogger.c: 96:   if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 23  ]
+[e ) _err ]
+[e $UE 17  ]
+[e :U 23 ]
+"98
+[; ;../modules/datalogger.c: 98:   err = eeprom_write_record(6u, 0);
+[e = _err ( _eeprom_write_record (2 , -> -> 6 `ui `us -> -> 0 `i `uc ]
+"99
+[; ;../modules/datalogger.c: 99:   if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 24  ]
+[e ) _err ]
+[e $UE 17  ]
+[e :U 24 ]
+"101
+[; ;../modules/datalogger.c: 101:   G_data_count = 0;
+[e = _G_data_count -> -> 0 `i `uc ]
+"102
+[; ;../modules/datalogger.c: 102:   return APP_OK;
+[e ) . `E55 0 ]
+[e $UE 17  ]
+"103
+[; ;../modules/datalogger.c: 103: }
+[e :UE 17 ]
+}
+"105
+[; ;../modules/datalogger.c: 105: app_err_t dl_set_sample_period_s(uint8_t period_s)
+[v _dl_set_sample_period_s `(E55 ~T0 @X0 1 ef1`uc ]
+"106
+[; ;../modules/datalogger.c: 106: {
+{
+[e :U _dl_set_sample_period_s ]
+"105
+[; ;../modules/datalogger.c: 105: app_err_t dl_set_sample_period_s(uint8_t period_s)
+[v _period_s `uc ~T0 @X0 1 r1 ]
+"106
+[; ;../modules/datalogger.c: 106: {
+[f ]
+"107
+[; ;../modules/datalogger.c: 107:   if (period_s == 0) return APP_ENCONF;
+[e $ ! == -> _period_s `i -> 0 `i 26  ]
+[e ) . `E55 5 ]
+[e $UE 25  ]
+[e :U 26 ]
+"108
+[; ;../modules/datalogger.c: 108:   return eeprom_write_record(0u, period_s);
+[e ) ( _eeprom_write_record (2 , -> -> 0 `ui `us _period_s ]
+[e $UE 25  ]
+"109
+[; ;../modules/datalogger.c: 109: }
+[e :UE 25 ]
+}
+"111
+[; ;../modules/datalogger.c: 111: app_err_t dl_set_running(rtc_time_t *start_time)
+[v _dl_set_running `(E55 ~T0 @X0 1 ef1`*S1 ]
+"112
+[; ;../modules/datalogger.c: 112: {
+{
+[e :U _dl_set_running ]
+"111
+[; ;../modules/datalogger.c: 111: app_err_t dl_set_running(rtc_time_t *start_time)
+[v _start_time `*S1 ~T0 @X0 1 r1 ]
+"112
+[; ;../modules/datalogger.c: 112: {
+[f ]
+"113
+[; ;../modules/datalogger.c: 113:   if (!start_time) return APP_EPARAM;
+[e $ ! ! != _start_time -> -> 0 `i `*S1 28  ]
+[e ) . `E55 3 ]
+[e $UE 27  ]
+[e :U 28 ]
+"115
+[; ;../modules/datalogger.c: 115:   app_err_t err;
+[v _err `E55 ~T0 @X0 1 a ]
+"117
+[; ;../modules/datalogger.c: 117:   err = eeprom_write_record(1u, start_time->day);
+[e = _err ( _eeprom_write_record (2 , -> -> 1 `ui `us . *U _start_time 2 ]
+"118
+[; ;../modules/datalogger.c: 118:   if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 29  ]
+[e ) _err ]
+[e $UE 27  ]
+[e :U 29 ]
+"120
+[; ;../modules/datalogger.c: 120:   err = eeprom_write_record(2u, start_time->month);
+[e = _err ( _eeprom_write_record (2 , -> -> 2 `ui `us . *U _start_time 3 ]
+"121
+[; ;../modules/datalogger.c: 121:   if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 30  ]
+[e ) _err ]
+[e $UE 27  ]
+[e :U 30 ]
+"123
+[; ;../modules/datalogger.c: 123:   err = eeprom_write_record(3u, start_time->hour);
+[e = _err ( _eeprom_write_record (2 , -> -> 3 `ui `us . *U _start_time 0 ]
+"124
+[; ;../modules/datalogger.c: 124:   if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 31  ]
+[e ) _err ]
+[e $UE 27  ]
+[e :U 31 ]
+"126
+[; ;../modules/datalogger.c: 126:   err = eeprom_write_record(4u, start_time->min);
+[e = _err ( _eeprom_write_record (2 , -> -> 4 `ui `us . *U _start_time 1 ]
+"127
+[; ;../modules/datalogger.c: 127:   if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 32  ]
+[e ) _err ]
+[e $UE 27  ]
+[e :U 32 ]
+"130
+[; ;../modules/datalogger.c: 130:   err = eeprom_write_record(5u, 0);
+[e = _err ( _eeprom_write_record (2 , -> -> 5 `ui `us -> -> 0 `i `uc ]
+"131
+[; ;../modules/datalogger.c: 131:   if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 33  ]
+[e ) _err ]
+[e $UE 27  ]
+[e :U 33 ]
+"133
+[; ;../modules/datalogger.c: 133:   G_data_count = 0;
+[e = _G_data_count -> -> 0 `i `uc ]
+"136
+[; ;../modules/datalogger.c: 136:   err = eeprom_write_record(6u, 1);
+[e = _err ( _eeprom_write_record (2 , -> -> 6 `ui `us -> -> 1 `i `uc ]
+"137
+[; ;../modules/datalogger.c: 137:   if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 34  ]
+[e ) _err ]
+[e $UE 27  ]
+[e :U 34 ]
+"139
+[; ;../modules/datalogger.c: 139:   return APP_OK;
+[e ) . `E55 0 ]
+[e $UE 27  ]
+"140
+[; ;../modules/datalogger.c: 140: }
+[e :UE 27 ]
+}
+"142
+[; ;../modules/datalogger.c: 142: app_err_t dl_get_config(dl_cfg_t *cfg)
+[v _dl_get_config `(E55 ~T0 @X0 1 ef1`*S5 ]
+"143
+[; ;../modules/datalogger.c: 143: {
+{
+[e :U _dl_get_config ]
+"142
+[; ;../modules/datalogger.c: 142: app_err_t dl_get_config(dl_cfg_t *cfg)
+[v _cfg `*S5 ~T0 @X0 1 r1 ]
+"143
+[; ;../modules/datalogger.c: 143: {
+[f ]
+"144
+[; ;../modules/datalogger.c: 144:   if (!cfg) return APP_EPARAM;
+[e $ ! ! != _cfg -> -> 0 `i `*S5 36  ]
+[e ) . `E55 3 ]
+[e $UE 35  ]
+[e :U 36 ]
+"146
+[; ;../modules/datalogger.c: 146:   app_err_t err;
+[v _err `E55 ~T0 @X0 1 a ]
+"147
+[; ;../modules/datalogger.c: 147:   uint8_t x;
+[v _x `uc ~T0 @X0 1 a ]
+"149
+[; ;../modules/datalogger.c: 149:   err = eeprom_read_record(0u, &x);
+[e = _err ( _eeprom_read_record (2 , -> -> 0 `ui `us &U _x ]
+"150
+[; ;../modules/datalogger.c: 150:   if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 37  ]
+[e ) _err ]
+[e $UE 35  ]
+[e :U 37 ]
+"151
+[; ;../modules/datalogger.c: 151:   cfg->sample_period_s = x;
+[e = . *U _cfg 0 _x ]
+"153
+[; ;../modules/datalogger.c: 153:   err = eeprom_read_record(1u, &x);
+[e = _err ( _eeprom_read_record (2 , -> -> 1 `ui `us &U _x ]
+"154
+[; ;../modules/datalogger.c: 154:   if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 38  ]
+[e ) _err ]
+[e $UE 35  ]
+[e :U 38 ]
+"155
+[; ;../modules/datalogger.c: 155:   cfg->start_time.day = x;
+[e = . . *U _cfg 2 2 _x ]
+"157
+[; ;../modules/datalogger.c: 157:   err = eeprom_read_record(2u, &x);
+[e = _err ( _eeprom_read_record (2 , -> -> 2 `ui `us &U _x ]
+"158
+[; ;../modules/datalogger.c: 158:   if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 39  ]
+[e ) _err ]
+[e $UE 35  ]
+[e :U 39 ]
+"159
+[; ;../modules/datalogger.c: 159:   cfg->start_time.month = x;
+[e = . . *U _cfg 2 3 _x ]
+"161
+[; ;../modules/datalogger.c: 161:   err = eeprom_read_record(3u, &x);
+[e = _err ( _eeprom_read_record (2 , -> -> 3 `ui `us &U _x ]
+"162
+[; ;../modules/datalogger.c: 162:   if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 40  ]
+[e ) _err ]
+[e $UE 35  ]
+[e :U 40 ]
+"163
+[; ;../modules/datalogger.c: 163:   cfg->start_time.hour = x;
+[e = . . *U _cfg 2 0 _x ]
+"165
+[; ;../modules/datalogger.c: 165:   err = eeprom_read_record(4u, &x);
+[e = _err ( _eeprom_read_record (2 , -> -> 4 `ui `us &U _x ]
+"166
+[; ;../modules/datalogger.c: 166:   if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 41  ]
+[e ) _err ]
+[e $UE 35  ]
+[e :U 41 ]
+"167
+[; ;../modules/datalogger.c: 167:   cfg->start_time.min = x;
+[e = . . *U _cfg 2 1 _x ]
+"169
+[; ;../modules/datalogger.c: 169:   err = eeprom_read_record(5u, &x);
+[e = _err ( _eeprom_read_record (2 , -> -> 5 `ui `us &U _x ]
+"170
+[; ;../modules/datalogger.c: 170:   if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 42  ]
+[e ) _err ]
+[e $UE 35  ]
+[e :U 42 ]
+"171
+[; ;../modules/datalogger.c: 171:   cfg->data_count = x;
+[e = . *U _cfg 1 _x ]
+"173
+[; ;../modules/datalogger.c: 173:   err = eeprom_read_record(6u, &x);
+[e = _err ( _eeprom_read_record (2 , -> -> 6 `ui `us &U _x ]
+"174
+[; ;../modules/datalogger.c: 174:   if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 43  ]
+[e ) _err ]
+[e $UE 35  ]
+[e :U 43 ]
+"175
+[; ;../modules/datalogger.c: 175:   cfg->running = (x != 0);
+[e = . *U _cfg 3 -> -> != -> _x `i -> 0 `i `i `a ]
+"178
+[; ;../modules/datalogger.c: 178:   G_data_count = cfg->data_count;
+[e = _G_data_count . *U _cfg 1 ]
+"180
+[; ;../modules/datalogger.c: 180:   return APP_OK;
+[e ) . `E55 0 ]
+[e $UE 35  ]
+"181
+[; ;../modules/datalogger.c: 181: }
+[e :UE 35 ]
+}
+"190
+[; ;../modules/datalogger.c: 190: app_err_t sensor_reduce(const sensor_data_t* in, sensor_reduced_t* out)
+[v _sensor_reduce `(E55 ~T0 @X0 1 ef2`*CS4`*S6 ]
+"191
+[; ;../modules/datalogger.c: 191: {
+{
+[e :U _sensor_reduce ]
+"190
+[; ;../modules/datalogger.c: 190: app_err_t sensor_reduce(const sensor_data_t* in, sensor_reduced_t* out)
+[v _in `*CS4 ~T0 @X0 1 r1 ]
+[v _out `*S6 ~T0 @X0 1 r2 ]
+"191
+[; ;../modules/datalogger.c: 191: {
+[f ]
+"192
+[; ;../modules/datalogger.c: 192:   if (!in || !out) return APP_EPARAM;
+[e $ ! || ! != _in -> -> 0 `i `*CS4 ! != _out -> -> 0 `i `*S6 45  ]
+[e ) . `E55 3 ]
+[e $UE 44  ]
+[e :U 45 ]
+"195
+[; ;../modules/datalogger.c: 195:   int16_t t = in->t_c_x100;
+[v _t `s ~T0 @X0 1 a ]
+[e = _t . *U _in 0 ]
+"196
+[; ;../modules/datalogger.c: 196:   t = clamp_i16(t, -4000, 8750);
+[e = _t ( _clamp_i16 (3 , , _t -> -U -> 4000 `i `s -> -> 8750 `i `s ]
+"197
+[; ;../modules/datalogger.c: 197:   uint16_t t_shift = (uint16_t)(t + 4000);
+[v _t_shift `us ~T0 @X0 1 a ]
+[e = _t_shift -> + -> _t `i -> 4000 `i `us ]
+"198
+[; ;../modules/datalogger.c: 198:   uint8_t t8 = (uint8_t)udiv_round((uint32_t)t_shift, 50u);
+[v _t8 `uc ~T0 @X0 1 a ]
+[e = _t8 -> ( _udiv_round (2 , -> _t_shift `ul -> -> 50 `ui `ul `uc ]
+"199
+[; ;../modules/datalogger.c: 199:   out->t8 = t8;
+[e = . *U _out 0 _t8 ]
+"202
+[; ;../modules/datalogger.c: 202:   uint16_t rh = clamp_u16(in->rh_x100, 0, 10000);
+[v _rh `us ~T0 @X0 1 a ]
+[e = _rh ( _clamp_u16 (3 , , . *U _in 1 -> -> 0 `i `us -> -> 10000 `i `us ]
+"203
+[; ;../modules/datalogger.c: 203:   uint8_t rh8 = (uint8_t)udiv_round((uint32_t)rh, 50u);
+[v _rh8 `uc ~T0 @X0 1 a ]
+[e = _rh8 -> ( _udiv_round (2 , -> _rh `ul -> -> 50 `ui `ul `uc ]
+"204
+[; ;../modules/datalogger.c: 204:   if (rh8 > 200u) rh8 = 200u;
+[e $ ! > -> _rh8 `ui -> 200 `ui 46  ]
+[e = _rh8 -> -> 200 `ui `uc ]
+[e :U 46 ]
+"205
+[; ;../modules/datalogger.c: 205:   out->rh8 = rh8;
+[e = . *U _out 1 _rh8 ]
+"208
+[; ;../modules/datalogger.c: 208:   int32_t p_pa = clamp_i32(in->p_pa, 30000, 110000);
+[v _p_pa `l ~T0 @X0 1 a ]
+[e = _p_pa ( _clamp_i32 (3 , , . *U _in 2 -> -> 30000 `i `l -> 110000 `l ]
+"210
+[; ;../modules/datalogger.c: 210:   int32_t p_hPa = (p_pa + 50) / 100;
+[v _p_hPa `l ~T0 @X0 1 a ]
+[e = _p_hPa / + _p_pa -> -> 50 `i `l -> -> 100 `i `l ]
+"211
+[; ;../modules/datalogger.c: 211:   if (p_hPa < 800) p_hPa = 800;
+[e $ ! < _p_hPa -> -> 800 `i `l 47  ]
+[e = _p_hPa -> -> 800 `i `l ]
+[e :U 47 ]
+"212
+[; ;../modules/datalogger.c: 212:   if (p_hPa > 1200) p_hPa = 1200;
+[e $ ! > _p_hPa -> -> 1200 `i `l 48  ]
+[e = _p_hPa -> -> 1200 `i `l ]
+[e :U 48 ]
+"214
+[; ;../modules/datalogger.c: 214:   uint8_t p8 = (uint8_t)udiv_round((uint32_t)(p_hPa - 800), 2u);
+[v _p8 `uc ~T0 @X0 1 a ]
+[e = _p8 -> ( _udiv_round (2 , -> - _p_hPa -> -> 800 `i `l `ul -> -> 2 `ui `ul `uc ]
+"215
+[; ;../modules/datalogger.c: 215:   if (p8 > 200u) p8 = 200u;
+[e $ ! > -> _p8 `ui -> 200 `ui 49  ]
+[e = _p8 -> -> 200 `ui `uc ]
+[e :U 49 ]
+"216
+[; ;../modules/datalogger.c: 216:   out->p8 = p8;
+[e = . *U _out 2 _p8 ]
+"218
+[; ;../modules/datalogger.c: 218:   return APP_OK;
+[e ) . `E55 0 ]
+[e $UE 44  ]
+"219
+[; ;../modules/datalogger.c: 219: }
+[e :UE 44 ]
+}
+"221
+[; ;../modules/datalogger.c: 221: void sensor_dereduce(const sensor_reduced_t* in, sensor_data_t* out)
+[v _sensor_dereduce `(v ~T0 @X0 1 ef2`*CS6`*S4 ]
+"222
+[; ;../modules/datalogger.c: 222: {
+{
+[e :U _sensor_dereduce ]
+"221
+[; ;../modules/datalogger.c: 221: void sensor_dereduce(const sensor_reduced_t* in, sensor_data_t* out)
+[v _in `*CS6 ~T0 @X0 1 r1 ]
+[v _out `*S4 ~T0 @X0 1 r2 ]
+"222
+[; ;../modules/datalogger.c: 222: {
+[f ]
+"223
+[; ;../modules/datalogger.c: 223:   if (!in || !out) return;
+[e $ ! || ! != _in -> -> 0 `i `*CS6 ! != _out -> -> 0 `i `*S4 51  ]
+[e $UE 50  ]
+[e :U 51 ]
+"226
+[; ;../modules/datalogger.c: 226:   out->t_c_x100 = (int16_t)((int32_t)in->t8 * 50 - 4000);
+[e = . *U _out 0 -> - * -> . *U _in 0 `l -> -> 50 `i `l -> -> 4000 `i `l `s ]
+"229
+[; ;../modules/datalogger.c: 229:   out->rh_x100 = (uint16_t)((uint32_t)in->rh8 * 50);
+[e = . *U _out 1 -> * -> . *U _in 1 `ul -> -> -> 50 `i `l `ul `us ]
+"232
+[; ;../modules/datalogger.c: 232:   out->p_pa = ((int32_t)in->p8 * 2 + 800) * 100;
+[e = . *U _out 2 * + * -> . *U _in 2 `l -> -> 2 `i `l -> -> 800 `i `l -> -> 100 `i `l ]
+"233
+[; ;../modules/datalogger.c: 233: }
+[e :UE 50 ]
+}
+"239
+[; ;../modules/datalogger.c: 239: static app_err_t dl_is_running(_Bool *running)
+[v _dl_is_running `(E55 ~T0 @X0 1 sf1`*a ]
+"240
+[; ;../modules/datalogger.c: 240: {
+{
+[e :U _dl_is_running ]
+"239
+[; ;../modules/datalogger.c: 239: static app_err_t dl_is_running(_Bool *running)
+[v _running `*a ~T0 @X0 1 r1 ]
+"240
+[; ;../modules/datalogger.c: 240: {
+[f ]
+"241
+[; ;../modules/datalogger.c: 241:   if (!running) return APP_EPARAM;
+[e $ ! ! != _running -> -> 0 `i `*a 53  ]
+[e ) . `E55 3 ]
+[e $UE 52  ]
+[e :U 53 ]
+"242
+[; ;../modules/datalogger.c: 242:   uint8_t x = 0;
+[v _x `uc ~T0 @X0 1 a ]
+[e = _x -> -> 0 `i `uc ]
+"243
+[; ;../modules/datalogger.c: 243:   app_err_t err = eeprom_read_record(6u, &x);
+[v _err `E55 ~T0 @X0 1 a ]
+[e = _err ( _eeprom_read_record (2 , -> -> 6 `ui `us &U _x ]
+"244
+[; ;../modules/datalogger.c: 244:   if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 54  ]
+[e ) _err ]
+[e $UE 52  ]
+[e :U 54 ]
+"245
+[; ;../modules/datalogger.c: 245:   *running = (x != 0);
+[e = *U _running -> -> != -> _x `i -> 0 `i `i `a ]
+"246
+[; ;../modules/datalogger.c: 246:   return APP_OK;
+[e ) . `E55 0 ]
+[e $UE 52  ]
+"247
+[; ;../modules/datalogger.c: 247: }
+[e :UE 52 ]
+}
+"249
+[; ;../modules/datalogger.c: 249: static app_err_t dl_get_count(uint8_t *count)
+[v _dl_get_count `(E55 ~T0 @X0 1 sf1`*uc ]
+"250
+[; ;../modules/datalogger.c: 250: {
+{
+[e :U _dl_get_count ]
+"249
+[; ;../modules/datalogger.c: 249: static app_err_t dl_get_count(uint8_t *count)
+[v _count `*uc ~T0 @X0 1 r1 ]
+"250
+[; ;../modules/datalogger.c: 250: {
+[f ]
+"251
+[; ;../modules/datalogger.c: 251:   if (!count) return APP_EPARAM;
+[e $ ! ! != _count -> -> 0 `i `*uc 56  ]
+[e ) . `E55 3 ]
+[e $UE 55  ]
+[e :U 56 ]
+"252
+[; ;../modules/datalogger.c: 252:   app_err_t err = eeprom_read_record(5u, count);
+[v _err `E55 ~T0 @X0 1 a ]
+[e = _err ( _eeprom_read_record (2 , -> -> 5 `ui `us _count ]
+"253
+[; ;../modules/datalogger.c: 253:   if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 57  ]
+[e ) _err ]
+[e $UE 55  ]
+[e :U 57 ]
+"254
+[; ;../modules/datalogger.c: 254:   G_data_count = *count;
+[e = _G_data_count *U _count ]
+"255
+[; ;../modules/datalogger.c: 255:   return APP_OK;
+[e ) . `E55 0 ]
+[e $UE 55  ]
+"256
+[; ;../modules/datalogger.c: 256: }
+[e :UE 55 ]
+}
+"258
+[; ;../modules/datalogger.c: 258: static app_err_t dl_set_count(uint8_t count)
+[v _dl_set_count `(E55 ~T0 @X0 1 sf1`uc ]
+"259
+[; ;../modules/datalogger.c: 259: {
+{
+[e :U _dl_set_count ]
+"258
+[; ;../modules/datalogger.c: 258: static app_err_t dl_set_count(uint8_t count)
+[v _count `uc ~T0 @X0 1 r1 ]
+"259
+[; ;../modules/datalogger.c: 259: {
+[f ]
+"260
+[; ;../modules/datalogger.c: 260:   G_data_count = count;
+[e = _G_data_count _count ]
+"261
+[; ;../modules/datalogger.c: 261:   return eeprom_write_record(5u, count);
+[e ) ( _eeprom_write_record (2 , -> -> 5 `ui `us _count ]
+[e $UE 58  ]
+"262
+[; ;../modules/datalogger.c: 262: }
+[e :UE 58 ]
+}
+"264
+[; ;../modules/datalogger.c: 264: app_err_t dl_push_record(const sensor_data_t *rec)
+[v _dl_push_record `(E55 ~T0 @X0 1 ef1`*CS4 ]
+"265
+[; ;../modules/datalogger.c: 265: {
+{
+[e :U _dl_push_record ]
+"264
+[; ;../modules/datalogger.c: 264: app_err_t dl_push_record(const sensor_data_t *rec)
+[v _rec `*CS4 ~T0 @X0 1 r1 ]
+"265
+[; ;../modules/datalogger.c: 265: {
+[f ]
+"266
+[; ;../modules/datalogger.c: 266:   if (!rec) return APP_EPARAM;
+[e $ ! ! != _rec -> -> 0 `i `*CS4 60  ]
+[e ) . `E55 3 ]
+[e $UE 59  ]
+[e :U 60 ]
+"268
+[; ;../modules/datalogger.c: 268:   app_err_t err;
+[v _err `E55 ~T0 @X0 1 a ]
+"270
+[; ;../modules/datalogger.c: 270:   uint8_t count = 0;
+[v _count `uc ~T0 @X0 1 a ]
+[e = _count -> -> 0 `i `uc ]
+"271
+[; ;../modules/datalogger.c: 271:   err = dl_get_count(&count);
+[e = _err ( _dl_get_count (1 &U _count ]
+"272
+[; ;../modules/datalogger.c: 272:   if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 61  ]
+[e ) _err ]
+[e $UE 59  ]
+[e :U 61 ]
+"274
+[; ;../modules/datalogger.c: 274:   if (count >= (uint8_t)((256u - 7u) / 3u)) return APP_EFULL;
+[e $ ! >= -> _count `i -> -> / - -> 256 `ui -> 7 `ui -> 3 `ui `uc `i 62  ]
+[e ) . `E55 7 ]
+[e $UE 59  ]
+[e :U 62 ]
+"276
+[; ;../modules/datalogger.c: 276:   sensor_reduced_t r;
+[v _r `S6 ~T0 @X0 1 a ]
+"277
+[; ;../modules/datalogger.c: 277:   err = sensor_reduce(rec, &r);
+[e = _err ( _sensor_reduce (2 , _rec &U _r ]
+"278
+[; ;../modules/datalogger.c: 278:   if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 63  ]
+[e ) _err ]
+[e $UE 59  ]
+[e :U 63 ]
+"281
+[; ;../modules/datalogger.c: 281:   uint16_t base = (uint16_t)(7u + ((uint16_t)count * 3u));
+[v _base `us ~T0 @X0 1 a ]
+[e = _base -> + -> 7 `ui * -> -> _count `us `ui -> 3 `ui `us ]
+"283
+[; ;../modules/datalogger.c: 283:   err = eeprom_write_record(base + 0u, r.t8);
+[e = _err ( _eeprom_write_record (2 , -> + -> _base `ui -> 0 `ui `us . _r 0 ]
+"284
+[; ;../modules/datalogger.c: 284:   if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 64  ]
+[e ) _err ]
+[e $UE 59  ]
+[e :U 64 ]
+"286
+[; ;../modules/datalogger.c: 286:   err = eeprom_write_record(base + 1u, r.rh8);
+[e = _err ( _eeprom_write_record (2 , -> + -> _base `ui -> 1 `ui `us . _r 1 ]
+"287
+[; ;../modules/datalogger.c: 287:   if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 65  ]
+[e ) _err ]
+[e $UE 59  ]
+[e :U 65 ]
+"289
+[; ;../modules/datalogger.c: 289:   err = eeprom_write_record(base + 2u, r.p8);
+[e = _err ( _eeprom_write_record (2 , -> + -> _base `ui -> 2 `ui `us . _r 2 ]
+"290
+[; ;../modules/datalogger.c: 290:   if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 66  ]
+[e ) _err ]
+[e $UE 59  ]
+[e :U 66 ]
+"293
+[; ;../modules/datalogger.c: 293:   count++;
+[e ++ _count -> -> 1 `i `uc ]
+"294
+[; ;../modules/datalogger.c: 294:   err = dl_set_count(count);
+[e = _err ( _dl_set_count (1 _count ]
+"295
+[; ;../modules/datalogger.c: 295:   if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 67  ]
+[e ) _err ]
+[e $UE 59  ]
+[e :U 67 ]
+"297
+[; ;../modules/datalogger.c: 297:   return APP_OK;
+[e ) . `E55 0 ]
+[e $UE 59  ]
+"298
+[; ;../modules/datalogger.c: 298: }
+[e :UE 59 ]
+}
+"300
+[; ;../modules/datalogger.c: 300: app_err_t dl_read(uint16_t index, sensor_data_t *rec)
+[v _dl_read `(E55 ~T0 @X0 1 ef2`us`*S4 ]
+"301
+[; ;../modules/datalogger.c: 301: {
+{
+[e :U _dl_read ]
+"300
+[; ;../modules/datalogger.c: 300: app_err_t dl_read(uint16_t index, sensor_data_t *rec)
+[v _index `us ~T0 @X0 1 r1 ]
+[v _rec `*S4 ~T0 @X0 1 r2 ]
+"301
+[; ;../modules/datalogger.c: 301: {
+[f ]
+"302
+[; ;../modules/datalogger.c: 302:   if (!rec) return APP_EPARAM;
+[e $ ! ! != _rec -> -> 0 `i `*S4 69  ]
+[e ) . `E55 3 ]
+[e $UE 68  ]
+[e :U 69 ]
+"304
+[; ;../modules/datalogger.c: 304:   uint8_t count = 0;
+[v _count `uc ~T0 @X0 1 a ]
+[e = _count -> -> 0 `i `uc ]
+"305
+[; ;../modules/datalogger.c: 305:   app_err_t err = dl_get_count(&count);
+[v _err `E55 ~T0 @X0 1 a ]
+[e = _err ( _dl_get_count (1 &U _count ]
+"306
+[; ;../modules/datalogger.c: 306:   if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 70  ]
+[e ) _err ]
+[e $UE 68  ]
+[e :U 70 ]
+"308
+[; ;../modules/datalogger.c: 308:   if (index >= count) return APP_ENOENT;
+[e $ ! >= -> _index `ui -> _count `ui 71  ]
+[e ) . `E55 4 ]
+[e $UE 68  ]
+[e :U 71 ]
+"310
+[; ;../modules/datalogger.c: 310:   uint16_t base = (uint16_t)(7u + (index * 3u));
+[v _base `us ~T0 @X0 1 a ]
+[e = _base -> + -> 7 `ui * -> _index `ui -> 3 `ui `us ]
+"312
+[; ;../modules/datalogger.c: 312:   sensor_reduced_t r;
+[v _r `S6 ~T0 @X0 1 a ]
+"313
+[; ;../modules/datalogger.c: 313:   err = eeprom_read_record(base + 0u, &r.t8);
+[e = _err ( _eeprom_read_record (2 , -> + -> _base `ui -> 0 `ui `us &U . _r 0 ]
+"314
+[; ;../modules/datalogger.c: 314:   if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 72  ]
+[e ) _err ]
+[e $UE 68  ]
+[e :U 72 ]
+"316
+[; ;../modules/datalogger.c: 316:   err = eeprom_read_record(base + 1u, &r.rh8);
+[e = _err ( _eeprom_read_record (2 , -> + -> _base `ui -> 1 `ui `us &U . _r 1 ]
+"317
+[; ;../modules/datalogger.c: 317:   if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 73  ]
+[e ) _err ]
+[e $UE 68  ]
+[e :U 73 ]
+"319
+[; ;../modules/datalogger.c: 319:   err = eeprom_read_record(base + 2u, &r.p8);
+[e = _err ( _eeprom_read_record (2 , -> + -> _base `ui -> 2 `ui `us &U . _r 2 ]
+"320
+[; ;../modules/datalogger.c: 320:   if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 74  ]
+[e ) _err ]
+[e $UE 68  ]
+[e :U 74 ]
+"322
+[; ;../modules/datalogger.c: 322:   sensor_dereduce(&r, rec);
+[e ( _sensor_dereduce (2 , -> &U _r `*CS6 _rec ]
+"323
+[; ;../modules/datalogger.c: 323:   return APP_OK;
+[e ) . `E55 0 ]
+[e $UE 68  ]
+"324
+[; ;../modules/datalogger.c: 324: }
+[e :UE 68 ]
+}

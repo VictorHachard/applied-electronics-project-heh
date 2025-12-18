@@ -36680,21 +36680,20 @@ extern volatile uint8_t g_uart2_rx_flag;
 # 1 "../app/../core/types.h" 1
 # 16 "../app/../core/types.h"
 typedef struct {
-  uint8_t hour, min, sec;
+  uint8_t hour, min;
   uint8_t day, month;
-  uint16_t year;
 } rtc_time_t;
-# 35 "../app/../core/types.h"
+# 34 "../app/../core/types.h"
 typedef struct {
   int32_t pressure_pa;
   int16_t temp_c_x100;
 } bmp280_data_t;
-# 53 "../app/../core/types.h"
+# 52 "../app/../core/types.h"
 typedef struct {
   uint16_t rh_x100;
   int16_t temp_c_x100;
 } sht30_data_t;
-# 69 "../app/../core/types.h"
+# 68 "../app/../core/types.h"
 typedef struct {
   int16_t t_c_x100;
   uint16_t rh_x100;
@@ -36705,12 +36704,18 @@ typedef struct {
 
 
 typedef enum {
-  APP_OK = 0,
-  APP_EBUS,
-  APP_EDEV,
-  APP_EPARAM,
-  APP_ENCONF,
-  APP_EFULL
+    APP_OK = 0,
+    APP_ERR = 1,
+    APP_EPARAM = 2,
+    APP_EBUS = 3,
+    APP_EDEV = 4,
+    APP_EIO = 5,
+    APP_EFULL = 6,
+    APP_ENOENT = 7,
+    APP_ENCONF = 8,
+    APP_ERR_PARAM = 9,
+    APP_ENOTCONFIG = 10,
+    APP_ENOTRUNNING = 11
 } app_err_t;
 # 14 "../app/app_main.c" 2
 
@@ -36770,10 +36775,12 @@ void Lcd_Shift_Left(void);
 
 
 # 1 "../app/../modules/rtc_ds1307.h" 1
-# 12 "../app/../modules/rtc_ds1307.h"
+# 29 "../app/../modules/rtc_ds1307.h"
 app_err_t rtc_init(void);
 
+
 app_err_t rtc_set_time(const rtc_time_t* time);
+
 
 app_err_t rtc_get_time(rtc_time_t* time);
 # 28 "../app/app_main.c" 2
@@ -36798,11 +36805,9 @@ app_err_t sht30_read(sht30_data_t* data);
 # 12 "../app/../modules/eeprom_m93c66.h"
 void eeprom_init(void);
 
-app_err_t eeprom_write_record(uint16_t addr, const uint8_t *val);
+app_err_t eeprom_write_record(uint16_t addr, uint8_t val);
 
 app_err_t eeprom_read_record(uint16_t addr, uint8_t *val);
-
-app_err_t eeprom_chip_erase(void);
 # 34 "../app/app_main.c" 2
 
 # 1 "../app/../modules/datalogger.h" 1
@@ -36814,24 +36819,22 @@ app_err_t eeprom_chip_erase(void);
 
 
 typedef struct {
-  uint16_t sample_period_s;
+  uint8_t sample_period_min;
+  uint8_t data_count;
+  rtc_time_t start_time;
   _Bool running;
 } dl_cfg_t;
 
-void dl_init(const dl_cfg_t *cfg);
+app_err_t dl_reset_config(void);
+
+app_err_t dl_set_sample_period_min(uint8_t period_s);
+
+app_err_t dl_set_running(rtc_time_t *start_time);
+
+app_err_t dl_stop(void);
 
 app_err_t dl_get_config(dl_cfg_t *cfg);
-
-uint16_t dl_get_sample_period_s(void);
-
-_Bool dl_is_running(void);
-
-void dl_start(void);
-
-void dl_stop(void);
-
-void dl_clear(void);
-# 62 "../app/../modules/datalogger.h"
+# 60 "../app/../modules/datalogger.h"
 typedef struct {
   uint8_t t8;
   uint8_t rh8;
@@ -36848,19 +36851,10 @@ app_err_t sensor_reduce(const sensor_data_t* in, sensor_reduced_t* out);
 
 
 void sensor_dereduce(const sensor_reduced_t* in, sensor_data_t* out);
-# 122 "../app/../modules/datalogger.h"
-typedef struct __attribute__((packed)) {
-    uint8_t t0_min_le[3];
-    uint8_t dt_s;
-    uint8_t flags;
-    uint8_t count;
-} dl_header_t;
 
 
 
 app_err_t dl_push_record(const sensor_data_t *rec);
-
-uint16_t dl_count(void);
 
 app_err_t dl_read(uint16_t index, sensor_data_t *rec);
 # 36 "../app/app_main.c" 2
@@ -36883,10 +36877,170 @@ void app_init(void);
 
 void app_loop(void);
 # 42 "../app/app_main.c" 2
-# 51 "../app/app_main.c"
+
+
+
+
+# 1 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/stdio.h" 1 3
+# 24 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/stdio.h" 3
+# 1 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/bits/alltypes.h" 1 3
+# 12 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/bits/alltypes.h" 3
+typedef void * va_list[1];
+
+
+
+
+typedef void * __isoc_va_list[1];
+# 143 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/bits/alltypes.h" 3
+typedef __int24 ssize_t;
+# 255 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/bits/alltypes.h" 3
+typedef long long off_t;
+# 409 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/bits/alltypes.h" 3
+typedef struct _IO_FILE FILE;
+# 25 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/stdio.h" 2 3
+# 52 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/stdio.h" 3
+typedef union _G_fpos64_t {
+ char __opaque[16];
+ double __align;
+} fpos_t;
+
+extern FILE *const stdin;
+extern FILE *const stdout;
+extern FILE *const stderr;
+
+
+
+
+
+FILE *fopen(const char *restrict, const char *restrict);
+FILE *freopen(const char *restrict, const char *restrict, FILE *restrict);
+int fclose(FILE *);
+
+int remove(const char *);
+int rename(const char *, const char *);
+
+int feof(FILE *);
+int ferror(FILE *);
+int fflush(FILE *);
+void clearerr(FILE *);
+
+int fseek(FILE *, long, int);
+long ftell(FILE *);
+void rewind(FILE *);
+
+int fgetpos(FILE *restrict, fpos_t *restrict);
+int fsetpos(FILE *, const fpos_t *);
+
+size_t fread(void *restrict, size_t, size_t, FILE *restrict);
+size_t fwrite(const void *restrict, size_t, size_t, FILE *restrict);
+
+int fgetc(FILE *);
+int getc(FILE *);
+int getchar(void);
+
+
+
+
+
+int ungetc(int, FILE *);
+int getch(void);
+
+int fputc(int, FILE *);
+int putc(int, FILE *);
+int putchar(int);
+
+
+
+
+
+void putch(char);
+
+char *fgets(char *restrict, int, FILE *restrict);
+
+char *gets(char *);
+
+
+int fputs(const char *restrict, FILE *restrict);
+int puts(const char *);
+
+__attribute__((__format__(__printf__, 1, 2)))
+int printf(const char *restrict, ...);
+__attribute__((__format__(__printf__, 2, 3)))
+int fprintf(FILE *restrict, const char *restrict, ...);
+__attribute__((__format__(__printf__, 2, 3)))
+int sprintf(char *restrict, const char *restrict, ...);
+__attribute__((__format__(__printf__, 3, 4)))
+int snprintf(char *restrict, size_t, const char *restrict, ...);
+
+__attribute__((__format__(__printf__, 1, 0)))
+int vprintf(const char *restrict, __isoc_va_list);
+int vfprintf(FILE *restrict, const char *restrict, __isoc_va_list);
+__attribute__((__format__(__printf__, 2, 0)))
+int vsprintf(char *restrict, const char *restrict, __isoc_va_list);
+__attribute__((__format__(__printf__, 3, 0)))
+int vsnprintf(char *restrict, size_t, const char *restrict, __isoc_va_list);
+
+__attribute__((__format__(__scanf__, 1, 2)))
+int scanf(const char *restrict, ...);
+__attribute__((__format__(__scanf__, 2, 3)))
+int fscanf(FILE *restrict, const char *restrict, ...);
+__attribute__((__format__(__scanf__, 2, 3)))
+int sscanf(const char *restrict, const char *restrict, ...);
+
+__attribute__((__format__(__scanf__, 1, 0)))
+int vscanf(const char *restrict, __isoc_va_list);
+int vfscanf(FILE *restrict, const char *restrict, __isoc_va_list);
+__attribute__((__format__(__scanf__, 2, 0)))
+int vsscanf(const char *restrict, const char *restrict, __isoc_va_list);
+
+void perror(const char *);
+
+int setvbuf(FILE *restrict, char *restrict, int, size_t);
+void setbuf(FILE *restrict, char *restrict);
+
+char *tmpnam(char *);
+FILE *tmpfile(void);
+
+
+
+
+FILE *fmemopen(void *restrict, size_t, const char *restrict);
+FILE *open_memstream(char **, size_t *);
+FILE *fdopen(int, const char *);
+FILE *popen(const char *, const char *);
+int pclose(FILE *);
+int fileno(FILE *);
+int fseeko(FILE *, off_t, int);
+off_t ftello(FILE *);
+int dprintf(int, const char *restrict, ...);
+int vdprintf(int, const char *restrict, __isoc_va_list);
+void flockfile(FILE *);
+int ftrylockfile(FILE *);
+void funlockfile(FILE *);
+int getc_unlocked(FILE *);
+int getchar_unlocked(void);
+int putc_unlocked(int, FILE *);
+int putchar_unlocked(int);
+ssize_t getdelim(char **restrict, size_t *restrict, int, FILE *restrict);
+ssize_t getline(char **restrict, size_t *restrict, FILE *restrict);
+int renameat(int, const char *, int, const char *);
+char *ctermid(char *);
+
+
+
+
+
+
+
+char *tempnam(const char *, const char *);
+# 47 "../app/app_main.c" 2
+
+
+
+
+
 static uint16_t g_tick_counter = 0;
 static uint16_t g_sensor_counter = 0;
-
 
 
 
@@ -36960,7 +37114,12 @@ void app_main_init(void) {
 
 
     err = bmp280_init();
-    if (err != APP_OK) {
+    if (err == APP_EDEV) {
+        Lcd_Clear();
+        Lcd_Set_Cursor(0, 0);
+        Lcd_Write_String("BMP280 Not Found");
+        while(1);
+    } else if (err != APP_OK) {
         Lcd_Clear();
         Lcd_Set_Cursor(0, 0);
         Lcd_Write_String("BMP280 Init Err");
@@ -36969,7 +37128,12 @@ void app_main_init(void) {
 
 
     err = sht30_init();
-    if (err != APP_OK) {
+    if (err == APP_EDEV) {
+        Lcd_Clear();
+        Lcd_Set_Cursor(0, 0);
+        Lcd_Write_String("SHT30 Not Found");
+        while(1);
+    } else if (err != APP_OK) {
         Lcd_Clear();
         Lcd_Set_Cursor(0, 0);
         Lcd_Write_String("SHT30 Init Err");
@@ -36980,16 +37144,8 @@ void app_main_init(void) {
     eeprom_init();
 
 
-
-
-    dl_cfg_t current_cfg;
-    err = dl_get_config(&current_cfg);
-    if (err == APP_ENCONF) {
-
-        current_cfg.sample_period_s = 10;
-        current_cfg.running = 0;
-        dl_init(&current_cfg);
-    } else if (err != APP_OK) {
+    err = dl_reset_config();
+    if (err != APP_OK) {
         Lcd_Clear();
         Lcd_Set_Cursor(0, 0);
         Lcd_Write_String("DL Config Err");
@@ -37017,26 +37173,53 @@ void app_main_init(void) {
     Lcd_Write_String("Ready!");
     _delay((unsigned long)((500)*(64000000UL/4000.0)));
 }
-# 215 "../app/app_main.c"
-void app_main_loop(void) {
+# 217 "../app/app_main.c"
+void app_main_loop_tmp(void) {
     sensor_data_t sensor_data;
     app_err_t err;
+
+    static uint16_t last_config_update_tick = 0;
+    static uint16_t last_sensor_read_tick = 0;
 
 
     while (1) {
 
+        err = eeprom_write_record(6u, 1);
+
+
+
         if (g_timer0_flag) {
             g_timer0_flag = 0;
             g_tick_counter++;
+
+
+
+
+
         }
 
 
-        if (g_tick_counter % 10 == 0) {
-            uint16_t period_s = dl_get_sample_period_s();
+        if (g_tick_counter % 10 == 0 &&
+            g_tick_counter != last_config_update_tick) {
+            last_config_update_tick = g_tick_counter;
+            dl_cfg_t current_cfg;
+            err = dl_get_config(&current_cfg);
+            if (err != APP_OK) {
+
+                continue;
+            }
+            uint8_t period_s = current_cfg.sample_period_min;
+
+
+
+
+
+
+            period_s = 10;
 
 
             if (period_s > 0) {
-                g_sensor_period_ticks = (period_s * 1000) / 10;
+                g_sensor_period_ticks = period_s;
             } else {
 
                 g_sensor_period_ticks = 0;
@@ -37044,7 +37227,9 @@ void app_main_loop(void) {
         }
 
 
-        if (g_sensor_period_ticks > 0) {
+        if (g_sensor_period_ticks > 0 &&
+            g_tick_counter != last_sensor_read_tick) {
+            last_sensor_read_tick = g_tick_counter;
             g_sensor_counter++;
 
             if (g_sensor_counter >= g_sensor_period_ticks) {
@@ -37058,26 +37243,79 @@ void app_main_loop(void) {
                 if (err == APP_OK) {
                     sensor_data.p_pa = bmp_data.pressure_pa;
                     sensor_data.t_c_x100 = bmp_data.temp_c_x100;
+                } else {
+                    Lcd_Clear();
+                    Lcd_Set_Cursor(0, 0);
+                    Lcd_Write_String("BMP Read Err");
+                    while(1);
                 }
 
                 err = sht30_read(&sht_data);
                 if (err == APP_OK) {
                     sensor_data.rh_x100 = sht_data.rh_x100;
+                } else {
+                    Lcd_Clear();
+                    Lcd_Set_Cursor(0, 0);
+                    Lcd_Write_String("SHT Read Err");
+                    while(1);
                 }
-
-
-                if (dl_is_running()) {
+# 321 "../app/app_main.c"
                     err = dl_push_record(&sensor_data);
                     if (err == APP_EFULL) {
-
-                        dl_stop();
-                    } if (err != APP_OK) {
                         Lcd_Clear();
                         Lcd_Set_Cursor(0, 0);
                         Lcd_Write_String("DL Write Err");
                         while(1);
+                    } else if (err != APP_OK){
+                        Lcd_Clear();
+                        Lcd_Set_Cursor(0, 0);
+                        Lcd_Write_String("DL Push Err");
+                        Lcd_Set_Cursor(1, 0);
+                        Lcd_Write_String("Code:");
+                        char buffer[16];
+                        sprintf(buffer, "%d", err);
+                        Lcd_Write_String(buffer);
+                        while(1);
                     }
+
+
+                     dl_cfg_t current_cfg;
+                err = dl_get_config(&current_cfg);
+                if (err != APP_OK) {
+
+                    continue;
                 }
+
+                    sensor_data_t verify_data;
+                     Lcd_Clear();
+                        Lcd_Set_Cursor(0, 0);
+                        Lcd_Write_String("Verif DL Rec");
+                        char buffer[16];
+                        sprintf(buffer, "Idx:%u", current_cfg.data_count - 1);
+                        Lcd_Set_Cursor(1, 0);
+                        _delay((unsigned long)((1000)*(64000000UL/4000.0)));_delay((unsigned long)((1000)*(64000000UL/4000.0)));_delay((unsigned long)((1000)*(64000000UL/4000.0)));_delay((unsigned long)((1000)*(64000000UL/4000.0)));
+                    err = dl_read(0, &verify_data);
+                    if (err != APP_OK) {
+                        Lcd_Clear();
+                        Lcd_Set_Cursor(0, 0);
+                        Lcd_Write_String("DL Read Err");
+                        Lcd_Set_Cursor(1, 0);
+                        Lcd_Write_String("Code:");
+                        char buffer[16];
+                        sprintf(buffer, "%d", err);
+                        Lcd_Write_String(buffer);
+                        while(1);
+                    } else {
+                          Lcd_Clear();
+                        Lcd_Set_Cursor(0, 0);
+                        Lcd_Write_String("Verif:");
+                        char buffer[16];
+                        sprintf(buffer, "%.2fC ", sensor_data.t_c_x100 / 100.0);
+                        Lcd_Set_Cursor(1, 0);
+                        Lcd_Write_String(buffer);
+                    }
+
+
 
 
             }
@@ -37085,5 +37323,427 @@ void app_main_loop(void) {
 
 
         app_loop();
+    }
+}
+
+
+
+
+void test_dl_setup(void)
+{
+    app_err_t err;
+    char buf[17];
+
+
+    Lcd_Clear();
+    Lcd_Set_Cursor(0, 0);
+    Lcd_Write_String("1.1 Reset config");
+    _delay((unsigned long)((1000)*(64000000UL/4000.0)));
+
+    err = dl_reset_config();
+    if (err != APP_OK) {
+        Lcd_Set_Cursor(1, 0);
+        sprintf(buf, "ERR: %d", err);
+        Lcd_Write_String(buf);
+        while(1);
+    }
+    Lcd_Set_Cursor(1, 0);
+    Lcd_Write_String("OK");
+    _delay((unsigned long)((1000)*(64000000UL/4000.0)));
+
+
+    Lcd_Clear();
+    Lcd_Set_Cursor(0, 0);
+    Lcd_Write_String("1.2 Start w/o");
+    Lcd_Set_Cursor(1, 0);
+    Lcd_Write_String("period (must err)");
+    _delay((unsigned long)((1500)*(64000000UL/4000.0)));
+
+    rtc_time_t start = {0, 0, 14, 15, 12, 25};
+    err = dl_set_running(&start);
+
+    if (err == APP_ENOTCONFIG) {
+        Lcd_Clear();
+        Lcd_Set_Cursor(0, 0);
+        Lcd_Write_String("Error detected:");
+        Lcd_Set_Cursor(1, 0);
+        Lcd_Write_String("APP_ENOTCONFIG");
+        _delay((unsigned long)((2000)*(64000000UL/4000.0)));
+
+        Lcd_Clear();
+        Lcd_Set_Cursor(0, 0);
+        Lcd_Write_String("Validation OK!");
+        _delay((unsigned long)((1000)*(64000000UL/4000.0)));
+    } else {
+        Lcd_Clear();
+        Lcd_Set_Cursor(0, 0);
+        Lcd_Write_String("FAIL: No error!");
+        Lcd_Set_Cursor(1, 0);
+        sprintf(buf, "Got: %d", err);
+        Lcd_Write_String(buf);
+        while(1);
+    }
+
+
+    Lcd_Clear();
+    Lcd_Set_Cursor(0, 0);
+    Lcd_Write_String("1.3 Set period");
+    Lcd_Set_Cursor(1, 0);
+    Lcd_Write_String("5 minutes");
+    _delay((unsigned long)((1000)*(64000000UL/4000.0)));
+
+    err = dl_set_sample_period_min(5);
+    if (err != APP_OK) {
+        Lcd_Clear();
+        sprintf(buf, "ERR: %d", err);
+        Lcd_Write_String(buf);
+        while(1);
+    }
+    Lcd_Clear();
+    Lcd_Set_Cursor(0, 0);
+    Lcd_Write_String("Period set: 5min");
+    Lcd_Set_Cursor(1, 0);
+    Lcd_Write_String("OK");
+    _delay((unsigned long)((1000)*(64000000UL/4000.0)));
+
+
+    Lcd_Clear();
+    Lcd_Set_Cursor(0, 0);
+    Lcd_Write_String("1.4 Check config");
+    _delay((unsigned long)((1000)*(64000000UL/4000.0)));
+
+    dl_cfg_t cfg;
+    err = dl_get_config(&cfg);
+    if (err != APP_OK) {
+        sprintf(buf, "ERR: %d", err);
+        Lcd_Set_Cursor(1, 0);
+        Lcd_Write_String(buf);
+        while(1);
+    }
+
+    Lcd_Clear();
+    Lcd_Set_Cursor(0, 0);
+    sprintf(buf, "P:%umin R:%d C:%d", cfg.sample_period_min, cfg.running, cfg.data_count);
+    Lcd_Write_String(buf);
+    _delay((unsigned long)((2000)*(64000000UL/4000.0)));
+
+
+    Lcd_Clear();
+    Lcd_Set_Cursor(0, 0);
+    Lcd_Write_String("1.5 Start logger");
+    _delay((unsigned long)((1000)*(64000000UL/4000.0)));
+
+    err = dl_set_running(&start);
+    if (err != APP_OK) {
+        Lcd_Set_Cursor(1, 0);
+        sprintf(buf, "ERR: %d", err);
+        Lcd_Write_String(buf);
+        while(1);
+    }
+
+    Lcd_Set_Cursor(1, 0);
+    Lcd_Write_String("Running: YES");
+    _delay((unsigned long)((1000)*(64000000UL/4000.0)));
+
+
+    Lcd_Clear();
+    Lcd_Set_Cursor(0, 0);
+    Lcd_Write_String("1.6 Final check");
+    _delay((unsigned long)((800)*(64000000UL/4000.0)));
+
+    err = dl_get_config(&cfg);
+    if (err != APP_OK || !cfg.running) {
+        Lcd_Set_Cursor(1, 0);
+        Lcd_Write_String("FAIL!");
+        while(1);
+    }
+
+    Lcd_Clear();
+    Lcd_Set_Cursor(0, 0);
+    Lcd_Write_String("SETUP COMPLETE!");
+    Lcd_Set_Cursor(1, 0);
+    Lcd_Write_String("Ready to log");
+    _delay((unsigned long)((2000)*(64000000UL/4000.0)));
+}
+
+
+
+
+void test_dl_log(void)
+{
+    app_err_t err;
+    char buf[17];
+
+    Lcd_Clear();
+    Lcd_Set_Cursor(0, 0);
+    Lcd_Write_String("2. LOG DATA TEST");
+    _delay((unsigned long)((1500)*(64000000UL/4000.0)));
+
+
+    sensor_data_t samples[5] = {
+        {2150, 6500, 101300},
+        {2200, 6800, 101250},
+        {2180, 6650, 101280},
+        {2230, 7000, 101200},
+        {2170, 6900, 101320},
+    };
+
+    for (uint8_t i = 0; i < 5; i++) {
+
+        Lcd_Clear();
+        Lcd_Set_Cursor(0, 0);
+        sprintf(buf, "Record %d/5", i + 1);
+        Lcd_Write_String(buf);
+
+        Lcd_Set_Cursor(1, 0);
+        sprintf(buf, "T:%.1fC H:%.0f%%",
+                samples[i].t_c_x100 / 100.0,
+                samples[i].rh_x100 / 100.0);
+        Lcd_Write_String(buf);
+        _delay((unsigned long)((1500)*(64000000UL/4000.0)));
+
+
+        err = dl_push_record(&samples[i]);
+
+        if (err != APP_OK) {
+            Lcd_Clear();
+            Lcd_Set_Cursor(0, 0);
+            if (err == APP_ENOTRUNNING) {
+                Lcd_Write_String("Not running!");
+            } else if (err == APP_EFULL) {
+                Lcd_Write_String("Memory full!");
+            } else {
+                sprintf(buf, "Push ERR: %d", err);
+                Lcd_Write_String(buf);
+            }
+            while(1);
+        }
+
+
+        Lcd_Clear();
+        Lcd_Set_Cursor(0, 0);
+        sprintf(buf, "Record %d: OK", i + 1);
+        Lcd_Write_String(buf);
+
+
+        Lcd_Set_Cursor(1, 0);
+        sprintf(buf, "P:%.1f hPa", samples[i].p_pa / 100.0);
+        Lcd_Write_String(buf);
+        _delay((unsigned long)((1200)*(64000000UL/4000.0)));
+    }
+
+
+    uint8_t count = 0;
+    dl_cfg_t cfg;
+    err = dl_get_config(&cfg);
+    if (err != APP_OK) {
+        Lcd_Clear();
+        sprintf(buf, "ERR: %d", err);
+        Lcd_Write_String(buf);
+        while(1);
+    }
+    count = cfg.data_count;
+
+    Lcd_Clear();
+    Lcd_Set_Cursor(0, 0);
+    Lcd_Write_String("Log complete!");
+    Lcd_Set_Cursor(1, 0);
+    sprintf(buf, "Total: %d rec", count);
+    Lcd_Write_String(buf);
+    _delay((unsigned long)((2000)*(64000000UL/4000.0)));
+}
+
+
+
+
+void test_dl_read(void)
+{
+    app_err_t err;
+    char buf[17];
+
+    Lcd_Clear();
+    Lcd_Set_Cursor(0, 0);
+    Lcd_Write_String("3. READ DATA TEST");
+    _delay((unsigned long)((1500)*(64000000UL/4000.0)));
+
+
+    uint8_t count = 0;
+    dl_cfg_t cfg;
+    err = dl_get_config(&cfg);
+    if (err != APP_OK) {
+        Lcd_Clear();
+        Lcd_Write_String("Count ERR!");
+        while(1);
+    }
+    count = cfg.data_count;
+
+    Lcd_Clear();
+    Lcd_Set_Cursor(0, 0);
+    sprintf(buf, "Records: %d", count);
+    Lcd_Write_String(buf);
+    Lcd_Set_Cursor(1, 0);
+    Lcd_Write_String("Reading...");
+    _delay((unsigned long)((1500)*(64000000UL/4000.0)));
+
+
+    for (uint8_t i = 0; i < count; i++) {
+        sensor_data_t data;
+
+        err = dl_read(i, &data);
+        if (err != APP_OK) {
+            Lcd_Clear();
+            sprintf(buf, "Read %d ERR:%d", i, err);
+            Lcd_Write_String(buf);
+            _delay((unsigned long)((2000)*(64000000UL/4000.0)));
+            continue;
+        }
+
+
+        Lcd_Clear();
+        Lcd_Set_Cursor(0, 0);
+        sprintf(buf, "[%d] T: %.2fC", i, data.t_c_x100 / 100.0);
+        Lcd_Write_String(buf);
+
+        Lcd_Set_Cursor(1, 0);
+        sprintf(buf, "RH: %.1f %%", data.rh_x100 / 100.0);
+        Lcd_Write_String(buf);
+        _delay((unsigned long)((2000)*(64000000UL/4000.0)));
+
+
+        Lcd_Clear();
+        Lcd_Set_Cursor(0, 0);
+        sprintf(buf, "[%d] Pressure:", i);
+        Lcd_Write_String(buf);
+
+        Lcd_Set_Cursor(1, 0);
+        sprintf(buf, "%.1f hPa", data.p_pa / 100.0);
+        Lcd_Write_String(buf);
+        _delay((unsigned long)((2000)*(64000000UL/4000.0)));
+    }
+
+    Lcd_Clear();
+    Lcd_Set_Cursor(0, 0);
+    Lcd_Write_String("READ COMPLETE!");
+    Lcd_Set_Cursor(1, 0);
+    sprintf(buf, "%d records OK", count);
+    Lcd_Write_String(buf);
+    _delay((unsigned long)((2000)*(64000000UL/4000.0)));
+}
+
+
+
+
+void test_dl_validation(void)
+{
+    app_err_t err;
+    char buf[17];
+
+    Lcd_Clear();
+    Lcd_Set_Cursor(0, 0);
+    Lcd_Write_String("4. VALIDATION");
+    _delay((unsigned long)((1500)*(64000000UL/4000.0)));
+
+
+    Lcd_Clear();
+    Lcd_Set_Cursor(0, 0);
+    Lcd_Write_String("4.1 Stop logger");
+    _delay((unsigned long)((1000)*(64000000UL/4000.0)));
+
+    err = dl_stop();
+    if (err != APP_OK) {
+        Lcd_Set_Cursor(1, 0);
+        sprintf(buf, "ERR: %d", err);
+        Lcd_Write_String(buf);
+        while(1);
+    }
+
+    Lcd_Set_Cursor(1, 0);
+    Lcd_Write_String("Stopped OK");
+    _delay((unsigned long)((1000)*(64000000UL/4000.0)));
+
+
+    Lcd_Clear();
+    Lcd_Set_Cursor(0, 0);
+    Lcd_Write_String("4.2 Try log");
+    Lcd_Set_Cursor(1, 0);
+    Lcd_Write_String("(must fail)");
+    _delay((unsigned long)((1500)*(64000000UL/4000.0)));
+
+    sensor_data_t dummy = {2500, 5000, 100000};
+    err = dl_push_record(&dummy);
+
+    if (err == APP_ENOTRUNNING) {
+        Lcd_Clear();
+        Lcd_Set_Cursor(0, 0);
+        Lcd_Write_String("Error detected:");
+        Lcd_Set_Cursor(1, 0);
+        Lcd_Write_String("ENOTRUNNING");
+        _delay((unsigned long)((2000)*(64000000UL/4000.0)));
+
+        Lcd_Clear();
+        Lcd_Set_Cursor(0, 0);
+        Lcd_Write_String("Validation OK!");
+        _delay((unsigned long)((1500)*(64000000UL/4000.0)));
+    } else {
+        Lcd_Clear();
+        Lcd_Write_String("FAIL: logged!");
+        while(1);
+    }
+
+
+    Lcd_Clear();
+    Lcd_Set_Cursor(0, 0);
+    Lcd_Write_String("4.3 Final state");
+    _delay((unsigned long)((1000)*(64000000UL/4000.0)));
+
+    dl_cfg_t cfg;
+    err = dl_get_config(&cfg);
+    if (err != APP_OK) {
+        Lcd_Set_Cursor(1, 0);
+        sprintf(buf, "ERR: %d", err);
+        Lcd_Write_String(buf);
+        while(1);
+    }
+
+    Lcd_Clear();
+    Lcd_Set_Cursor(0, 0);
+    sprintf(buf, "R:%d C:%d P:%umin", cfg.running, cfg.data_count, cfg.sample_period_min);
+    Lcd_Write_String(buf);
+    _delay((unsigned long)((2000)*(64000000UL/4000.0)));
+}
+
+
+
+
+void app_main_loop(void) {
+    Lcd_Clear();
+    Lcd_Set_Cursor(0, 0);
+    Lcd_Write_String("DATALOGGER TESTS");
+    Lcd_Set_Cursor(1, 0);
+    Lcd_Write_String("Starting...");
+    _delay((unsigned long)((2000)*(64000000UL/4000.0)));
+
+
+    test_dl_setup();
+
+
+    test_dl_log();
+
+
+    test_dl_read();
+
+
+    test_dl_validation();
+
+
+    Lcd_Clear();
+    Lcd_Set_Cursor(0, 0);
+    Lcd_Write_String("ALL TESTS PASS!");
+    Lcd_Set_Cursor(1, 0);
+    Lcd_Write_String("*** SUCCESS ***");
+
+
+    while (1) {
+        _delay((unsigned long)((1000)*(64000000UL/4000.0)));
     }
 }
