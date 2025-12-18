@@ -20,5 +20,6 @@ void __interrupt() isr_handler(void);
 extern volatile uint8_t g_timer0_flag;   // Flag Timer0 (scheduler périodique)
 extern volatile uint8_t g_uart1_rx_flag; // Flag UART1 RX
 extern volatile uint8_t g_uart2_rx_flag; // Flag UART2 RX (Bluetooth)
+extern volatile char g_uart2_rx_char; // Octet reçu
 
 #endif // ISR_H

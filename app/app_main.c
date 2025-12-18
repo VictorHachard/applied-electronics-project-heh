@@ -60,6 +60,8 @@ static uint16_t g_sensor_period_ticks = 0;
 
 // Flags externes de l'ISR
 extern volatile uint8_t g_timer0_flag;
+extern volatile uint8_t g_uart2_rx_flag;
+extern volatile char g_uart2_rx_char;
 
 // ===============================================
 // FONCTION : app_main_init
@@ -223,6 +225,12 @@ void app_main_loop(void) {
     
     // Boucle infinie
     while (1) {
+        // Tache continue : Bluetooth
+        if (g_uart2_rx_flag) {
+            g_uart2_rx_flag = 0;
+            bluetooth_handle_rx(g_uart2_rx_char);
+        }
+
         // TÂCHE : Vérifier le tick du scheduler
         if (g_timer0_flag) {
             g_timer0_flag = 0;  // Effacer le flag

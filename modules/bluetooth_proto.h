@@ -6,13 +6,13 @@
 #ifndef BLUETOOTH_PROTO_H
 #define BLUETOOTH_PROTO_H
 
-#include <stdint.h>
 #include "../core/types.h"
 
-// Initialisation du module Bluetooth
+// Initialise le protocole (reset index)
 app_err_t bluetooth_init(void);
 
-// Envoi des données capteurs via Bluetooth
-app_err_t bluetooth_send_sensor_data(const sensor_data_t* data);
+// Traite une commande reçue via Bluetooth
+// Commandes: 'C'=Config, 'N'=Count, 'R'=Reset, 'A'=Avancer
+void bluetooth_handle_rx(char cmd);
 
 #endif // BLUETOOTH_PROTO_H

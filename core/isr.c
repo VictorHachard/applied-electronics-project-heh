@@ -15,6 +15,7 @@
 volatile uint8_t g_timer0_flag = 0;   // Flag Timer0 (scheduler périodique)
 volatile uint8_t g_uart1_rx_flag = 0; // Flag UART1 RX
 volatile uint8_t g_uart2_rx_flag = 0; // Flag UART2 RX (Bluetooth)
+volatile char g_uart2_rx_char = 0;
 
 // ===============================================
 // FONCTION : isr_init
@@ -47,6 +48,10 @@ void isr_init(void) {
     PIE3bits.TMR0IE = 1;   // Enable IT Timer0
 
     T0CON0bits.T0EN = 1;   // Start Timer0
+
+    // UART2 RX : Bluetooth
+    PIR7bits.U2RXIF = 0;
+    PIE7bits.U2RXIE = 1;
 
     // Activer les interruptions globales
     INTCON0bits.GIE = 1;
@@ -88,8 +93,8 @@ void __interrupt() isr_handler(void) {
     // ------------------------
     // INTERRUPTION UART2 RX (à compléter)
     // ------------------------
-    // if (PIR7bits.U2RXIF) {
-    //     PIR7bits.U2RXIF = 0;
-    //     g_uart2_rx_flag = 1;
-    // }
+    if (PIR7bits.U2RXIF && PIE7bits.U2RXIE) {
+        g_uart2_rx_char = U2RXB;
+        g_uart2_rx_flag = 1;
+    }
 }
