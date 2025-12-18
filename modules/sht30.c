@@ -4,18 +4,15 @@
 // ===============================================
 
 #include "sht30.h"
+#include "../drivers/i2c_bus.h"  // Utiliser le module I2C centralisé
+#include "../core/board.h"
 #include <xc.h>
 #include <stdint.h>
-
-#ifndef _XTAL_FREQ
-#define _XTAL_FREQ 64000000UL
-#endif
 
 #define SHT30_ADDR_WRITE  0x88
 #define SHT30_ADDR_READ   0x89
 
-// Single shot measurement, High repeatability, Clock stretching disabled
-// Datasheet command: 0x2400
+// Single shot measurement, High repeatability
 #define SHT30_CMD_MSB     0x24
 #define SHT30_CMD_LSB     0x00
 
@@ -23,10 +20,9 @@
 #define SHT30_STATUS_MSB  0xF3
 #define SHT30_STATUS_LSB  0x2D
 
-// Typical max measurement time for high repeatability ~15 ms
 #define SHT30_MEAS_DELAY_MS  15
 
-// Optional: local CRC-8 (poly 0x31, init 0xFF)
+// CRC-8 (poly 0x31, init 0xFF)
 static uint8_t sht30_crc8(const uint8_t *data, uint8_t len)
 {
     uint8_t crc = 0xFF;
@@ -41,61 +37,20 @@ static uint8_t sht30_crc8(const uint8_t *data, uint8_t len)
 
 app_err_t sht30_init(void)
 {
-    // Vérifier la présence du SHT30 en lisant le registre de status
+    app_err_t err;
+    uint8_t status_cmd[2] = {SHT30_STATUS_MSB, SHT30_STATUS_LSB};
     uint8_t status_buf[3];
     
-    I2C2CON0bits.RSEN = 0;
-    I2C2CNT           = 2;
-    I2C2ADB1          = SHT30_ADDR_WRITE;
-    I2C2TXB           = SHT30_STATUS_MSB;
-
-    I2C2CON0bits.S = 1;
-    while (!I2C2PIRbits.SCIF);
-    I2C2PIRbits.SCIF = 0;
-
-    while (!I2C2STAT1bits.TXBE);
-    I2C2TXB = SHT30_STATUS_LSB;
-
-    while (!I2C2PIRbits.PCIF);
-    I2C2PIRbits.PCIF = 0;
-
-    __delay_ms(1);
-
-    // Essayer de lire le status (3 bytes)
-    I2C2CNT  = 3;
-    I2C2ADB1 = SHT30_ADDR_READ;
-
-    I2C2CON0bits.S = 1;
-    while (!I2C2PIRbits.SCIF);
-    I2C2PIRbits.SCIF = 0;
-
-    I2C2CON1bits.ACKCNT = 0;
-
-    // Si le module n'est pas présent, cette lecture échouera
-    uint16_t timeout = 1000;
-    while (!I2C2STAT1bits.RXBF && timeout--) {
-        if (timeout == 0) {
-            // Timeout - module non présent
-            I2C2CON0bits.P = 1;  // Envoyer STOP
-            while (!I2C2PIRbits.PCIF);
-            I2C2PIRbits.PCIF = 0;
-            return APP_EDEV;
-        }
+    // Vérifier la présence du SHT30 en lisant le registre de status
+    // Utiliser write_read pour envoyer la commande et lire la réponse
+    err = i2c2_write_read(SHT30_ADDR_WRITE, status_cmd, 2, 
+                          SHT30_ADDR_READ, status_buf, 3);
+    if (err != APP_OK) {
+        // Module non présent ou erreur I2C
+        return APP_EDEV;
     }
     
-    status_buf[0] = I2C2RXB;
-
-    while (!I2C2STAT1bits.RXBF);
-    status_buf[1] = I2C2RXB;
-
-    I2C2CON1bits.ACKCNT = 1;
-    while (!I2C2STAT1bits.RXBF);
-    status_buf[2] = I2C2RXB;
-
-    while (!I2C2PIRbits.PCIF);
-    I2C2PIRbits.PCIF = 0;
-
-    // Si on arrive ici, le module a répondu
+    // Si on arrive ici, le module a répondu correctement
     return APP_OK;
 }
 
@@ -105,102 +60,49 @@ app_err_t sht30_read(sht30_data_t *data)
         return APP_EPARAM;
     }
 
-    uint16_t raw_temperature = 0;
-    uint16_t raw_humidity    = 0;
+    app_err_t err;
+    uint8_t cmd[2] = {SHT30_CMD_MSB, SHT30_CMD_LSB};
+    uint8_t rbuf[6];  // T_MSB, T_LSB, T_CRC, RH_MSB, RH_LSB, RH_CRC
 
-    uint8_t b1, b2, b3;
-    uint8_t b4, b5, b6;
+    // 1) Envoyer la commande de mesure
+    err = i2c2_write(SHT30_ADDR_WRITE, cmd, 2);
+    if (err != APP_OK) {
+        return err;
+    }
 
-    // ------------------------------------------------------------
-    // 1) WRITE measurement command (0x2400)
-    // ------------------------------------------------------------
-    I2C2CON0bits.RSEN = 0;       // no repeated start for this phase
-    I2C2CNT           = 2;       // 2 bytes to transmit (cmd MSB + cmd LSB)
-    I2C2ADB1          = SHT30_ADDR_WRITE;
-
-    I2C2TXB           = SHT30_CMD_MSB;
-
-    I2C2CON0bits.S = 1;          // START
-    while (!I2C2PIRbits.SCIF);
-    I2C2PIRbits.SCIF = 0;
-
-    while (!I2C2STAT1bits.TXBE);
-    I2C2TXB = SHT30_CMD_LSB;
-
-    // Wait end of transaction (STOP / count done depends on your I2C config)
-    while (!I2C2PIRbits.PCIF);
-    I2C2PIRbits.PCIF = 0;
-
-    // Wait measurement time
+    // 2) Attendre le temps de mesure
     __delay_ms(SHT30_MEAS_DELAY_MS);
 
-    // ------------------------------------------------------------
-    // 2) READ 6 bytes: T(MSB,LSB,CRC) + RH(MSB,LSB,CRC)
-    // ------------------------------------------------------------
-    I2C2CNT  = 6;
-    I2C2ADB1 = SHT30_ADDR_READ;
-
-    I2C2CON0bits.S = 1;          // START
-    while (!I2C2PIRbits.SCIF);
-    I2C2PIRbits.SCIF = 0;
-
-    // Read bytes 1..5 with ACK, last byte with NACK
-    I2C2CON1bits.ACKCNT = 0;     // ACK
-
-    while (!I2C2STAT1bits.RXBF);
-    b1 = I2C2RXB;
-
-    while (!I2C2STAT1bits.RXBF);
-    b2 = I2C2RXB;
-
-    while (!I2C2STAT1bits.RXBF);
-    b3 = I2C2RXB;
-
-    while (!I2C2STAT1bits.RXBF);
-    b4 = I2C2RXB;
-
-    while (!I2C2STAT1bits.RXBF);
-    b5 = I2C2RXB;
-
-    I2C2CON1bits.ACKCNT = 1;     // NACK for last byte
-    while (!I2C2STAT1bits.RXBF);
-    b6 = I2C2RXB;
-
-    while (!I2C2PIRbits.PCIF);
-    I2C2PIRbits.PCIF = 0;
-
-    // ------------------------------------------------------------
-    // 3) CRC check (recommended). If you prefer to ignore CRC,
-    //    comment this block.
-    // ------------------------------------------------------------
-    {
-        uint8_t t2[2]  = { b1, b2 };
-        uint8_t rh2[2] = { b4, b5 };
-
-        if (sht30_crc8(t2, 2) != b3) {
-            return APP_EIO;
-        }
-        if (sht30_crc8(rh2, 2) != b6) {
-            return APP_EIO;
-        }
+    // 3) Lire les 6 bytes de résultat
+    // Utiliser write_read avec wn=0 pour faire une lecture pure
+    err = i2c2_write_read(SHT30_ADDR_WRITE, NULL, 0,
+                          SHT30_ADDR_READ, rbuf, 6);
+    if (err != APP_OK) {
+        return err;
     }
 
-    // ------------------------------------------------------------
-    // 4) Convert raw values
-    // Temperature (°C): -45 + 175 * raw / 65535
-    // Stored as °C * 100 (int16)
-    // Humidity (%RH): 100 * raw / 65535
-    // Stored as % * 100 (uint16)
-    // ------------------------------------------------------------
-    raw_temperature = ((uint16_t)b1 << 8) | b2;
-    raw_humidity    = ((uint16_t)b4 << 8) | b5;
+    // 4) Vérifier les CRC
+    uint8_t t_data[2]  = {rbuf[0], rbuf[1]};
+    uint8_t rh_data[2] = {rbuf[3], rbuf[4]};
 
-    {
-        int32_t temp_c_x100 =
-            -4500L + ((17500L * (int32_t)raw_temperature) / 65535L);
-        data->temp_c_x100 = (int16_t)temp_c_x100;
+    if (sht30_crc8(t_data, 2) != rbuf[2]) {
+        return APP_EIO;  // Erreur CRC température
+    }
+    if (sht30_crc8(rh_data, 2) != rbuf[5]) {
+        return APP_EIO;  // Erreur CRC humidité
     }
 
+    // 5) Convertir les valeurs brutes
+    uint16_t raw_temperature = ((uint16_t)rbuf[0] << 8) | rbuf[1];
+    uint16_t raw_humidity    = ((uint16_t)rbuf[3] << 8) | rbuf[4];
+
+    // Température (°C): -45 + 175 * raw / 65535
+    // Stockée en °C * 100
+    int32_t temp_c_x100 = -4500L + ((17500L * (int32_t)raw_temperature) / 65535L);
+    data->temp_c_x100 = (int16_t)temp_c_x100;
+
+    // Humidité (%RH): 100 * raw / 65535
+    // Stockée en % * 100
     data->rh_x100 = (uint16_t)((10000UL * (uint32_t)raw_humidity) / 65535UL);
 
     return APP_OK;

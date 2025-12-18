@@ -5,7 +5,7 @@
 
 #include "bmp280.h"
 #include "../drivers/i2c_bus.h"
-#include "../drivers/lcd.h"
+#include "../core/board.h"
 #include <xc.h>
 #include <stdio.h>
 
