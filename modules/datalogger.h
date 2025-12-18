@@ -25,6 +25,8 @@ app_err_t dl_set_sample_period_min(uint8_t period_s);
 
 app_err_t dl_set_running(rtc_time_t *start_time);
 
+app_err_t dl_stop(void);
+
 app_err_t dl_get_config(dl_cfg_t *cfg);
 
 /* STRUCTURE DE DONNÉES : log_rec_t
