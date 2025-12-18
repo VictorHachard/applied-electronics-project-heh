@@ -31,7 +31,9 @@ typedef enum {
 typedef enum {
     SUBMENU_DATETIME = 0,      // Date & Heure
     SUBMENU_BMP280,            // Pression & Température
-    SUBMENU_SHT30              // Humidité & Température
+    SUBMENU_SHT30,             // Humidité & Température
+    SUBMENU_DATALOGGER,        // Configuration Datalogger
+    SUBMENU_CLEAR_EEPROM       // Clear EEPROM
 } submenu_type_t;
 
 // Champs éditables pour Date/Heure
@@ -44,6 +46,13 @@ typedef enum {
     FIELD_SECOND,
     FIELD_COUNT
 } datetime_field_t;
+
+// Champs éditables pour Datalogger
+typedef enum {
+    FIELD_DL_DELTA_T = 0,      // Delta t entre mesures
+    FIELD_DL_START_STOP,       // Start/Stop
+    FIELD_DL_COUNT
+} datalogger_field_t;
 
 // ===============================================
 // STRUCTURES
@@ -59,6 +68,7 @@ typedef struct {
     uint16_t scroll_counter;    // Compteur pour temporisation du scroll
     uint8_t editing;            // Mode édition activé
     datetime_field_t edit_field;// Champ en cours d'édition
+    datalogger_field_t dl_edit_field; // Champ datalogger en cours
     uint8_t edit_cursor;        // Position du curseur en édition
 } menu_context_t;
 

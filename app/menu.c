@@ -9,6 +9,8 @@
 #include "../modules/rtc_ds1307.h"
 #include "../modules/bmp280.h"
 #include "../modules/sht30.h"
+#include "../modules/datalogger.h"
+#include "../modules/eeprom_m93c66.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -22,9 +24,11 @@
 static const char* main_menu_items[] = {
     "1.Date & Heure",
     "2.Pression & Temp",
-    "3.Humidite & Temp"
+    "3.Humidite & Temp",
+    "4.Datalogger Cfg",
+    "5.Clear EEPROM"
 };
-#define MAIN_MENU_COUNT 3
+#define MAIN_MENU_COUNT 5
 
 // ===============================================
 // VARIABLES PRIVÉES
@@ -34,6 +38,8 @@ static rtc_time_t current_time;
 static rtc_time_t edit_time;
 static bmp280_data_t bmp_data;
 static sht30_data_t sht_data;
+static dl_cfg_t dl_config;
+static uint8_t edit_delta_t = 1;  // Delta t en minutes (1-255)
 static uint16_t blink_counter = 0;
 static uint8_t blink_state = 0;
 
@@ -273,6 +279,74 @@ static void display_sht30_data(void) {
     Lcd_Write_String(line2);
 }
 
+// Affiche le sous-menu du datalogger
+static void display_datalogger_submenu(void) {
+    char line1[LCD_WIDTH + 1];
+    char line2[LCD_WIDTH + 1];
+    
+    // Lire la config actuelle
+    dl_get_config(&dl_config);
+    
+    if (ctx.state == MENU_STATE_EDIT_VALUE) {
+        // Mode édition
+        if (ctx.dl_edit_field == FIELD_DL_DELTA_T) {
+            snprintf(line1, sizeof(line1), "Delta t:%d min", edit_delta_t);
+            snprintf(line2, sizeof(line2), "UP/DOWN modifier");
+            
+            // Clignotement
+            if (blink_state) {
+                Lcd_Set_Cursor(0, 8);
+                Lcd_Write_String("___");
+            }
+        } else {
+            // Champ Start/Stop
+            const char* status = dl_config.running ? "RUNNING" : "STOPPED";
+            snprintf(line1, sizeof(line1), "Status:%s", status);
+            snprintf(line2, sizeof(line2), "ENTER:toggle");
+        }
+    } else {
+        // Mode affichage normal
+        const char* options[] = {"Delta t", "Start/Stop"};
+        display_menu_line(0, options[ctx.submenu_index], 1, 0);
+        
+        if (ctx.submenu_index == 0) {
+            snprintf(line2, sizeof(line2), " %d min", dl_config.sample_period_min);
+        } else {
+            const char* status = dl_config.running ? "RUNNING" : "STOPPED";
+            snprintf(line2, sizeof(line2), " %s", status);
+        }
+        
+        Lcd_Set_Cursor(1, 0);
+        Lcd_Write_String(line2);
+        return;
+    }
+    
+    Lcd_Set_Cursor(0, 0);
+    Lcd_Write_String(line1);
+    Lcd_Set_Cursor(1, 0);
+    Lcd_Write_String(line2);
+}
+
+// Affiche la confirmation de clear EEPROM
+static void display_clear_eeprom(void) {
+    char line1[LCD_WIDTH + 1];
+    char line2[LCD_WIDTH + 1];
+    
+    if (ctx.state == MENU_STATE_EDIT_VALUE) {
+        // En cours d'effacement
+        snprintf(line1, sizeof(line1), "Clearing...");
+        snprintf(line2, sizeof(line2), "Please wait");
+    } else {
+        snprintf(line1, sizeof(line1), "Clear EEPROM?");
+        snprintf(line2, sizeof(line2), "ENTER:Yes BACK:No");
+    }
+    
+    Lcd_Set_Cursor(0, 0);
+    Lcd_Write_String(line1);
+    Lcd_Set_Cursor(1, 0);
+    Lcd_Write_String(line2);
+}
+
 // ===============================================
 // GESTION DES ÉTATS
 // ===============================================
@@ -303,7 +377,8 @@ static void handle_main_menu(void) {
         ctx.scroll_offset = 0;
         ctx.scroll_counter = 0;
         
-        if (ctx.current_submenu == SUBMENU_DATETIME) {
+        if (ctx.current_submenu == SUBMENU_DATETIME || 
+            ctx.current_submenu == SUBMENU_DATALOGGER) {
             ctx.state = MENU_STATE_SUBMENU;
         } else {
             ctx.state = MENU_STATE_DISPLAY;
@@ -420,6 +495,124 @@ static void handle_display_state(void) {
     }
 }
 
+// Gère le sous-menu Datalogger
+static void handle_datalogger_submenu(void) {
+    // Navigation entre Delta t et Start/Stop
+    if (button_pressed(BTN_DOWN)) {
+        ctx.submenu_index = (ctx.submenu_index + 1) % 2;
+    }
+    
+    if (button_pressed(BTN_UP)) {
+        ctx.submenu_index = (ctx.submenu_index == 0) ? 1 : 0;
+    }
+    
+    // Entrer en mode édition
+    if (button_pressed(BTN_ENTER)) {
+        dl_get_config(&dl_config);
+        
+        if (ctx.submenu_index == 0) {
+            // Édition Delta t
+            edit_delta_t = dl_config.sample_period_min;
+            if (edit_delta_t == 0) edit_delta_t = 1; // Défaut
+            ctx.dl_edit_field = FIELD_DL_DELTA_T;
+        } else {
+            // Toggle Start/Stop
+            ctx.dl_edit_field = FIELD_DL_START_STOP;
+        }
+        
+        ctx.state = MENU_STATE_EDIT_VALUE;
+        blink_counter = 0;
+        blink_state = 1;
+    }
+    
+    // Retour au menu principal
+    if (button_pressed(BTN_BACK)) {
+        ctx.state = MENU_STATE_MAIN;
+    }
+}
+
+// Gère l'édition du datalogger
+static void handle_datalogger_edit(void) {
+    if (ctx.dl_edit_field == FIELD_DL_DELTA_T) {
+        // Édition Delta t
+        if (button_pressed(BTN_UP)) {
+            edit_delta_t++;
+            if (edit_delta_t > 255) edit_delta_t = 1;
+        }
+        
+        if (button_pressed(BTN_DOWN)) {
+            if (edit_delta_t <= 1) {
+                edit_delta_t = 255;
+            } else {
+                edit_delta_t--;
+            }
+        }
+        
+        // Sauvegarder
+        if (button_pressed(BTN_ENTER)) {
+            dl_set_sample_period_min(edit_delta_t);
+            ctx.state = MENU_STATE_SUBMENU;
+        }
+        
+        // Gestion du clignotement
+        blink_counter++;
+        if (blink_counter > BLINK_DELAY) {
+            blink_counter = 0;
+            blink_state = !blink_state;
+        }
+    } else {
+        // Toggle Start/Stop
+        if (button_pressed(BTN_ENTER)) {
+            dl_get_config(&dl_config);
+            
+            if (dl_config.running) {
+                // Arrêter le datalogger
+                dl_stop();
+            } else {
+                // Démarrer le datalogger
+                rtc_get_time(&current_time);
+                dl_set_running(&current_time);
+            }
+            
+            ctx.state = MENU_STATE_SUBMENU;
+        }
+    }
+    
+    // Annuler
+    if (button_pressed(BTN_BACK)) {
+        ctx.state = MENU_STATE_SUBMENU;
+    }
+}
+
+// Gère le menu Clear EEPROM
+static void handle_clear_eeprom(void) {
+    if (ctx.state == MENU_STATE_DISPLAY) {
+        // Confirmation
+        if (button_pressed(BTN_ENTER)) {
+            // Lancer l'effacement
+            ctx.state = MENU_STATE_EDIT_VALUE;
+            
+            // Effacer l'EEPROM (écrire des 0xFF sur toute la mémoire)
+            // Note: Ceci est une implémentation simple, peut être lent
+            for (uint16_t addr = 0; addr < 4096; addr++) {
+                eeprom_write_record(addr, 0xFF);
+            }
+            
+            // Réinitialiser la config du datalogger
+            dl_reset_config();
+            
+            // Retour au menu principal après un délai
+            __delay_ms(1000);
+            ctx.state = MENU_STATE_MAIN;
+        }
+        
+        // Annuler
+        if (button_pressed(BTN_BACK)) {
+            ctx.state = MENU_STATE_MAIN;
+        }
+    }
+}
+
 // ===============================================
 // API PUBLIQUE
 // ===============================================
@@ -450,15 +643,25 @@ void menu_update(void) {
         case MENU_STATE_SUBMENU:
             if (ctx.current_submenu == SUBMENU_DATETIME) {
                 handle_datetime_submenu();
+            } else if (ctx.current_submenu == SUBMENU_DATALOGGER) {
+                handle_datalogger_submenu();
             }
             break;
             
         case MENU_STATE_DISPLAY:
-            handle_display_state();
+            if (ctx.current_submenu == SUBMENU_CLEAR_EEPROM) {
+                handle_clear_eeprom();
+            } else {
+                handle_display_state();
+            }
             break;
             
         case MENU_STATE_EDIT_VALUE:
-            handle_datetime_edit();
+            if (ctx.current_submenu == SUBMENU_DATETIME) {
+                handle_datetime_edit();
+            } else if (ctx.current_submenu == SUBMENU_DATALOGGER) {
+                handle_datalogger_edit();
+            }
             break;
             
         default:
@@ -478,6 +681,8 @@ void menu_display(void) {
         case MENU_STATE_SUBMENU:
             if (ctx.current_submenu == SUBMENU_DATETIME) {
                 display_datetime_submenu();
+            } else if (ctx.current_submenu == SUBMENU_DATALOGGER) {
+                display_datalogger_submenu();
             }
             break;
             
@@ -486,11 +691,17 @@ void menu_display(void) {
                 display_bmp280_data();
             } else if (ctx.current_submenu == SUBMENU_SHT30) {
                 display_sht30_data();
+            } else if (ctx.current_submenu == SUBMENU_CLEAR_EEPROM) {
+                display_clear_eeprom();
             }
             break;
             
         case MENU_STATE_EDIT_VALUE:
-            display_datetime_submenu();
+            if (ctx.current_submenu == SUBMENU_DATETIME) {
+                display_datetime_submenu();
+            } else if (ctx.current_submenu == SUBMENU_DATALOGGER) {
+                display_datalogger_submenu();
+            }
             break;
             
         default:
