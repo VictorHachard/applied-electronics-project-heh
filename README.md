@@ -143,11 +143,10 @@ app_main_loop()
   │
   └──► while(1) {
          │
-         ├──► Vérifier g_timer0_flag    // Tick toutes les 10ms
+         ├──► Vérifier g_timer0_flag    // Tick toutes les 1s
          │      └── g_tick_counter++
          │
-         ├──► Mettre à jour la config   // Toutes les 100ms
-         │      └── g_sensor_period_ticks = dl_get_sample_period_min() × 100
+         ├──► Mettre à jour la config   // Toutes les 10s
          │
          ├──► Acquisition capteurs      // Selon période configurée
          │      ├── bmp280_read()
@@ -166,9 +165,8 @@ Dans le fichier `core/types.h` il y a des définitions de types partagés entre 
 ```c
 // Heure et date (RTC)
 typedef struct {
-  uint8_t hour, min, sec;   // 0-23, 0-59, 0-59
+  uint8_t hour, min;        // 0-23, 0-59
   uint8_t day, month;       // 1-31, 1-12
-  uint16_t year;            // 2000-2099
 } rtc_time_t;
 
 // Données BMP280
@@ -193,11 +191,17 @@ typedef struct {
 // Codes d'erreur
 typedef enum {
   APP_OK = 0,               // Succès
-  APP_EBUS,                 // Erreur bus I2C/SPI
-  APP_EDEV,                 // Périphérique non trouvé
-  APP_EPARAM,               // Paramètre invalide
-  APP_ENCONF,               // Configuration vide
-  APP_EFULL                 // Mémoire pleine
+  APP_ERR = 1,              // Erreur générique
+  APP_EPARAM = 2,           // Paramètre invalide
+  APP_EBUS = 3,             // Erreur bus (I2C, SPI, UART)
+  APP_EDEV = 4,             // Erreur device (capteur ne répond pas)
+  APP_EIO = 5,              // Erreur I/O (CRC, timeout)
+  APP_EFULL = 6,            // Mémoire pleine (datalogger)
+  APP_ENOENT = 7,           // Élément non trouvé
+  APP_ENCONF = 8,           // Configuration invalide
+  APP_ERR_PARAM = 9,        // Alias pour compatibilité
+  APP_ENOTCONFIG = 10,      // Datalogger non configuré
+  APP_ENOTRUNNING = 11      // Datalogger non démarré
 } app_err_t;
 ```
 

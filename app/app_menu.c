@@ -35,7 +35,4 @@ void app_loop(void) {
         // Rafraîchir l'affichage uniquement si un changement a eu lieu
         menu_display();
     }
-    
-    // Note: buttons_update() est maintenant appelé automatiquement toutes les 10ms
-    // par l'interruption Timer1 dans isr.c, plus besoin de délai ici
 }
