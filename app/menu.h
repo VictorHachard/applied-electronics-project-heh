@@ -65,7 +65,6 @@ typedef struct {
     uint8_t submenu_index;      // Index dans le sous-menu actuel
     submenu_type_t current_submenu;
     uint8_t scroll_offset;      // Offset pour le scroll horizontal
-    uint16_t scroll_counter;    // Compteur pour temporisation du scroll
     uint8_t editing;            // Mode édition activé
     datetime_field_t edit_field;// Champ en cours d'édition
     datalogger_field_t dl_edit_field; // Champ datalogger en cours

@@ -36675,13 +36675,16 @@ extern void buttons_ioc_callback(void);
 extern void buttons_update(void);
 
 
+extern volatile uint16_t g_menu_tick_10ms;
+
+
 
 
 volatile uint8_t g_timer0_flag = 0;
 volatile uint8_t g_uart1_rx_flag = 0;
 volatile uint8_t g_uart2_rx_flag = 0;
 volatile char g_uart2_rx_char = 0;
-# 33 "../core/isr.c"
+# 36 "../core/isr.c"
 void isr_init(void) {
 
     INTCON0bits.GIE = 0;
@@ -36729,6 +36732,12 @@ void isr_init(void) {
 
 
     INTCON0bits.GIE = 1;
+
+
+
+
+
+
 }
 
 
@@ -36761,12 +36770,12 @@ void __attribute__((picinterrupt(("")))) isr_handler(void) {
         TMR1L = 0xE0;
 
 
+        g_menu_tick_10ms++;
+
+
         buttons_update();
     }
-
-
-
-
+# 138 "../core/isr.c"
     if (PIR7bits.U2RXIF && PIE7bits.U2RXIE) {
         g_uart2_rx_char = U2RXB;
         g_uart2_rx_flag = 1;

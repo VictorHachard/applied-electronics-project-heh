@@ -11,8 +11,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [n E59 . FIELD_DL_DELTA_T FIELD_DL_START_STOP FIELD_DL_COUNT  ]
 "62 ../app/menu.h
 [; ;../app/menu.h: 62: typedef struct {
-[s S1 `E36 1 `uc 1 `uc 1 `E43 1 `uc 1 `us 1 `uc 1 `E50 1 `E59 1 `uc 1 ]
-[n S1 . state main_index submenu_index current_submenu scroll_offset scroll_counter editing edit_field dl_edit_field edit_cursor ]
+[s S1 `E36 1 `uc 1 `uc 1 `E43 1 `uc 1 `uc 1 `E50 1 `E59 1 `uc 1 ]
+[n S1 . state main_index submenu_index current_submenu scroll_offset editing edit_field dl_edit_field edit_cursor ]
 "16 ../app/../modules/../core/types.h
 [; ;../app/../modules/../core/types.h: 16: typedef struct {
 [s S3251 `uc 1 `uc 1 `uc 1 `uc 1 ]
@@ -44,60 +44,50 @@ Version 4.0 HI-TECH Software Intermediate Code
 "15 ../app/../drivers/lcd.h
 [; ;../app/../drivers/lcd.h: 15: void Lcd_Write_String(const char *str);
 [v _Lcd_Write_String `(v ~T0 @X0 0 ef1`*Cuc ]
-"185 ../app/menu.c
-[; ;../app/menu.c: 185:     rtc_get_time(&current_time);
-[c E22870 0 1 2 3 4 5 6 7 8 9 10 11 .. ]
-[n E22870 . APP_OK APP_ERR APP_EPARAM APP_EBUS APP_EDEV APP_EIO APP_EFULL APP_ENOENT APP_ENCONF APP_ERR_PARAM APP_ENOTCONFIG APP_ENOTRUNNING  ]
+"189 ../app/menu.c
+[; ;../app/menu.c: 189:     rtc_get_time(&current_time);
+[c E22869 0 1 2 3 4 5 6 7 8 9 10 11 .. ]
+[n E22869 . APP_OK APP_ERR APP_EPARAM APP_EBUS APP_EDEV APP_EIO APP_EFULL APP_ENOENT APP_ENCONF APP_ERR_PARAM APP_ENOTCONFIG APP_ENOTRUNNING  ]
 "35 ../app/../modules/rtc_ds1307.h
 [; ;../app/../modules/rtc_ds1307.h: 35: app_err_t rtc_get_time(rtc_time_t* time);
-[v _rtc_get_time `(E22870 ~T0 @X0 0 ef1`*S3251 ]
+[v _rtc_get_time `(E22869 ~T0 @X0 0 ef1`*S3251 ]
 "123 C:\Program Files\Microchip\xc8\v3.10\pic\include\c99/stdio.h
 [; ;C:\Program Files\Microchip\xc8\v3.10\pic\include\c99/stdio.h: 123: int snprintf(char *restrict, size_t, const char *restrict, ...);
 [v _snprintf `(i ~T0 @X0 0 e2v`*uc`ui`*Cuc ]
-"68 ../app/../modules/../core/types.h
-[; ;../app/../modules/../core/types.h: 68: typedef struct {
-[s S3254 `s 1 `us 1 `l 1 ]
-[n S3254 . t_c_x100 rh_x100 p_pa ]
-"30 ../app/../modules/datalogger.h
-[; ;../app/../modules/datalogger.h: 30: app_err_t dl_get_config(dl_cfg_t *cfg);
-[v _dl_get_config `(E22870 ~T0 @X0 0 ef1`*S3255 ]
-"81
-[; ;../app/../modules/datalogger.h: 81: app_err_t dl_read(uint16_t index, sensor_data_t *rec);
-[v _dl_read `(E22870 ~T0 @X0 0 ef2`us`*S3254 ]
 "16 ../app/../modules/bmp280.h
 [; ;../app/../modules/bmp280.h: 16: app_err_t bmp280_read(bmp280_data_t* data);
-[v _bmp280_read `(E22870 ~T0 @X0 0 ef1`*S3252 ]
+[v _bmp280_read `(E22869 ~T0 @X0 0 ef1`*S3252 ]
 "16 ../app/../modules/sht30.h
 [; ;../app/../modules/sht30.h: 16: app_err_t sht30_read(sht30_data_t* data);
-[v _sht30_read `(E22870 ~T0 @X0 0 ef1`*S3253 ]
-"391 ../app/menu.c
-[; ;../app/menu.c: 391:     if (button_pressed(BTN_DOWN)) {
-[c E79 0 1 2 3 4 .. ]
-[n E79 . BTN_UP BTN_DOWN BTN_ENTER BTN_BACK BTN_COUNT  ]
+[v _sht30_read `(E22869 ~T0 @X0 0 ef1`*S3253 ]
+"30 ../app/../modules/datalogger.h
+[; ;../app/../modules/datalogger.h: 30: app_err_t dl_get_config(dl_cfg_t *cfg);
+[v _dl_get_config `(E22869 ~T0 @X0 0 ef1`*S3255 ]
+"362 ../app/menu.c
+[; ;../app/menu.c: 362:     if (button_pressed(BTN_DOWN)) {
+[c E78 0 1 2 3 4 .. ]
+[n E78 . BTN_UP BTN_DOWN BTN_ENTER BTN_BACK BTN_COUNT  ]
 "34 ../app/buttons.h
 [; ;../app/buttons.h: 34: uint8_t button_pressed(button_t btn);
-[v _button_pressed `(uc ~T0 @X0 0 ef1`E79 ]
+[v _button_pressed `(uc ~T0 @X0 0 ef1`E78 ]
 "32 ../app/../modules/rtc_ds1307.h
 [; ;../app/../modules/rtc_ds1307.h: 32: app_err_t rtc_set_time(const rtc_time_t* time);
-[v _rtc_set_time `(E22870 ~T0 @X0 0 ef1`*CS3251 ]
+[v _rtc_set_time `(E22869 ~T0 @X0 0 ef1`*CS3251 ]
 "24 ../app/../modules/datalogger.h
 [; ;../app/../modules/datalogger.h: 24: app_err_t dl_set_sample_period_min(uint8_t period_s);
-[v _dl_set_sample_period_min `(E22870 ~T0 @X0 0 ef1`uc ]
+[v _dl_set_sample_period_min `(E22869 ~T0 @X0 0 ef1`uc ]
 "28
 [; ;../app/../modules/datalogger.h: 28: app_err_t dl_stop(void);
-[v _dl_stop `(E22870 ~T0 @X0 0 ef ]
+[v _dl_stop `(E22869 ~T0 @X0 0 ef ]
 "26
 [; ;../app/../modules/datalogger.h: 26: app_err_t dl_set_running(rtc_time_t *start_time);
-[v _dl_set_running `(E22870 ~T0 @X0 0 ef1`*S3251 ]
+[v _dl_set_running `(E22869 ~T0 @X0 0 ef1`*S3251 ]
 "22
 [; ;../app/../modules/datalogger.h: 22: app_err_t dl_reset_config(void);
-[v _dl_reset_config `(E22870 ~T0 @X0 0 ef ]
+[v _dl_reset_config `(E22869 ~T0 @X0 0 ef ]
 "11 ../app/../drivers/lcd.h
 [; ;../app/../drivers/lcd.h: 11: void Lcd_Clear(void);
 [v _Lcd_Clear `(v ~T0 @X0 0 ef ]
-"121 C:\Program Files\Microchip\xc8\v3.10\pic\include\c99/stdio.h
-[; ;C:\Program Files\Microchip\xc8\v3.10\pic\include\c99/stdio.h: 121: int sprintf(char *restrict, const char *restrict, ...);
-[v _sprintf `(i ~T0 @X0 0 e1v`*uc`*Cuc ]
 "272 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 272: __asm("CIOCON equ 03700h");
 [; <" CIOCON equ 03700h ;# ">
@@ -3177,25 +3167,37 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> -> 1 `i `uc
 ]
 "43
-[; ;../app/menu.c: 43: static uint16_t blink_counter = 0;
-[v _blink_counter `us ~T0 @X0 1 s ]
-[i _blink_counter
--> -> 0 `i `us
-]
-"44
-[; ;../app/menu.c: 44: static uint8_t blink_state = 0;
+[; ;../app/menu.c: 43: static uint8_t blink_state = 0;
 [v _blink_state `uc ~T0 @X0 1 s ]
 [i _blink_state
 -> -> 0 `i `uc
 ]
-"45
-[; ;../app/menu.c: 45: static uint8_t force_refresh = 0;
+"44
+[; ;../app/menu.c: 44: static uint8_t force_refresh = 0;
 [v _force_refresh `uc ~T0 @X0 1 s ]
 [i _force_refresh
 -> -> 0 `i `uc
 ]
-"52
-[; ;../app/menu.c: 52: static uint8_t clamp(uint8_t value, uint8_t min, uint8_t max) {
+"47
+[; ;../app/menu.c: 47: volatile uint16_t g_menu_tick_10ms = 0;
+[v _g_menu_tick_10ms `Vus ~T0 @X0 1 e ]
+[i _g_menu_tick_10ms
+-> -> 0 `i `us
+]
+"48
+[; ;../app/menu.c: 48: static uint16_t last_blink_tick = 0;
+[v _last_blink_tick `us ~T0 @X0 1 s ]
+[i _last_blink_tick
+-> -> 0 `i `us
+]
+"49
+[; ;../app/menu.c: 49: static uint16_t last_scroll_tick = 0;
+[v _last_scroll_tick `us ~T0 @X0 1 s ]
+[i _last_scroll_tick
+-> -> 0 `i `us
+]
+"56
+[; ;../app/menu.c: 56: static uint8_t clamp(uint8_t value, uint8_t min, uint8_t max) {
 [v _clamp `(uc ~T0 @X0 1 sf3`uc`uc`uc ]
 {
 [e :U _clamp ]
@@ -3203,74 +3205,74 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _min `uc ~T0 @X0 1 r2 ]
 [v _max `uc ~T0 @X0 1 r3 ]
 [f ]
-"53
-[; ;../app/menu.c: 53:     if (value < min) return min;
+"57
+[; ;../app/menu.c: 57:     if (value < min) return min;
 [e $ ! < -> _value `i -> _min `i 3261  ]
 [e ) _min ]
 [e $UE 3260  ]
 [e :U 3261 ]
-"54
-[; ;../app/menu.c: 54:     if (value > max) return max;
+"58
+[; ;../app/menu.c: 58:     if (value > max) return max;
 [e $ ! > -> _value `i -> _max `i 3262  ]
 [e ) _max ]
 [e $UE 3260  ]
 [e :U 3262 ]
-"55
-[; ;../app/menu.c: 55:     return value;
+"59
+[; ;../app/menu.c: 59:     return value;
 [e ) _value ]
 [e $UE 3260  ]
-"56
-[; ;../app/menu.c: 56: }
+"60
+[; ;../app/menu.c: 60: }
 [e :UE 3260 ]
 }
-"59
-[; ;../app/menu.c: 59: static uint8_t get_field_max(datetime_field_t field) {
+"63
+[; ;../app/menu.c: 63: static uint8_t get_field_max(datetime_field_t field) {
 [v _get_field_max `(uc ~T0 @X0 1 sf1`E50 ]
 {
 [e :U _get_field_max ]
 [v _field `E50 ~T0 @X0 1 r1 ]
 [f ]
-"60
-[; ;../app/menu.c: 60:     switch (field) {
+"64
+[; ;../app/menu.c: 64:     switch (field) {
 [e $U 3265  ]
 {
-"61
-[; ;../app/menu.c: 61:         case FIELD_DAY: return 31;
+"65
+[; ;../app/menu.c: 65:         case FIELD_DAY: return 31;
 [e :U 3266 ]
 [e ) -> -> 31 `i `uc ]
 [e $UE 3263  ]
-"62
-[; ;../app/menu.c: 62:         case FIELD_MONTH: return 12;
+"66
+[; ;../app/menu.c: 66:         case FIELD_MONTH: return 12;
 [e :U 3267 ]
 [e ) -> -> 12 `i `uc ]
 [e $UE 3263  ]
-"63
-[; ;../app/menu.c: 63:         case FIELD_YEAR: return 99;
+"67
+[; ;../app/menu.c: 67:         case FIELD_YEAR: return 99;
 [e :U 3268 ]
 [e ) -> -> 99 `i `uc ]
 [e $UE 3263  ]
-"64
-[; ;../app/menu.c: 64:         case FIELD_HOUR: return 23;
+"68
+[; ;../app/menu.c: 68:         case FIELD_HOUR: return 23;
 [e :U 3269 ]
 [e ) -> -> 23 `i `uc ]
 [e $UE 3263  ]
-"65
-[; ;../app/menu.c: 65:         case FIELD_MINUTE: return 59;
+"69
+[; ;../app/menu.c: 69:         case FIELD_MINUTE: return 59;
 [e :U 3270 ]
 [e ) -> -> 59 `i `uc ]
 [e $UE 3263  ]
-"66
-[; ;../app/menu.c: 66:         case FIELD_SECOND: return 59;
+"70
+[; ;../app/menu.c: 70:         case FIELD_SECOND: return 59;
 [e :U 3271 ]
 [e ) -> -> 59 `i `uc ]
 [e $UE 3263  ]
-"67
-[; ;../app/menu.c: 67:         default: return 0;
+"71
+[; ;../app/menu.c: 71:         default: return 0;
 [e :U 3272 ]
 [e ) -> -> 0 `i `uc ]
 [e $UE 3263  ]
-"68
-[; ;../app/menu.c: 68:     }
+"72
+[; ;../app/menu.c: 72:     }
 }
 [e $U 3264  ]
 [e :U 3265 ]
@@ -3282,36 +3284,36 @@ Version 4.0 HI-TECH Software Intermediate Code
  , $ -> . `E50 5 `ui 3271
  3272 ]
 [e :U 3264 ]
-"69
-[; ;../app/menu.c: 69: }
+"73
+[; ;../app/menu.c: 73: }
 [e :UE 3263 ]
 }
-"72
-[; ;../app/menu.c: 72: static uint8_t get_field_min(datetime_field_t field) {
+"76
+[; ;../app/menu.c: 76: static uint8_t get_field_min(datetime_field_t field) {
 [v _get_field_min `(uc ~T0 @X0 1 sf1`E50 ]
 {
 [e :U _get_field_min ]
 [v _field `E50 ~T0 @X0 1 r1 ]
 [f ]
-"73
-[; ;../app/menu.c: 73:     switch (field) {
+"77
+[; ;../app/menu.c: 77:     switch (field) {
 [e $U 3275  ]
 {
-"74
-[; ;../app/menu.c: 74:         case FIELD_DAY:
+"78
+[; ;../app/menu.c: 78:         case FIELD_DAY:
 [e :U 3276 ]
-"75
-[; ;../app/menu.c: 75:         case FIELD_MONTH: return 1;
+"79
+[; ;../app/menu.c: 79:         case FIELD_MONTH: return 1;
 [e :U 3277 ]
 [e ) -> -> 1 `i `uc ]
 [e $UE 3273  ]
-"76
-[; ;../app/menu.c: 76:         default: return 0;
+"80
+[; ;../app/menu.c: 80:         default: return 0;
 [e :U 3278 ]
 [e ) -> -> 0 `i `uc ]
 [e $UE 3273  ]
-"77
-[; ;../app/menu.c: 77:     }
+"81
+[; ;../app/menu.c: 81:     }
 }
 [e $U 3274  ]
 [e :U 3275 ]
@@ -3319,58 +3321,58 @@ Version 4.0 HI-TECH Software Intermediate Code
  , $ -> . `E50 1 `ui 3277
  3278 ]
 [e :U 3274 ]
-"78
-[; ;../app/menu.c: 78: }
+"82
+[; ;../app/menu.c: 82: }
 [e :UE 3273 ]
 }
-"81
-[; ;../app/menu.c: 81: static uint8_t get_field_value(datetime_field_t field) {
+"85
+[; ;../app/menu.c: 85: static uint8_t get_field_value(datetime_field_t field) {
 [v _get_field_value `(uc ~T0 @X0 1 sf1`E50 ]
 {
 [e :U _get_field_value ]
 [v _field `E50 ~T0 @X0 1 r1 ]
 [f ]
-"82
-[; ;../app/menu.c: 82:     switch (field) {
+"86
+[; ;../app/menu.c: 86:     switch (field) {
 [e $U 3281  ]
 {
-"83
-[; ;../app/menu.c: 83:         case FIELD_DAY: return edit_time.day;
+"87
+[; ;../app/menu.c: 87:         case FIELD_DAY: return edit_time.day;
 [e :U 3282 ]
 [e ) . _edit_time 2 ]
 [e $UE 3279  ]
-"84
-[; ;../app/menu.c: 84:         case FIELD_MONTH: return edit_time.month;
+"88
+[; ;../app/menu.c: 88:         case FIELD_MONTH: return edit_time.month;
 [e :U 3283 ]
 [e ) . _edit_time 3 ]
 [e $UE 3279  ]
-"85
-[; ;../app/menu.c: 85:         case FIELD_YEAR: return 25;
+"89
+[; ;../app/menu.c: 89:         case FIELD_YEAR: return 25;
 [e :U 3284 ]
 [e ) -> -> 25 `i `uc ]
 [e $UE 3279  ]
-"86
-[; ;../app/menu.c: 86:         case FIELD_HOUR: return edit_time.hour;
+"90
+[; ;../app/menu.c: 90:         case FIELD_HOUR: return edit_time.hour;
 [e :U 3285 ]
 [e ) . _edit_time 0 ]
 [e $UE 3279  ]
-"87
-[; ;../app/menu.c: 87:         case FIELD_MINUTE: return edit_time.min;
+"91
+[; ;../app/menu.c: 91:         case FIELD_MINUTE: return edit_time.min;
 [e :U 3286 ]
 [e ) . _edit_time 1 ]
 [e $UE 3279  ]
-"88
-[; ;../app/menu.c: 88:         case FIELD_SECOND: return 0;
+"92
+[; ;../app/menu.c: 92:         case FIELD_SECOND: return 0;
 [e :U 3287 ]
 [e ) -> -> 0 `i `uc ]
 [e $UE 3279  ]
-"89
-[; ;../app/menu.c: 89:         default: return 0;
+"93
+[; ;../app/menu.c: 93:         default: return 0;
 [e :U 3288 ]
 [e ) -> -> 0 `i `uc ]
 [e $UE 3279  ]
-"90
-[; ;../app/menu.c: 90:     }
+"94
+[; ;../app/menu.c: 94:     }
 }
 [e $U 3280  ]
 [e :U 3281 ]
@@ -3382,52 +3384,52 @@ Version 4.0 HI-TECH Software Intermediate Code
  , $ -> . `E50 5 `ui 3287
  3288 ]
 [e :U 3280 ]
-"91
-[; ;../app/menu.c: 91: }
+"95
+[; ;../app/menu.c: 95: }
 [e :UE 3279 ]
 }
-"93
-[; ;../app/menu.c: 93: static void set_field_value(datetime_field_t field, uint8_t value) {
+"97
+[; ;../app/menu.c: 97: static void set_field_value(datetime_field_t field, uint8_t value) {
 [v _set_field_value `(v ~T0 @X0 1 sf2`E50`uc ]
 {
 [e :U _set_field_value ]
 [v _field `E50 ~T0 @X0 1 r1 ]
 [v _value `uc ~T0 @X0 1 r2 ]
 [f ]
-"94
-[; ;../app/menu.c: 94:     switch (field) {
+"98
+[; ;../app/menu.c: 98:     switch (field) {
 [e $U 3291  ]
 {
-"95
-[; ;../app/menu.c: 95:         case FIELD_DAY: edit_time.day = value; break;
+"99
+[; ;../app/menu.c: 99:         case FIELD_DAY: edit_time.day = value; break;
 [e :U 3292 ]
 [e = . _edit_time 2 _value ]
 [e $U 3290  ]
-"96
-[; ;../app/menu.c: 96:         case FIELD_MONTH: edit_time.month = value; break;
+"100
+[; ;../app/menu.c: 100:         case FIELD_MONTH: edit_time.month = value; break;
 [e :U 3293 ]
 [e = . _edit_time 3 _value ]
 [e $U 3290  ]
-"97
-[; ;../app/menu.c: 97:         case FIELD_YEAR: break;
+"101
+[; ;../app/menu.c: 101:         case FIELD_YEAR: break;
 [e :U 3294 ]
 [e $U 3290  ]
-"98
-[; ;../app/menu.c: 98:         case FIELD_HOUR: edit_time.hour = value; break;
+"102
+[; ;../app/menu.c: 102:         case FIELD_HOUR: edit_time.hour = value; break;
 [e :U 3295 ]
 [e = . _edit_time 0 _value ]
 [e $U 3290  ]
-"99
-[; ;../app/menu.c: 99:         case FIELD_MINUTE: edit_time.min = value; break;
+"103
+[; ;../app/menu.c: 103:         case FIELD_MINUTE: edit_time.min = value; break;
 [e :U 3296 ]
 [e = . _edit_time 1 _value ]
 [e $U 3290  ]
-"100
-[; ;../app/menu.c: 100:         case FIELD_SECOND: break;
+"104
+[; ;../app/menu.c: 104:         case FIELD_SECOND: break;
 [e :U 3297 ]
 [e $U 3290  ]
-"101
-[; ;../app/menu.c: 101:     }
+"105
+[; ;../app/menu.c: 105:     }
 }
 [e $U 3290  ]
 [e :U 3291 ]
@@ -3439,12 +3441,12 @@ Version 4.0 HI-TECH Software Intermediate Code
  , $ -> . `E50 5 `ui 3297
  3290 ]
 [e :U 3290 ]
-"102
-[; ;../app/menu.c: 102: }
+"106
+[; ;../app/menu.c: 106: }
 [e :UE 3289 ]
 }
-"109
-[; ;../app/menu.c: 109: static void display_menu_line(uint8_t row, const char* text, uint8_t selected, uint8_t scroll_offset) {
+"113
+[; ;../app/menu.c: 113: static void display_menu_line(uint8_t row, const char* text, uint8_t selected, uint8_t scroll_offset) {
 [v _display_menu_line `(v ~T0 @X0 1 sf4`uc`*Cuc`uc`uc ]
 {
 [e :U _display_menu_line ]
@@ -3453,1921 +3455,1769 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _selected `uc ~T0 @X0 1 r3 ]
 [v _scroll_offset `uc ~T0 @X0 1 r4 ]
 [f ]
-"110
-[; ;../app/menu.c: 110:     char buffer[16 + 1];
+"114
+[; ;../app/menu.c: 114:     char buffer[16 + 1];
 [v _buffer `uc ~T0 @X0 -> 17 `i a ]
-"111
-[; ;../app/menu.c: 111:     char display_buf[16 + 1];
+"115
+[; ;../app/menu.c: 115:     char display_buf[16 + 1];
 [v _display_buf `uc ~T0 @X0 -> 17 `i a ]
-"112
-[; ;../app/menu.c: 112:     uint8_t prefix_len = 0;
+"116
+[; ;../app/menu.c: 116:     uint8_t prefix_len = 0;
 [v _prefix_len `uc ~T0 @X0 1 a ]
 [e = _prefix_len -> -> 0 `i `uc ]
-"113
-[; ;../app/menu.c: 113:     uint8_t text_start = 0;
+"117
+[; ;../app/menu.c: 117:     uint8_t text_start = 0;
 [v _text_start `uc ~T0 @X0 1 a ]
 [e = _text_start -> -> 0 `i `uc ]
-"114
-[; ;../app/menu.c: 114:     uint8_t i;
+"118
+[; ;../app/menu.c: 118:     uint8_t i;
 [v _i `uc ~T0 @X0 1 a ]
-"116
-[; ;../app/menu.c: 116:     Lcd_Set_Cursor(row, 0);
+"120
+[; ;../app/menu.c: 120:     Lcd_Set_Cursor(row, 0);
 [e ( _Lcd_Set_Cursor (2 , -> _row `uc -> -> 0 `i `uc ]
-"119
-[; ;../app/menu.c: 119:     if (selected) {
+"123
+[; ;../app/menu.c: 123:     if (selected) {
 [e $ ! != -> _selected `i -> 0 `i 3299  ]
 {
-"120
-[; ;../app/menu.c: 120:         Lcd_Write_Char('>');
+"124
+[; ;../app/menu.c: 124:         Lcd_Write_Char('>');
 [e ( _Lcd_Write_Char (1 -> -> 62 `ui `uc ]
-"121
-[; ;../app/menu.c: 121:     } else {
+"125
+[; ;../app/menu.c: 125:     } else {
 }
 [e $U 3300  ]
 [e :U 3299 ]
 {
-"122
-[; ;../app/menu.c: 122:         Lcd_Write_Char(' ');
+"126
+[; ;../app/menu.c: 126:         Lcd_Write_Char(' ');
 [e ( _Lcd_Write_Char (1 -> -> 32 `ui `uc ]
-"123
-[; ;../app/menu.c: 123:     }
+"127
+[; ;../app/menu.c: 127:     }
 }
 [e :U 3300 ]
-"126
-[; ;../app/menu.c: 126:     for (i = 0; text[i] != '\0' && text[i] != '.'; i++) {
+"130
+[; ;../app/menu.c: 130:     for (i = 0; text[i] != '\0' && text[i] != '.'; i++) {
 {
 [e = _i -> -> 0 `i `uc ]
 [e $U 3304  ]
 [e :U 3301 ]
 {
-"127
-[; ;../app/menu.c: 127:         if (text[i] >= '0' && text[i] <= '9') {
+"131
+[; ;../app/menu.c: 131:         if (text[i] >= '0' && text[i] <= '9') {
 [e $ ! && >= -> *U + _text * -> _i `ux -> -> # *U _text `ui `ux `ui -> 48 `ui <= -> *U + _text * -> _i `ux -> -> # *U _text `ui `ux `ui -> 57 `ui 3305  ]
 {
-"128
-[; ;../app/menu.c: 128:             prefix_len = i + 2;
+"132
+[; ;../app/menu.c: 132:             prefix_len = i + 2;
 [e = _prefix_len -> + -> _i `i -> 2 `i `uc ]
-"129
-[; ;../app/menu.c: 129:         } else {
+"133
+[; ;../app/menu.c: 133:         } else {
 }
 [e $U 3306  ]
 [e :U 3305 ]
 {
-"130
-[; ;../app/menu.c: 130:             break;
+"134
+[; ;../app/menu.c: 134:             break;
 [e $U 3302  ]
-"131
-[; ;../app/menu.c: 131:         }
+"135
+[; ;../app/menu.c: 135:         }
 }
 [e :U 3306 ]
-"132
-[; ;../app/menu.c: 132:     }
+"136
+[; ;../app/menu.c: 136:     }
 }
 [e ++ _i -> -> 1 `i `uc ]
 [e :U 3304 ]
 [e $ && != -> *U + _text * -> _i `ux -> -> # *U _text `ui `ux `ui -> 0 `ui != -> *U + _text * -> _i `ux -> -> # *U _text `ui `ux `ui -> 46 `ui 3301  ]
 [e :U 3302 ]
 }
-"135
-[; ;../app/menu.c: 135:     if (prefix_len > 0 && text[prefix_len - 1] == '.') {
+"139
+[; ;../app/menu.c: 139:     if (prefix_len > 0 && text[prefix_len - 1] == '.') {
 [e $ ! && > -> _prefix_len `i -> 0 `i == -> *U + _text * -> - -> _prefix_len `i -> 1 `i `x -> -> # *U _text `i `x `ui -> 46 `ui 3307  ]
 {
-"137
-[; ;../app/menu.c: 137:         for (i = 0; i < prefix_len; i++) {
+"141
+[; ;../app/menu.c: 141:         for (i = 0; i < prefix_len; i++) {
 {
 [e = _i -> -> 0 `i `uc ]
 [e $U 3311  ]
 [e :U 3308 ]
 {
-"138
-[; ;../app/menu.c: 138:             Lcd_Write_Char(text[i]);
+"142
+[; ;../app/menu.c: 142:             Lcd_Write_Char(text[i]);
 [e ( _Lcd_Write_Char (1 *U + _text * -> _i `ux -> -> # *U _text `ui `ux ]
-"139
-[; ;../app/menu.c: 139:         }
+"143
+[; ;../app/menu.c: 143:         }
 }
 [e ++ _i -> -> 1 `i `uc ]
 [e :U 3311 ]
 [e $ < -> _i `i -> _prefix_len `i 3308  ]
 [e :U 3309 ]
 }
-"140
-[; ;../app/menu.c: 140:         text_start = prefix_len;
+"144
+[; ;../app/menu.c: 144:         text_start = prefix_len;
 [e = _text_start _prefix_len ]
-"141
-[; ;../app/menu.c: 141:     }
+"145
+[; ;../app/menu.c: 145:     }
 }
 [e :U 3307 ]
-"144
-[; ;../app/menu.c: 144:     uint8_t available_space = 16 - 1 - prefix_len;
+"148
+[; ;../app/menu.c: 148:     uint8_t available_space = 16 - 1 - prefix_len;
 [v _available_space `uc ~T0 @X0 1 a ]
 [e = _available_space -> - - -> 16 `i -> 1 `i -> _prefix_len `i `uc ]
-"145
-[; ;../app/menu.c: 145:     uint8_t text_len = strlen(&text[text_start]);
+"149
+[; ;../app/menu.c: 149:     uint8_t text_len = strlen(&text[text_start]);
 [v _text_len `uc ~T0 @X0 1 a ]
 [e = _text_len -> ( _strlen (1 &U *U + _text * -> _text_start `ux -> -> # *U _text `ui `ux `uc ]
-"148
-[; ;../app/menu.c: 148:     if (text_len > available_space) {
+"152
+[; ;../app/menu.c: 152:     if (text_len > available_space) {
 [e $ ! > -> _text_len `i -> _available_space `i 3312  ]
 {
-"149
-[; ;../app/menu.c: 149:         uint8_t max_offset = text_len - available_space;
+"153
+[; ;../app/menu.c: 153:         uint8_t max_offset = text_len - available_space;
 [v _max_offset `uc ~T0 @X0 1 a ]
 [e = _max_offset -> - -> _text_len `i -> _available_space `i `uc ]
-"150
-[; ;../app/menu.c: 150:         if (scroll_offset > max_offset) {
+"154
+[; ;../app/menu.c: 154:         if (scroll_offset > max_offset) {
 [e $ ! > -> _scroll_offset `i -> _max_offset `i 3313  ]
 {
-"151
-[; ;../app/menu.c: 151:             scroll_offset = max_offset;
+"155
+[; ;../app/menu.c: 155:             scroll_offset = max_offset;
 [e = _scroll_offset _max_offset ]
-"152
-[; ;../app/menu.c: 152:         }
+"156
+[; ;../app/menu.c: 156:         }
 }
 [e :U 3313 ]
-"154
-[; ;../app/menu.c: 154:         strncpy(display_buf, &text[text_start + scroll_offset], available_space);
+"158
+[; ;../app/menu.c: 158:         strncpy(display_buf, &text[text_start + scroll_offset], available_space);
 [e ( _strncpy (3 , , &U _display_buf &U *U + _text * -> + -> _text_start `i -> _scroll_offset `i `x -> -> # *U _text `i `x -> _available_space `ui ]
-"155
-[; ;../app/menu.c: 155:         display_buf[available_space] = '\0';
+"159
+[; ;../app/menu.c: 159:         display_buf[available_space] = '\0';
 [e = *U + &U _display_buf * -> _available_space `ux -> -> # *U &U _display_buf `ui `ux -> -> 0 `ui `uc ]
-"156
-[; ;../app/menu.c: 156:     } else {
+"160
+[; ;../app/menu.c: 160:     } else {
 }
 [e $U 3314  ]
 [e :U 3312 ]
 {
-"157
-[; ;../app/menu.c: 157:         strncpy(display_buf, &text[text_start], available_space);
+"161
+[; ;../app/menu.c: 161:         strncpy(display_buf, &text[text_start], available_space);
 [e ( _strncpy (3 , , &U _display_buf &U *U + _text * -> _text_start `ux -> -> # *U _text `ui `ux -> _available_space `ui ]
-"158
-[; ;../app/menu.c: 158:         display_buf[text_len] = '\0';
+"162
+[; ;../app/menu.c: 162:         display_buf[text_len] = '\0';
 [e = *U + &U _display_buf * -> _text_len `ux -> -> # *U &U _display_buf `ui `ux -> -> 0 `ui `uc ]
-"159
-[; ;../app/menu.c: 159:     }
+"163
+[; ;../app/menu.c: 163:     }
 }
 [e :U 3314 ]
-"162
-[; ;../app/menu.c: 162:     Lcd_Write_String(display_buf);
+"166
+[; ;../app/menu.c: 166:     Lcd_Write_String(display_buf);
 [e ( _Lcd_Write_String (1 -> &U _display_buf `*Cuc ]
-"165
-[; ;../app/menu.c: 165:     for (i = strlen(display_buf) + 1 + prefix_len; i < 16; i++) {
+"169
+[; ;../app/menu.c: 169:     for (i = strlen(display_buf) + 1 + prefix_len; i < 16; i++) {
 {
 [e = _i -> + + ( _strlen (1 -> &U _display_buf `*Cuc -> -> 1 `i `ui -> _prefix_len `ui `uc ]
 [e $ < -> _i `i -> 16 `i 3315  ]
 [e $U 3316  ]
 [e :U 3315 ]
 {
-"166
-[; ;../app/menu.c: 166:         Lcd_Write_Char(' ');
+"170
+[; ;../app/menu.c: 170:         Lcd_Write_Char(' ');
 [e ( _Lcd_Write_Char (1 -> -> 32 `ui `uc ]
-"167
-[; ;../app/menu.c: 167:     }
+"171
+[; ;../app/menu.c: 171:     }
 }
 [e ++ _i -> -> 1 `i `uc ]
 [e $ < -> _i `i -> 16 `i 3315  ]
 [e :U 3316 ]
 }
-"168
-[; ;../app/menu.c: 168: }
+"172
+[; ;../app/menu.c: 172: }
 [e :UE 3298 ]
 }
-"171
-[; ;../app/menu.c: 171: static void display_main_menu(void) {
+"175
+[; ;../app/menu.c: 175: static void display_main_menu(void) {
 [v _display_main_menu `(v ~T0 @X0 1 sf ]
 {
 [e :U _display_main_menu ]
 [f ]
-"172
-[; ;../app/menu.c: 172:     uint8_t current_item = ctx.main_index;
+"176
+[; ;../app/menu.c: 176:     uint8_t current_item = ctx.main_index;
 [v _current_item `uc ~T0 @X0 1 a ]
 [e = _current_item . _ctx 1 ]
-"173
-[; ;../app/menu.c: 173:     uint8_t next_item = (current_item + 1) % 5;
+"177
+[; ;../app/menu.c: 177:     uint8_t next_item = (current_item + 1) % 5;
 [v _next_item `uc ~T0 @X0 1 a ]
 [e = _next_item -> % + -> _current_item `i -> 1 `i -> 5 `i `uc ]
-"175
-[; ;../app/menu.c: 175:     display_menu_line(0, main_menu_items[current_item], 1, ctx.scroll_offset);
+"179
+[; ;../app/menu.c: 179:     display_menu_line(0, main_menu_items[current_item], 1, ctx.scroll_offset);
 [e ( _display_menu_line (4 , , , -> -> 0 `i `uc *U + &U _main_menu_items * -> _current_item `ux -> -> # *U &U _main_menu_items `ui `ux -> -> 1 `i `uc . _ctx 4 ]
-"176
-[; ;../app/menu.c: 176:     display_menu_line(1, main_menu_items[next_item], 0, 0);
+"180
+[; ;../app/menu.c: 180:     display_menu_line(1, main_menu_items[next_item], 0, 0);
 [e ( _display_menu_line (4 , , , -> -> 1 `i `uc *U + &U _main_menu_items * -> _next_item `ux -> -> # *U &U _main_menu_items `ui `ux -> -> 0 `i `uc -> -> 0 `i `uc ]
-"177
-[; ;../app/menu.c: 177: }
+"181
+[; ;../app/menu.c: 181: }
 [e :UE 3318 ]
 }
-"180
-[; ;../app/menu.c: 180: static void display_datetime_submenu(void) {
+"184
+[; ;../app/menu.c: 184: static void display_datetime_submenu(void) {
 [v _display_datetime_submenu `(v ~T0 @X0 1 sf ]
 {
 [e :U _display_datetime_submenu ]
 [f ]
-"181
-[; ;../app/menu.c: 181:     char line1[16 + 1];
-[v _line1 `uc ~T0 @X0 -> 17 `i a ]
-"182
-[; ;../app/menu.c: 182:     char line2[16 + 1];
-[v _line2 `uc ~T0 @X0 -> 17 `i a ]
 "185
-[; ;../app/menu.c: 185:     rtc_get_time(&current_time);
+[; ;../app/menu.c: 185:     char line1[16 + 1];
+[v _line1 `uc ~T0 @X0 -> 17 `i a ]
+"186
+[; ;../app/menu.c: 186:     char line2[16 + 1];
+[v _line2 `uc ~T0 @X0 -> 17 `i a ]
+"189
+[; ;../app/menu.c: 189:     rtc_get_time(&current_time);
 [e ( _rtc_get_time (1 &U _current_time ]
-"187
-[; ;../app/menu.c: 187:     if (ctx.state == MENU_STATE_EDIT_SELECT || ctx.state == MENU_STATE_EDIT_VALUE) {
+"191
+[; ;../app/menu.c: 191:     if (ctx.state == MENU_STATE_EDIT_SELECT || ctx.state == MENU_STATE_EDIT_VALUE) {
 [e $ ! || == -> . _ctx 0 `ui -> . `E36 3 `ui == -> . _ctx 0 `ui -> . `E36 4 `ui 3320  ]
 {
-"189
-[; ;../app/menu.c: 189:         snprintf(line1, sizeof(line1), "Date:%02d/%02d/2025",
-[e ( _snprintf (2 , , (. , , &U _line1 -> # _line1 `ui :s 6C -> . _edit_time 2 `i -> . _edit_time 3 `i ]
-"191
-[; ;../app/menu.c: 191:         snprintf(line2, sizeof(line2), "Heure:%02d:%02d:00",
-[e ( _snprintf (2 , , (. , , &U _line2 -> # _line2 `ui :s 7C -> . _edit_time 0 `i -> . _edit_time 1 `i ]
 "193
-[; ;../app/menu.c: 193:     } else {
+[; ;../app/menu.c: 193:         snprintf(line1, sizeof(line1), "Date:%02d/%02d/2025",
+[e ( _snprintf (2 , , (. , , &U _line1 -> # _line1 `ui :s 6C -> . _edit_time 2 `i -> . _edit_time 3 `i ]
+"195
+[; ;../app/menu.c: 195:         snprintf(line2, sizeof(line2), "Heure:%02d:%02d:00",
+[e ( _snprintf (2 , , (. , , &U _line2 -> # _line2 `ui :s 7C -> . _edit_time 0 `i -> . _edit_time 1 `i ]
+"197
+[; ;../app/menu.c: 197:     } else {
 }
 [e $U 3321  ]
 [e :U 3320 ]
 {
-[v F23463 `*Cuc ~T0 @X0 -> 2 `i s ]
-[i F23463
+[v F23464 `*Cuc ~T0 @X0 -> 2 `i s ]
+[i F23464
 :U ..
-"195
-[; ;../app/menu.c: 195:         const char* options[] = {"Date", "Heure"};
+"199
+[; ;../app/menu.c: 199:         const char* options[] = {"Date", "Heure"};
 :s 8C
 :s 9C
 ..
 ]
 [v _options `*Cuc ~T0 @X0 -> 2 `i a ]
-[e = _options F23463 ]
-"196
-[; ;../app/menu.c: 196:         display_menu_line(0, options[ctx.submenu_index], 1, 0);
+[e = _options F23464 ]
+"200
+[; ;../app/menu.c: 200:         display_menu_line(0, options[ctx.submenu_index], 1, 0);
 [e ( _display_menu_line (4 , , , -> -> 0 `i `uc *U + &U _options * -> . _ctx 2 `ux -> -> # *U &U _options `ui `ux -> -> 1 `i `uc -> -> 0 `i `uc ]
-"198
-[; ;../app/menu.c: 198:         if (ctx.submenu_index == 0) {
+"202
+[; ;../app/menu.c: 202:         if (ctx.submenu_index == 0) {
 [e $ ! == -> . _ctx 2 `i -> 0 `i 3322  ]
 {
-"199
-[; ;../app/menu.c: 199:             snprintf(line2, sizeof(line2), " %02d/%02d/2025",
+"203
+[; ;../app/menu.c: 203:             snprintf(line2, sizeof(line2), " %02d/%02d/2025",
 [e ( _snprintf (2 , , (. , , &U _line2 -> # _line2 `ui :s 10C -> . _current_time 2 `i -> . _current_time 3 `i ]
-"201
-[; ;../app/menu.c: 201:         } else {
+"205
+[; ;../app/menu.c: 205:         } else {
 }
 [e $U 3323  ]
 [e :U 3322 ]
 {
-"202
-[; ;../app/menu.c: 202:             snprintf(line2, sizeof(line2), " %02d:%02d:00",
+"206
+[; ;../app/menu.c: 206:             snprintf(line2, sizeof(line2), " %02d:%02d:--",
 [e ( _snprintf (2 , , (. , , &U _line2 -> # _line2 `ui :s 11C -> . _current_time 0 `i -> . _current_time 1 `i ]
-"204
-[; ;../app/menu.c: 204:         }
+"208
+[; ;../app/menu.c: 208:         }
 }
 [e :U 3323 ]
-"206
-[; ;../app/menu.c: 206:         Lcd_Set_Cursor(1, 0);
+"210
+[; ;../app/menu.c: 210:         Lcd_Set_Cursor(1, 0);
 [e ( _Lcd_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
-"207
-[; ;../app/menu.c: 207:         Lcd_Write_String(line2);
+"211
+[; ;../app/menu.c: 211:         Lcd_Write_String(line2);
 [e ( _Lcd_Write_String (1 -> &U _line2 `*Cuc ]
-"208
-[; ;../app/menu.c: 208:         return;
+"212
+[; ;../app/menu.c: 212:         return;
 [e $UE 3319  ]
-"209
-[; ;../app/menu.c: 209:     }
+"213
+[; ;../app/menu.c: 213:     }
 }
 [e :U 3321 ]
-"211
-[; ;../app/menu.c: 211:     Lcd_Set_Cursor(0, 0);
+"215
+[; ;../app/menu.c: 215:     Lcd_Set_Cursor(0, 0);
 [e ( _Lcd_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
-"212
-[; ;../app/menu.c: 212:     Lcd_Write_String(line1);
+"216
+[; ;../app/menu.c: 216:     Lcd_Write_String(line1);
 [e ( _Lcd_Write_String (1 -> &U _line1 `*Cuc ]
-"213
-[; ;../app/menu.c: 213:     Lcd_Set_Cursor(1, 0);
-[e ( _Lcd_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
-"214
-[; ;../app/menu.c: 214:     Lcd_Write_String(line2);
-[e ( _Lcd_Write_String (1 -> &U _line2 `*Cuc ]
 "217
-[; ;../app/menu.c: 217:     if (ctx.state == MENU_STATE_EDIT_VALUE && blink_state) {
+[; ;../app/menu.c: 217:     Lcd_Set_Cursor(1, 0);
+[e ( _Lcd_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+"218
+[; ;../app/menu.c: 218:     Lcd_Write_String(line2);
+[e ( _Lcd_Write_String (1 -> &U _line2 `*Cuc ]
+"221
+[; ;../app/menu.c: 221:     if (ctx.state == MENU_STATE_EDIT_VALUE && blink_state) {
 [e $ ! && == -> . _ctx 0 `ui -> . `E36 4 `ui != -> _blink_state `i -> 0 `i 3324  ]
 {
-"218
-[; ;../app/menu.c: 218:         uint8_t cursor_pos = 0;
+"222
+[; ;../app/menu.c: 222:         uint8_t cursor_pos = 0;
 [v _cursor_pos `uc ~T0 @X0 1 a ]
 [e = _cursor_pos -> -> 0 `i `uc ]
-"219
-[; ;../app/menu.c: 219:         uint8_t cursor_row = 0;
+"223
+[; ;../app/menu.c: 223:         uint8_t cursor_row = 0;
 [v _cursor_row `uc ~T0 @X0 1 a ]
 [e = _cursor_row -> -> 0 `i `uc ]
-"221
-[; ;../app/menu.c: 221:         switch (ctx.edit_field) {
+"225
+[; ;../app/menu.c: 225:         switch (ctx.edit_field) {
 [e $U 3326  ]
 {
-"222
-[; ;../app/menu.c: 222:             case FIELD_DAY: cursor_row = 0; cursor_pos = 5; break;
+"226
+[; ;../app/menu.c: 226:             case FIELD_DAY: cursor_row = 0; cursor_pos = 5; break;
 [e :U 3327 ]
 [e = _cursor_row -> -> 0 `i `uc ]
 [e = _cursor_pos -> -> 5 `i `uc ]
 [e $U 3325  ]
-"223
-[; ;../app/menu.c: 223:             case FIELD_MONTH: cursor_row = 0; cursor_pos = 8; break;
+"227
+[; ;../app/menu.c: 227:             case FIELD_MONTH: cursor_row = 0; cursor_pos = 8; break;
 [e :U 3328 ]
 [e = _cursor_row -> -> 0 `i `uc ]
 [e = _cursor_pos -> -> 8 `i `uc ]
 [e $U 3325  ]
-"224
-[; ;../app/menu.c: 224:             case FIELD_HOUR: cursor_row = 1; cursor_pos = 6; break;
+"228
+[; ;../app/menu.c: 228:             case FIELD_HOUR: cursor_row = 1; cursor_pos = 6; break;
 [e :U 3329 ]
 [e = _cursor_row -> -> 1 `i `uc ]
 [e = _cursor_pos -> -> 6 `i `uc ]
 [e $U 3325  ]
-"225
-[; ;../app/menu.c: 225:             case FIELD_MINUTE: cursor_row = 1; cursor_pos = 9; break;
+"229
+[; ;../app/menu.c: 229:             case FIELD_MINUTE: cursor_row = 1; cursor_pos = 9; break;
 [e :U 3330 ]
 [e = _cursor_row -> -> 1 `i `uc ]
 [e = _cursor_pos -> -> 9 `i `uc ]
 [e $U 3325  ]
-"226
-[; ;../app/menu.c: 226:             default: break;
+"230
+[; ;../app/menu.c: 230:             default: break;
 [e :U 3331 ]
 [e $U 3325  ]
-"227
-[; ;../app/menu.c: 227:         }
+"231
+[; ;../app/menu.c: 231:         }
 }
 [e $U 3325  ]
 [e :U 3326 ]
-[e [\ -> . _ctx 7 `ui , $ -> . `E50 0 `ui 3327
+[e [\ -> . _ctx 6 `ui , $ -> . `E50 0 `ui 3327
  , $ -> . `E50 1 `ui 3328
  , $ -> . `E50 3 `ui 3329
  , $ -> . `E50 4 `ui 3330
  3331 ]
 [e :U 3325 ]
-"229
-[; ;../app/menu.c: 229:         Lcd_Set_Cursor(cursor_row, cursor_pos);
+"233
+[; ;../app/menu.c: 233:         Lcd_Set_Cursor(cursor_row, cursor_pos);
 [e ( _Lcd_Set_Cursor (2 , -> _cursor_row `uc -> _cursor_pos `uc ]
-"230
-[; ;../app/menu.c: 230:         Lcd_Write_String("__");
+"234
+[; ;../app/menu.c: 234:         Lcd_Write_String("__");
 [e ( _Lcd_Write_String (1 :s 12C ]
-"231
-[; ;../app/menu.c: 231:     }
+"235
+[; ;../app/menu.c: 235:     }
 }
 [e :U 3324 ]
-"232
-[; ;../app/menu.c: 232: }
+"236
+[; ;../app/menu.c: 236: }
 [e :UE 3319 ]
 }
-"235
-[; ;../app/menu.c: 235: static void display_datalogger_index(void) {
-[v _display_datalogger_index `(v ~T0 @X0 1 sf ]
-{
-[e :U _display_datalogger_index ]
-[f ]
-"236
-[; ;../app/menu.c: 236:     dl_cfg_t cfg;
-[v _cfg `S3255 ~T0 @X0 1 a ]
-"237
-[; ;../app/menu.c: 237:     app_err_t err;
-[v _err `E22870 ~T0 @X0 1 a ]
-"238
-[; ;../app/menu.c: 238:     sensor_data_t data;
-[v _data `S3254 ~T0 @X0 1 a ]
 "239
-[; ;../app/menu.c: 239:     char line1[16 + 1];
-[v _line1 `uc ~T0 @X0 -> 17 `i a ]
-"240
-[; ;../app/menu.c: 240:     char line2[16 + 1];
-[v _line2 `uc ~T0 @X0 -> 17 `i a ]
-"242
-[; ;../app/menu.c: 242:     err = dl_get_config(&cfg);
-[e = _err ( _dl_get_config (1 &U _cfg ]
-"243
-[; ;../app/menu.c: 243:     if (err != APP_OK) {
-[e $ ! != -> _err `ui -> . `E22870 0 `ui 3333  ]
-{
-"244
-[; ;../app/menu.c: 244:         snprintf(line1, sizeof(line1), "DL Config Err");
-[e ( _snprintf (2 , , &U _line1 -> # _line1 `ui :s 13C ]
-"245
-[; ;../app/menu.c: 245:         snprintf(line2, sizeof(line2), "Err Code:%d", err);
-[e ( _snprintf (2 , (. , , &U _line2 -> # _line2 `ui :s 14C -> _err `ui ]
-"246
-[; ;../app/menu.c: 246:     } else {
-}
-[e $U 3334  ]
-[e :U 3333 ]
-{
-"247
-[; ;../app/menu.c: 247:         snprintf(line1, sizeof(line1), "DL Idx:%d", cfg.data_count);
-[e ( _snprintf (2 , (. , , &U _line1 -> # _line1 `ui :s 15C -> . _cfg 1 `i ]
-"248
-[; ;../app/menu.c: 248:         err = dl_read(cfg.data_count - 1, (sensor_data_t*)&data);
-[e = _err ( _dl_read (2 , -> - -> . _cfg 1 `i -> 1 `i `us &U _data ]
-"249
-[; ;../app/menu.c: 249:         if (err != APP_OK) {
-[e $ ! != -> _err `ui -> . `E22870 0 `ui 3335  ]
-{
-"250
-[; ;../app/menu.c: 250:             snprintf(line2, sizeof(line2), "DL Read Err:%d", err);
-[e ( _snprintf (2 , (. , , &U _line2 -> # _line2 `ui :s 16C -> _err `ui ]
-"251
-[; ;../app/menu.c: 251:         } else {
-}
-[e $U 3336  ]
-[e :U 3335 ]
-{
-"252
-[; ;../app/menu.c: 252:             int32_t temp = data.t_c_x100 / 100;
-[v _temp `l ~T0 @X0 1 a ]
-[e = _temp -> / -> . _data 0 `i -> 100 `i `l ]
-"253
-[; ;../app/menu.c: 253:             int32_t temp_dec = data.t_c_x100 % 100;
-[v _temp_dec `l ~T0 @X0 1 a ]
-[e = _temp_dec -> % -> . _data 0 `i -> 100 `i `l ]
-"254
-[; ;../app/menu.c: 254:             uint32_t rh = data.rh_x100 / 100;
-[v _rh `ul ~T0 @X0 1 a ]
-[e = _rh -> / -> . _data 1 `ui -> -> 100 `i `ui `ul ]
-"255
-[; ;../app/menu.c: 255:             uint32_t rh_dec = data.rh_x100 % 100;
-[v _rh_dec `ul ~T0 @X0 1 a ]
-[e = _rh_dec -> % -> . _data 1 `ui -> -> 100 `i `ui `ul ]
-"256
-[; ;../app/menu.c: 256:             snprintf(line2, sizeof(line2), "T:%ld.%02ldC RH:%lu.%02lu%%",
-[e ( _snprintf (2 , , , , (. , , &U _line2 -> # _line2 `ui :s 17C _temp _temp_dec _rh _rh_dec ]
-"258
-[; ;../app/menu.c: 258:         }
-}
-[e :U 3336 ]
-"259
-[; ;../app/menu.c: 259:     }
-}
-[e :U 3334 ]
-"261
-[; ;../app/menu.c: 261:     Lcd_Set_Cursor(0, 0);
-[e ( _Lcd_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
-"262
-[; ;../app/menu.c: 262:     Lcd_Write_String(line1);
-[e ( _Lcd_Write_String (1 -> &U _line1 `*Cuc ]
-"263
-[; ;../app/menu.c: 263:     Lcd_Set_Cursor(1, 0);
-[e ( _Lcd_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
-"264
-[; ;../app/menu.c: 264:     Lcd_Write_String(line2);
-[e ( _Lcd_Write_String (1 -> &U _line2 `*Cuc ]
-"265
-[; ;../app/menu.c: 265: }
-[e :UE 3332 ]
-}
-"268
-[; ;../app/menu.c: 268: static void display_bmp280_data(void) {
+[; ;../app/menu.c: 239: static void display_bmp280_data(void) {
 [v _display_bmp280_data `(v ~T0 @X0 1 sf ]
 {
 [e :U _display_bmp280_data ]
 [f ]
-"269
-[; ;../app/menu.c: 269:     char line1[16 + 1];
+"240
+[; ;../app/menu.c: 240:     char line1[16 + 1];
 [v _line1 `uc ~T0 @X0 -> 17 `i a ]
-"270
-[; ;../app/menu.c: 270:     char line2[16 + 1];
+"241
+[; ;../app/menu.c: 241:     char line2[16 + 1];
 [v _line2 `uc ~T0 @X0 -> 17 `i a ]
-"272
-[; ;../app/menu.c: 272:     if (bmp280_read(&bmp_data) == APP_OK) {
-[e $ ! == -> ( _bmp280_read (1 &U _bmp_data `ui -> . `E22870 0 `ui 3338  ]
+"243
+[; ;../app/menu.c: 243:     if (bmp280_read(&bmp_data) == APP_OK) {
+[e $ ! == -> ( _bmp280_read (1 &U _bmp_data `ui -> . `E22869 0 `ui 3333  ]
 {
-"274
-[; ;../app/menu.c: 274:         int32_t temp = bmp_data.temp_c_x100 / 100;
+"245
+[; ;../app/menu.c: 245:         int32_t temp = bmp_data.temp_c_x100 / 100;
 [v _temp `l ~T0 @X0 1 a ]
 [e = _temp -> / -> . _bmp_data 1 `i -> 100 `i `l ]
-"275
-[; ;../app/menu.c: 275:         int32_t temp_dec = bmp_data.temp_c_x100 % 100;
+"246
+[; ;../app/menu.c: 246:         int32_t temp_dec = bmp_data.temp_c_x100 % 100;
 [v _temp_dec `l ~T0 @X0 1 a ]
 [e = _temp_dec -> % -> . _bmp_data 1 `i -> 100 `i `l ]
-"276
-[; ;../app/menu.c: 276:         int32_t press = bmp_data.pressure_pa / 100;
+"247
+[; ;../app/menu.c: 247:         int32_t press = bmp_data.pressure_pa / 100;
 [v _press `l ~T0 @X0 1 a ]
 [e = _press / . _bmp_data 0 -> -> 100 `i `l ]
-"278
-[; ;../app/menu.c: 278:         snprintf(line1, sizeof(line1), "Pres:%ld hPa", press);
-[e ( _snprintf (2 , (. , , &U _line1 -> # _line1 `ui :s 18C _press ]
-"279
-[; ;../app/menu.c: 279:         snprintf(line2, sizeof(line2), "Temp:%ld.%02ld C", temp, temp_dec);
-[e ( _snprintf (2 , , (. , , &U _line2 -> # _line2 `ui :s 19C _temp _temp_dec ]
-"280
-[; ;../app/menu.c: 280:     } else {
+"249
+[; ;../app/menu.c: 249:         snprintf(line1, sizeof(line1), "Pres:%ld hPa", press);
+[e ( _snprintf (2 , (. , , &U _line1 -> # _line1 `ui :s 13C _press ]
+"250
+[; ;../app/menu.c: 250:         snprintf(line2, sizeof(line2), "Temp:%ld.%02ld C", temp, temp_dec);
+[e ( _snprintf (2 , , (. , , &U _line2 -> # _line2 `ui :s 14C _temp _temp_dec ]
+"251
+[; ;../app/menu.c: 251:     } else {
 }
-[e $U 3339  ]
-[e :U 3338 ]
+[e $U 3334  ]
+[e :U 3333 ]
 {
-"281
-[; ;../app/menu.c: 281:         snprintf(line1, sizeof(line1), "Pres: ERROR");
-[e ( _snprintf (2 , , &U _line1 -> # _line1 `ui :s 20C ]
-"282
-[; ;../app/menu.c: 282:         snprintf(line2, sizeof(line2), "Temp: ERROR");
-[e ( _snprintf (2 , , &U _line2 -> # _line2 `ui :s 21C ]
-"283
-[; ;../app/menu.c: 283:     }
+"252
+[; ;../app/menu.c: 252:         snprintf(line1, sizeof(line1), "Pres: ERROR");
+[e ( _snprintf (2 , , &U _line1 -> # _line1 `ui :s 15C ]
+"253
+[; ;../app/menu.c: 253:         snprintf(line2, sizeof(line2), "Temp: ERROR");
+[e ( _snprintf (2 , , &U _line2 -> # _line2 `ui :s 16C ]
+"254
+[; ;../app/menu.c: 254:     }
 }
-[e :U 3339 ]
-"285
-[; ;../app/menu.c: 285:     Lcd_Set_Cursor(0, 0);
+[e :U 3334 ]
+"256
+[; ;../app/menu.c: 256:     Lcd_Set_Cursor(0, 0);
 [e ( _Lcd_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
-"286
-[; ;../app/menu.c: 286:     Lcd_Write_String(line1);
+"257
+[; ;../app/menu.c: 257:     Lcd_Write_String(line1);
 [e ( _Lcd_Write_String (1 -> &U _line1 `*Cuc ]
-"287
-[; ;../app/menu.c: 287:     Lcd_Set_Cursor(1, 0);
+"258
+[; ;../app/menu.c: 258:     Lcd_Set_Cursor(1, 0);
 [e ( _Lcd_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
-"288
-[; ;../app/menu.c: 288:     Lcd_Write_String(line2);
+"259
+[; ;../app/menu.c: 259:     Lcd_Write_String(line2);
 [e ( _Lcd_Write_String (1 -> &U _line2 `*Cuc ]
-"289
-[; ;../app/menu.c: 289: }
-[e :UE 3337 ]
+"260
+[; ;../app/menu.c: 260: }
+[e :UE 3332 ]
 }
-"292
-[; ;../app/menu.c: 292: static void display_sht30_data(void) {
+"263
+[; ;../app/menu.c: 263: static void display_sht30_data(void) {
 [v _display_sht30_data `(v ~T0 @X0 1 sf ]
 {
 [e :U _display_sht30_data ]
 [f ]
-"293
-[; ;../app/menu.c: 293:     char line1[16 + 1];
+"264
+[; ;../app/menu.c: 264:     char line1[16 + 1];
 [v _line1 `uc ~T0 @X0 -> 17 `i a ]
-"294
-[; ;../app/menu.c: 294:     char line2[16 + 1];
+"265
+[; ;../app/menu.c: 265:     char line2[16 + 1];
 [v _line2 `uc ~T0 @X0 -> 17 `i a ]
-"296
-[; ;../app/menu.c: 296:     if (sht30_read(&sht_data) == APP_OK) {
-[e $ ! == -> ( _sht30_read (1 &U _sht_data `ui -> . `E22870 0 `ui 3341  ]
+"267
+[; ;../app/menu.c: 267:     if (sht30_read(&sht_data) == APP_OK) {
+[e $ ! == -> ( _sht30_read (1 &U _sht_data `ui -> . `E22869 0 `ui 3336  ]
 {
-"298
-[; ;../app/menu.c: 298:         uint16_t rh = sht_data.rh_x100 / 100;
+"269
+[; ;../app/menu.c: 269:         uint16_t rh = sht_data.rh_x100 / 100;
 [v _rh `us ~T0 @X0 1 a ]
 [e = _rh -> / -> . _sht_data 0 `ui -> -> 100 `i `ui `us ]
-"299
-[; ;../app/menu.c: 299:         uint16_t rh_dec = sht_data.rh_x100 % 100;
+"270
+[; ;../app/menu.c: 270:         uint16_t rh_dec = sht_data.rh_x100 % 100;
 [v _rh_dec `us ~T0 @X0 1 a ]
 [e = _rh_dec -> % -> . _sht_data 0 `ui -> -> 100 `i `ui `us ]
-"300
-[; ;../app/menu.c: 300:         int16_t temp = sht_data.temp_c_x100 / 100;
+"271
+[; ;../app/menu.c: 271:         int16_t temp = sht_data.temp_c_x100 / 100;
 [v _temp `s ~T0 @X0 1 a ]
 [e = _temp -> / -> . _sht_data 1 `i -> 100 `i `s ]
-"301
-[; ;../app/menu.c: 301:         int16_t temp_dec = sht_data.temp_c_x100 % 100;
+"272
+[; ;../app/menu.c: 272:         int16_t temp_dec = sht_data.temp_c_x100 % 100;
 [v _temp_dec `s ~T0 @X0 1 a ]
 [e = _temp_dec -> % -> . _sht_data 1 `i -> 100 `i `s ]
-"303
-[; ;../app/menu.c: 303:         snprintf(line1, sizeof(line1), "RH:%d.%02d %%", rh, rh_dec);
-[e ( _snprintf (2 , , (. , , &U _line1 -> # _line1 `ui :s 22C -> _rh `ui -> _rh_dec `ui ]
-"304
-[; ;../app/menu.c: 304:         snprintf(line2, sizeof(line2), "Temp:%d.%02d C", temp, temp_dec);
-[e ( _snprintf (2 , , (. , , &U _line2 -> # _line2 `ui :s 23C -> _temp `i -> _temp_dec `i ]
-"305
-[; ;../app/menu.c: 305:     } else {
+"274
+[; ;../app/menu.c: 274:         snprintf(line1, sizeof(line1), "RH:%d.%02d %%", rh, rh_dec);
+[e ( _snprintf (2 , , (. , , &U _line1 -> # _line1 `ui :s 17C -> _rh `ui -> _rh_dec `ui ]
+"275
+[; ;../app/menu.c: 275:         snprintf(line2, sizeof(line2), "Temp:%d.%02d C", temp, temp_dec);
+[e ( _snprintf (2 , , (. , , &U _line2 -> # _line2 `ui :s 18C -> _temp `i -> _temp_dec `i ]
+"276
+[; ;../app/menu.c: 276:     } else {
 }
-[e $U 3342  ]
-[e :U 3341 ]
+[e $U 3337  ]
+[e :U 3336 ]
 {
-"306
-[; ;../app/menu.c: 306:         snprintf(line1, sizeof(line1), "RH: ERROR");
-[e ( _snprintf (2 , , &U _line1 -> # _line1 `ui :s 24C ]
-"307
-[; ;../app/menu.c: 307:         snprintf(line2, sizeof(line2), "Temp: ERROR");
-[e ( _snprintf (2 , , &U _line2 -> # _line2 `ui :s 25C ]
-"308
-[; ;../app/menu.c: 308:     }
+"277
+[; ;../app/menu.c: 277:         snprintf(line1, sizeof(line1), "RH: ERROR");
+[e ( _snprintf (2 , , &U _line1 -> # _line1 `ui :s 19C ]
+"278
+[; ;../app/menu.c: 278:         snprintf(line2, sizeof(line2), "Temp: ERROR");
+[e ( _snprintf (2 , , &U _line2 -> # _line2 `ui :s 20C ]
+"279
+[; ;../app/menu.c: 279:     }
 }
-[e :U 3342 ]
-"310
-[; ;../app/menu.c: 310:     Lcd_Set_Cursor(0, 0);
+[e :U 3337 ]
+"281
+[; ;../app/menu.c: 281:     Lcd_Set_Cursor(0, 0);
 [e ( _Lcd_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
-"311
-[; ;../app/menu.c: 311:     Lcd_Write_String(line1);
+"282
+[; ;../app/menu.c: 282:     Lcd_Write_String(line1);
 [e ( _Lcd_Write_String (1 -> &U _line1 `*Cuc ]
-"312
-[; ;../app/menu.c: 312:     Lcd_Set_Cursor(1, 0);
+"283
+[; ;../app/menu.c: 283:     Lcd_Set_Cursor(1, 0);
 [e ( _Lcd_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
-"313
-[; ;../app/menu.c: 313:     Lcd_Write_String(line2);
+"284
+[; ;../app/menu.c: 284:     Lcd_Write_String(line2);
 [e ( _Lcd_Write_String (1 -> &U _line2 `*Cuc ]
-"314
-[; ;../app/menu.c: 314: }
-[e :UE 3340 ]
+"285
+[; ;../app/menu.c: 285: }
+[e :UE 3335 ]
 }
-"317
-[; ;../app/menu.c: 317: static void display_datalogger_submenu(void) {
+"288
+[; ;../app/menu.c: 288: static void display_datalogger_submenu(void) {
 [v _display_datalogger_submenu `(v ~T0 @X0 1 sf ]
 {
 [e :U _display_datalogger_submenu ]
 [f ]
-"318
-[; ;../app/menu.c: 318:     char line1[16 + 1];
+"289
+[; ;../app/menu.c: 289:     char line1[16 + 1];
 [v _line1 `uc ~T0 @X0 -> 17 `i a ]
-"319
-[; ;../app/menu.c: 319:     char line2[16 + 1];
+"290
+[; ;../app/menu.c: 290:     char line2[16 + 1];
 [v _line2 `uc ~T0 @X0 -> 17 `i a ]
-"322
-[; ;../app/menu.c: 322:     dl_get_config(&dl_config);
+"293
+[; ;../app/menu.c: 293:     dl_get_config(&dl_config);
 [e ( _dl_get_config (1 &U _dl_config ]
-"324
-[; ;../app/menu.c: 324:     if (ctx.state == MENU_STATE_EDIT_VALUE) {
-[e $ ! == -> . _ctx 0 `ui -> . `E36 4 `ui 3344  ]
+"295
+[; ;../app/menu.c: 295:     if (ctx.state == MENU_STATE_EDIT_VALUE) {
+[e $ ! == -> . _ctx 0 `ui -> . `E36 4 `ui 3339  ]
 {
-"326
-[; ;../app/menu.c: 326:         if (ctx.dl_edit_field == FIELD_DL_DELTA_T) {
-[e $ ! == -> . _ctx 8 `ui -> . `E59 0 `ui 3345  ]
+"297
+[; ;../app/menu.c: 297:         if (ctx.dl_edit_field == FIELD_DL_DELTA_T) {
+[e $ ! == -> . _ctx 7 `ui -> . `E59 0 `ui 3340  ]
 {
-"327
-[; ;../app/menu.c: 327:             snprintf(line1, sizeof(line1), "Delta t:%d min", edit_delta_t);
-[e ( _snprintf (2 , (. , , &U _line1 -> # _line1 `ui :s 26C -> _edit_delta_t `i ]
-"328
-[; ;../app/menu.c: 328:             snprintf(line2, sizeof(line2), "UP/DOWN modifier");
-[e ( _snprintf (2 , , &U _line2 -> # _line2 `ui :s 27C ]
-"331
-[; ;../app/menu.c: 331:             if (blink_state) {
-[e $ ! != -> _blink_state `i -> 0 `i 3346  ]
+"298
+[; ;../app/menu.c: 298:             snprintf(line1, sizeof(line1), "Delta t:%d min", edit_delta_t);
+[e ( _snprintf (2 , (. , , &U _line1 -> # _line1 `ui :s 21C -> _edit_delta_t `i ]
+"299
+[; ;../app/menu.c: 299:             snprintf(line2, sizeof(line2), "UP/DOWN modifier");
+[e ( _snprintf (2 , , &U _line2 -> # _line2 `ui :s 22C ]
+"302
+[; ;../app/menu.c: 302:             if (blink_state) {
+[e $ ! != -> _blink_state `i -> 0 `i 3341  ]
 {
-"332
-[; ;../app/menu.c: 332:                 Lcd_Set_Cursor(0, 8);
+"303
+[; ;../app/menu.c: 303:                 Lcd_Set_Cursor(0, 8);
 [e ( _Lcd_Set_Cursor (2 , -> -> 0 `i `uc -> -> 8 `i `uc ]
-"333
-[; ;../app/menu.c: 333:                 Lcd_Write_String("___");
-[e ( _Lcd_Write_String (1 :s 28C ]
-"334
-[; ;../app/menu.c: 334:             }
+"304
+[; ;../app/menu.c: 304:                 Lcd_Write_String("___");
+[e ( _Lcd_Write_String (1 :s 23C ]
+"305
+[; ;../app/menu.c: 305:             }
 }
-[e :U 3346 ]
-"335
-[; ;../app/menu.c: 335:         } else {
+[e :U 3341 ]
+"306
+[; ;../app/menu.c: 306:         } else {
 }
-[e $U 3347  ]
-[e :U 3345 ]
+[e $U 3342  ]
+[e :U 3340 ]
 {
-"337
-[; ;../app/menu.c: 337:             const char* status = dl_config.running ? "RUNNING" : "STOPPED";
+"308
+[; ;../app/menu.c: 308:             const char* status = dl_config.running ? "RUNNING" : "STOPPED";
 [v _status `*Cuc ~T0 @X0 1 a ]
-[e = _status -> ? != -> . _dl_config 3 `i -> 0 `i : :s 29C :s 30C `*Cuc ]
-"338
-[; ;../app/menu.c: 338:             snprintf(line1, sizeof(line1), "Status:%s", status);
-[e ( _snprintf (2 , (. , , &U _line1 -> # _line1 `ui :s 31C _status ]
-"339
-[; ;../app/menu.c: 339:             snprintf(line2, sizeof(line2), "ENTER:toggle");
-[e ( _snprintf (2 , , &U _line2 -> # _line2 `ui :s 32C ]
-"340
-[; ;../app/menu.c: 340:         }
+[e = _status -> ? != -> . _dl_config 3 `i -> 0 `i : :s 24C :s 25C `*Cuc ]
+"309
+[; ;../app/menu.c: 309:             snprintf(line1, sizeof(line1), "Status:%s", status);
+[e ( _snprintf (2 , (. , , &U _line1 -> # _line1 `ui :s 26C _status ]
+"310
+[; ;../app/menu.c: 310:             snprintf(line2, sizeof(line2), "ENTER:toggle");
+[e ( _snprintf (2 , , &U _line2 -> # _line2 `ui :s 27C ]
+"311
+[; ;../app/menu.c: 311:         }
 }
-[e :U 3347 ]
-"341
-[; ;../app/menu.c: 341:     } else {
+[e :U 3342 ]
+"312
+[; ;../app/menu.c: 312:     } else {
 }
-[e $U 3348  ]
-[e :U 3344 ]
+[e $U 3343  ]
+[e :U 3339 ]
 {
-[v F23494 `*Cuc ~T0 @X0 -> 2 `i s ]
-[i F23494
+[v F23485 `*Cuc ~T0 @X0 -> 2 `i s ]
+[i F23485
 :U ..
-"343
-[; ;../app/menu.c: 343:         const char* options[] = {"Delta t", "Start/Stop"};
-:s 33C
-:s 34C
+"314
+[; ;../app/menu.c: 314:         const char* options[] = {"Delta t", "Start/Stop"};
+:s 28C
+:s 29C
 ..
 ]
 [v _options `*Cuc ~T0 @X0 -> 2 `i a ]
-[e = _options F23494 ]
-"344
-[; ;../app/menu.c: 344:         display_menu_line(0, options[ctx.submenu_index], 1, 0);
+[e = _options F23485 ]
+"315
+[; ;../app/menu.c: 315:         display_menu_line(0, options[ctx.submenu_index], 1, 0);
 [e ( _display_menu_line (4 , , , -> -> 0 `i `uc *U + &U _options * -> . _ctx 2 `ux -> -> # *U &U _options `ui `ux -> -> 1 `i `uc -> -> 0 `i `uc ]
-"346
-[; ;../app/menu.c: 346:         if (ctx.submenu_index == 0) {
-[e $ ! == -> . _ctx 2 `i -> 0 `i 3349  ]
+"317
+[; ;../app/menu.c: 317:         if (ctx.submenu_index == 0) {
+[e $ ! == -> . _ctx 2 `i -> 0 `i 3344  ]
 {
-"347
-[; ;../app/menu.c: 347:             snprintf(line2, sizeof(line2), " %d min", dl_config.sample_period_min);
-[e ( _snprintf (2 , (. , , &U _line2 -> # _line2 `ui :s 35C -> . _dl_config 0 `i ]
-"348
-[; ;../app/menu.c: 348:         } else {
+"318
+[; ;../app/menu.c: 318:             snprintf(line2, sizeof(line2), " %d min", dl_config.sample_period_min);
+[e ( _snprintf (2 , (. , , &U _line2 -> # _line2 `ui :s 30C -> . _dl_config 0 `i ]
+"319
+[; ;../app/menu.c: 319:         } else {
 }
-[e $U 3350  ]
-[e :U 3349 ]
+[e $U 3345  ]
+[e :U 3344 ]
 {
-"349
-[; ;../app/menu.c: 349:             const char* status = dl_config.running ? "RUNNING" : "STOPPED";
+"320
+[; ;../app/menu.c: 320:             const char* status = dl_config.running ? "RUNNING" : "STOPPED";
 [v _status `*Cuc ~T0 @X0 1 a ]
-[e = _status -> ? != -> . _dl_config 3 `i -> 0 `i : :s 36C :s 37C `*Cuc ]
-"350
-[; ;../app/menu.c: 350:             snprintf(line2, sizeof(line2), " %s", status);
-[e ( _snprintf (2 , (. , , &U _line2 -> # _line2 `ui :s 38C _status ]
-"351
-[; ;../app/menu.c: 351:         }
+[e = _status -> ? != -> . _dl_config 3 `i -> 0 `i : :s 31C :s 32C `*Cuc ]
+"321
+[; ;../app/menu.c: 321:             snprintf(line2, sizeof(line2), " %s", status);
+[e ( _snprintf (2 , (. , , &U _line2 -> # _line2 `ui :s 33C _status ]
+"322
+[; ;../app/menu.c: 322:         }
 }
-[e :U 3350 ]
-"353
-[; ;../app/menu.c: 353:         Lcd_Set_Cursor(1, 0);
+[e :U 3345 ]
+"324
+[; ;../app/menu.c: 324:         Lcd_Set_Cursor(1, 0);
 [e ( _Lcd_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
-"354
-[; ;../app/menu.c: 354:         Lcd_Write_String(line2);
+"325
+[; ;../app/menu.c: 325:         Lcd_Write_String(line2);
 [e ( _Lcd_Write_String (1 -> &U _line2 `*Cuc ]
-"355
-[; ;../app/menu.c: 355:         return;
-[e $UE 3343  ]
-"356
-[; ;../app/menu.c: 356:     }
+"326
+[; ;../app/menu.c: 326:         return;
+[e $UE 3338  ]
+"327
+[; ;../app/menu.c: 327:     }
 }
-[e :U 3348 ]
-"358
-[; ;../app/menu.c: 358:     Lcd_Set_Cursor(0, 0);
+[e :U 3343 ]
+"329
+[; ;../app/menu.c: 329:     Lcd_Set_Cursor(0, 0);
 [e ( _Lcd_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
-"359
-[; ;../app/menu.c: 359:     Lcd_Write_String(line1);
+"330
+[; ;../app/menu.c: 330:     Lcd_Write_String(line1);
 [e ( _Lcd_Write_String (1 -> &U _line1 `*Cuc ]
-"360
-[; ;../app/menu.c: 360:     Lcd_Set_Cursor(1, 0);
+"331
+[; ;../app/menu.c: 331:     Lcd_Set_Cursor(1, 0);
 [e ( _Lcd_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
-"361
-[; ;../app/menu.c: 361:     Lcd_Write_String(line2);
+"332
+[; ;../app/menu.c: 332:     Lcd_Write_String(line2);
 [e ( _Lcd_Write_String (1 -> &U _line2 `*Cuc ]
-"362
-[; ;../app/menu.c: 362: }
-[e :UE 3343 ]
+"333
+[; ;../app/menu.c: 333: }
+[e :UE 3338 ]
 }
-"365
-[; ;../app/menu.c: 365: static void display_clear_eeprom(void) {
+"336
+[; ;../app/menu.c: 336: static void display_clear_eeprom(void) {
 [v _display_clear_eeprom `(v ~T0 @X0 1 sf ]
 {
 [e :U _display_clear_eeprom ]
 [f ]
-"366
-[; ;../app/menu.c: 366:     char line1[16 + 1];
+"337
+[; ;../app/menu.c: 337:     char line1[16 + 1];
 [v _line1 `uc ~T0 @X0 -> 17 `i a ]
-"367
-[; ;../app/menu.c: 367:     char line2[16 + 1];
+"338
+[; ;../app/menu.c: 338:     char line2[16 + 1];
 [v _line2 `uc ~T0 @X0 -> 17 `i a ]
-"369
-[; ;../app/menu.c: 369:     if (ctx.state == MENU_STATE_EDIT_VALUE) {
-[e $ ! == -> . _ctx 0 `ui -> . `E36 4 `ui 3352  ]
+"340
+[; ;../app/menu.c: 340:     if (ctx.state == MENU_STATE_EDIT_VALUE) {
+[e $ ! == -> . _ctx 0 `ui -> . `E36 4 `ui 3347  ]
 {
-"371
-[; ;../app/menu.c: 371:         snprintf(line1, sizeof(line1), "Clearing...");
-[e ( _snprintf (2 , , &U _line1 -> # _line1 `ui :s 39C ]
-"372
-[; ;../app/menu.c: 372:         snprintf(line2, sizeof(line2), "Please wait");
-[e ( _snprintf (2 , , &U _line2 -> # _line2 `ui :s 40C ]
-"373
-[; ;../app/menu.c: 373:     } else {
+"342
+[; ;../app/menu.c: 342:         snprintf(line1, sizeof(line1), "Clearing...");
+[e ( _snprintf (2 , , &U _line1 -> # _line1 `ui :s 34C ]
+"343
+[; ;../app/menu.c: 343:         snprintf(line2, sizeof(line2), "Please wait");
+[e ( _snprintf (2 , , &U _line2 -> # _line2 `ui :s 35C ]
+"344
+[; ;../app/menu.c: 344:     } else {
 }
-[e $U 3353  ]
-[e :U 3352 ]
+[e $U 3348  ]
+[e :U 3347 ]
 {
-"374
-[; ;../app/menu.c: 374:         snprintf(line1, sizeof(line1), "Clear EEPROM?");
-[e ( _snprintf (2 , , &U _line1 -> # _line1 `ui :s 41C ]
-"375
-[; ;../app/menu.c: 375:         snprintf(line2, sizeof(line2), "ENTER:Yes BACK:No");
-[e ( _snprintf (2 , , &U _line2 -> # _line2 `ui :s 42C ]
-"376
-[; ;../app/menu.c: 376:     }
+"345
+[; ;../app/menu.c: 345:         snprintf(line1, sizeof(line1), "Clear EEPROM?");
+[e ( _snprintf (2 , , &U _line1 -> # _line1 `ui :s 36C ]
+"346
+[; ;../app/menu.c: 346:         snprintf(line2, sizeof(line2), "ENTER:Yes BACK:No");
+[e ( _snprintf (2 , , &U _line2 -> # _line2 `ui :s 37C ]
+"347
+[; ;../app/menu.c: 347:     }
 }
-[e :U 3353 ]
-"378
-[; ;../app/menu.c: 378:     Lcd_Set_Cursor(0, 0);
+[e :U 3348 ]
+"349
+[; ;../app/menu.c: 349:     Lcd_Set_Cursor(0, 0);
 [e ( _Lcd_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
-"379
-[; ;../app/menu.c: 379:     Lcd_Write_String(line1);
+"350
+[; ;../app/menu.c: 350:     Lcd_Write_String(line1);
 [e ( _Lcd_Write_String (1 -> &U _line1 `*Cuc ]
-"380
-[; ;../app/menu.c: 380:     Lcd_Set_Cursor(1, 0);
+"351
+[; ;../app/menu.c: 351:     Lcd_Set_Cursor(1, 0);
 [e ( _Lcd_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
-"381
-[; ;../app/menu.c: 381:     Lcd_Write_String(line2);
+"352
+[; ;../app/menu.c: 352:     Lcd_Write_String(line2);
 [e ( _Lcd_Write_String (1 -> &U _line2 `*Cuc ]
-"382
-[; ;../app/menu.c: 382: }
-[e :UE 3351 ]
+"353
+[; ;../app/menu.c: 353: }
+[e :UE 3346 ]
 }
-"389
-[; ;../app/menu.c: 389: static void handle_main_menu(void) {
+"360
+[; ;../app/menu.c: 360: static void handle_main_menu(void) {
 [v _handle_main_menu `(v ~T0 @X0 1 sf ]
 {
 [e :U _handle_main_menu ]
 [f ]
-"391
-[; ;../app/menu.c: 391:     if (button_pressed(BTN_DOWN)) {
-[e $ ! != -> ( _button_pressed (1 . `E79 1 `i -> 0 `i 3355  ]
+"362
+[; ;../app/menu.c: 362:     if (button_pressed(BTN_DOWN)) {
+[e $ ! != -> ( _button_pressed (1 . `E78 1 `i -> 0 `i 3350  ]
 {
-"392
-[; ;../app/menu.c: 392:         ctx.main_index = (ctx.main_index + 1) % 5;
+"363
+[; ;../app/menu.c: 363:         ctx.main_index = (ctx.main_index + 1) % 5;
 [e = . _ctx 1 -> % + -> . _ctx 1 `i -> 1 `i -> 5 `i `uc ]
-"393
-[; ;../app/menu.c: 393:         ctx.scroll_offset = 0;
+"364
+[; ;../app/menu.c: 364:         ctx.scroll_offset = 0;
 [e = . _ctx 4 -> -> 0 `i `uc ]
-"394
-[; ;../app/menu.c: 394:         ctx.scroll_counter = 0;
-[e = . _ctx 5 -> -> 0 `i `us ]
-"395
-[; ;../app/menu.c: 395:     }
+"365
+[; ;../app/menu.c: 365:         last_scroll_tick = g_menu_tick_10ms;
+[e = _last_scroll_tick _g_menu_tick_10ms ]
+"366
+[; ;../app/menu.c: 366:     }
 }
-[e :U 3355 ]
-"397
-[; ;../app/menu.c: 397:     if (button_pressed(BTN_UP)) {
-[e $ ! != -> ( _button_pressed (1 . `E79 0 `i -> 0 `i 3356  ]
+[e :U 3350 ]
+"368
+[; ;../app/menu.c: 368:     if (button_pressed(BTN_UP)) {
+[e $ ! != -> ( _button_pressed (1 . `E78 0 `i -> 0 `i 3351  ]
 {
-"398
-[; ;../app/menu.c: 398:         if (ctx.main_index == 0) {
-[e $ ! == -> . _ctx 1 `i -> 0 `i 3357  ]
+"369
+[; ;../app/menu.c: 369:         if (ctx.main_index == 0) {
+[e $ ! == -> . _ctx 1 `i -> 0 `i 3352  ]
 {
-"399
-[; ;../app/menu.c: 399:             ctx.main_index = 5 - 1;
+"370
+[; ;../app/menu.c: 370:             ctx.main_index = 5 - 1;
 [e = . _ctx 1 -> - -> 5 `i -> 1 `i `uc ]
-"400
-[; ;../app/menu.c: 400:         } else {
+"371
+[; ;../app/menu.c: 371:         } else {
 }
-[e $U 3358  ]
-[e :U 3357 ]
+[e $U 3353  ]
+[e :U 3352 ]
 {
-"401
-[; ;../app/menu.c: 401:             ctx.main_index--;
+"372
+[; ;../app/menu.c: 372:             ctx.main_index--;
 [e -- . _ctx 1 -> -> 1 `i `uc ]
-"402
-[; ;../app/menu.c: 402:         }
+"373
+[; ;../app/menu.c: 373:         }
 }
-[e :U 3358 ]
-"403
-[; ;../app/menu.c: 403:         ctx.scroll_offset = 0;
+[e :U 3353 ]
+"374
+[; ;../app/menu.c: 374:         ctx.scroll_offset = 0;
 [e = . _ctx 4 -> -> 0 `i `uc ]
-"404
-[; ;../app/menu.c: 404:         ctx.scroll_counter = 0;
-[e = . _ctx 5 -> -> 0 `i `us ]
-"405
-[; ;../app/menu.c: 405:     }
+"375
+[; ;../app/menu.c: 375:         last_scroll_tick = g_menu_tick_10ms;
+[e = _last_scroll_tick _g_menu_tick_10ms ]
+"376
+[; ;../app/menu.c: 376:     }
+}
+[e :U 3351 ]
+"379
+[; ;../app/menu.c: 379:     if (button_pressed(BTN_ENTER)) {
+[e $ ! != -> ( _button_pressed (1 . `E78 2 `i -> 0 `i 3354  ]
+{
+"380
+[; ;../app/menu.c: 380:         ctx.current_submenu = (submenu_type_t)ctx.main_index;
+[e = . _ctx 3 -> . _ctx 1 `E43 ]
+"381
+[; ;../app/menu.c: 381:         ctx.submenu_index = 0;
+[e = . _ctx 2 -> -> 0 `i `uc ]
+"382
+[; ;../app/menu.c: 382:         ctx.scroll_offset = 0;
+[e = . _ctx 4 -> -> 0 `i `uc ]
+"383
+[; ;../app/menu.c: 383:         last_scroll_tick = g_menu_tick_10ms;
+[e = _last_scroll_tick _g_menu_tick_10ms ]
+"385
+[; ;../app/menu.c: 385:         if (ctx.current_submenu == SUBMENU_DATETIME ||
+[e $ ! || == -> . _ctx 3 `ui -> . `E43 0 `ui == -> . _ctx 3 `ui -> . `E43 3 `ui 3355  ]
+"386
+[; ;../app/menu.c: 386:             ctx.current_submenu == SUBMENU_DATALOGGER) {
+{
+"387
+[; ;../app/menu.c: 387:             ctx.state = MENU_STATE_SUBMENU;
+[e = . _ctx 0 . `E36 1 ]
+"388
+[; ;../app/menu.c: 388:         } else {
+}
+[e $U 3356  ]
+[e :U 3355 ]
+{
+"389
+[; ;../app/menu.c: 389:             ctx.state = MENU_STATE_DISPLAY;
+[e = . _ctx 0 . `E36 2 ]
+"390
+[; ;../app/menu.c: 390:         }
 }
 [e :U 3356 ]
-"408
-[; ;../app/menu.c: 408:     if (button_pressed(BTN_ENTER)) {
-[e $ ! != -> ( _button_pressed (1 . `E79 2 `i -> 0 `i 3359  ]
-{
-"409
-[; ;../app/menu.c: 409:         ctx.current_submenu = (submenu_type_t)ctx.main_index;
-[e = . _ctx 3 -> . _ctx 1 `E43 ]
-"410
-[; ;../app/menu.c: 410:         ctx.submenu_index = 0;
-[e = . _ctx 2 -> -> 0 `i `uc ]
-"411
-[; ;../app/menu.c: 411:         ctx.scroll_offset = 0;
-[e = . _ctx 4 -> -> 0 `i `uc ]
-"412
-[; ;../app/menu.c: 412:         ctx.scroll_counter = 0;
-[e = . _ctx 5 -> -> 0 `i `us ]
-"414
-[; ;../app/menu.c: 414:         if (ctx.current_submenu == SUBMENU_DATETIME ||
-[e $ ! || == -> . _ctx 3 `ui -> . `E43 0 `ui == -> . _ctx 3 `ui -> . `E43 3 `ui 3360  ]
-"415
-[; ;../app/menu.c: 415:             ctx.current_submenu == SUBMENU_DATALOGGER) {
-{
-"416
-[; ;../app/menu.c: 416:             ctx.state = MENU_STATE_SUBMENU;
-[e = . _ctx 0 . `E36 1 ]
-"417
-[; ;../app/menu.c: 417:         } else {
+"391
+[; ;../app/menu.c: 391:     }
 }
-[e $U 3361  ]
-[e :U 3360 ]
+[e :U 3354 ]
+"394
+[; ;../app/menu.c: 394:     if ((g_menu_tick_10ms - last_scroll_tick) >= 100) {
+[e $ ! >= - -> _g_menu_tick_10ms `ui -> _last_scroll_tick `ui -> -> 100 `i `ui 3357  ]
 {
-"418
-[; ;../app/menu.c: 418:             ctx.state = MENU_STATE_DISPLAY;
-[e = . _ctx 0 . `E36 2 ]
-"419
-[; ;../app/menu.c: 419:         }
-}
-[e :U 3361 ]
-"420
-[; ;../app/menu.c: 420:     }
-}
-[e :U 3359 ]
-"423
-[; ;../app/menu.c: 423:     ctx.scroll_counter++;
-[e ++ . _ctx 5 -> -> 1 `i `us ]
-"424
-[; ;../app/menu.c: 424:     if (ctx.scroll_counter > 100) {
-[e $ ! > -> . _ctx 5 `ui -> -> 100 `i `ui 3362  ]
-{
-"425
-[; ;../app/menu.c: 425:         ctx.scroll_counter = 0;
-[e = . _ctx 5 -> -> 0 `i `us ]
-"427
-[; ;../app/menu.c: 427:         const char* current_text = main_menu_items[ctx.main_index];
+"395
+[; ;../app/menu.c: 395:         last_scroll_tick = g_menu_tick_10ms;
+[e = _last_scroll_tick _g_menu_tick_10ms ]
+"397
+[; ;../app/menu.c: 397:         const char* current_text = main_menu_items[ctx.main_index];
 [v _current_text `*Cuc ~T0 @X0 1 a ]
 [e = _current_text *U + &U _main_menu_items * -> . _ctx 1 `ux -> -> # *U &U _main_menu_items `ui `ux ]
-"428
-[; ;../app/menu.c: 428:         uint8_t text_len = strlen(current_text);
+"398
+[; ;../app/menu.c: 398:         uint8_t text_len = strlen(current_text);
 [v _text_len `uc ~T0 @X0 1 a ]
 [e = _text_len -> ( _strlen (1 _current_text `uc ]
-"429
-[; ;../app/menu.c: 429:         uint8_t prefix_len = 2;
+"399
+[; ;../app/menu.c: 399:         uint8_t prefix_len = 2;
 [v _prefix_len `uc ~T0 @X0 1 a ]
 [e = _prefix_len -> -> 2 `i `uc ]
-"431
-[; ;../app/menu.c: 431:         if (text_len - prefix_len > 16 - 1 - prefix_len) {
-[e $ ! > - -> _text_len `i -> _prefix_len `i - - -> 16 `i -> 1 `i -> _prefix_len `i 3363  ]
+"401
+[; ;../app/menu.c: 401:         if (text_len - prefix_len > 16 - 1 - prefix_len) {
+[e $ ! > - -> _text_len `i -> _prefix_len `i - - -> 16 `i -> 1 `i -> _prefix_len `i 3358  ]
 {
-"432
-[; ;../app/menu.c: 432:             ctx.scroll_offset++;
+"402
+[; ;../app/menu.c: 402:             ctx.scroll_offset++;
 [e ++ . _ctx 4 -> -> 1 `i `uc ]
-"433
-[; ;../app/menu.c: 433:             if (ctx.scroll_offset > text_len - (16 - 1)) {
-[e $ ! > -> . _ctx 4 `i - -> _text_len `i - -> 16 `i -> 1 `i 3364  ]
+"403
+[; ;../app/menu.c: 403:             if (ctx.scroll_offset > text_len - (16 - 1)) {
+[e $ ! > -> . _ctx 4 `i - -> _text_len `i - -> 16 `i -> 1 `i 3359  ]
 {
-"434
-[; ;../app/menu.c: 434:                 ctx.scroll_offset = 0;
+"404
+[; ;../app/menu.c: 404:                 ctx.scroll_offset = 0;
 [e = . _ctx 4 -> -> 0 `i `uc ]
-"435
-[; ;../app/menu.c: 435:             }
+"405
+[; ;../app/menu.c: 405:             }
 }
-[e :U 3364 ]
-"436
-[; ;../app/menu.c: 436:         }
+[e :U 3359 ]
+"406
+[; ;../app/menu.c: 406:         }
 }
-[e :U 3363 ]
-"437
-[; ;../app/menu.c: 437:     }
+[e :U 3358 ]
+"407
+[; ;../app/menu.c: 407:     }
 }
-[e :U 3362 ]
-"438
-[; ;../app/menu.c: 438: }
-[e :UE 3354 ]
+[e :U 3357 ]
+"408
+[; ;../app/menu.c: 408: }
+[e :UE 3349 ]
 }
-"441
-[; ;../app/menu.c: 441: static void handle_datetime_submenu(void) {
+"411
+[; ;../app/menu.c: 411: static void handle_datetime_submenu(void) {
 [v _handle_datetime_submenu `(v ~T0 @X0 1 sf ]
 {
 [e :U _handle_datetime_submenu ]
 [f ]
-"443
-[; ;../app/menu.c: 443:     if (button_pressed(BTN_DOWN)) {
-[e $ ! != -> ( _button_pressed (1 . `E79 1 `i -> 0 `i 3366  ]
+"413
+[; ;../app/menu.c: 413:     if (button_pressed(BTN_DOWN)) {
+[e $ ! != -> ( _button_pressed (1 . `E78 1 `i -> 0 `i 3361  ]
 {
-"444
-[; ;../app/menu.c: 444:         ctx.submenu_index = (ctx.submenu_index + 1) % 2;
+"414
+[; ;../app/menu.c: 414:         ctx.submenu_index = (ctx.submenu_index + 1) % 2;
 [e = . _ctx 2 -> % + -> . _ctx 2 `i -> 1 `i -> 2 `i `uc ]
-"445
-[; ;../app/menu.c: 445:     }
+"415
+[; ;../app/menu.c: 415:     }
 }
-[e :U 3366 ]
-"447
-[; ;../app/menu.c: 447:     if (button_pressed(BTN_UP)) {
-[e $ ! != -> ( _button_pressed (1 . `E79 0 `i -> 0 `i 3367  ]
+[e :U 3361 ]
+"417
+[; ;../app/menu.c: 417:     if (button_pressed(BTN_UP)) {
+[e $ ! != -> ( _button_pressed (1 . `E78 0 `i -> 0 `i 3362  ]
 {
-"448
-[; ;../app/menu.c: 448:         ctx.submenu_index = (ctx.submenu_index == 0) ? 1 : 0;
+"418
+[; ;../app/menu.c: 418:         ctx.submenu_index = (ctx.submenu_index == 0) ? 1 : 0;
 [e = . _ctx 2 -> ? == -> . _ctx 2 `i -> 0 `i : -> 1 `i -> 0 `i `uc ]
-"449
-[; ;../app/menu.c: 449:     }
+"419
+[; ;../app/menu.c: 419:     }
 }
-[e :U 3367 ]
-"452
-[; ;../app/menu.c: 452:     if (button_pressed(BTN_ENTER)) {
-[e $ ! != -> ( _button_pressed (1 . `E79 2 `i -> 0 `i 3368  ]
+[e :U 3362 ]
+"422
+[; ;../app/menu.c: 422:     if (button_pressed(BTN_ENTER)) {
+[e $ ! != -> ( _button_pressed (1 . `E78 2 `i -> 0 `i 3363  ]
 {
-"453
-[; ;../app/menu.c: 453:         rtc_get_time(&edit_time);
+"423
+[; ;../app/menu.c: 423:         rtc_get_time(&edit_time);
 [e ( _rtc_get_time (1 &U _edit_time ]
-"454
-[; ;../app/menu.c: 454:         ctx.edit_field = (ctx.submenu_index == 0) ? FIELD_DAY : FIELD_HOUR;
-[e = . _ctx 7 -> ? == -> . _ctx 2 `i -> 0 `i : . `E50 0 . `E50 3 `E50 ]
-"455
-[; ;../app/menu.c: 455:         ctx.state = MENU_STATE_EDIT_VALUE;
+"424
+[; ;../app/menu.c: 424:         ctx.edit_field = (ctx.submenu_index == 0) ? FIELD_DAY : FIELD_HOUR;
+[e = . _ctx 6 -> ? == -> . _ctx 2 `i -> 0 `i : . `E50 0 . `E50 3 `E50 ]
+"425
+[; ;../app/menu.c: 425:         ctx.state = MENU_STATE_EDIT_VALUE;
 [e = . _ctx 0 . `E36 4 ]
-"456
-[; ;../app/menu.c: 456:         blink_counter = 0;
-[e = _blink_counter -> -> 0 `i `us ]
-"457
-[; ;../app/menu.c: 457:         blink_state = 1;
+"426
+[; ;../app/menu.c: 426:         last_blink_tick = g_menu_tick_10ms;
+[e = _last_blink_tick _g_menu_tick_10ms ]
+"427
+[; ;../app/menu.c: 427:         blink_state = 1;
 [e = _blink_state -> -> 1 `i `uc ]
-"458
-[; ;../app/menu.c: 458:     }
+"428
+[; ;../app/menu.c: 428:     }
 }
-[e :U 3368 ]
-"461
-[; ;../app/menu.c: 461:     if (button_pressed(BTN_BACK)) {
-[e $ ! != -> ( _button_pressed (1 . `E79 3 `i -> 0 `i 3369  ]
+[e :U 3363 ]
+"431
+[; ;../app/menu.c: 431:     if (button_pressed(BTN_BACK)) {
+[e $ ! != -> ( _button_pressed (1 . `E78 3 `i -> 0 `i 3364  ]
 {
-"462
-[; ;../app/menu.c: 462:         ctx.state = MENU_STATE_MAIN;
+"432
+[; ;../app/menu.c: 432:         ctx.state = MENU_STATE_MAIN;
 [e = . _ctx 0 . `E36 0 ]
-"463
-[; ;../app/menu.c: 463:     }
+"433
+[; ;../app/menu.c: 433:     }
 }
-[e :U 3369 ]
-"464
-[; ;../app/menu.c: 464: }
-[e :UE 3365 ]
+[e :U 3364 ]
+"434
+[; ;../app/menu.c: 434: }
+[e :UE 3360 ]
 }
-"467
-[; ;../app/menu.c: 467: static void handle_datetime_edit(void) {
+"437
+[; ;../app/menu.c: 437: static void handle_datetime_edit(void) {
 [v _handle_datetime_edit `(v ~T0 @X0 1 sf ]
 {
 [e :U _handle_datetime_edit ]
 [f ]
-"468
-[; ;../app/menu.c: 468:     uint8_t value = get_field_value(ctx.edit_field);
+"438
+[; ;../app/menu.c: 438:     uint8_t value = get_field_value(ctx.edit_field);
 [v _value `uc ~T0 @X0 1 a ]
-[e = _value ( _get_field_value (1 . _ctx 7 ]
-"469
-[; ;../app/menu.c: 469:     uint8_t min_val = get_field_min(ctx.edit_field);
+[e = _value ( _get_field_value (1 . _ctx 6 ]
+"439
+[; ;../app/menu.c: 439:     uint8_t min_val = get_field_min(ctx.edit_field);
 [v _min_val `uc ~T0 @X0 1 a ]
-[e = _min_val ( _get_field_min (1 . _ctx 7 ]
-"470
-[; ;../app/menu.c: 470:     uint8_t max_val = get_field_max(ctx.edit_field);
+[e = _min_val ( _get_field_min (1 . _ctx 6 ]
+"440
+[; ;../app/menu.c: 440:     uint8_t max_val = get_field_max(ctx.edit_field);
 [v _max_val `uc ~T0 @X0 1 a ]
-[e = _max_val ( _get_field_max (1 . _ctx 7 ]
-"473
-[; ;../app/menu.c: 473:     if (button_pressed(BTN_UP)) {
-[e $ ! != -> ( _button_pressed (1 . `E79 0 `i -> 0 `i 3371  ]
+[e = _max_val ( _get_field_max (1 . _ctx 6 ]
+"443
+[; ;../app/menu.c: 443:     if (button_pressed(BTN_UP)) {
+[e $ ! != -> ( _button_pressed (1 . `E78 0 `i -> 0 `i 3366  ]
 {
-"474
-[; ;../app/menu.c: 474:         value++;
+"444
+[; ;../app/menu.c: 444:         value++;
 [e ++ _value -> -> 1 `i `uc ]
-"475
-[; ;../app/menu.c: 475:         if (value > max_val) value = min_val;
-[e $ ! > -> _value `i -> _max_val `i 3372  ]
+"445
+[; ;../app/menu.c: 445:         if (value > max_val) value = min_val;
+[e $ ! > -> _value `i -> _max_val `i 3367  ]
 [e = _value _min_val ]
-[e :U 3372 ]
-"476
-[; ;../app/menu.c: 476:         set_field_value(ctx.edit_field, value);
-[e ( _set_field_value (2 , . _ctx 7 _value ]
-"477
-[; ;../app/menu.c: 477:     }
+[e :U 3367 ]
+"446
+[; ;../app/menu.c: 446:         set_field_value(ctx.edit_field, value);
+[e ( _set_field_value (2 , . _ctx 6 _value ]
+"447
+[; ;../app/menu.c: 447:     }
 }
-[e :U 3371 ]
-"480
-[; ;../app/menu.c: 480:     if (button_pressed(BTN_DOWN)) {
-[e $ ! != -> ( _button_pressed (1 . `E79 1 `i -> 0 `i 3373  ]
+[e :U 3366 ]
+"450
+[; ;../app/menu.c: 450:     if (button_pressed(BTN_DOWN)) {
+[e $ ! != -> ( _button_pressed (1 . `E78 1 `i -> 0 `i 3368  ]
 {
-"481
-[; ;../app/menu.c: 481:         if (value <= min_val) {
-[e $ ! <= -> _value `i -> _min_val `i 3374  ]
+"451
+[; ;../app/menu.c: 451:         if (value <= min_val) {
+[e $ ! <= -> _value `i -> _min_val `i 3369  ]
 {
-"482
-[; ;../app/menu.c: 482:             value = max_val;
+"452
+[; ;../app/menu.c: 452:             value = max_val;
 [e = _value _max_val ]
-"483
-[; ;../app/menu.c: 483:         } else {
+"453
+[; ;../app/menu.c: 453:         } else {
+}
+[e $U 3370  ]
+[e :U 3369 ]
+{
+"454
+[; ;../app/menu.c: 454:             value--;
+[e -- _value -> -> 1 `i `uc ]
+"455
+[; ;../app/menu.c: 455:         }
+}
+[e :U 3370 ]
+"456
+[; ;../app/menu.c: 456:         set_field_value(ctx.edit_field, value);
+[e ( _set_field_value (2 , . _ctx 6 _value ]
+"457
+[; ;../app/menu.c: 457:     }
+}
+[e :U 3368 ]
+"460
+[; ;../app/menu.c: 460:     if (button_pressed(BTN_ENTER)) {
+[e $ ! != -> ( _button_pressed (1 . `E78 2 `i -> 0 `i 3371  ]
+{
+"462
+[; ;../app/menu.c: 462:         if (ctx.submenu_index == 0) {
+[e $ ! == -> . _ctx 2 `i -> 0 `i 3372  ]
+{
+"463
+[; ;../app/menu.c: 463:             if (ctx.edit_field == FIELD_DAY) {
+[e $ ! == -> . _ctx 6 `ui -> . `E50 0 `ui 3373  ]
+{
+"464
+[; ;../app/menu.c: 464:                 ctx.edit_field = FIELD_MONTH;
+[e = . _ctx 6 . `E50 1 ]
+"465
+[; ;../app/menu.c: 465:             } else {
+}
+[e $U 3374  ]
+[e :U 3373 ]
+{
+"467
+[; ;../app/menu.c: 467:                 rtc_set_time(&edit_time);
+[e ( _rtc_set_time (1 -> &U _edit_time `*CS3251 ]
+"468
+[; ;../app/menu.c: 468:                 ctx.state = MENU_STATE_SUBMENU;
+[e = . _ctx 0 . `E36 1 ]
+"469
+[; ;../app/menu.c: 469:             }
+}
+[e :U 3374 ]
+"470
+[; ;../app/menu.c: 470:         } else {
 }
 [e $U 3375  ]
-[e :U 3374 ]
+[e :U 3372 ]
 {
-"484
-[; ;../app/menu.c: 484:             value--;
-[e -- _value -> -> 1 `i `uc ]
-"485
-[; ;../app/menu.c: 485:         }
+"471
+[; ;../app/menu.c: 471:             if (ctx.edit_field == FIELD_HOUR) {
+[e $ ! == -> . _ctx 6 `ui -> . `E50 3 `ui 3376  ]
+{
+"472
+[; ;../app/menu.c: 472:                 ctx.edit_field = FIELD_MINUTE;
+[e = . _ctx 6 . `E50 4 ]
+"473
+[; ;../app/menu.c: 473:             } else {
+}
+[e $U 3377  ]
+[e :U 3376 ]
+{
+"475
+[; ;../app/menu.c: 475:                 rtc_set_time(&edit_time);
+[e ( _rtc_set_time (1 -> &U _edit_time `*CS3251 ]
+"476
+[; ;../app/menu.c: 476:                 ctx.state = MENU_STATE_SUBMENU;
+[e = . _ctx 0 . `E36 1 ]
+"477
+[; ;../app/menu.c: 477:             }
+}
+[e :U 3377 ]
+"478
+[; ;../app/menu.c: 478:         }
 }
 [e :U 3375 ]
-"486
-[; ;../app/menu.c: 486:         set_field_value(ctx.edit_field, value);
-[e ( _set_field_value (2 , . _ctx 7 _value ]
-"487
-[; ;../app/menu.c: 487:     }
+"479
+[; ;../app/menu.c: 479:     }
 }
-[e :U 3373 ]
-"490
-[; ;../app/menu.c: 490:     if (button_pressed(BTN_ENTER)) {
-[e $ ! != -> ( _button_pressed (1 . `E79 2 `i -> 0 `i 3376  ]
+[e :U 3371 ]
+"482
+[; ;../app/menu.c: 482:     if (button_pressed(BTN_BACK)) {
+[e $ ! != -> ( _button_pressed (1 . `E78 3 `i -> 0 `i 3378  ]
 {
-"492
-[; ;../app/menu.c: 492:         if (ctx.submenu_index == 0) {
-[e $ ! == -> . _ctx 2 `i -> 0 `i 3377  ]
-{
-"493
-[; ;../app/menu.c: 493:             if (ctx.edit_field == FIELD_DAY) {
-[e $ ! == -> . _ctx 7 `ui -> . `E50 0 `ui 3378  ]
-{
-"494
-[; ;../app/menu.c: 494:                 ctx.edit_field = FIELD_MONTH;
-[e = . _ctx 7 . `E50 1 ]
-"495
-[; ;../app/menu.c: 495:             } else {
-}
-[e $U 3379  ]
-[e :U 3378 ]
-{
-"497
-[; ;../app/menu.c: 497:                 rtc_set_time(&edit_time);
-[e ( _rtc_set_time (1 -> &U _edit_time `*CS3251 ]
-"498
-[; ;../app/menu.c: 498:                 ctx.state = MENU_STATE_SUBMENU;
+"483
+[; ;../app/menu.c: 483:         ctx.state = MENU_STATE_SUBMENU;
 [e = . _ctx 0 . `E36 1 ]
-"499
-[; ;../app/menu.c: 499:             }
+"484
+[; ;../app/menu.c: 484:     }
+}
+[e :U 3378 ]
+"487
+[; ;../app/menu.c: 487:     if ((g_menu_tick_10ms - last_blink_tick) >= 25) {
+[e $ ! >= - -> _g_menu_tick_10ms `ui -> _last_blink_tick `ui -> -> 25 `i `ui 3379  ]
+{
+"488
+[; ;../app/menu.c: 488:         last_blink_tick = g_menu_tick_10ms;
+[e = _last_blink_tick _g_menu_tick_10ms ]
+"489
+[; ;../app/menu.c: 489:         blink_state = !blink_state;
+[e = _blink_state -> -> ! != -> _blink_state `i -> 0 `i `i `uc ]
+"490
+[; ;../app/menu.c: 490:     }
 }
 [e :U 3379 ]
-"500
-[; ;../app/menu.c: 500:         } else {
+"491
+[; ;../app/menu.c: 491: }
+[e :UE 3365 ]
 }
-[e $U 3380  ]
-[e :U 3377 ]
-{
-"501
-[; ;../app/menu.c: 501:             if (ctx.edit_field == FIELD_HOUR) {
-[e $ ! == -> . _ctx 7 `ui -> . `E50 3 `ui 3381  ]
-{
-"502
-[; ;../app/menu.c: 502:                 ctx.edit_field = FIELD_MINUTE;
-[e = . _ctx 7 . `E50 4 ]
-"503
-[; ;../app/menu.c: 503:             } else {
-}
-[e $U 3382  ]
-[e :U 3381 ]
-{
-"505
-[; ;../app/menu.c: 505:                 rtc_set_time(&edit_time);
-[e ( _rtc_set_time (1 -> &U _edit_time `*CS3251 ]
-"506
-[; ;../app/menu.c: 506:                 ctx.state = MENU_STATE_SUBMENU;
-[e = . _ctx 0 . `E36 1 ]
-"507
-[; ;../app/menu.c: 507:             }
-}
-[e :U 3382 ]
-"508
-[; ;../app/menu.c: 508:         }
-}
-[e :U 3380 ]
-"509
-[; ;../app/menu.c: 509:     }
-}
-[e :U 3376 ]
-"512
-[; ;../app/menu.c: 512:     if (button_pressed(BTN_BACK)) {
-[e $ ! != -> ( _button_pressed (1 . `E79 3 `i -> 0 `i 3383  ]
-{
-"513
-[; ;../app/menu.c: 513:         ctx.state = MENU_STATE_SUBMENU;
-[e = . _ctx 0 . `E36 1 ]
-"514
-[; ;../app/menu.c: 514:     }
-}
-[e :U 3383 ]
-"517
-[; ;../app/menu.c: 517:     blink_counter++;
-[e ++ _blink_counter -> -> 1 `i `us ]
-"518
-[; ;../app/menu.c: 518:     if (blink_counter > 25) {
-[e $ ! > -> _blink_counter `ui -> -> 25 `i `ui 3384  ]
-{
-"519
-[; ;../app/menu.c: 519:         blink_counter = 0;
-[e = _blink_counter -> -> 0 `i `us ]
-"520
-[; ;../app/menu.c: 520:         blink_state = !blink_state;
-[e = _blink_state -> -> ! != -> _blink_state `i -> 0 `i `i `uc ]
-"521
-[; ;../app/menu.c: 521:     }
-}
-[e :U 3384 ]
-"522
-[; ;../app/menu.c: 522: }
-[e :UE 3370 ]
-}
-"525
-[; ;../app/menu.c: 525: static void handle_display_state(void) {
+"494
+[; ;../app/menu.c: 494: static void handle_display_state(void) {
 [v _handle_display_state `(v ~T0 @X0 1 sf ]
 {
 [e :U _handle_display_state ]
 [f ]
-"527
-[; ;../app/menu.c: 527:     force_refresh = 1;
+"496
+[; ;../app/menu.c: 496:     force_refresh = 1;
 [e = _force_refresh -> -> 1 `i `uc ]
-"530
-[; ;../app/menu.c: 530:     if (button_pressed(BTN_BACK)) {
-[e $ ! != -> ( _button_pressed (1 . `E79 3 `i -> 0 `i 3386  ]
+"499
+[; ;../app/menu.c: 499:     if (button_pressed(BTN_BACK)) {
+[e $ ! != -> ( _button_pressed (1 . `E78 3 `i -> 0 `i 3381  ]
 {
-"531
-[; ;../app/menu.c: 531:         ctx.state = MENU_STATE_MAIN;
+"500
+[; ;../app/menu.c: 500:         ctx.state = MENU_STATE_MAIN;
 [e = . _ctx 0 . `E36 0 ]
-"532
-[; ;../app/menu.c: 532:         force_refresh = 0;
+"501
+[; ;../app/menu.c: 501:         force_refresh = 0;
 [e = _force_refresh -> -> 0 `i `uc ]
-"533
-[; ;../app/menu.c: 533:     }
+"502
+[; ;../app/menu.c: 502:     }
 }
-[e :U 3386 ]
-"534
-[; ;../app/menu.c: 534: }
-[e :UE 3385 ]
+[e :U 3381 ]
+"503
+[; ;../app/menu.c: 503: }
+[e :UE 3380 ]
 }
-"537
-[; ;../app/menu.c: 537: static void handle_datalogger_submenu(void) {
+"506
+[; ;../app/menu.c: 506: static void handle_datalogger_submenu(void) {
 [v _handle_datalogger_submenu `(v ~T0 @X0 1 sf ]
 {
 [e :U _handle_datalogger_submenu ]
 [f ]
-"539
-[; ;../app/menu.c: 539:     if (button_pressed(BTN_DOWN)) {
-[e $ ! != -> ( _button_pressed (1 . `E79 1 `i -> 0 `i 3388  ]
+"508
+[; ;../app/menu.c: 508:     if (button_pressed(BTN_DOWN)) {
+[e $ ! != -> ( _button_pressed (1 . `E78 1 `i -> 0 `i 3383  ]
 {
-"540
-[; ;../app/menu.c: 540:         ctx.submenu_index = (ctx.submenu_index + 1) % 2;
+"509
+[; ;../app/menu.c: 509:         ctx.submenu_index = (ctx.submenu_index + 1) % 2;
 [e = . _ctx 2 -> % + -> . _ctx 2 `i -> 1 `i -> 2 `i `uc ]
-"541
-[; ;../app/menu.c: 541:     }
+"510
+[; ;../app/menu.c: 510:     }
+}
+[e :U 3383 ]
+"512
+[; ;../app/menu.c: 512:     if (button_pressed(BTN_UP)) {
+[e $ ! != -> ( _button_pressed (1 . `E78 0 `i -> 0 `i 3384  ]
+{
+"513
+[; ;../app/menu.c: 513:         ctx.submenu_index = (ctx.submenu_index == 0) ? 1 : 0;
+[e = . _ctx 2 -> ? == -> . _ctx 2 `i -> 0 `i : -> 1 `i -> 0 `i `uc ]
+"514
+[; ;../app/menu.c: 514:     }
+}
+[e :U 3384 ]
+"517
+[; ;../app/menu.c: 517:     if (button_pressed(BTN_ENTER)) {
+[e $ ! != -> ( _button_pressed (1 . `E78 2 `i -> 0 `i 3385  ]
+{
+"518
+[; ;../app/menu.c: 518:         dl_get_config(&dl_config);
+[e ( _dl_get_config (1 &U _dl_config ]
+"520
+[; ;../app/menu.c: 520:         if (ctx.submenu_index == 0) {
+[e $ ! == -> . _ctx 2 `i -> 0 `i 3386  ]
+{
+"522
+[; ;../app/menu.c: 522:             edit_delta_t = dl_config.sample_period_min;
+[e = _edit_delta_t . _dl_config 0 ]
+"523
+[; ;../app/menu.c: 523:             if (edit_delta_t == 0) edit_delta_t = 1;
+[e $ ! == -> _edit_delta_t `i -> 0 `i 3387  ]
+[e = _edit_delta_t -> -> 1 `i `uc ]
+[e :U 3387 ]
+"524
+[; ;../app/menu.c: 524:             ctx.dl_edit_field = FIELD_DL_DELTA_T;
+[e = . _ctx 7 . `E59 0 ]
+"525
+[; ;../app/menu.c: 525:         } else {
+}
+[e $U 3388  ]
+[e :U 3386 ]
+{
+"527
+[; ;../app/menu.c: 527:             ctx.dl_edit_field = FIELD_DL_START_STOP;
+[e = . _ctx 7 . `E59 1 ]
+"528
+[; ;../app/menu.c: 528:         }
 }
 [e :U 3388 ]
-"543
-[; ;../app/menu.c: 543:     if (button_pressed(BTN_UP)) {
-[e $ ! != -> ( _button_pressed (1 . `E79 0 `i -> 0 `i 3389  ]
+"530
+[; ;../app/menu.c: 530:         ctx.state = MENU_STATE_EDIT_VALUE;
+[e = . _ctx 0 . `E36 4 ]
+"531
+[; ;../app/menu.c: 531:         last_blink_tick = g_menu_tick_10ms;
+[e = _last_blink_tick _g_menu_tick_10ms ]
+"532
+[; ;../app/menu.c: 532:         blink_state = 1;
+[e = _blink_state -> -> 1 `i `uc ]
+"533
+[; ;../app/menu.c: 533:     }
+}
+[e :U 3385 ]
+"536
+[; ;../app/menu.c: 536:     if (button_pressed(BTN_BACK)) {
+[e $ ! != -> ( _button_pressed (1 . `E78 3 `i -> 0 `i 3389  ]
 {
-"544
-[; ;../app/menu.c: 544:         ctx.submenu_index = (ctx.submenu_index == 0) ? 1 : 0;
-[e = . _ctx 2 -> ? == -> . _ctx 2 `i -> 0 `i : -> 1 `i -> 0 `i `uc ]
-"545
-[; ;../app/menu.c: 545:     }
+"537
+[; ;../app/menu.c: 537:         ctx.state = MENU_STATE_MAIN;
+[e = . _ctx 0 . `E36 0 ]
+"538
+[; ;../app/menu.c: 538:     }
 }
 [e :U 3389 ]
-"548
-[; ;../app/menu.c: 548:     if (button_pressed(BTN_ENTER)) {
-[e $ ! != -> ( _button_pressed (1 . `E79 2 `i -> 0 `i 3390  ]
-{
-"549
-[; ;../app/menu.c: 549:         dl_get_config(&dl_config);
-[e ( _dl_get_config (1 &U _dl_config ]
-"551
-[; ;../app/menu.c: 551:         if (ctx.submenu_index == 0) {
-[e $ ! == -> . _ctx 2 `i -> 0 `i 3391  ]
-{
-"553
-[; ;../app/menu.c: 553:             edit_delta_t = dl_config.sample_period_min;
-[e = _edit_delta_t . _dl_config 0 ]
-"554
-[; ;../app/menu.c: 554:             if (edit_delta_t == 0) edit_delta_t = 1;
-[e $ ! == -> _edit_delta_t `i -> 0 `i 3392  ]
-[e = _edit_delta_t -> -> 1 `i `uc ]
-[e :U 3392 ]
-"555
-[; ;../app/menu.c: 555:             ctx.dl_edit_field = FIELD_DL_DELTA_T;
-[e = . _ctx 8 . `E59 0 ]
-"556
-[; ;../app/menu.c: 556:         } else {
+"539
+[; ;../app/menu.c: 539: }
+[e :UE 3382 ]
 }
-[e $U 3393  ]
-[e :U 3391 ]
-{
-"558
-[; ;../app/menu.c: 558:             ctx.dl_edit_field = FIELD_DL_START_STOP;
-[e = . _ctx 8 . `E59 1 ]
-"559
-[; ;../app/menu.c: 559:         }
-}
-[e :U 3393 ]
-"561
-[; ;../app/menu.c: 561:         ctx.state = MENU_STATE_EDIT_VALUE;
-[e = . _ctx 0 . `E36 4 ]
-"562
-[; ;../app/menu.c: 562:         blink_counter = 0;
-[e = _blink_counter -> -> 0 `i `us ]
-"563
-[; ;../app/menu.c: 563:         blink_state = 1;
-[e = _blink_state -> -> 1 `i `uc ]
-"564
-[; ;../app/menu.c: 564:     }
-}
-[e :U 3390 ]
-"567
-[; ;../app/menu.c: 567:     if (button_pressed(BTN_BACK)) {
-[e $ ! != -> ( _button_pressed (1 . `E79 3 `i -> 0 `i 3394  ]
-{
-"568
-[; ;../app/menu.c: 568:         ctx.state = MENU_STATE_MAIN;
-[e = . _ctx 0 . `E36 0 ]
-"569
-[; ;../app/menu.c: 569:     }
-}
-[e :U 3394 ]
-"570
-[; ;../app/menu.c: 570: }
-[e :UE 3387 ]
-}
-"573
-[; ;../app/menu.c: 573: static void handle_datalogger_edit(void) {
+"542
+[; ;../app/menu.c: 542: static void handle_datalogger_edit(void) {
 [v _handle_datalogger_edit `(v ~T0 @X0 1 sf ]
 {
 [e :U _handle_datalogger_edit ]
 [f ]
-"574
-[; ;../app/menu.c: 574:     if (ctx.dl_edit_field == FIELD_DL_DELTA_T) {
-[e $ ! == -> . _ctx 8 `ui -> . `E59 0 `ui 3396  ]
+"543
+[; ;../app/menu.c: 543:     if (ctx.dl_edit_field == FIELD_DL_DELTA_T) {
+[e $ ! == -> . _ctx 7 `ui -> . `E59 0 `ui 3391  ]
 {
-"576
-[; ;../app/menu.c: 576:         if (button_pressed(BTN_UP)) {
-[e $ ! != -> ( _button_pressed (1 . `E79 0 `i -> 0 `i 3397  ]
+"545
+[; ;../app/menu.c: 545:         if (button_pressed(BTN_UP)) {
+[e $ ! != -> ( _button_pressed (1 . `E78 0 `i -> 0 `i 3392  ]
 {
-"577
-[; ;../app/menu.c: 577:             edit_delta_t++;
+"546
+[; ;../app/menu.c: 546:             edit_delta_t++;
 [e ++ _edit_delta_t -> -> 1 `i `uc ]
-"578
-[; ;../app/menu.c: 578:             if (edit_delta_t > 255) edit_delta_t = 1;
-[e $ ! > -> _edit_delta_t `i -> 255 `i 3398  ]
+"547
+[; ;../app/menu.c: 547:             if (edit_delta_t > 255) edit_delta_t = 1;
+[e $ ! > -> _edit_delta_t `i -> 255 `i 3393  ]
 [e = _edit_delta_t -> -> 1 `i `uc ]
-[e :U 3398 ]
-"579
-[; ;../app/menu.c: 579:         }
+[e :U 3393 ]
+"548
+[; ;../app/menu.c: 548:         }
+}
+[e :U 3392 ]
+"550
+[; ;../app/menu.c: 550:         if (button_pressed(BTN_DOWN)) {
+[e $ ! != -> ( _button_pressed (1 . `E78 1 `i -> 0 `i 3394  ]
+{
+"551
+[; ;../app/menu.c: 551:             if (edit_delta_t <= 1) {
+[e $ ! <= -> _edit_delta_t `i -> 1 `i 3395  ]
+{
+"552
+[; ;../app/menu.c: 552:                 edit_delta_t = 255;
+[e = _edit_delta_t -> -> 255 `i `uc ]
+"553
+[; ;../app/menu.c: 553:             } else {
+}
+[e $U 3396  ]
+[e :U 3395 ]
+{
+"554
+[; ;../app/menu.c: 554:                 edit_delta_t--;
+[e -- _edit_delta_t -> -> 1 `i `uc ]
+"555
+[; ;../app/menu.c: 555:             }
+}
+[e :U 3396 ]
+"556
+[; ;../app/menu.c: 556:         }
+}
+[e :U 3394 ]
+"559
+[; ;../app/menu.c: 559:         if (button_pressed(BTN_ENTER)) {
+[e $ ! != -> ( _button_pressed (1 . `E78 2 `i -> 0 `i 3397  ]
+{
+"560
+[; ;../app/menu.c: 560:             dl_set_sample_period_min(edit_delta_t);
+[e ( _dl_set_sample_period_min (1 _edit_delta_t ]
+"561
+[; ;../app/menu.c: 561:             ctx.state = MENU_STATE_SUBMENU;
+[e = . _ctx 0 . `E36 1 ]
+"562
+[; ;../app/menu.c: 562:         }
 }
 [e :U 3397 ]
-"581
-[; ;../app/menu.c: 581:         if (button_pressed(BTN_DOWN)) {
-[e $ ! != -> ( _button_pressed (1 . `E79 1 `i -> 0 `i 3399  ]
+"565
+[; ;../app/menu.c: 565:         if ((g_menu_tick_10ms - last_blink_tick) >= 25) {
+[e $ ! >= - -> _g_menu_tick_10ms `ui -> _last_blink_tick `ui -> -> 25 `i `ui 3398  ]
 {
-"582
-[; ;../app/menu.c: 582:             if (edit_delta_t <= 1) {
-[e $ ! <= -> _edit_delta_t `i -> 1 `i 3400  ]
-{
-"583
-[; ;../app/menu.c: 583:                 edit_delta_t = 255;
-[e = _edit_delta_t -> -> 255 `i `uc ]
-"584
-[; ;../app/menu.c: 584:             } else {
+"566
+[; ;../app/menu.c: 566:             last_blink_tick = g_menu_tick_10ms;
+[e = _last_blink_tick _g_menu_tick_10ms ]
+"567
+[; ;../app/menu.c: 567:             blink_state = !blink_state;
+[e = _blink_state -> -> ! != -> _blink_state `i -> 0 `i `i `uc ]
+"568
+[; ;../app/menu.c: 568:         }
 }
-[e $U 3401  ]
-[e :U 3400 ]
-{
-"585
-[; ;../app/menu.c: 585:                 edit_delta_t--;
-[e -- _edit_delta_t -> -> 1 `i `uc ]
-"586
-[; ;../app/menu.c: 586:             }
+[e :U 3398 ]
+"569
+[; ;../app/menu.c: 569:     } else {
 }
+[e $U 3399  ]
+[e :U 3391 ]
+{
+"571
+[; ;../app/menu.c: 571:         if (button_pressed(BTN_ENTER)) {
+[e $ ! != -> ( _button_pressed (1 . `E78 2 `i -> 0 `i 3400  ]
+{
+"572
+[; ;../app/menu.c: 572:             dl_get_config(&dl_config);
+[e ( _dl_get_config (1 &U _dl_config ]
+"574
+[; ;../app/menu.c: 574:             if (dl_config.running) {
+[e $ ! != -> . _dl_config 3 `i -> 0 `i 3401  ]
+{
+"576
+[; ;../app/menu.c: 576:                 dl_stop();
+[e ( _dl_stop ..  ]
+"577
+[; ;../app/menu.c: 577:             } else {
+}
+[e $U 3402  ]
 [e :U 3401 ]
-"587
-[; ;../app/menu.c: 587:         }
-}
-[e :U 3399 ]
-"590
-[; ;../app/menu.c: 590:         if (button_pressed(BTN_ENTER)) {
-[e $ ! != -> ( _button_pressed (1 . `E79 2 `i -> 0 `i 3402  ]
 {
-"591
-[; ;../app/menu.c: 591:             dl_set_sample_period_min(edit_delta_t);
-[e ( _dl_set_sample_period_min (1 _edit_delta_t ]
-"592
-[; ;../app/menu.c: 592:             ctx.state = MENU_STATE_SUBMENU;
-[e = . _ctx 0 . `E36 1 ]
-"593
-[; ;../app/menu.c: 593:         }
+"579
+[; ;../app/menu.c: 579:                 rtc_get_time(&current_time);
+[e ( _rtc_get_time (1 &U _current_time ]
+"580
+[; ;../app/menu.c: 580:                 dl_set_running(&current_time);
+[e ( _dl_set_running (1 &U _current_time ]
+"581
+[; ;../app/menu.c: 581:             }
 }
 [e :U 3402 ]
-"596
-[; ;../app/menu.c: 596:         blink_counter++;
-[e ++ _blink_counter -> -> 1 `i `us ]
-"597
-[; ;../app/menu.c: 597:         if (blink_counter > 25) {
-[e $ ! > -> _blink_counter `ui -> -> 25 `i `ui 3403  ]
+"583
+[; ;../app/menu.c: 583:             ctx.state = MENU_STATE_SUBMENU;
+[e = . _ctx 0 . `E36 1 ]
+"584
+[; ;../app/menu.c: 584:         }
+}
+[e :U 3400 ]
+"585
+[; ;../app/menu.c: 585:     }
+}
+[e :U 3399 ]
+"588
+[; ;../app/menu.c: 588:     if (button_pressed(BTN_BACK)) {
+[e $ ! != -> ( _button_pressed (1 . `E78 3 `i -> 0 `i 3403  ]
 {
-"598
-[; ;../app/menu.c: 598:             blink_counter = 0;
-[e = _blink_counter -> -> 0 `i `us ]
-"599
-[; ;../app/menu.c: 599:             blink_state = !blink_state;
-[e = _blink_state -> -> ! != -> _blink_state `i -> 0 `i `i `uc ]
-"600
-[; ;../app/menu.c: 600:         }
+"589
+[; ;../app/menu.c: 589:         ctx.state = MENU_STATE_SUBMENU;
+[e = . _ctx 0 . `E36 1 ]
+"590
+[; ;../app/menu.c: 590:     }
 }
 [e :U 3403 ]
-"601
-[; ;../app/menu.c: 601:     } else {
+"591
+[; ;../app/menu.c: 591: }
+[e :UE 3390 ]
 }
-[e $U 3404  ]
-[e :U 3396 ]
-{
-"603
-[; ;../app/menu.c: 603:         if (button_pressed(BTN_ENTER)) {
-[e $ ! != -> ( _button_pressed (1 . `E79 2 `i -> 0 `i 3405  ]
-{
-"604
-[; ;../app/menu.c: 604:             dl_get_config(&dl_config);
-[e ( _dl_get_config (1 &U _dl_config ]
-"606
-[; ;../app/menu.c: 606:             if (dl_config.running) {
-[e $ ! != -> . _dl_config 3 `i -> 0 `i 3406  ]
-{
-"608
-[; ;../app/menu.c: 608:                 dl_stop();
-[e ( _dl_stop ..  ]
-"609
-[; ;../app/menu.c: 609:             } else {
-}
-[e $U 3407  ]
-[e :U 3406 ]
-{
-"611
-[; ;../app/menu.c: 611:                 rtc_get_time(&current_time);
-[e ( _rtc_get_time (1 &U _current_time ]
-"612
-[; ;../app/menu.c: 612:                 dl_set_running(&current_time);
-[e ( _dl_set_running (1 &U _current_time ]
-"613
-[; ;../app/menu.c: 613:             }
-}
-[e :U 3407 ]
-"615
-[; ;../app/menu.c: 615:             ctx.state = MENU_STATE_SUBMENU;
-[e = . _ctx 0 . `E36 1 ]
-"616
-[; ;../app/menu.c: 616:         }
-}
-[e :U 3405 ]
-"617
-[; ;../app/menu.c: 617:     }
-}
-[e :U 3404 ]
-"620
-[; ;../app/menu.c: 620:     if (button_pressed(BTN_BACK)) {
-[e $ ! != -> ( _button_pressed (1 . `E79 3 `i -> 0 `i 3408  ]
-{
-"621
-[; ;../app/menu.c: 621:         ctx.state = MENU_STATE_SUBMENU;
-[e = . _ctx 0 . `E36 1 ]
-"622
-[; ;../app/menu.c: 622:     }
-}
-[e :U 3408 ]
-"623
-[; ;../app/menu.c: 623: }
-[e :UE 3395 ]
-}
-"626
-[; ;../app/menu.c: 626: static void handle_clear_eeprom(void) {
+"594
+[; ;../app/menu.c: 594: static void handle_clear_eeprom(void) {
 [v _handle_clear_eeprom `(v ~T0 @X0 1 sf ]
 {
 [e :U _handle_clear_eeprom ]
 [f ]
-"628
-[; ;../app/menu.c: 628:     force_refresh = 1;
+"596
+[; ;../app/menu.c: 596:     force_refresh = 1;
 [e = _force_refresh -> -> 1 `i `uc ]
-"631
-[; ;../app/menu.c: 631:     if (button_pressed(BTN_BACK)) {
-[e $ ! != -> ( _button_pressed (1 . `E79 3 `i -> 0 `i 3410  ]
+"599
+[; ;../app/menu.c: 599:     if (button_pressed(BTN_BACK)) {
+[e $ ! != -> ( _button_pressed (1 . `E78 3 `i -> 0 `i 3405  ]
 {
-"632
-[; ;../app/menu.c: 632:         ctx.state = MENU_STATE_MAIN;
+"600
+[; ;../app/menu.c: 600:         ctx.state = MENU_STATE_MAIN;
 [e = . _ctx 0 . `E36 0 ]
-"633
-[; ;../app/menu.c: 633:         force_refresh = 0;
+"601
+[; ;../app/menu.c: 601:         force_refresh = 0;
 [e = _force_refresh -> -> 0 `i `uc ]
-"634
-[; ;../app/menu.c: 634:         return;
-[e $UE 3409  ]
-"635
-[; ;../app/menu.c: 635:     }
+"602
+[; ;../app/menu.c: 602:         return;
+[e $UE 3404  ]
+"603
+[; ;../app/menu.c: 603:     }
 }
-[e :U 3410 ]
-"637
-[; ;../app/menu.c: 637:     if (ctx.state == MENU_STATE_DISPLAY) {
-[e $ ! == -> . _ctx 0 `ui -> . `E36 2 `ui 3411  ]
+[e :U 3405 ]
+"605
+[; ;../app/menu.c: 605:     if (ctx.state == MENU_STATE_DISPLAY) {
+[e $ ! == -> . _ctx 0 `ui -> . `E36 2 `ui 3406  ]
 {
-"639
-[; ;../app/menu.c: 639:         if (button_pressed(BTN_ENTER)) {
-[e $ ! != -> ( _button_pressed (1 . `E79 2 `i -> 0 `i 3412  ]
+"607
+[; ;../app/menu.c: 607:         if (button_pressed(BTN_ENTER)) {
+[e $ ! != -> ( _button_pressed (1 . `E78 2 `i -> 0 `i 3407  ]
 {
-"641
-[; ;../app/menu.c: 641:             ctx.state = MENU_STATE_EDIT_VALUE;
+"609
+[; ;../app/menu.c: 609:             ctx.state = MENU_STATE_EDIT_VALUE;
 [e = . _ctx 0 . `E36 4 ]
-"644
-[; ;../app/menu.c: 644:             app_err_t err = dl_reset_config();
-[v _err `E22870 ~T0 @X0 1 a ]
-[e = _err ( _dl_reset_config ..  ]
-"645
-[; ;../app/menu.c: 645:             if (err != APP_OK) {
-[e $ ! != -> _err `ui -> . `E22870 0 `ui 3413  ]
-{
-"646
-[; ;../app/menu.c: 646:                 Lcd_Clear();
-[e ( _Lcd_Clear ..  ]
-"647
-[; ;../app/menu.c: 647:                 Lcd_Set_Cursor(0, 0);
-[e ( _Lcd_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
-"648
-[; ;../app/menu.c: 648:                 Lcd_Write_String("DL Reset ERROR");
-[e ( _Lcd_Write_String (1 :s 43C ]
-"649
-[; ;../app/menu.c: 649:                 Lcd_Set_Cursor(1, 0);
-[e ( _Lcd_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
-"650
-[; ;../app/menu.c: 650:                 char buffer[16];
-[v _buffer `uc ~T0 @X0 -> 16 `i a ]
-"651
-[; ;../app/menu.c: 651:                 sprintf(buffer, "Err Code:%d", err);
-[e ( _sprintf (1 , (. , &U _buffer :s 44C -> _err `ui ]
-"652
-[; ;../app/menu.c: 652:                 Lcd_Write_String(buffer);
-[e ( _Lcd_Write_String (1 -> &U _buffer `*Cuc ]
-"653
-[; ;../app/menu.c: 653:                 while(1);
-[e :U 3415 ]
-[e :U 3414 ]
-[e $U 3415  ]
-[e :U 3416 ]
-"654
-[; ;../app/menu.c: 654:             }
-}
-[e :U 3413 ]
-"656
-[; ;../app/menu.c: 656:             ctx.state = MENU_STATE_MAIN;
+"611
+[; ;../app/menu.c: 611:             dl_reset_config();
+[e ( _dl_reset_config ..  ]
+"613
+[; ;../app/menu.c: 613:             ctx.state = MENU_STATE_MAIN;
 [e = . _ctx 0 . `E36 0 ]
-"657
-[; ;../app/menu.c: 657:             force_refresh = 0;
+"614
+[; ;../app/menu.c: 614:             force_refresh = 0;
 [e = _force_refresh -> -> 0 `i `uc ]
-"658
-[; ;../app/menu.c: 658:         }
+"615
+[; ;../app/menu.c: 615:         }
 }
-[e :U 3412 ]
-"659
-[; ;../app/menu.c: 659:     }
+[e :U 3407 ]
+"616
+[; ;../app/menu.c: 616:     }
 }
-[e :U 3411 ]
-"660
-[; ;../app/menu.c: 660: }
-[e :UE 3409 ]
+[e :U 3406 ]
+"617
+[; ;../app/menu.c: 617: }
+[e :UE 3404 ]
 }
-"666
-[; ;../app/menu.c: 666: void menu_init(void) {
+"623
+[; ;../app/menu.c: 623: void menu_init(void) {
 [v _menu_init `(v ~T0 @X0 1 ef ]
 {
 [e :U _menu_init ]
 [f ]
-"667
-[; ;../app/menu.c: 667:     ctx.state = MENU_STATE_MAIN;
+"624
+[; ;../app/menu.c: 624:     ctx.state = MENU_STATE_MAIN;
 [e = . _ctx 0 . `E36 0 ]
-"668
-[; ;../app/menu.c: 668:     ctx.main_index = 0;
+"625
+[; ;../app/menu.c: 625:     ctx.main_index = 0;
 [e = . _ctx 1 -> -> 0 `i `uc ]
-"669
-[; ;../app/menu.c: 669:     ctx.submenu_index = 0;
+"626
+[; ;../app/menu.c: 626:     ctx.submenu_index = 0;
 [e = . _ctx 2 -> -> 0 `i `uc ]
-"670
-[; ;../app/menu.c: 670:     ctx.scroll_offset = 0;
+"627
+[; ;../app/menu.c: 627:     ctx.scroll_offset = 0;
 [e = . _ctx 4 -> -> 0 `i `uc ]
-"671
-[; ;../app/menu.c: 671:     ctx.scroll_counter = 0;
-[e = . _ctx 5 -> -> 0 `i `us ]
-"672
-[; ;../app/menu.c: 672:     ctx.editing = 0;
-[e = . _ctx 6 -> -> 0 `i `uc ]
-"673
-[; ;../app/menu.c: 673:     ctx.edit_field = FIELD_DAY;
-[e = . _ctx 7 . `E50 0 ]
-"674
-[; ;../app/menu.c: 674:     ctx.edit_cursor = 0;
-[e = . _ctx 9 -> -> 0 `i `uc ]
-"676
-[; ;../app/menu.c: 676:     Lcd_Clear();
+"628
+[; ;../app/menu.c: 628:     ctx.editing = 0;
+[e = . _ctx 5 -> -> 0 `i `uc ]
+"629
+[; ;../app/menu.c: 629:     ctx.edit_field = FIELD_DAY;
+[e = . _ctx 6 . `E50 0 ]
+"630
+[; ;../app/menu.c: 630:     ctx.edit_cursor = 0;
+[e = . _ctx 8 -> -> 0 `i `uc ]
+"633
+[; ;../app/menu.c: 633:     last_blink_tick = 0;
+[e = _last_blink_tick -> -> 0 `i `us ]
+"634
+[; ;../app/menu.c: 634:     last_scroll_tick = 0;
+[e = _last_scroll_tick -> -> 0 `i `us ]
+"636
+[; ;../app/menu.c: 636:     Lcd_Clear();
 [e ( _Lcd_Clear ..  ]
-"677
-[; ;../app/menu.c: 677: }
-[e :UE 3417 ]
+"637
+[; ;../app/menu.c: 637: }
+[e :UE 3408 ]
 }
-"679
-[; ;../app/menu.c: 679: uint8_t menu_update(void) {
+"639
+[; ;../app/menu.c: 639: uint8_t menu_update(void) {
 [v _menu_update `(uc ~T0 @X0 1 ef ]
 {
 [e :U _menu_update ]
 [f ]
-"680
-[; ;../app/menu.c: 680:     uint8_t old_state = ctx.state;
+"640
+[; ;../app/menu.c: 640:     uint8_t old_state = ctx.state;
 [v _old_state `uc ~T0 @X0 1 a ]
 [e = _old_state -> . _ctx 0 `uc ]
-"681
-[; ;../app/menu.c: 681:     uint8_t old_index = ctx.main_index;
+"641
+[; ;../app/menu.c: 641:     uint8_t old_index = ctx.main_index;
 [v _old_index `uc ~T0 @X0 1 a ]
 [e = _old_index . _ctx 1 ]
-"682
-[; ;../app/menu.c: 682:     uint8_t old_submenu_index = ctx.submenu_index;
+"642
+[; ;../app/menu.c: 642:     uint8_t old_submenu_index = ctx.submenu_index;
 [v _old_submenu_index `uc ~T0 @X0 1 a ]
 [e = _old_submenu_index . _ctx 2 ]
-"683
-[; ;../app/menu.c: 683:     uint8_t old_blink = blink_state;
+"643
+[; ;../app/menu.c: 643:     uint8_t old_blink = blink_state;
 [v _old_blink `uc ~T0 @X0 1 a ]
 [e = _old_blink _blink_state ]
-"686
-[; ;../app/menu.c: 686:     switch (ctx.state) {
-[e $U 3420  ]
+"646
+[; ;../app/menu.c: 646:     switch (ctx.state) {
+[e $U 3411  ]
 {
-"687
-[; ;../app/menu.c: 687:         case MENU_STATE_MAIN:
-[e :U 3421 ]
-"688
-[; ;../app/menu.c: 688:             handle_main_menu();
+"647
+[; ;../app/menu.c: 647:         case MENU_STATE_MAIN:
+[e :U 3412 ]
+"648
+[; ;../app/menu.c: 648:             handle_main_menu();
 [e ( _handle_main_menu ..  ]
-"689
-[; ;../app/menu.c: 689:             break;
-[e $U 3419  ]
-"691
-[; ;../app/menu.c: 691:         case MENU_STATE_SUBMENU:
-[e :U 3422 ]
-"692
-[; ;../app/menu.c: 692:             if (ctx.current_submenu == SUBMENU_DATETIME) {
-[e $ ! == -> . _ctx 3 `ui -> . `E43 0 `ui 3423  ]
+"649
+[; ;../app/menu.c: 649:             break;
+[e $U 3410  ]
+"651
+[; ;../app/menu.c: 651:         case MENU_STATE_SUBMENU:
+[e :U 3413 ]
+"652
+[; ;../app/menu.c: 652:             if (ctx.current_submenu == SUBMENU_DATETIME) {
+[e $ ! == -> . _ctx 3 `ui -> . `E43 0 `ui 3414  ]
 {
-"693
-[; ;../app/menu.c: 693:                 handle_datetime_submenu();
+"653
+[; ;../app/menu.c: 653:                 handle_datetime_submenu();
 [e ( _handle_datetime_submenu ..  ]
-"694
-[; ;../app/menu.c: 694:             } else if (ctx.current_submenu == SUBMENU_DATALOGGER) {
+"654
+[; ;../app/menu.c: 654:             } else if (ctx.current_submenu == SUBMENU_DATALOGGER) {
 }
-[e $U 3424  ]
-[e :U 3423 ]
-[e $ ! == -> . _ctx 3 `ui -> . `E43 3 `ui 3425  ]
+[e $U 3415  ]
+[e :U 3414 ]
+[e $ ! == -> . _ctx 3 `ui -> . `E43 3 `ui 3416  ]
 {
-"695
-[; ;../app/menu.c: 695:                 handle_datalogger_submenu();
+"655
+[; ;../app/menu.c: 655:                 handle_datalogger_submenu();
 [e ( _handle_datalogger_submenu ..  ]
-"696
-[; ;../app/menu.c: 696:             }
+"656
+[; ;../app/menu.c: 656:             }
 }
-[e :U 3425 ]
-[e :U 3424 ]
-"697
-[; ;../app/menu.c: 697:             break;
-[e $U 3419  ]
-"699
-[; ;../app/menu.c: 699:         case MENU_STATE_DISPLAY:
-[e :U 3426 ]
-"700
-[; ;../app/menu.c: 700:             if (ctx.current_submenu == SUBMENU_CLEAR_EEPROM) {
-[e $ ! == -> . _ctx 3 `ui -> . `E43 4 `ui 3427  ]
+[e :U 3416 ]
+[e :U 3415 ]
+"657
+[; ;../app/menu.c: 657:             break;
+[e $U 3410  ]
+"659
+[; ;../app/menu.c: 659:         case MENU_STATE_DISPLAY:
+[e :U 3417 ]
+"660
+[; ;../app/menu.c: 660:             if (ctx.current_submenu == SUBMENU_CLEAR_EEPROM) {
+[e $ ! == -> . _ctx 3 `ui -> . `E43 4 `ui 3418  ]
 {
-"701
-[; ;../app/menu.c: 701:                 handle_clear_eeprom();
+"661
+[; ;../app/menu.c: 661:                 handle_clear_eeprom();
 [e ( _handle_clear_eeprom ..  ]
-"702
-[; ;../app/menu.c: 702:             } else {
+"662
+[; ;../app/menu.c: 662:             } else {
 }
-[e $U 3428  ]
-[e :U 3427 ]
+[e $U 3419  ]
+[e :U 3418 ]
 {
-"703
-[; ;../app/menu.c: 703:                 handle_display_state();
+"663
+[; ;../app/menu.c: 663:                 handle_display_state();
 [e ( _handle_display_state ..  ]
-"704
-[; ;../app/menu.c: 704:             }
+"664
+[; ;../app/menu.c: 664:             }
 }
-[e :U 3428 ]
-"705
-[; ;../app/menu.c: 705:             break;
-[e $U 3419  ]
-"707
-[; ;../app/menu.c: 707:         case MENU_STATE_EDIT_VALUE:
-[e :U 3429 ]
-"708
-[; ;../app/menu.c: 708:             if (ctx.current_submenu == SUBMENU_DATETIME) {
-[e $ ! == -> . _ctx 3 `ui -> . `E43 0 `ui 3430  ]
-{
-"709
-[; ;../app/menu.c: 709:                 handle_datetime_edit();
-[e ( _handle_datetime_edit ..  ]
-"710
-[; ;../app/menu.c: 710:             } else if (ctx.current_submenu == SUBMENU_DATALOGGER) {
-}
-[e $U 3431  ]
-[e :U 3430 ]
-[e $ ! == -> . _ctx 3 `ui -> . `E43 3 `ui 3432  ]
-{
-"711
-[; ;../app/menu.c: 711:                 handle_datalogger_edit();
-[e ( _handle_datalogger_edit ..  ]
-"712
-[; ;../app/menu.c: 712:             }
-}
-[e :U 3432 ]
-[e :U 3431 ]
-"713
-[; ;../app/menu.c: 713:             break;
-[e $U 3419  ]
-"715
-[; ;../app/menu.c: 715:         default:
-[e :U 3433 ]
-"716
-[; ;../app/menu.c: 716:             ctx.state = MENU_STATE_MAIN;
-[e = . _ctx 0 . `E36 0 ]
-"717
-[; ;../app/menu.c: 717:             return 1;
-[e ) -> -> 1 `i `uc ]
-[e $UE 3418  ]
-"718
-[; ;../app/menu.c: 718:             break;
-[e $U 3419  ]
-"719
-[; ;../app/menu.c: 719:     }
-}
-[e $U 3419  ]
-[e :U 3420 ]
-[e [\ -> . _ctx 0 `ui , $ -> . `E36 0 `ui 3421
- , $ -> . `E36 1 `ui 3422
- , $ -> . `E36 2 `ui 3426
- , $ -> . `E36 4 `ui 3429
- 3433 ]
 [e :U 3419 ]
-"722
-[; ;../app/menu.c: 722:     uint8_t needs_refresh = (old_state != ctx.state ||
+"665
+[; ;../app/menu.c: 665:             break;
+[e $U 3410  ]
+"667
+[; ;../app/menu.c: 667:         case MENU_STATE_EDIT_VALUE:
+[e :U 3420 ]
+"668
+[; ;../app/menu.c: 668:             if (ctx.current_submenu == SUBMENU_DATETIME) {
+[e $ ! == -> . _ctx 3 `ui -> . `E43 0 `ui 3421  ]
+{
+"669
+[; ;../app/menu.c: 669:                 handle_datetime_edit();
+[e ( _handle_datetime_edit ..  ]
+"670
+[; ;../app/menu.c: 670:             } else if (ctx.current_submenu == SUBMENU_DATALOGGER) {
+}
+[e $U 3422  ]
+[e :U 3421 ]
+[e $ ! == -> . _ctx 3 `ui -> . `E43 3 `ui 3423  ]
+{
+"671
+[; ;../app/menu.c: 671:                 handle_datalogger_edit();
+[e ( _handle_datalogger_edit ..  ]
+"672
+[; ;../app/menu.c: 672:             }
+}
+[e :U 3423 ]
+[e :U 3422 ]
+"673
+[; ;../app/menu.c: 673:             break;
+[e $U 3410  ]
+"675
+[; ;../app/menu.c: 675:         default:
+[e :U 3424 ]
+"676
+[; ;../app/menu.c: 676:             ctx.state = MENU_STATE_MAIN;
+[e = . _ctx 0 . `E36 0 ]
+"677
+[; ;../app/menu.c: 677:             return 1;
+[e ) -> -> 1 `i `uc ]
+[e $UE 3409  ]
+"678
+[; ;../app/menu.c: 678:             break;
+[e $U 3410  ]
+"679
+[; ;../app/menu.c: 679:     }
+}
+[e $U 3410  ]
+[e :U 3411 ]
+[e [\ -> . _ctx 0 `ui , $ -> . `E36 0 `ui 3412
+ , $ -> . `E36 1 `ui 3413
+ , $ -> . `E36 2 `ui 3417
+ , $ -> . `E36 4 `ui 3420
+ 3424 ]
+[e :U 3410 ]
+"682
+[; ;../app/menu.c: 682:     uint8_t needs_refresh = (old_state != ctx.state ||
 [v _needs_refresh `uc ~T0 @X0 1 a ]
 [e = _needs_refresh -> -> || || || || != -> _old_state `ui -> . _ctx 0 `ui != -> _old_index `i -> . _ctx 1 `i != -> _old_submenu_index `i -> . _ctx 2 `i != -> _old_blink `i -> _blink_state `i != -> _force_refresh `i -> 0 `i `i `uc ]
-"729
-[; ;../app/menu.c: 729:     if (force_refresh && needs_refresh) {
-[e $ ! && != -> _force_refresh `i -> 0 `i != -> _needs_refresh `i -> 0 `i 3434  ]
+"689
+[; ;../app/menu.c: 689:     if (force_refresh && needs_refresh) {
+[e $ ! && != -> _force_refresh `i -> 0 `i != -> _needs_refresh `i -> 0 `i 3425  ]
 {
-"730
-[; ;../app/menu.c: 730:         force_refresh = 0;
+"690
+[; ;../app/menu.c: 690:         force_refresh = 0;
 [e = _force_refresh -> -> 0 `i `uc ]
-"731
-[; ;../app/menu.c: 731:     }
+"691
+[; ;../app/menu.c: 691:     }
 }
-[e :U 3434 ]
-"733
-[; ;../app/menu.c: 733:     return needs_refresh;
+[e :U 3425 ]
+"693
+[; ;../app/menu.c: 693:     return needs_refresh;
 [e ) _needs_refresh ]
-[e $UE 3418  ]
-"734
-[; ;../app/menu.c: 734: }
-[e :UE 3418 ]
+[e $UE 3409  ]
+"694
+[; ;../app/menu.c: 694: }
+[e :UE 3409 ]
 }
-"736
-[; ;../app/menu.c: 736: void menu_display(void) {
+"696
+[; ;../app/menu.c: 696: void menu_display(void) {
 [v _menu_display `(v ~T0 @X0 1 ef ]
 {
 [e :U _menu_display ]
 [f ]
-"737
-[; ;../app/menu.c: 737:     Lcd_Clear();
+"697
+[; ;../app/menu.c: 697:     Lcd_Clear();
 [e ( _Lcd_Clear ..  ]
-"739
-[; ;../app/menu.c: 739:     switch (ctx.state) {
-[e $U 3437  ]
+"699
+[; ;../app/menu.c: 699:     switch (ctx.state) {
+[e $U 3428  ]
 {
-"740
-[; ;../app/menu.c: 740:         case MENU_STATE_MAIN:
-[e :U 3438 ]
-"741
-[; ;../app/menu.c: 741:             display_main_menu();
+"700
+[; ;../app/menu.c: 700:         case MENU_STATE_MAIN:
+[e :U 3429 ]
+"701
+[; ;../app/menu.c: 701:             display_main_menu();
 [e ( _display_main_menu ..  ]
-"742
-[; ;../app/menu.c: 742:             break;
-[e $U 3436  ]
-"744
-[; ;../app/menu.c: 744:         case MENU_STATE_SUBMENU:
-[e :U 3439 ]
-"745
-[; ;../app/menu.c: 745:             if (ctx.current_submenu == SUBMENU_DATETIME) {
-[e $ ! == -> . _ctx 3 `ui -> . `E43 0 `ui 3440  ]
+"702
+[; ;../app/menu.c: 702:             break;
+[e $U 3427  ]
+"704
+[; ;../app/menu.c: 704:         case MENU_STATE_SUBMENU:
+[e :U 3430 ]
+"705
+[; ;../app/menu.c: 705:             if (ctx.current_submenu == SUBMENU_DATETIME) {
+[e $ ! == -> . _ctx 3 `ui -> . `E43 0 `ui 3431  ]
 {
-"746
-[; ;../app/menu.c: 746:                 display_datetime_submenu();
+"706
+[; ;../app/menu.c: 706:                 display_datetime_submenu();
 [e ( _display_datetime_submenu ..  ]
-"747
-[; ;../app/menu.c: 747:             } else if (ctx.current_submenu == SUBMENU_DATALOGGER) {
+"707
+[; ;../app/menu.c: 707:             } else if (ctx.current_submenu == SUBMENU_DATALOGGER) {
 }
-[e $U 3441  ]
-[e :U 3440 ]
-[e $ ! == -> . _ctx 3 `ui -> . `E43 3 `ui 3442  ]
+[e $U 3432  ]
+[e :U 3431 ]
+[e $ ! == -> . _ctx 3 `ui -> . `E43 3 `ui 3433  ]
 {
-"748
-[; ;../app/menu.c: 748:                 display_datalogger_submenu();
+"708
+[; ;../app/menu.c: 708:                 display_datalogger_submenu();
 [e ( _display_datalogger_submenu ..  ]
-"749
-[; ;../app/menu.c: 749:             }
+"709
+[; ;../app/menu.c: 709:             }
 }
-[e :U 3442 ]
-[e :U 3441 ]
-"750
-[; ;../app/menu.c: 750:             break;
+[e :U 3433 ]
+[e :U 3432 ]
+"710
+[; ;../app/menu.c: 710:             break;
+[e $U 3427  ]
+"712
+[; ;../app/menu.c: 712:         case MENU_STATE_DISPLAY:
+[e :U 3434 ]
+"713
+[; ;../app/menu.c: 713:             if (ctx.current_submenu == SUBMENU_BMP280) {
+[e $ ! == -> . _ctx 3 `ui -> . `E43 1 `ui 3435  ]
+{
+"714
+[; ;../app/menu.c: 714:                 display_bmp280_data();
+[e ( _display_bmp280_data ..  ]
+"715
+[; ;../app/menu.c: 715:             } else if (ctx.current_submenu == SUBMENU_SHT30) {
+}
 [e $U 3436  ]
-"752
-[; ;../app/menu.c: 752:         case MENU_STATE_DISPLAY:
-[e :U 3443 ]
-"753
-[; ;../app/menu.c: 753:             if (ctx.current_submenu == SUBMENU_BMP280) {
-[e $ ! == -> . _ctx 3 `ui -> . `E43 1 `ui 3444  ]
+[e :U 3435 ]
+[e $ ! == -> . _ctx 3 `ui -> . `E43 2 `ui 3437  ]
 {
-"754
-[; ;../app/menu.c: 754:                 display_datalogger_index();
-[e ( _display_datalogger_index ..  ]
-"755
-[; ;../app/menu.c: 755:             } else if (ctx.current_submenu == SUBMENU_SHT30) {
-}
-[e $U 3445  ]
-[e :U 3444 ]
-[e $ ! == -> . _ctx 3 `ui -> . `E43 2 `ui 3446  ]
-{
-"756
-[; ;../app/menu.c: 756:                 display_sht30_data();
+"716
+[; ;../app/menu.c: 716:                 display_sht30_data();
 [e ( _display_sht30_data ..  ]
-"757
-[; ;../app/menu.c: 757:             } else if (ctx.current_submenu == SUBMENU_CLEAR_EEPROM) {
+"717
+[; ;../app/menu.c: 717:             } else if (ctx.current_submenu == SUBMENU_CLEAR_EEPROM) {
 }
-[e $U 3447  ]
-[e :U 3446 ]
-[e $ ! == -> . _ctx 3 `ui -> . `E43 4 `ui 3448  ]
-{
-"758
-[; ;../app/menu.c: 758:                 display_clear_eeprom();
-[e ( _display_clear_eeprom ..  ]
-"759
-[; ;../app/menu.c: 759:             }
-}
-[e :U 3448 ]
-[e :U 3447 ]
-[e :U 3445 ]
-"760
-[; ;../app/menu.c: 760:             break;
-[e $U 3436  ]
-"762
-[; ;../app/menu.c: 762:         case MENU_STATE_EDIT_VALUE:
-[e :U 3449 ]
-"763
-[; ;../app/menu.c: 763:             if (ctx.current_submenu == SUBMENU_DATETIME) {
-[e $ ! == -> . _ctx 3 `ui -> . `E43 0 `ui 3450  ]
-{
-"764
-[; ;../app/menu.c: 764:                 display_datetime_submenu();
-[e ( _display_datetime_submenu ..  ]
-"765
-[; ;../app/menu.c: 765:             } else if (ctx.current_submenu == SUBMENU_DATALOGGER) {
-}
-[e $U 3451  ]
-[e :U 3450 ]
-[e $ ! == -> . _ctx 3 `ui -> . `E43 3 `ui 3452  ]
-{
-"766
-[; ;../app/menu.c: 766:                 display_datalogger_submenu();
-[e ( _display_datalogger_submenu ..  ]
-"767
-[; ;../app/menu.c: 767:             }
-}
-[e :U 3452 ]
-[e :U 3451 ]
-"768
-[; ;../app/menu.c: 768:             break;
-[e $U 3436  ]
-"770
-[; ;../app/menu.c: 770:         default:
-[e :U 3453 ]
-"771
-[; ;../app/menu.c: 771:             break;
-[e $U 3436  ]
-"772
-[; ;../app/menu.c: 772:     }
-}
-[e $U 3436  ]
+[e $U 3438  ]
 [e :U 3437 ]
-[e [\ -> . _ctx 0 `ui , $ -> . `E36 0 `ui 3438
- , $ -> . `E36 1 `ui 3439
- , $ -> . `E36 2 `ui 3443
- , $ -> . `E36 4 `ui 3449
- 3453 ]
-[e :U 3436 ]
-"773
-[; ;../app/menu.c: 773: }
-[e :UE 3435 ]
+[e $ ! == -> . _ctx 3 `ui -> . `E43 4 `ui 3439  ]
+{
+"718
+[; ;../app/menu.c: 718:                 display_clear_eeprom();
+[e ( _display_clear_eeprom ..  ]
+"719
+[; ;../app/menu.c: 719:             }
 }
-[p f _snprintf 9733268 ]
-[p f _sprintf 8388736 ]
-[a 40C 80 108 101 97 115 101 32 119 97 105 116 0 ]
-[a 33C 68 101 108 116 97 32 116 0 ]
-[a 31C 83 116 97 116 117 115 58 37 115 0 ]
-[a 38C 32 37 115 0 ]
-[a 13C 68 76 32 67 111 110 102 105 103 32 69 114 114 0 ]
-[a 27C 85 80 47 68 79 87 78 32 109 111 100 105 102 105 101 114 0 ]
-[a 34C 83 116 97 114 116 47 83 116 111 112 0 ]
+[e :U 3439 ]
+[e :U 3438 ]
+[e :U 3436 ]
+"720
+[; ;../app/menu.c: 720:             break;
+[e $U 3427  ]
+"722
+[; ;../app/menu.c: 722:         case MENU_STATE_EDIT_VALUE:
+[e :U 3440 ]
+"723
+[; ;../app/menu.c: 723:             if (ctx.current_submenu == SUBMENU_DATETIME) {
+[e $ ! == -> . _ctx 3 `ui -> . `E43 0 `ui 3441  ]
+{
+"724
+[; ;../app/menu.c: 724:                 display_datetime_submenu();
+[e ( _display_datetime_submenu ..  ]
+"725
+[; ;../app/menu.c: 725:             } else if (ctx.current_submenu == SUBMENU_DATALOGGER) {
+}
+[e $U 3442  ]
+[e :U 3441 ]
+[e $ ! == -> . _ctx 3 `ui -> . `E43 3 `ui 3443  ]
+{
+"726
+[; ;../app/menu.c: 726:                 display_datalogger_submenu();
+[e ( _display_datalogger_submenu ..  ]
+"727
+[; ;../app/menu.c: 727:             }
+}
+[e :U 3443 ]
+[e :U 3442 ]
+"728
+[; ;../app/menu.c: 728:             break;
+[e $U 3427  ]
+"730
+[; ;../app/menu.c: 730:         default:
+[e :U 3444 ]
+"731
+[; ;../app/menu.c: 731:             break;
+[e $U 3427  ]
+"732
+[; ;../app/menu.c: 732:     }
+}
+[e $U 3427  ]
+[e :U 3428 ]
+[e [\ -> . _ctx 0 `ui , $ -> . `E36 0 `ui 3429
+ , $ -> . `E36 1 `ui 3430
+ , $ -> . `E36 2 `ui 3434
+ , $ -> . `E36 4 `ui 3440
+ 3444 ]
+[e :U 3427 ]
+"733
+[; ;../app/menu.c: 733: }
+[e :UE 3426 ]
+}
+[p f _snprintf 9732244 ]
+[a 35C 80 108 101 97 115 101 32 119 97 105 116 0 ]
+[a 28C 68 101 108 116 97 32 116 0 ]
+[a 26C 83 116 97 116 117 115 58 37 115 0 ]
+[a 33C 32 37 115 0 ]
+[a 22C 85 80 47 68 79 87 78 32 109 111 100 105 102 105 101 114 0 ]
+[a 29C 83 116 97 114 116 47 83 116 111 112 0 ]
 [a 2C 50 46 80 114 101 115 115 105 111 110 32 38 32 84 101 109 112 0 ]
 [a 3C 51 46 72 117 109 105 100 105 116 101 32 38 32 84 101 109 112 0 ]
-[a 42C 69 78 84 69 82 58 89 101 115 32 66 65 67 75 58 78 111 0 ]
-[a 26C 68 101 108 116 97 32 116 58 37 100 32 109 105 110 0 ]
-[a 35C 32 37 100 32 109 105 110 0 ]
+[a 37C 69 78 84 69 82 58 89 101 115 32 66 65 67 75 58 78 111 0 ]
+[a 21C 68 101 108 116 97 32 116 58 37 100 32 109 105 110 0 ]
+[a 30C 32 37 100 32 109 105 110 0 ]
 [a 4C 52 46 68 97 116 97 108 111 103 103 101 114 32 67 102 103 0 ]
 [a 8C 68 97 116 101 0 ]
 [a 1C 49 46 68 97 116 101 32 38 32 72 101 117 114 101 0 ]
 [a 9C 72 101 117 114 101 0 ]
-[a 32C 69 78 84 69 82 58 116 111 103 103 108 101 0 ]
-[a 15C 68 76 32 73 100 120 58 37 100 0 ]
-[a 16C 68 76 32 82 101 97 100 32 69 114 114 58 37 100 0 ]
-[a 14C 69 114 114 32 67 111 100 101 58 37 100 0 ]
-[a 44C 69 114 114 32 67 111 100 101 58 37 100 0 ]
-[a 18C 80 114 101 115 58 37 108 100 32 104 80 97 0 ]
-[a 28C 95 95 95 0 ]
+[a 27C 69 78 84 69 82 58 116 111 103 103 108 101 0 ]
+[a 13C 80 114 101 115 58 37 108 100 32 104 80 97 0 ]
+[a 23C 95 95 95 0 ]
 [a 12C 95 95 0 ]
-[a 43C 68 76 32 82 101 115 101 116 32 69 82 82 79 82 0 ]
-[a 20C 80 114 101 115 58 32 69 82 82 79 82 0 ]
-[a 21C 84 101 109 112 58 32 69 82 82 79 82 0 ]
-[a 25C 84 101 109 112 58 32 69 82 82 79 82 0 ]
-[a 24C 82 72 58 32 69 82 82 79 82 0 ]
+[a 15C 80 114 101 115 58 32 69 82 82 79 82 0 ]
+[a 16C 84 101 109 112 58 32 69 82 82 79 82 0 ]
+[a 20C 84 101 109 112 58 32 69 82 82 79 82 0 ]
+[a 19C 82 72 58 32 69 82 82 79 82 0 ]
 [a 5C 53 46 67 108 101 97 114 32 69 69 80 82 79 77 0 ]
-[a 29C 82 85 78 78 73 78 71 0 ]
-[a 36C 82 85 78 78 73 78 71 0 ]
-[a 30C 83 84 79 80 80 69 68 0 ]
-[a 37C 83 84 79 80 80 69 68 0 ]
-[a 19C 84 101 109 112 58 37 108 100 46 37 48 50 108 100 32 67 0 ]
-[a 23C 84 101 109 112 58 37 100 46 37 48 50 100 32 67 0 ]
-[a 41C 67 108 101 97 114 32 69 69 80 82 79 77 63 0 ]
+[a 24C 82 85 78 78 73 78 71 0 ]
+[a 31C 82 85 78 78 73 78 71 0 ]
+[a 25C 83 84 79 80 80 69 68 0 ]
+[a 32C 83 84 79 80 80 69 68 0 ]
+[a 14C 84 101 109 112 58 37 108 100 46 37 48 50 108 100 32 67 0 ]
+[a 18C 84 101 109 112 58 37 100 46 37 48 50 100 32 67 0 ]
+[a 36C 67 108 101 97 114 32 69 69 80 82 79 77 63 0 ]
 [a 6C 68 97 116 101 58 37 48 50 100 47 37 48 50 100 47 50 48 50 53 0 ]
 [a 10C 32 37 48 50 100 47 37 48 50 100 47 50 48 50 53 0 ]
 [a 7C 72 101 117 114 101 58 37 48 50 100 58 37 48 50 100 58 48 48 0 ]
-[a 11C 32 37 48 50 100 58 37 48 50 100 58 48 48 0 ]
-[a 39C 67 108 101 97 114 105 110 103 46 46 46 0 ]
-[a 17C 84 58 37 108 100 46 37 48 50 108 100 67 32 82 72 58 37 108 117 46 37 48 50 108 117 37 37 0 ]
-[a 22C 82 72 58 37 100 46 37 48 50 100 32 37 37 0 ]
+[a 34C 67 108 101 97 114 105 110 103 46 46 46 0 ]
+[a 11C 32 37 48 50 100 58 37 48 50 100 58 45 45 0 ]
+[a 17C 82 72 58 37 100 46 37 48 50 100 32 37 37 0 ]

@@ -37643,16 +37643,6 @@ void app_main_loop(void) {
                 }
                 if (current_cfg.running) {
                     period_locked = 1;
-                    Lcd_Clear();
-                    Lcd_Set_Cursor(0, 0);
-                    Lcd_Write_String("Logging Active");
-                    Lcd_Set_Cursor(1, 0);
-                    char buffer[16];
-                    sprintf(buffer, "Period:%us", period_s);
-                    Lcd_Write_String(buffer);
-
-                    _delay((unsigned long)((500)*(64000000UL/4000.0))); _delay((unsigned long)((500)*(64000000UL/4000.0))); _delay((unsigned long)((500)*(64000000UL/4000.0))); _delay((unsigned long)((500)*(64000000UL/4000.0))); _delay((unsigned long)((500)*(64000000UL/4000.0))); _delay((unsigned long)((500)*(64000000UL/4000.0)));
-
                 }
             }
         }
@@ -37660,15 +37650,7 @@ void app_main_loop(void) {
 
         if (g_sensor_period_ticks > 0u &&
             (uint16_t)(g_tick_counter - last_sensor_tick) >= g_sensor_period_ticks) {
-
-                Lcd_Clear();
-                Lcd_Set_Cursor(0, 0);
-                Lcd_Write_String("Acquiring...");
-                _delay((unsigned long)((500)*(64000000UL/4000.0))); _delay((unsigned long)((500)*(64000000UL/4000.0))); _delay((unsigned long)((500)*(64000000UL/4000.0))); _delay((unsigned long)((500)*(64000000UL/4000.0))); _delay((unsigned long)((500)*(64000000UL/4000.0))); _delay((unsigned long)((500)*(64000000UL/4000.0)));
-
             last_sensor_tick = g_tick_counter;
-
-
 
                 bmp280_data_t bmp_data;
                 sht30_data_t sht_data;
@@ -37693,7 +37675,7 @@ void app_main_loop(void) {
                     Lcd_Write_String("SHT Read Err");
                     while(1);
                 }
-# 746 "../app/app_main.c"
+
                 err = dl_get_config(&current_cfg);
                 if (err != APP_OK) {
 
@@ -37719,30 +37701,8 @@ void app_main_loop(void) {
                         Lcd_Write_String(buffer);
                         while(1);
                     }
-
-
-                    err = dl_get_config(&current_cfg);
-                    if (err != APP_OK) {
-
-                        continue;
-                    }
-
-                    sensor_data_t verify_data;
-                    err = dl_read(current_cfg.data_count - 1, &verify_data);
-
-                    if (err != APP_OK) {
-                        Lcd_Clear();
-                        Lcd_Set_Cursor(0, 0);
-                        Lcd_Write_String("DL Read Err");
-                        Lcd_Set_Cursor(1, 0);
-                        Lcd_Write_String("Code:");
-                        char buffer[16];
-                        sprintf(buffer, "%d", err);
-                        Lcd_Write_String(buffer);
-                        while(1);
-                    }
+                }
             }
-        }
 
 
         app_loop();

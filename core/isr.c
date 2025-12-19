@@ -1,4 +1,4 @@
-﻿// ===============================================
+// ===============================================
 // File:   isr.c
 // Desc:   Gestionnaire centralisé des interruptions
 //         Point d'entrée unique pour toutes les ISR
@@ -12,6 +12,9 @@
 // Prototype de la callback boutons
 extern void buttons_ioc_callback(void);
 extern void buttons_update(void);
+
+// Compteur pour menu (blink et scroll)
+extern volatile uint16_t g_menu_tick_10ms;
 
 // ===============================================
 // VARIABLES GLOBALES POUR LES INTERRUPTIONS
@@ -77,6 +80,12 @@ void isr_init(void) {
 
     // Activer les interruptions globales
     INTCON0bits.GIE = 1;
+
+    // ------------------------
+    // Configuration UART (optionnel pour l’instant)
+    // ------------------------
+    // PIE3bits.U1RXIE = 1;   // à activer si tu veux l’IT RX UART1
+    // PIE7bits.U2RXIE = 1;   // à activer si tu veux l’IT RX UART2
 }
 
 // ===============================================
@@ -108,15 +117,26 @@ void __interrupt() isr_handler(void) {
         TMR1H = 0xB1;
         TMR1L = 0xE0;
         
+        // Incrémenter le compteur global pour le menu (blink et scroll)
+        g_menu_tick_10ms++;
+        
         // Appeler la mise à jour des boutons pour le debounce
         buttons_update();
     }
 
     // ------------------------
-    // INTERRUPTION UART2 RX
+    // INTERRUPTION UART1 RX (à compléter)
+    // ------------------------
+    // if (PIR3bits.U1RXIF) {
+    //     PIR3bits.U1RXIF = 0;
+    //     g_uart1_rx_flag = 1;
+    // }
+
+    // ------------------------
+    // INTERRUPTION UART2 RX (à compléter)
     // ------------------------
     if (PIR7bits.U2RXIF && PIE7bits.U2RXIE) {
-        g_uart2_rx_char = U2RXB;  // Lecture de RXB clear automatiquement le flag
+        g_uart2_rx_char = U2RXB;
         g_uart2_rx_flag = 1;
     }
     

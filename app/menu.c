@@ -39,10 +39,14 @@ static rtc_time_t edit_time;
 static bmp280_data_t bmp_data;
 static sht30_data_t sht_data;
 static dl_cfg_t dl_config;
-static uint8_t edit_delta_t = 1;  // Delta t en minutes (1-255)
-static uint16_t blink_counter = 0;
+static uint8_t edit_delta_t = 1;  // Delta t en minutes (1-255), défaut 5 min
 static uint8_t blink_state = 0;
 static uint8_t force_refresh = 0;  // Flag pour forcer le rafraîchissement
+
+// Compteur global incrémenté par Timer1 (10ms) pour les timings
+volatile uint16_t g_menu_tick_10ms = 0;
+static uint16_t last_blink_tick = 0;
+static uint16_t last_scroll_tick = 0;
 
 // ===============================================
 // FONCTIONS UTILITAIRES PRIVÉES
@@ -199,7 +203,7 @@ static void display_datetime_submenu(void) {
             snprintf(line2, sizeof(line2), " %02d/%02d/2025", 
                      current_time.day, current_time.month);
         } else {
-            snprintf(line2, sizeof(line2), " %02d:%02d:00", 
+            snprintf(line2, sizeof(line2), " %02d:%02d:--", 
                      current_time.hour, current_time.min);
         }
         
@@ -229,39 +233,6 @@ static void display_datetime_submenu(void) {
         Lcd_Set_Cursor(cursor_row, cursor_pos);
         Lcd_Write_String("__");
     }
-}
-
-// Affiche le indx et les valeur en indx - 1 du datalogger
-static void display_datalogger_index(void) {
-    dl_cfg_t cfg;
-    app_err_t err;
-    sensor_data_t data;
-    char line1[LCD_WIDTH + 1];
-    char line2[LCD_WIDTH + 1];
-    
-    err = dl_get_config(&cfg);
-    if (err != APP_OK) {
-        snprintf(line1, sizeof(line1), "DL Config Err");
-        snprintf(line2, sizeof(line2), "Err Code:%d", err);
-    } else {
-        snprintf(line1, sizeof(line1), "DL Idx:%d", cfg.data_count);
-        err = dl_read(cfg.data_count - 1, (sensor_data_t*)&data);
-        if (err != APP_OK) {
-            snprintf(line2, sizeof(line2), "DL Read Err:%d", err);
-        } else {
-            int32_t temp = data.t_c_x100 / 100;
-            int32_t temp_dec = data.t_c_x100 % 100;
-            uint32_t rh = data.rh_x100 / 100;
-            uint32_t rh_dec = data.rh_x100 % 100;
-            snprintf(line2, sizeof(line2), "T:%ld.%02ldC RH:%lu.%02lu%%", 
-                     temp, temp_dec, rh, rh_dec);
-        }
-    }
-    
-    Lcd_Set_Cursor(0, 0);
-    Lcd_Write_String(line1);
-    Lcd_Set_Cursor(1, 0);
-    Lcd_Write_String(line2);
 }
 
 // Affiche les données du BMP280
@@ -391,7 +362,7 @@ static void handle_main_menu(void) {
     if (button_pressed(BTN_DOWN)) {
         ctx.main_index = (ctx.main_index + 1) % MAIN_MENU_COUNT;
         ctx.scroll_offset = 0;
-        ctx.scroll_counter = 0;
+        last_scroll_tick = g_menu_tick_10ms;
     }
     
     if (button_pressed(BTN_UP)) {
@@ -401,7 +372,7 @@ static void handle_main_menu(void) {
             ctx.main_index--;
         }
         ctx.scroll_offset = 0;
-        ctx.scroll_counter = 0;
+        last_scroll_tick = g_menu_tick_10ms;
     }
     
     // Entrer dans le sous-menu
@@ -409,7 +380,7 @@ static void handle_main_menu(void) {
         ctx.current_submenu = (submenu_type_t)ctx.main_index;
         ctx.submenu_index = 0;
         ctx.scroll_offset = 0;
-        ctx.scroll_counter = 0;
+        last_scroll_tick = g_menu_tick_10ms;
         
         if (ctx.current_submenu == SUBMENU_DATETIME || 
             ctx.current_submenu == SUBMENU_DATALOGGER) {
@@ -419,10 +390,9 @@ static void handle_main_menu(void) {
         }
     }
     
-    // Gestion du scroll
-    ctx.scroll_counter++;
-    if (ctx.scroll_counter > SCROLL_DELAY) {
-        ctx.scroll_counter = 0;
+    // Gestion du scroll avec timer
+    if ((g_menu_tick_10ms - last_scroll_tick) >= SCROLL_DELAY) {
+        last_scroll_tick = g_menu_tick_10ms;
         
         const char* current_text = main_menu_items[ctx.main_index];
         uint8_t text_len = strlen(current_text);
@@ -453,7 +423,7 @@ static void handle_datetime_submenu(void) {
         rtc_get_time(&edit_time);
         ctx.edit_field = (ctx.submenu_index == 0) ? FIELD_DAY : FIELD_HOUR;
         ctx.state = MENU_STATE_EDIT_VALUE;
-        blink_counter = 0;
+        last_blink_tick = g_menu_tick_10ms;
         blink_state = 1;
     }
     
@@ -513,10 +483,9 @@ static void handle_datetime_edit(void) {
         ctx.state = MENU_STATE_SUBMENU;
     }
     
-    // Gestion du clignotement
-    blink_counter++;
-    if (blink_counter > BLINK_DELAY) {
-        blink_counter = 0;
+    // Gestion du clignotement avec timer
+    if ((g_menu_tick_10ms - last_blink_tick) >= BLINK_DELAY) {
+        last_blink_tick = g_menu_tick_10ms;
         blink_state = !blink_state;
     }
 }
@@ -559,7 +528,7 @@ static void handle_datalogger_submenu(void) {
         }
         
         ctx.state = MENU_STATE_EDIT_VALUE;
-        blink_counter = 0;
+        last_blink_tick = g_menu_tick_10ms;
         blink_state = 1;
     }
     
@@ -592,10 +561,9 @@ static void handle_datalogger_edit(void) {
             ctx.state = MENU_STATE_SUBMENU;
         }
         
-        // Gestion du clignotement
-        blink_counter++;
-        if (blink_counter > BLINK_DELAY) {
-            blink_counter = 0;
+        // Gestion du clignotement avec timer
+        if ((g_menu_tick_10ms - last_blink_tick) >= BLINK_DELAY) {
+            last_blink_tick = g_menu_tick_10ms;
             blink_state = !blink_state;
         }
     } else {
@@ -638,20 +606,9 @@ static void handle_clear_eeprom(void) {
         // Confirmation
         if (button_pressed(BTN_ENTER)) {
             // Lancer l'effacement
-            ctx.state = MENU_STATE_EDIT_VALUE;
-            
+            ctx.state = MENU_STATE_EDIT_VALUE;    
             // Réinitialiser la config du datalogger
-            app_err_t err = dl_reset_config();
-            if (err != APP_OK) {
-                Lcd_Clear();
-                Lcd_Set_Cursor(0, 0);
-                Lcd_Write_String("DL Reset ERROR");
-                Lcd_Set_Cursor(1, 0);
-                char buffer[16];
-                sprintf(buffer, "Err Code:%d", err);
-                Lcd_Write_String(buffer);
-                while(1);  // Bloquer l'exécution
-            }
+            dl_reset_config();
             
             ctx.state = MENU_STATE_MAIN;
             force_refresh = 0;
@@ -668,10 +625,13 @@ void menu_init(void) {
     ctx.main_index = 0;
     ctx.submenu_index = 0;
     ctx.scroll_offset = 0;
-    ctx.scroll_counter = 0;
     ctx.editing = 0;
     ctx.edit_field = FIELD_DAY;
     ctx.edit_cursor = 0;
+    
+    // Initialiser les compteurs de timing
+    last_blink_tick = 0;
+    last_scroll_tick = 0;
     
     Lcd_Clear();
 }
@@ -751,7 +711,7 @@ void menu_display(void) {
             
         case MENU_STATE_DISPLAY:
             if (ctx.current_submenu == SUBMENU_BMP280) {
-                display_datalogger_index();
+                display_bmp280_data();
             } else if (ctx.current_submenu == SUBMENU_SHT30) {
                 display_sht30_data();
             } else if (ctx.current_submenu == SUBMENU_CLEAR_EEPROM) {

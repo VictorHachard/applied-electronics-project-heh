@@ -1,4 +1,4 @@
-﻿// ===============================================
+// ===============================================
 // File:   app_menu.c
 // Desc:   Application menu avec navigation
 // ===============================================
@@ -16,10 +16,10 @@
 void app_init(void) {
     // Initialiser le système de boutons
     buttons_init();
-
+    
     // Initialiser le menu
     menu_init();
-
+    
     // Afficher le menu initial
     menu_display();
 }
@@ -35,4 +35,7 @@ void app_loop(void) {
         // Rafraîchir l'affichage uniquement si un changement a eu lieu
         menu_display();
     }
+    
+    // Note: buttons_update() est maintenant appelé automatiquement toutes les 10ms
+    // par l'interruption Timer1 dans isr.c, plus besoin de délai ici
 }

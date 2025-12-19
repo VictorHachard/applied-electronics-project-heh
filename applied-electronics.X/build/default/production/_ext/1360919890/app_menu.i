@@ -218,7 +218,6 @@ typedef struct {
     uint8_t submenu_index;
     submenu_type_t current_submenu;
     uint8_t scroll_offset;
-    uint16_t scroll_counter;
     uint8_t editing;
     datetime_field_t edit_field;
     datalogger_field_t dl_edit_field;
@@ -36828,4 +36827,7 @@ void app_loop(void) {
 
         menu_display();
     }
+
+
+
 }

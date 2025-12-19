@@ -185,7 +185,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _PIE7bits `VS1074 ~T0 @X0 0 e@14743 ]
 [t ~ __interrupt . k ]
 [t T2 __interrupt ]
-"14 ../core/isr.c
+"17 ../core/isr.c
+[; ;../core/isr.c: 17: extern volatile uint16_t g_menu_tick_10ms;
+[v _g_menu_tick_10ms `Vus ~T0 @X0 0 e ]
+"14
 [; ;../core/isr.c: 14: extern void buttons_update(void);
 [v _buttons_update `(v ~T0 @X0 0 ef ]
 "45587 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h
@@ -3253,191 +3256,194 @@ Version 4.0 HI-TECH Software Intermediate Code
 "72326
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 72326: __asm("TOSU equ 03FFFh");
 [; <" TOSU equ 03FFFh ;# ">
-"19 ../core/isr.c
-[; ;../core/isr.c: 19: volatile uint8_t g_timer0_flag = 0;
+"22 ../core/isr.c
+[; ;../core/isr.c: 22: volatile uint8_t g_timer0_flag = 0;
 [v _g_timer0_flag `Vuc ~T0 @X0 1 e ]
 [i _g_timer0_flag
 -> -> 0 `i `uc
 ]
-"20
-[; ;../core/isr.c: 20: volatile uint8_t g_uart1_rx_flag = 0;
+"23
+[; ;../core/isr.c: 23: volatile uint8_t g_uart1_rx_flag = 0;
 [v _g_uart1_rx_flag `Vuc ~T0 @X0 1 e ]
 [i _g_uart1_rx_flag
 -> -> 0 `i `uc
 ]
-"21
-[; ;../core/isr.c: 21: volatile uint8_t g_uart2_rx_flag = 0;
+"24
+[; ;../core/isr.c: 24: volatile uint8_t g_uart2_rx_flag = 0;
 [v _g_uart2_rx_flag `Vuc ~T0 @X0 1 e ]
 [i _g_uart2_rx_flag
 -> -> 0 `i `uc
 ]
-"22
-[; ;../core/isr.c: 22: volatile char g_uart2_rx_char = 0;
+"25
+[; ;../core/isr.c: 25: volatile char g_uart2_rx_char = 0;
 [v _g_uart2_rx_char `Vuc ~T0 @X0 1 e ]
 [i _g_uart2_rx_char
 -> -> 0 `i `uc
 ]
-"33
-[; ;../core/isr.c: 33: void isr_init(void) {
+"36
+[; ;../core/isr.c: 36: void isr_init(void) {
 [v _isr_init `(v ~T0 @X0 1 ef ]
 {
 [e :U _isr_init ]
 [f ]
-"35
-[; ;../core/isr.c: 35:     INTCON0bits.GIE = 0;
-[e = . . _INTCON0bits 0 6 -> -> 0 `i `uc ]
 "38
-[; ;../core/isr.c: 38:     T0CON0bits.T0EN = 0;
-[e = . . _T0CON0bits 1 4 -> -> 0 `i `uc ]
-"39
-[; ;../core/isr.c: 39:     T0CON0bits.T016BIT = 1;
-[e = . . _T0CON0bits 2 4 -> -> 1 `i `uc ]
-"40
-[; ;../core/isr.c: 40:     T0CON1bits.T0CS = 0b010;
-[e = . . _T0CON1bits 2 2 -> -> 2 `i `uc ]
+[; ;../core/isr.c: 38:     INTCON0bits.GIE = 0;
+[e = . . _INTCON0bits 0 6 -> -> 0 `i `uc ]
 "41
-[; ;../core/isr.c: 41:     T0CON1bits.T0ASYNC = 1;
-[e = . . _T0CON1bits 1 4 -> -> 1 `i `uc ]
+[; ;../core/isr.c: 41:     T0CON0bits.T0EN = 0;
+[e = . . _T0CON0bits 1 4 -> -> 0 `i `uc ]
 "42
-[; ;../core/isr.c: 42:     T0CON1bits.T0CKPS = 0b1000;
+[; ;../core/isr.c: 42:     T0CON0bits.T016BIT = 1;
+[e = . . _T0CON0bits 2 4 -> -> 1 `i `uc ]
+"43
+[; ;../core/isr.c: 43:     T0CON1bits.T0CS = 0b010;
+[e = . . _T0CON1bits 2 2 -> -> 2 `i `uc ]
+"44
+[; ;../core/isr.c: 44:     T0CON1bits.T0ASYNC = 1;
+[e = . . _T0CON1bits 1 4 -> -> 1 `i `uc ]
+"45
+[; ;../core/isr.c: 45:     T0CON1bits.T0CKPS = 0b1000;
 [e = . . _T0CON1bits 2 0 -> -> 8 `i `uc ]
-"48
-[; ;../core/isr.c: 48:     TMR0H = 0x0B;
-[e = _TMR0H -> -> 11 `i `uc ]
-"49
-[; ;../core/isr.c: 49:     TMR0L = 0xDC;
-[e = _TMR0L -> -> 220 `i `uc ]
 "51
-[; ;../core/isr.c: 51:     PIR3bits.TMR0IF = 0;
-[e = . . _PIR3bits 0 7 -> -> 0 `i `uc ]
+[; ;../core/isr.c: 51:     TMR0H = 0x0B;
+[e = _TMR0H -> -> 11 `i `uc ]
 "52
-[; ;../core/isr.c: 52:     PIE3bits.TMR0IE = 1;
-[e = . . _PIE3bits 0 7 -> -> 1 `i `uc ]
+[; ;../core/isr.c: 52:     TMR0L = 0xDC;
+[e = _TMR0L -> -> 220 `i `uc ]
 "54
-[; ;../core/isr.c: 54:     T0CON0bits.T0EN = 1;
-[e = . . _T0CON0bits 1 4 -> -> 1 `i `uc ]
+[; ;../core/isr.c: 54:     PIR3bits.TMR0IF = 0;
+[e = . . _PIR3bits 0 7 -> -> 0 `i `uc ]
+"55
+[; ;../core/isr.c: 55:     PIE3bits.TMR0IE = 1;
+[e = . . _PIE3bits 0 7 -> -> 1 `i `uc ]
 "57
-[; ;../core/isr.c: 57:     T1CONbits.TMR1ON = 0;
-[e = . . _T1CONbits 1 0 -> -> 0 `i `uc ]
-"58
-[; ;../core/isr.c: 58:     T1CONbits.RD16 = 1;
-[e = . . _T1CONbits 0 1 -> -> 1 `i `uc ]
-"59
-[; ;../core/isr.c: 59:     T1CON = (T1CON & 0xCF) | 0x30;
-[e = _T1CON -> | & -> _T1CON `i -> 207 `i -> 48 `i `uc ]
+[; ;../core/isr.c: 57:     T0CON0bits.T0EN = 1;
+[e = . . _T0CON0bits 1 4 -> -> 1 `i `uc ]
 "60
-[; ;../core/isr.c: 60:     T1CLK = 0b0001;
+[; ;../core/isr.c: 60:     T1CONbits.TMR1ON = 0;
+[e = . . _T1CONbits 1 0 -> -> 0 `i `uc ]
+"61
+[; ;../core/isr.c: 61:     T1CONbits.RD16 = 1;
+[e = . . _T1CONbits 0 1 -> -> 1 `i `uc ]
+"62
+[; ;../core/isr.c: 62:     T1CON = (T1CON & 0xCF) | 0x30;
+[e = _T1CON -> | & -> _T1CON `i -> 207 `i -> 48 `i `uc ]
+"63
+[; ;../core/isr.c: 63:     T1CLK = 0b0001;
 [e = _T1CLK -> -> 1 `i `uc ]
-"66
-[; ;../core/isr.c: 66:     TMR1H = 0xB1;
-[e = _TMR1H -> -> 177 `i `uc ]
-"67
-[; ;../core/isr.c: 67:     TMR1L = 0xE0;
-[e = _TMR1L -> -> 224 `i `uc ]
 "69
-[; ;../core/isr.c: 69:     PIR4bits.TMR1IF = 0;
-[e = . . _PIR4bits 0 0 -> -> 0 `i `uc ]
+[; ;../core/isr.c: 69:     TMR1H = 0xB1;
+[e = _TMR1H -> -> 177 `i `uc ]
 "70
-[; ;../core/isr.c: 70:     PIE4bits.TMR1IE = 1;
-[e = . . _PIE4bits 0 0 -> -> 1 `i `uc ]
+[; ;../core/isr.c: 70:     TMR1L = 0xE0;
+[e = _TMR1L -> -> 224 `i `uc ]
 "72
-[; ;../core/isr.c: 72:     T1CONbits.TMR1ON = 1;
-[e = . . _T1CONbits 1 0 -> -> 1 `i `uc ]
+[; ;../core/isr.c: 72:     PIR4bits.TMR1IF = 0;
+[e = . . _PIR4bits 0 0 -> -> 0 `i `uc ]
+"73
+[; ;../core/isr.c: 73:     PIE4bits.TMR1IE = 1;
+[e = . . _PIE4bits 0 0 -> -> 1 `i `uc ]
 "75
-[; ;../core/isr.c: 75:     PIR7bits.U2RXIF = 0;
+[; ;../core/isr.c: 75:     T1CONbits.TMR1ON = 1;
+[e = . . _T1CONbits 1 0 -> -> 1 `i `uc ]
+"78
+[; ;../core/isr.c: 78:     PIR7bits.U2RXIF = 0;
 [e = . . _PIR7bits 0 4 -> -> 0 `i `uc ]
-"76
-[; ;../core/isr.c: 76:     PIE7bits.U2RXIE = 1;
-[e = . . _PIE7bits 0 4 -> -> 1 `i `uc ]
 "79
-[; ;../core/isr.c: 79:     INTCON0bits.GIE = 1;
+[; ;../core/isr.c: 79:     PIE7bits.U2RXIE = 1;
+[e = . . _PIE7bits 0 4 -> -> 1 `i `uc ]
+"82
+[; ;../core/isr.c: 82:     INTCON0bits.GIE = 1;
 [e = . . _INTCON0bits 0 6 -> -> 1 `i `uc ]
-"80
-[; ;../core/isr.c: 80: }
+"89
+[; ;../core/isr.c: 89: }
 [e :UE 3250 ]
 }
 [v $root$_isr_handler `(v ~T0 @X0 0 e ]
-"87
-[; ;../core/isr.c: 87: void __attribute__((picinterrupt(("")))) isr_handler(void) {
+"96
+[; ;../core/isr.c: 96: void __attribute__((picinterrupt(("")))) isr_handler(void) {
 [v _isr_handler `(v ~T2 @X0 1 ef ]
 {
 [e :U _isr_handler ]
 [f ]
-"91
-[; ;../core/isr.c: 91:     if (PIR3bits.TMR0IF) {
+"100
+[; ;../core/isr.c: 100:     if (PIR3bits.TMR0IF) {
 [e $ ! != -> . . _PIR3bits 0 7 `i -> 0 `i 3252  ]
 {
-"92
-[; ;../core/isr.c: 92:         PIR3bits.TMR0IF = 0;
+"101
+[; ;../core/isr.c: 101:         PIR3bits.TMR0IF = 0;
 [e = . . _PIR3bits 0 7 -> -> 0 `i `uc ]
-"95
-[; ;../core/isr.c: 95:         TMR0H = 0x0B;
+"104
+[; ;../core/isr.c: 104:         TMR0H = 0x0B;
 [e = _TMR0H -> -> 11 `i `uc ]
-"96
-[; ;../core/isr.c: 96:         TMR0L = 0xDC;
+"105
+[; ;../core/isr.c: 105:         TMR0L = 0xDC;
 [e = _TMR0L -> -> 220 `i `uc ]
-"98
-[; ;../core/isr.c: 98:         g_timer0_flag = 1;
+"107
+[; ;../core/isr.c: 107:         g_timer0_flag = 1;
 [e = _g_timer0_flag -> -> 1 `i `uc ]
-"99
-[; ;../core/isr.c: 99:     }
+"108
+[; ;../core/isr.c: 108:     }
 }
 [e :U 3252 ]
-"104
-[; ;../core/isr.c: 104:     if (PIR4bits.TMR1IF) {
+"113
+[; ;../core/isr.c: 113:     if (PIR4bits.TMR1IF) {
 [e $ ! != -> . . _PIR4bits 0 0 `i -> 0 `i 3253  ]
 {
-"105
-[; ;../core/isr.c: 105:         PIR4bits.TMR1IF = 0;
+"114
+[; ;../core/isr.c: 114:         PIR4bits.TMR1IF = 0;
 [e = . . _PIR4bits 0 0 -> -> 0 `i `uc ]
-"108
-[; ;../core/isr.c: 108:         TMR1H = 0xB1;
+"117
+[; ;../core/isr.c: 117:         TMR1H = 0xB1;
 [e = _TMR1H -> -> 177 `i `uc ]
-"109
-[; ;../core/isr.c: 109:         TMR1L = 0xE0;
+"118
+[; ;../core/isr.c: 118:         TMR1L = 0xE0;
 [e = _TMR1L -> -> 224 `i `uc ]
-"112
-[; ;../core/isr.c: 112:         buttons_update();
+"121
+[; ;../core/isr.c: 121:         g_menu_tick_10ms++;
+[e ++ _g_menu_tick_10ms -> -> 1 `i `Vus ]
+"124
+[; ;../core/isr.c: 124:         buttons_update();
 [e ( _buttons_update ..  ]
-"113
-[; ;../core/isr.c: 113:     }
+"125
+[; ;../core/isr.c: 125:     }
 }
 [e :U 3253 ]
-"118
-[; ;../core/isr.c: 118:     if (PIR7bits.U2RXIF && PIE7bits.U2RXIE) {
+"138
+[; ;../core/isr.c: 138:     if (PIR7bits.U2RXIF && PIE7bits.U2RXIE) {
 [e $ ! && != -> . . _PIR7bits 0 4 `i -> 0 `i != -> . . _PIE7bits 0 4 `i -> 0 `i 3254  ]
 {
-"119
-[; ;../core/isr.c: 119:         g_uart2_rx_char = U2RXB;
+"139
+[; ;../core/isr.c: 139:         g_uart2_rx_char = U2RXB;
 [e = _g_uart2_rx_char -> _U2RXB `uc ]
-"120
-[; ;../core/isr.c: 120:         g_uart2_rx_flag = 1;
+"140
+[; ;../core/isr.c: 140:         g_uart2_rx_flag = 1;
 [e = _g_uart2_rx_flag -> -> 1 `i `uc ]
-"121
-[; ;../core/isr.c: 121:     }
+"141
+[; ;../core/isr.c: 141:     }
 }
 [e :U 3254 ]
-"126
-[; ;../core/isr.c: 126:     if (PIR0bits.IOCIF) {
+"146
+[; ;../core/isr.c: 146:     if (PIR0bits.IOCIF) {
 [e $ ! != -> . . _PIR0bits 0 7 `i -> 0 `i 3255  ]
 {
-"128
-[; ;../core/isr.c: 128:         IOCAF = 0;
+"148
+[; ;../core/isr.c: 148:         IOCAF = 0;
 [e = _IOCAF -> -> 0 `i `uc ]
-"129
-[; ;../core/isr.c: 129:         IOCCF = 0;
+"149
+[; ;../core/isr.c: 149:         IOCCF = 0;
 [e = _IOCCF -> -> 0 `i `uc ]
-"130
-[; ;../core/isr.c: 130:         PIR0bits.IOCIF = 0;
+"150
+[; ;../core/isr.c: 150:         PIR0bits.IOCIF = 0;
 [e = . . _PIR0bits 0 7 -> -> 0 `i `uc ]
-"133
-[; ;../core/isr.c: 133:         buttons_ioc_callback();
+"153
+[; ;../core/isr.c: 153:         buttons_ioc_callback();
 [e ( _buttons_ioc_callback ..  ]
-"134
-[; ;../core/isr.c: 134:     }
+"154
+[; ;../core/isr.c: 154:     }
 }
 [e :U 3255 ]
-"135
-[; ;../core/isr.c: 135: }
+"155
+[; ;../core/isr.c: 155: }
 [e :UE 3251 ]
 }

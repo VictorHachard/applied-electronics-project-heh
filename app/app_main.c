@@ -738,7 +738,6 @@ void app_main_loop(void) {
                     }
                 }
             }
-        }
         
         // TÂCHE CONTINUE : Gestion du menu
         app_loop();
