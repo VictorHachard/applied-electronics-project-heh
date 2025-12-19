@@ -686,8 +686,6 @@ void app_main_loop(void) {
         if (g_sensor_period_ticks > 0u &&
             (uint16_t)(g_tick_counter - last_sensor_tick) >= g_sensor_period_ticks) {
             last_sensor_tick = g_tick_counter;
-            
-                
                 // Lire les capteurs BMP280 et SHT30
                 bmp280_data_t bmp_data;
                 sht30_data_t sht_data;
@@ -738,28 +736,7 @@ void app_main_loop(void) {
                         Lcd_Write_String(buffer);
                         while(1);  // Bloquer l'exécution
                     }
-                    
-                    // Use dl read to verify the written data
-                    err = dl_get_config(&current_cfg);
-                    if (err != APP_OK) {
-                        // Erreur de lecture de la configuration
-                        continue;  // Ignorer cette itération
-                    }
-
-                    sensor_data_t verify_data;
-                    err = dl_read(current_cfg.data_count - 1, &verify_data);
-
-                    if (err != APP_OK) {
-                        Lcd_Clear();
-                        Lcd_Set_Cursor(0, 0);
-                        Lcd_Write_String("DL Read Err");
-                        Lcd_Set_Cursor(1, 0);
-                        Lcd_Write_String("Code:");
-                        char buffer[16];
-                        sprintf(buffer, "%d", err);
-                        Lcd_Write_String(buffer);
-                        while(1);  // Bloquer l'exécution
-                    }
+                }
             }
         }
         
