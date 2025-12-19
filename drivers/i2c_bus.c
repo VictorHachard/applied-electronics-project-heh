@@ -12,7 +12,7 @@
 // ===============================================
 // CONSTANTES PRIVÉES
 // ===============================================
-#define I2C_TIMEOUT 1000u  // Timeout pour les opérations I2C (boucles d’attente)
+#define I2C_TIMEOUT 10000u // Timeout pour les opérations I2C (boucles d’attente)
 
 // ===============================================
 // FONCTION : i2c_bus_init
