@@ -55,12 +55,6 @@ void isr_init(void) {
 
     // Activer les interruptions globales
     INTCON0bits.GIE = 1;
-
-    // ------------------------
-    // Configuration UART (optionnel pour l’instant)
-    // ------------------------
-    // PIE3bits.U1RXIE = 1;   // à activer si tu veux l’IT RX UART1
-    // PIE7bits.U2RXIE = 1;   // à activer si tu veux l’IT RX UART2
 }
 
 // ===============================================
@@ -75,9 +69,10 @@ void __interrupt() isr_handler(void) {
     if (PIR3bits.TMR0IF) {
         PIR3bits.TMR0IF = 0;   // Effacer le flag
 
-        // Recharger pour la prochaine seconde
-        TMR0H = 0x0B;
-        TMR0L = 0xDC;
+        // Compensation de la dérive
+        uint16_t reload = TMR0 + 3036;  // Ajoute au compteur actuel
+        TMR0H = (reload >> 8) & 0xFF;
+        TMR0L = reload & 0xFF;
 
         g_timer0_flag = 1;     // Indiquer au main loop qu’un tick est arrivé
     }
@@ -94,7 +89,7 @@ void __interrupt() isr_handler(void) {
     // INTERRUPTION UART2 RX (à compléter)
     // ------------------------
     if (PIR7bits.U2RXIF && PIE7bits.U2RXIE) {
-        g_uart2_rx_char = U2RXB;
+        g_uart2_rx_char = U2RXB;  // Lecture de RXB clear automatiquement le flag
         g_uart2_rx_flag = 1;
     }
 }
