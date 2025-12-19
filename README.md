@@ -235,6 +235,6 @@ typedef enum {
 
 * `bluetooth_proto.c/h` → réception des commandes, envoi des données (temps, mesures, logs)
 
-### Optionnel – Liaison PC (UART1)**
+### Optionnel – Liaison PC (UART1)
 
 * `uart_pc.c/h` → export CSV ou debug série

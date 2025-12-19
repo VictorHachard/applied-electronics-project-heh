@@ -1,0 +1,817 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{geometry}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{listings}
+
+\geometry{
+    top=2cm,
+    bottom=2cm,
+    left=2.5cm,
+    right=2.5cm,
+    headsep=0.5cm
+}
+
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, fit, backgrounds, calc}
+
+% Couleurs personnalisées
+\definecolor{corecolor}{RGB}{52, 73, 94}
+\definecolor{drivercolor}{RGB}{41, 128, 185}
+\definecolor{modulecolor}{RGB}{39, 174, 96}
+\definecolor{appcolor}{RGB}{192, 57, 43}
+\definecolor{arrowcolor}{RGB}{127, 140, 141}
+
+% Configuration listings pour le code C
+\lstset{
+    language=C,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{gray}\itshape,
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    frame=single,
+    tabsize=4
+}
+
+\begin{document}
+
+% Page de titre
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    
+    {\Huge\bfseries Weather Station\par}
+    \vspace{0.5cm}
+    {\Large Station Météo avec Datalogger\par}
+    \vspace{2cm}
+    
+    {\large\bfseries Rapport d'Architecture Logicielle\par}
+    \vspace{1cm}
+
+    {\large\bfseries Groupe G0 - Coordinateurs\par}
+    \vspace{0.5cm}
+    
+    {\large Microcontrôleur : PIC18F26K83 @ 64 MHz\par}
+    \vspace{0.5cm}
+    {\large Projet d'Électronique Appliquée\par}
+    
+    \vfill
+    
+    {\large 2025\par}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+%==============================================================================
+\section{Introduction}
+%==============================================================================
+
+Ce document présente l'architecture logicielle complète de la station météo développée sur microcontrôleur PIC18F26K83. Il détaille particulièrement le rôle du groupe G0 (coordinateurs) qui est responsable de l'infrastructure de base et de l'orchestration du système.
+
+Le projet consiste à développer une station capable de :
+\begin{itemize}
+    \item Mesurer la température, l'humidité et la pression atmosphérique
+    \item Afficher les données sur un écran LCD 16x2
+    \item Enregistrer les mesures dans une mémoire EEPROM M93C66
+    \item Transmettre les données via Bluetooth HC-05
+    \item Gérer une interface utilisateur avec menu navigable
+\end{itemize}
+
+%==============================================================================
+\section{Architecture en couches}
+%==============================================================================
+
+L'application est organisée en \textbf{quatre couches} distinctes, chacune ayant un rôle spécifique. Cette organisation permet de séparer les responsabilités et de faciliter le travail en équipe.
+
+\vspace{0.5cm}
+\begin{center}
+\begin{tikzpicture}[
+    layer/.style={rectangle, draw, thick, minimum width=12cm, minimum height=1.5cm, align=center},
+    arrow/.style={-{Stealth[length=3mm]}, thick}
+]
+    % Couches
+    \node[layer, fill=appcolor!20] (app) at (0,4.5) {\textbf{APPLICATION}\\app\_main.c \quad app\_menu.c \quad menu.c \quad buttons.c};
+    
+    \node[layer, fill=modulecolor!20] (mod) at (0,2.5)
+    {\textbf{MODULES}\\
+    rtc\_ds1307 \quad bmp280 \quad sht30 \quad datalogger\\
+    eeprom\_m93c66 \quad bluetooth\_proto};
+    
+    \node[layer, fill=drivercolor!20] (drv) at (0,0.5) {\textbf{DRIVERS}\\i2c\_bus \quad spi\_bus \quad uart\_pc \quad uart\_bt \quad lcd};
+    
+    \node[layer, fill=corecolor!20] (core) at (0,-1.5) {\textbf{CORE}\\board \quad isr \quad types};
+    
+    % Flèches
+    \draw[arrow] (app.south) -- (mod.north);
+    \draw[arrow] (mod.south) -- (drv.north);
+    \draw[arrow] (drv.south) -- (core.north);
+    
+    % Labels à droite
+    \node[right] at (6.5,4.5) {Logique applicative};
+    \node[right] at (6.5,2.5) {Périphériques externes};
+    \node[right] at (6.5,0.5) {Communication bas niveau};
+    \node[right] at (6.5,-1.5) {Configuration matérielle};
+    
+\end{tikzpicture}
+\end{center}
+\vspace{0.5cm}
+
+\subsection{Description des couches}
+
+\textbf{CORE (G0)} : Cette couche configure le microcontrôleur lui-même. Elle définit quelles broches sont des entrées ou des sorties, comment les périphériques internes sont routés via PPS, et gère toutes les interruptions. C'est la fondation sur laquelle tout le reste repose.
+
+\textbf{DRIVERS (G0 + autres)} : Cette couche fournit des fonctions pour communiquer avec le monde extérieur. Elle encapsule les protocoles de communication (I2C, SPI, UART) et l'affichage LCD. Les modules au-dessus n'ont pas besoin de connaître les détails des registres du PIC.
+
+\textbf{MODULES (tous les groupes)} : Cette couche contient la logique spécifique à chaque périphérique externe (capteurs, RTC, EEPROM, Bluetooth). Chaque module utilise les drivers pour communiquer avec son composant.
+
+\textbf{APPLICATION (G0 + G1)} : Cette couche orchestre l'ensemble. Elle contient la boucle principale qui coordonne toutes les opérations, ainsi que l'interface utilisateur (menu LCD, gestion des boutons).
+
+%==============================================================================
+\section{Organisation des fichiers}
+%==============================================================================
+
+Chaque module est divisé en deux fichiers : un fichier d'en-tête (\texttt{.h}) et un fichier source (\texttt{.c}). Cette séparation est fondamentale pour le travail en équipe.
+
+\vspace{0.5cm}
+\begin{center}
+\begin{tikzpicture}[
+    file/.style={rectangle, draw, thick, minimum width=3cm, minimum height=1cm, align=center},
+    arrow/.style={-{Stealth[length=3mm]}, thick}
+]
+    % Fichier .h
+    \node[file, fill=blue!10] (header) at (0,0) {\textbf{module.h}\\Prototypes\\Types};
+    
+    % Fichier .c
+    \node[file, fill=green!10] (source) at (5,0) {\textbf{module.c}\\Implémentation\\Variables locales};
+    
+    % Autres modules
+    \node[file, fill=gray!10] (other1) at (-3,2) {autre\_module.c};
+    \node[file, fill=gray!10] (other2) at (0,2) {main.c};
+    \node[file, fill=gray!10] (other3) at (3,2) {app.c};
+    
+    % Flèches include
+    \draw[arrow, dashed] (other1.south) -- (header.north west);
+    \draw[arrow, dashed] (other2.south) -- (header.north);
+    \draw[arrow, dashed] (other3.south) -- (header.north east);
+    \draw[arrow] (source.west) -- (header.east) node[midway, above] {\small include};
+    
+    % Labels
+    \node[below] at (0,-1) {Visible par tous};
+    \node[below] at (5,-1) {Privé au module};
+    
+\end{tikzpicture}
+\end{center}
+\vspace{0.5cm}
+
+Le fichier \texttt{.h} contient les \textbf{prototypes} des fonctions (leur signature) et les \textbf{types} de données. Il est inclus par tous les autres modules qui ont besoin d'utiliser ces fonctions.
+
+Le fichier \texttt{.c} contient l'\textbf{implémentation} réelle des fonctions. Son contenu est privé et peut être modifié sans affecter les autres modules, tant que les prototypes dans le \texttt{.h} restent identiques.
+
+Cette organisation permet à chaque groupe de travailler sur son fichier \texttt{.c} sans créer de conflits avec les autres.
+
+%==============================================================================
+\section{Point d'entrée et structure du main.c}
+%==============================================================================
+
+Le programme démarre dans la fonction \texttt{main()} qui se trouve dans le fichier \texttt{main.c}. Cette fonction est volontairement très simple : elle appelle l'initialisation puis entre dans la boucle infinie.
+
+\vspace{0.5cm}
+\begin{center}
+\begin{tikzpicture}[
+    block/.style={rectangle, draw, thick, minimum width=4cm, minimum height=1cm, align=center},
+    arrow/.style={-{Stealth[length=3mm]}, thick}
+]
+    % Blocs principaux
+    \node[block, fill=corecolor!20] (main) at (0,0) {\textbf{main()}};
+    \node[block, fill=appcolor!20] (init) at (0,-2) {\textbf{app\_main\_init()}\\Initialisation complète};
+    \node[block, fill=appcolor!20] (loop) at (0,-4) {\textbf{app\_main\_loop()}\\Boucle infinie};
+    
+    % Flèches
+    \draw[arrow] (main) -- (init);
+    \draw[arrow] (init) -- (loop);
+
+\end{tikzpicture}
+\end{center}
+
+\subsection{Structure du main.c}
+
+Le fichier \texttt{main.c} est le point d'entrée de l'application. Il contient la fonction \texttt{main()} qui appelle successivement l'initialisation complète du système puis entre dans la boucle infinie principale.
+
+\subsection{Configuration bits}
+
+Les \textit{configuration bits} sont des paramètres spéciaux du PIC qui définissent son comportement au démarrage. Ils sont programmés une seule fois et ne peuvent pas être modifiés durant l'exécution.
+
+\begin{itemize}
+    \item \textbf{FEXTOSC = OFF} : Pas de quartz externe utilisé
+    \item \textbf{RSTOSC = HFINTOSC\_64MHZ} : Oscillateur interne haute fréquence à 64 MHz
+    \item \textbf{WDTE = OFF} : Watchdog timer désactivé (pas de reset automatique)
+    \item \textbf{MCLRE = EXTMCLR} : Broche MCLR utilisée pour le reset externe
+\end{itemize}
+
+%==============================================================================
+\section{Séquence d'initialisation (app\_main\_init)}
+%==============================================================================
+
+L'initialisation suit un ordre précis et critique. Chaque étape dépend de la précédente, et une erreur à n'importe quelle étape bloque l'exécution pour éviter un comportement imprévisible.
+
+\subsection{Ordre d'initialisation}
+
+\begin{enumerate}
+  \item Configuration matérielle (\texttt{board\_init})
+  \item Affichage LCD (\texttt{Lcd\_Init})
+  \item Bus I2C (\texttt{i2c\_bus\_init})
+  \item Bus SPI (\texttt{spi\_bus\_init})
+  \item UART1 et UART2 (\texttt{uart\_pc\_init}, \texttt{uart\_bt\_init})
+  \item Périphériques I2C (\texttt{rtc}, \texttt{bmp280}, \texttt{sht30})
+  \item EEPROM (\texttt{eeprom\_init})
+  \item Datalogger (\texttt{dl\_reset\_config})
+  \item Bluetooth (\texttt{bluetooth\_init})
+  \item Menu (\texttt{app\_init})
+  \item Interruptions (\texttt{isr\_init})
+\end{enumerate}
+
+\subsection{Gestion des erreurs}
+
+Chaque étape retourne un code d'erreur de type \texttt{app\_err\_t}. Si une erreur survient, le système :
+\begin{enumerate}
+    \item Affiche un message d'erreur sur le LCD
+    \item Entre dans une boucle infinie (\texttt{while(1);})
+    \item Ne continue jamais l'exécution
+\end{enumerate}
+
+Cette approche garantit qu'aucun module ne fonctionne sans que ses dépendances soient correctement initialisées. Par exemple, si le bus I2C échoue à l'initialisation, le système affiche "I2C Init Error" et se bloque.
+
+%==============================================================================
+\section{Système d'interruptions (isr.c)}
+%==============================================================================
+
+Le fichier \texttt{isr.c} centralise toutes les interruptions du système. Cette approche permet de gérer efficacement les événements asynchrones sans bloquer la boucle principale.
+
+\subsection{Interruptions gérées}
+
+\begin{enumerate}
+    \item \textbf{Timer0} : Tick périodique d'1 seconde pour le scheduler
+    \item \textbf{Timer1} : Tick de 10ms pour le debouncing des boutons et les animations du menu
+    \item \textbf{UART2 RX} : Réception de commandes Bluetooth
+    \item \textbf{IOC (Interrupt-on-Change)} : Détection des appuis sur les boutons
+\end{enumerate}
+
+\subsection{Configuration du Timer0 (1 seconde)}
+
+Le Timer0 génère une interruption toutes les secondes. Ce tick sert de base au scheduler de la boucle principale.
+
+\textbf{Paramètres de configuration :}
+\begin{itemize}
+    \item Mode 16 bits
+    \item Source d'horloge : Fosc/4 = 16 MHz
+    \item Prescaler : 1:256
+    \item Fréquence résultante : 16 MHz / 256 = 62500 Hz
+\end{itemize}
+
+\textbf{Calcul de la précharge :}
+\begin{center}
+Pour obtenir 1 seconde, il faut 62500 cycles\\
+Précharge = 65536 - 62500 = 3036 = 0x0BDC
+\end{center}
+
+À chaque interruption, les registres TMR0H et TMR0L sont rechargés avec cette valeur pour maintenir la période d'1 seconde.
+
+\subsection{Configuration du Timer1 (10 millisecondes)}
+
+Le Timer1 génère une interruption toutes les 10ms. Il sert pour :
+\begin{itemize}
+    \item Le debouncing des boutons (anti-rebond)
+    \item Les animations du menu (clignotement, scroll)
+\end{itemize}
+
+\textbf{Paramètres de configuration :}
+\begin{itemize}
+    \item Mode 16 bits
+    \item Source d'horloge : Fosc/4 = 16 MHz
+    \item Prescaler : 1:8
+    \item Fréquence résultante : 16 MHz / 8 = 2 MHz
+\end{itemize}
+
+\textbf{Calcul de la précharge :}
+\begin{center}
+Pour obtenir 10ms, il faut 20000 cycles\\
+Précharge = 65536 - 20000 = 45536 = 0xB1E0
+\end{center}
+
+Cette interruption rapide permet une détection réactive des boutons et des animations fluides du menu.
+
+\subsection{Gestionnaire d'interruptions unifié}
+
+Toutes les interruptions passent par une fonction unique \texttt{\_\_interrupt() isr\_handler()}. Cette centralisation permet une gestion cohérente et facilite le débogage.
+
+\textbf{Interruptions gérées :}
+
+\begin{enumerate}
+    \item \textbf{Timer0 (1s)} : Incrémente un drapeau pour le scheduler, recharge les registres TMR0H/TMR0L
+    
+    \item \textbf{Timer1 (10ms)} : Incrémente un compteur pour les animations du menu, appelle la fonction de debouncing des boutons
+    
+    \item \textbf{UART2 RX} : Stocke le caractère reçu et lève un drapeau pour traitement dans la boucle principale
+    
+    \item \textbf{IOC (Interrupt-on-Change)} : Détecte les changements d'état des boutons et appelle la callback de gestion
+\end{enumerate}
+
+Chaque interruption effectue le minimum de travail nécessaire et délègue le traitement complexe à la boucle principale via des drapeaux.
+
+\subsection{Drapeaux globaux}
+
+Les interruptions communiquent avec la boucle principale via des drapeaux globaux déclarés avec le mot-clé \texttt{volatile}. Ce qualificateur indique au compilateur que ces variables peuvent changer à tout moment (via interruption) et ne doivent pas être optimisées.
+
+\textbf{Drapeaux utilisés :}
+\begin{itemize}
+    \item \texttt{g\_timer0\_flag} : Signale un tick de 1 seconde
+    \item \texttt{g\_uart2\_rx\_flag} : Indique qu'un caractère Bluetooth a été reçu
+    \item \texttt{g\_uart2\_rx\_char} : Contient le caractère reçu
+    \item \texttt{g\_menu\_tick\_10ms} : Compteur incrémenté toutes les 10ms pour les animations
+\end{itemize}
+
+La boucle principale vérifie périodiquement ces drapeaux et les remet à zéro après traitement.
+
+%==============================================================================
+\section{Boucle principale (app\_main\_loop)}
+%==============================================================================
+
+La boucle principale orchestre toutes les tâches du système selon une architecture non-bloquante basée sur le scheduler.
+
+\subsection{Principe du scheduler non-bloquant}
+
+\subsubsection{Problème des délais bloquants}
+
+Une approche naïve consisterait à utiliser des délais pour espacer les lectures :
+
+\vspace{0.3cm}
+\begin{center}
+\begin{tikzpicture}
+    % Timeline
+    \draw[thick, ->] (0,0) -- (12,0) node[right] {Temps};
+    
+    % Blocs
+    \fill[red!30] (0,0.2) rectangle (1,0.8);
+    \node at (0.5,0.5) {\tiny Lire};
+    
+    \fill[gray!30] (1,0.2) rectangle (5,0.8);
+    \node at (3,0.5) {\small Attendre 1 seconde};
+    
+    \fill[red!30] (5,0.2) rectangle (6,0.8);
+    \node at (5.5,0.5) {\tiny Lire};
+    
+    \fill[gray!30] (6,0.2) rectangle (10,0.8);
+    \node at (8,0.5) {\small Attendre 1 seconde};
+    
+    % Problème
+    \draw[thick, ->] (3,-0.2) -- (3,-0.8);
+    \node[below, align=center] at (3,-0.8) {\small Bouton appuyé ici\\n'est pas détecté !};
+    
+\end{tikzpicture}
+\end{center}
+\vspace{0.3cm}
+
+Pendant l'attente, le processeur ne fait rien et ne peut pas détecter les appuis sur les boutons. L'interface devient non-réactive.
+
+\subsubsection{Solution : scheduler non-bloquant}
+
+La solution utilise une interruption périodique (Timer0) qui lève un drapeau toutes les secondes. La boucle principale vérifie ce drapeau et compte les ticks.
+
+\vspace{0.5cm}
+\begin{center}
+\begin{tikzpicture}[
+    block/.style={rectangle, draw, thick, align=center},
+    arrow/.style={-{Stealth[length=3mm]}, thick}
+]
+
+% Timer hardware
+\node[block, fill=yellow!20, minimum width=4cm, minimum height=1.6cm] (timer) at (0,3)
+    {\textbf{Timer0}\\Interruption\\toutes les 1s};
+
+% ISR
+\node[block, fill=orange!20, minimum width=4cm, minimum height=1.4cm] (isr) at (0,0)
+    {\textbf{Interruption}\\flag = 1};
+
+% Boucle principale
+\node[
+    rectangle, draw, thick,
+    fill=green!20,
+    minimum width=6cm,
+    minimum height=3.4cm,
+    align=left
+] (main) at (7,1.5)
+{
+    \textbf{Boucle principale}\\
+    Si flag = 1 :\\
+    \quad compteur++\\
+    \quad flag = 0\\
+    Si compteur = période :\\
+    \quad lire\_capteurs()
+};
+
+% Flèches
+\draw[arrow, dashed] (timer) -- (isr) node[midway, right] {\small Automatique};
+\draw[arrow] (isr.east) -- (main.west) node[midway, above] {\small flag};
+
+% Boucle continue
+\draw[arrow] (main.south) -- ++(0,-0.35) -- ++(3.3,0) -- ++(0,4.15) -- ++(-3.3,0) -- (main.north);
+\node[right] at (10.6,1.5) {\small Tourne en continu};
+
+\end{tikzpicture}
+\end{center}
+\vspace{0.5cm}
+
+Avec cette approche, la boucle principale tourne en permanence. Entre les lectures de capteurs, elle peut vérifier les boutons et mettre à jour l'affichage. Le système reste réactif.
+
+\subsubsection{Illustration temporelle}
+
+\begin{center}
+\begin{tikzpicture}[
+    block/.style={rectangle, draw, thick, align=center, minimum height=1cm},
+    arrow/.style={-{Stealth[length=3mm]}, thick}
+]
+
+% Timeline
+\draw[thick, ->] (0,0) -- (14,0) node[right] {Temps};
+
+% Ticks
+\foreach \x in {0,2,4,6,8,10,12} {
+    \draw[thick] (\x,0.1) -- (\x,-0.1);
+    \node[below] at (\x,-0.3) {\tiny \x s};
+}
+
+% Tâches
+\fill[green!30] (0,0.3) rectangle (0.3,0.8);
+\node[above] at (0.15,0.8) {\tiny Menu};
+
+\fill[blue!30] (2,0.3) rectangle (2.5,0.8);
+\node[above] at (2.25,0.8) {\tiny BT};
+
+\fill[red!30] (6,0.3) rectangle (7,0.8);
+\node[above] at (6.5,0.8) {\tiny Capteurs};
+
+\fill[green!30] (6.2,0.3) rectangle (6.5,0.8);
+\fill[blue!30] (8,0.3) rectangle (8.5,0.8);
+\fill[green!30] (10,0.3) rectangle (10.3,0.8);
+
+\fill[red!30] (12,0.3) rectangle (13,0.8);
+\node[above] at (12.5,0.8) {\tiny Capteurs};
+
+\end{tikzpicture}
+\end{center}
+
+Le système ne bloque jamais. Entre deux lectures de capteurs, il traite continuellement le menu et les commandes Bluetooth.
+
+\subsection{Structure de la boucle}
+
+La boucle principale est organisée en plusieurs tâches qui s'exécutent selon des périodes différentes :
+
+\textbf{Tâches continues (chaque itération) :}
+\begin{itemize}
+    \item Traitement des commandes Bluetooth reçues
+    \item Mise à jour de l'interface utilisateur (menu)
+\end{itemize}
+
+\textbf{Tâches périodiques (basées sur Timer0) :}
+\begin{itemize}
+    \item Mise à jour de la configuration datalogger (toutes les 10 secondes)
+    \item Acquisition des capteurs (période configurable, typiquement 1-5 minutes)
+\end{itemize}
+
+\textbf{Principe de fonctionnement :}
+
+La boucle utilise des variables statiques pour mémoriser l'état entre les itérations. Un compteur global (\texttt{g\_tick\_counter}) est incrémenté à chaque tick Timer0. Les tâches périodiques comparent ce compteur avec leur dernier moment d'exécution pour déterminer s'il est temps de s'exécuter.
+
+Cette approche non-bloquante permet au système de rester réactif : pendant les longues périodes entre deux lectures de capteurs, le menu et le Bluetooth continuent de fonctionner normalement.
+
+\subsection{Variables statiques}
+
+Les variables \texttt{static} dans la fonction conservent leur valeur entre les appels. Cela permet de :
+\begin{itemize}
+    \item Compter les ticks sans variable globale
+    \item Mémoriser le dernier moment d'exécution de chaque tâche
+    \item Éviter de polluer l'espace de noms global
+\end{itemize}
+
+\subsection{Gestion de la période d'échantillonnage}
+
+La période d'échantillonnage est dynamique et configurée via le menu :
+
+\[
+\text{Période en ticks} = \text{Période en minutes} \times 60\,\text{secondes}
+\]
+
+Par exemple, pour une période de 5 minutes :
+\[
+\text{Ticks} = 5 \times 60 = 300\,\text{secondes}
+\]
+
+La configuration est relue toutes les 10 secondes pour détecter les changements faits par l'utilisateur dans le menu.
+
+%==============================================================================
+\section{Configuration matérielle (board.c)}
+%==============================================================================
+
+Le module \texttt{board.c} configure tout le matériel du PIC avant que les autres modules ne puissent l'utiliser.
+
+\subsection{Mappage des broches}
+
+\begin{center}
+\begin{tabular}{|c|l|l|}
+\hline
+\textbf{Broche} & \textbf{Fonction} & \textbf{Périphérique} \\
+\hline
+\multicolumn{3}{|c|}{\textbf{PORTA}} \\
+\hline
+RA0 & RS & LCD \\
+RA1 & EN & LCD \\
+RA2-RA5 & D4-D7 & LCD \\
+RA6 & BTN\_UP & Bouton \\
+RA7 & BTN\_DOWN & Bouton \\
+\hline
+\multicolumn{3}{|c|}{\textbf{PORTB}} \\
+\hline
+RB1 & SCL2 & I2C (capteurs + RTC) \\
+RB2 & SDA2 & I2C (capteurs + RTC) \\
+RB3 & CS & SPI (EEPROM) \\
+RB4 & LED1 & Debug \\
+RB5 & LED2 & Debug \\
+RB6 & TX2 & UART Bluetooth \\
+RB7 & RX2 & UART Bluetooth \\
+\hline
+\multicolumn{3}{|c|}{\textbf{PORTC}} \\
+\hline
+RC0 & BTN\_ENTER & Bouton \\
+RC1 & BTN\_BACK & Bouton \\
+RC2 & LED3 & Debug \\
+RC3 & SCK & SPI (EEPROM) \\
+RC4 & SDI (MISO) & SPI (EEPROM) \\
+RC5 & SDO (MOSI) & SPI (EEPROM) \\
+RC6 & TX1 & UART PC \\
+RC7 & RX1 & UART PC \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Configuration PPS (Peripheral Pin Select)}
+
+Le PIC18F26K83 utilise PPS pour router les périphériques internes vers les broches externes. Cela offre de la flexibilité mais nécessite une configuration explicite. Les codes hexadécimaux utilisés correspondent aux numéros de périphériques définis dans le datasheet du PIC.
+
+\textbf{Exemple de routage :}
+\begin{itemize}
+    \item \textbf{UART2 (Bluetooth)} : RB7 est configurée comme entrée U2RX, RB6 comme sortie U2TX
+    \item \textbf{SPI1 (EEPROM)} : RC4 reçoit les données (SDI), RC5 émet (SDO), RC3 fournit l'horloge (SCK)
+    \item \textbf{I2C2 (capteurs)} : RB1 et RB2 sont configurées en mode bidirectionnel pour SCL2 et SDA2
+\end{itemize}
+
+La configuration PPS est critique : une erreur de routage empêchera la communication avec les périphériques externes.
+
+%==============================================================================
+\section{Communication entre modules}
+%==============================================================================
+
+Les modules communiquent via des interfaces bien définies dans les fichiers d'en-tête.
+
+\subsection{Flux de données}
+
+\begin{center}
+\begin{tikzpicture}[
+    module/.style={
+        rectangle,
+        draw,
+        thick,
+        minimum width=3cm,
+        minimum height=1.2cm,
+        align=center
+    },
+    arrow/.style={-{Stealth[length=3mm]}, thick}
+]
+
+% Ligne du haut
+\node[module, fill=appcolor!20] (main) at (0,0)
+{\textbf{app\_main.c}\\Boucle principale};
+
+\node[module, fill=appcolor!10] (menu) at (6,0)
+{\textbf{app\_menu.c}\\Interface};
+
+% Ligne du bas (modules fonctionnels)
+\node[module, fill=modulecolor!20] (bmp) at (-5.5,-3)
+{\textbf{bmp280.c}\\Pression + Temp};
+
+\node[module, fill=modulecolor!20] (sht) at (-2,-3)
+{\textbf{sht30.c}\\Humidité};
+
+\node[module, fill=modulecolor!20] (btp) at (2,-3)
+{\textbf{bluetooth\_proto.c}\\Protocole BT};
+
+\node[module, fill=modulecolor!20] (dl) at (6,-3)
+{\textbf{datalogger.c}\\Enregistrement};
+
+% Flèches capteurs
+\draw[arrow] (main) -- (bmp) node[midway, left]{};
+\draw[arrow] (main) -- (sht) node[midway, left]{};
+
+% Bluetooth
+\draw[arrow] (main) -- (btp)
+node[midway, right]{};
+
+% Datalogger
+\draw[arrow] (main) -- (dl)
+node[midway, right]{};
+
+\draw[arrow] (btp) -- (dl)
+node[midway, above]{};
+
+% Menu
+\draw[arrow, <->] (main) -- (menu)
+node[midway, above]{};
+
+\draw[arrow] (menu) -- (dl)
+node[midway, right]{};
+
+\end{tikzpicture}
+\end{center}
+
+\subsection{Types de données partagés}
+
+Les structures de données sont définies dans \texttt{types.h} et partagées entre tous les modules. Cette centralisation garantit la cohérence des types utilisés.
+
+\textbf{Structure des données capteurs :}
+\begin{itemize}
+    \item \texttt{t\_c\_x100} : Température en degrés Celsius × 100 (ex: 2150 = 21.50°C)
+    \item \texttt{rh\_x100} : Humidité relative en pourcentage × 100 (ex: 6500 = 65.00\%)
+    \item \texttt{p\_pa} : Pression atmosphérique en Pascals (ex: 101300 = 1013 hPa)
+\end{itemize}
+
+\textbf{Configuration du datalogger :}
+\begin{itemize}
+    \item \texttt{sample\_period\_min} : Période d'échantillonnage en minutes
+    \item \texttt{start\_time} : Horodatage du démarrage (jour, mois, heure, minute)
+    \item \texttt{data\_count} : Nombre d'enregistrements actuellement stockés
+    \item \texttt{running} : État du datalogger (1 = actif, 0 = arrêté)
+\end{itemize}
+
+\textbf{Codes d'erreur unifiés :}
+
+Tous les modules utilisent le même type énuméré \texttt{app\_err\_t} pour les codes de retour. Cela inclut \texttt{APP\_OK} (succès), \texttt{APP\_EPARAM} (paramètre invalide), \texttt{APP\_EBUS} (erreur de communication), \texttt{APP\_EDEV} (périphérique non présent), \texttt{APP\_EFULL} (mémoire pleine), \texttt{APP\_ENOTRUNNING} (datalogger arrêté), et \texttt{APP\_ENOTCONFIG} (configuration manquante).
+
+%==============================================================================
+\section{Optimisations et cache RAM}
+%==============================================================================
+
+Le module \texttt{datalogger.c} utilise un système de cache pour minimiser les lectures EEPROM qui sont lentes (5ms par lecture).
+
+\subsection{Principe du cache}
+
+\begin{center}
+\begin{tikzpicture}[
+    block/.style={rectangle, draw, thick, minimum width=3cm, minimum height=1.2cm, align=center},
+    arrow/.style={-{Stealth[length=3mm]}, thick}
+]
+
+\node[block, fill=green!20] (ram) at (0,0) {\textbf{Cache RAM}\\dl\_cfg\_t\\Rapide (0µs)};
+
+\node[block, fill=orange!20] (eeprom) at (5,0) {\textbf{EEPROM}\\256 bytes\\Lent (5ms)};
+
+\node[block, fill=blue!20] (app) at (2.5,3) {\textbf{Application}};
+
+% Flèches
+\draw[arrow, dashed] (app) -- (ram) node[midway, left] {\tiny Lecture};
+\draw[arrow] (ram) -- (eeprom) node[midway, above] {\tiny Sync};
+\draw[arrow, dashed, red] (app) -- (eeprom) node[midway, right] {\tiny Évité !};
+
+\end{tikzpicture}
+\end{center}
+
+Le cache maintient une copie de la configuration en RAM. Les lectures sont instantanées et n'utilisent pas l'EEPROM.
+
+%==============================================================================
+\section{Répartition du travail - Groupe G0}
+%==============================================================================
+
+\subsection{Responsabilités du groupe coordinateur}
+
+Le groupe G0 est responsable de l'infrastructure complète :
+
+\begin{center}
+\begin{tabular}{|l|p{8cm}|}
+\hline
+\textbf{Module} & \textbf{Responsabilité} \\
+\hline
+\texttt{main.c} & Point d'entrée, configuration bits \\
+\hline
+\texttt{board.c/h} & Configuration broches, TRIS, ANSEL, PPS \\
+\hline
+\texttt{isr.c/h} & Gestion centralisée des interruptions \\
+\hline
+\texttt{types.h} & Définition des types partagés \\
+\hline
+\texttt{app\_main.c/h} & Boucle principale, scheduler, orchestration \\
+\hline
+\texttt{i2c\_bus.c/h} & Driver I2C pour tous les périphériques I2C \\
+\hline
+\texttt{spi\_bus.c/h} & Driver SPI pour l'EEPROM \\
+\hline
+\texttt{uart\_bt.c/h} & Driver UART pour Bluetooth \\
+\hline
+\texttt{uart\_pc.c/h} & Driver UART pour PC \\
+\hline
+\texttt{lcd.c/h} & Driver LCD 16x2 mode 4 bits \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Points d'intégration avec les autres groupes}
+
+\begin{center}
+\begin{tabular}{|c|l|l|}
+\hline
+\textbf{Groupe} & \textbf{Fichiers fournis} & \textbf{Interface utilisée} \\
+\hline
+G1 & menu.c, buttons.c, rtc\_ds1307.c & app\_init(), app\_loop() \\
+\hline
+G2 & bmp280.c & bmp280\_init(), bmp280\_read() \\
+\hline
+G3 & sht30.c & sht30\_init(), sht30\_read() \\
+\hline
+G4 & datalogger.c, eeprom\_m93c66.c & dl\_*, eeprom\_* \\
+\hline
+G5 & bluetooth\_proto.c & bluetooth\_handle\_rx() \\
+\hline
+\end{tabular}
+\end{center}
+
+%==============================================================================
+\section{Synthèse}
+%==============================================================================
+
+\subsection{Points clés de l'architecture}
+
+\begin{enumerate}
+    \item \textbf{Initialisation séquentielle stricte} : Chaque couche dépend de la précédente, les erreurs bloquent l'exécution
+    
+    \item \textbf{Scheduler non-bloquant} : Basé sur Timer0 (1s) et drapeaux, permet la réactivité
+    
+    \item \textbf{Interruptions centralisées} : Un seul point d'entrée dans \texttt{isr\_handler()}, gestion cohérente
+    
+    \item \textbf{Séparation des responsabilités} : Chaque module a un rôle clair, pas de dépendances circulaires
+    
+    \item \textbf{Communication via interfaces} : Les fichiers .h définissent les contrats entre modules
+    
+    \item \textbf{Optimisation EEPROM} : Cache RAM pour minimiser les accès lents
+\end{enumerate}
+
+\subsection{Avantages de cette architecture}
+
+\begin{itemize}
+    \item \textbf{Travail parallèle} : Chaque groupe peut développer indépendamment
+    \item \textbf{Testabilité} : Chaque module peut être testé isolément
+    \item \textbf{Maintenabilité} : Les modifications sont localisées
+    \item \textbf{Réutilisabilité} : Les drivers peuvent être réutilisés dans d'autres projets
+    \item \textbf{Robustesse} : Gestion stricte des erreurs, pas de comportement indéfini
+\end{itemize}
+
+\subsection{Flux d'exécution complet}
+
+\begin{center}
+\begin{tikzpicture}[
+    block/.style={rectangle, draw, thick, minimum width=4cm, minimum height=1.1cm, align=center, font=\small},
+    arrow/.style={-{Stealth[length=2mm]}, thick}
+]
+
+\node[block, fill=corecolor!20] (start) at (0,0) {Démarrage PIC};
+\node[block, fill=appcolor!20] (init) at (0,-1.5) {app\_main\_init()};
+\node[block, fill=corecolor!30] (isr) at (0,-3) {isr\_init()};
+\node[block, fill=appcolor!20] (loop) at (0,-4.5) {app\_main\_loop()};
+
+\node[block, fill=green!20] (timer) at (5,-4.5) {Timer0 ISR\\(1s)};
+\node[block, fill=orange!20] (menu) at (5,-6) {app\_loop()\\(continu)};
+\node[block, fill=blue!20] (bt) at (5,-7.5) {Bluetooth\\(continu)};
+
+\draw[arrow] (start) -- (init);
+\draw[arrow] (init) -- (isr);
+\draw[arrow] (isr) -- (loop);
+
+\draw[arrow, dashed] (timer) -- (loop);
+\draw[arrow] (loop) -- (menu);
+\draw[arrow] (loop) -- (bt);
+
+\draw[arrow] (loop.south) -- ++(0,-0.5) -| (loop.east);
+
+\end{tikzpicture}
+\end{center}
+
+\end{document}
