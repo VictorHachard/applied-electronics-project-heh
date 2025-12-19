@@ -9,6 +9,10 @@
 #include <xc.h>
 #include <stdint.h>
 
+// Prototype de la callback boutons
+extern void buttons_ioc_callback(void);
+extern void buttons_update(void);
+
 // ===============================================
 // VARIABLES GLOBALES POUR LES INTERRUPTIONS
 // ===============================================
@@ -48,6 +52,24 @@ void isr_init(void) {
     PIE3bits.TMR0IE = 1;   // Enable IT Timer0
 
     T0CON0bits.T0EN = 1;   // Start Timer0
+    
+    // --- Timer1 (10 millisecondes pour debounce) ---
+    T1CONbits.TMR1ON = 0;      // OFF pendant la config
+    T1CONbits.RD16 = 1;        // 16-bit mode
+    T1CON = (T1CON & 0xCF) | 0x30; // Prescaler 1:8 (bits 5-4 = 11)
+    T1CLK = 0b0001;            // Fosc/4
+    
+    // Préchargement pour 10ms avec Fosc = 64 MHz
+    // Fosc/4 = 16 MHz, prescaler 1:8 = 2 MHz
+    // Pour 10ms : 20000 cycles
+    // Précharge = 65536 - 20000 = 45536 = 0xB1E0
+    TMR1H = 0xB1;
+    TMR1L = 0xE0;
+    
+    PIR4bits.TMR1IF = 0;   // Clear flag
+    PIE4bits.TMR1IE = 1;   // Enable IT Timer1
+    
+    T1CONbits.TMR1ON = 1;  // Start Timer1
 
     // UART2 RX : Bluetooth
     PIR7bits.U2RXIF = 0;
@@ -64,32 +86,50 @@ void isr_init(void) {
 // ===============================================
 void __interrupt() isr_handler(void) {
     // ------------------------
-    // INTERRUPTION TIMER0
+    // INTERRUPTION TIMER0 (1 seconde)
     // ------------------------
     if (PIR3bits.TMR0IF) {
         PIR3bits.TMR0IF = 0;   // Effacer le flag
 
-        // Compensation de la dérive
-        uint16_t reload = TMR0 + 3036;  // Ajoute au compteur actuel
-        TMR0H = (reload >> 8) & 0xFF;
-        TMR0L = reload & 0xFF;
+        // Recharger pour la prochaine seconde
+        TMR0H = 0x0B;
+        TMR0L = 0xDC;
 
-        g_timer0_flag = 1;     // Indiquer au main loop qu’un tick est arrivé
+        g_timer0_flag = 1;     // Indiquer au main loop qu'un tick est arrivé
+    }
+    
+    // ------------------------
+    // INTERRUPTION TIMER1 (10 millisecondes pour debounce)
+    // ------------------------
+    if (PIR4bits.TMR1IF) {
+        PIR4bits.TMR1IF = 0;   // Effacer le flag
+        
+        // Recharger pour les prochaines 10ms
+        TMR1H = 0xB1;
+        TMR1L = 0xE0;
+        
+        // Appeler la mise à jour des boutons pour le debounce
+        buttons_update();
     }
 
     // ------------------------
-    // INTERRUPTION UART1 RX (à compléter)
-    // ------------------------
-    // if (PIR3bits.U1RXIF) {
-    //     PIR3bits.U1RXIF = 0;
-    //     g_uart1_rx_flag = 1;
-    // }
-
-    // ------------------------
-    // INTERRUPTION UART2 RX (à compléter)
+    // INTERRUPTION UART2 RX
     // ------------------------
     if (PIR7bits.U2RXIF && PIE7bits.U2RXIE) {
         g_uart2_rx_char = U2RXB;  // Lecture de RXB clear automatiquement le flag
         g_uart2_rx_flag = 1;
+    }
+    
+    // ------------------------
+    // INTERRUPTION IOC (Boutons)
+    // ------------------------
+    if (PIR0bits.IOCIF) {
+        // Effacer les flags IOC
+        IOCAF = 0;
+        IOCCF = 0;
+        PIR0bits.IOCIF = 0;
+        
+        // Appeler le callback boutons
+        buttons_ioc_callback();
     }
 }

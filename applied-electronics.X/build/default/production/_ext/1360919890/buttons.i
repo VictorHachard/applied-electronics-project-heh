@@ -158,6 +158,9 @@ uint8_t button_held(button_t btn);
 
 
 uint8_t button_get_raw(button_t btn);
+
+
+void buttons_ioc_callback(void);
 # 7 "../app/buttons.c" 2
 # 1 "../app/../core/board.h" 1
 # 14 "../app/../core/board.h"
@@ -36705,18 +36708,17 @@ void board_configure_pps(void);
 # 8 "../app/buttons.c" 2
 # 20 "../app/buttons.c"
 typedef struct {
-    uint8_t current;
-    uint8_t previous;
-    uint8_t stable;
-    uint16_t debounce_counter;
-    uint16_t hold_counter;
+    uint8_t pressed_flag;
+    uint8_t state;
+    uint16_t debounce_timer;
+    uint16_t hold_timer;
+    uint8_t debouncing;
 } button_info_t;
 
 
 
 
-static button_info_t buttons[BTN_COUNT];
-static uint32_t last_update_tick = 0;
+static volatile button_info_t buttons[BTN_COUNT];
 
 
 
@@ -36742,51 +36744,71 @@ void buttons_init(void) {
 
 
     for (i = 0; i < BTN_COUNT; i++) {
-        buttons[i].current = 0;
-        buttons[i].previous = 0;
-        buttons[i].stable = 0;
-        buttons[i].debounce_counter = 0;
-        buttons[i].hold_counter = 0;
+        buttons[i].pressed_flag = 0;
+        buttons[i].state = 0;
+        buttons[i].debounce_timer = 0;
+        buttons[i].hold_timer = 0;
+        buttons[i].debouncing = 0;
     }
 
-    last_update_tick = 0;
+
+
+    IOCAPbits.IOCAP6 = 1;
+    IOCAPbits.IOCAP7 = 1;
+    IOCANbits.IOCAN6 = 1;
+    IOCANbits.IOCAN7 = 1;
+
+
+    IOCCPbits.IOCCP0 = 1;
+    IOCCPbits.IOCCP1 = 1;
+    IOCCNbits.IOCCN0 = 1;
+    IOCCNbits.IOCCN1 = 1;
+
+
+    IOCAF = 0;
+    IOCCF = 0;
+
+
+    PIR0bits.IOCIF = 0;
+    PIE0bits.IOCIE = 1;
 }
 
 void buttons_update(void) {
     uint8_t i;
-    uint8_t raw_state;
 
 
     for (i = 0; i < BTN_COUNT; i++) {
 
-        raw_state = read_button_raw((button_t)i);
+        if (buttons[i].debouncing && buttons[i].debounce_timer > 0) {
+            buttons[i].debounce_timer--;
 
+            if (buttons[i].debounce_timer == 0) {
 
-        if (raw_state != buttons[i].current) {
-            buttons[i].current = raw_state;
-            buttons[i].debounce_counter = 0;
+                uint8_t raw = read_button_raw((button_t)i);
+
+                if (raw == 1 && buttons[i].state == 0) {
+
+                    buttons[i].state = 1;
+                    buttons[i].pressed_flag = 1;
+                    buttons[i].hold_timer = 0;
+                } else if (raw == 0 && buttons[i].state == 1) {
+
+                    buttons[i].state = 0;
+                    buttons[i].hold_timer = 0;
+                }
+
+                buttons[i].debouncing = 0;
+            }
         }
 
-        else {
 
-            if (buttons[i].debounce_counter < 20) {
-                buttons[i].debounce_counter++;
-
-
-                if (buttons[i].debounce_counter >= 20) {
-                    buttons[i].previous = buttons[i].stable;
-                    buttons[i].stable = buttons[i].current;
+        if (buttons[i].state == 1 && !buttons[i].debouncing) {
+            buttons[i].hold_timer++;
 
 
-                    if (buttons[i].stable == 0) {
-                        buttons[i].hold_counter = 0;
-                    }
-                }
-            }
-
-            else if (buttons[i].stable == 1) {
-                if (buttons[i].hold_counter < 0xFFFF) {
-                    buttons[i].hold_counter++;
+            if (buttons[i].hold_timer > (500 / 10)) {
+                if ((buttons[i].hold_timer - (500 / 10)) % (100 / 10) == 0) {
+                    buttons[i].pressed_flag = 1;
                 }
             }
         }
@@ -36797,7 +36819,8 @@ uint8_t button_pressed(button_t btn) {
     if (btn >= BTN_COUNT) return 0;
 
 
-    if (buttons[btn].stable == 1 && buttons[btn].previous == 0) {
+    if (buttons[btn].pressed_flag) {
+        buttons[btn].pressed_flag = 0;
         return 1;
     }
 
@@ -36807,11 +36830,26 @@ uint8_t button_pressed(button_t btn) {
 uint8_t button_held(button_t btn) {
     if (btn >= BTN_COUNT) return 0;
 
-    return (buttons[btn].stable == 1 &&
-            buttons[btn].hold_counter > (500 / 10));
+    return (buttons[btn].state == 1 &&
+            buttons[btn].hold_timer > (500 / 10));
 }
 
 uint8_t button_get_raw(button_t btn) {
     if (btn >= BTN_COUNT) return 0;
     return read_button_raw(btn);
+}
+
+
+
+
+void buttons_ioc_callback(void) {
+    uint8_t i;
+
+
+    for (i = 0; i < BTN_COUNT; i++) {
+        if (!buttons[i].debouncing) {
+            buttons[i].debouncing = 1;
+            buttons[i].debounce_timer = 50 / 10;
+        }
+    }
 }

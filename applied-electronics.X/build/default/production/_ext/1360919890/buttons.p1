@@ -1,10 +1,10 @@
 Version 4.0 HI-TECH Software Intermediate Code
 "20 ../app/buttons.c
 [; ;../app/buttons.c: 20: typedef struct {
-[s S3250 `uc 1 `uc 1 `uc 1 `us 1 `us 1 ]
-[n S3250 . current previous stable debounce_counter hold_counter ]
-"39
-[; ;../app/buttons.c: 39: static uint8_t read_button_raw(button_t btn) {
+[s S3250 `uc 1 `uc 1 `us 1 `us 1 `uc 1 ]
+[n S3250 . pressed_flag state debounce_timer hold_timer debouncing ]
+"38
+[; ;../app/buttons.c: 38: static uint8_t read_button_raw(button_t btn) {
 [c E36 0 1 2 3 4 .. ]
 [n E36 . BTN_UP BTN_DOWN BTN_ENTER BTN_BACK BTN_COUNT  ]
 "70603 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h
@@ -41,6 +41,78 @@ Version 4.0 HI-TECH Software Intermediate Code
 "70778
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 70778: extern volatile PORTCbits_t PORTCbits __attribute__((address(0x3FCC)));
 [v _PORTCbits `VS3134 ~T0 @X0 0 e@16332 ]
+"29937
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 29937:     struct {
+[s S1263 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S1263 . IOCAP0 IOCAP1 IOCAP2 IOCAP3 IOCAP4 IOCAP5 IOCAP6 IOCAP7 ]
+"29936
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 29936: typedef union {
+[u S1262 `S1263 1 ]
+[n S1262 . . ]
+"29948
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 29948: extern volatile IOCAPbits_t IOCAPbits __attribute__((address(0x3A45)));
+[v _IOCAPbits `VS1262 ~T0 @X0 0 e@14917 ]
+"29999
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 29999:     struct {
+[s S1265 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S1265 . IOCAN0 IOCAN1 IOCAN2 IOCAN3 IOCAN4 IOCAN5 IOCAN6 IOCAN7 ]
+"29998
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 29998: typedef union {
+[u S1264 `S1265 1 ]
+[n S1264 . . ]
+"30010
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 30010: extern volatile IOCANbits_t IOCANbits __attribute__((address(0x3A46)));
+[v _IOCANbits `VS1264 ~T0 @X0 0 e@14918 ]
+"31145
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 31145:     struct {
+[s S1305 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S1305 . IOCCP0 IOCCP1 IOCCP2 IOCCP3 IOCCP4 IOCCP5 IOCCP6 IOCCP7 ]
+"31144
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 31144: typedef union {
+[u S1304 `S1305 1 ]
+[n S1304 . . ]
+"31156
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 31156: extern volatile IOCCPbits_t IOCCPbits __attribute__((address(0x3A65)));
+[v _IOCCPbits `VS1304 ~T0 @X0 0 e@14949 ]
+"31207
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 31207:     struct {
+[s S1307 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S1307 . IOCCN0 IOCCN1 IOCCN2 IOCCN3 IOCCN4 IOCCN5 IOCCN6 IOCCN7 ]
+"31206
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 31206: typedef union {
+[u S1306 `S1307 1 ]
+[n S1306 . . ]
+"31218
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 31218: extern volatile IOCCNbits_t IOCCNbits __attribute__((address(0x3A66)));
+[v _IOCCNbits `VS1306 ~T0 @X0 0 e@14950 ]
+"30055
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 30055: extern volatile unsigned char IOCAF __attribute__((address(0x3A47)));
+[v _IOCAF `Vuc ~T0 @X0 0 e@14919 ]
+"31263
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 31263: extern volatile unsigned char IOCCF __attribute__((address(0x3A67)));
+[v _IOCCF `Vuc ~T0 @X0 0 e@14951 ]
+"25885
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 25885:     struct {
+[s S1081 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S1081 . SWIF HLVDIF OSFIF CSWIF NVMIF SCANIF CRCIF IOCIF ]
+"25884
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 25884: typedef union {
+[u S1080 `S1081 1 ]
+[n S1080 . . ]
+"25896
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 25896: extern volatile PIR0bits_t PIR0bits __attribute__((address(0x39A0)));
+[v _PIR0bits `VS1080 ~T0 @X0 0 e@14752 ]
+"25154
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 25154:     struct {
+[s S1054 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S1054 . SWIE HLVDIE OSFIE CSWIE NVMIE SCANIE CRCIE IOCIE ]
+"25153
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 25153: typedef union {
+[u S1053 `S1054 1 ]
+[n S1053 . . ]
+"25165
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 25165: extern volatile PIE0bits_t PIE0bits __attribute__((address(0x3990)));
+[v _PIE0bits `VS1053 ~T0 @X0 0 e@14736 ]
 "272 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 272: __asm("CIOCON equ 03700h");
 [; <" CIOCON equ 03700h ;# ">
@@ -3084,52 +3156,46 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 72326: __asm("TOSU equ 03FFFh");
 [; <" TOSU equ 03FFFh ;# ">
 "31 ../app/buttons.c
-[; ;../app/buttons.c: 31: static button_info_t buttons[BTN_COUNT];
-[v _buttons `S3250 ~T0 @X0 -> 4 `i s ]
-"32
-[; ;../app/buttons.c: 32: static uint32_t last_update_tick = 0;
-[v _last_update_tick `ul ~T0 @X0 1 s ]
-[i _last_update_tick
--> -> -> 0 `i `l `ul
-]
-"39
-[; ;../app/buttons.c: 39: static uint8_t read_button_raw(button_t btn) {
+[; ;../app/buttons.c: 31: static volatile button_info_t buttons[BTN_COUNT];
+[v _buttons `VS3250 ~T0 @X0 -> 4 `i s ]
+"38
+[; ;../app/buttons.c: 38: static uint8_t read_button_raw(button_t btn) {
 [v _read_button_raw `(uc ~T0 @X0 1 sf1`E36 ]
 {
 [e :U _read_button_raw ]
 [v _btn `E36 ~T0 @X0 1 r1 ]
 [f ]
-"40
-[; ;../app/buttons.c: 40:     switch (btn) {
+"39
+[; ;../app/buttons.c: 39:     switch (btn) {
 [e $U 3253  ]
 {
-"41
-[; ;../app/buttons.c: 41:         case BTN_UP: return !PORTAbits.RA7;
+"40
+[; ;../app/buttons.c: 40:         case BTN_UP: return !PORTAbits.RA7;
 [e :U 3254 ]
 [e ) -> -> ! != -> . . _PORTAbits 0 7 `i -> 0 `i `i `uc ]
 [e $UE 3251  ]
-"42
-[; ;../app/buttons.c: 42:         case BTN_DOWN: return !PORTAbits.RA6;
+"41
+[; ;../app/buttons.c: 41:         case BTN_DOWN: return !PORTAbits.RA6;
 [e :U 3255 ]
 [e ) -> -> ! != -> . . _PORTAbits 0 6 `i -> 0 `i `i `uc ]
 [e $UE 3251  ]
-"43
-[; ;../app/buttons.c: 43:         case BTN_ENTER: return !PORTCbits.RC0;
+"42
+[; ;../app/buttons.c: 42:         case BTN_ENTER: return !PORTCbits.RC0;
 [e :U 3256 ]
 [e ) -> -> ! != -> . . _PORTCbits 0 0 `i -> 0 `i `i `uc ]
 [e $UE 3251  ]
-"44
-[; ;../app/buttons.c: 44:         case BTN_BACK: return !PORTCbits.RC1;
+"43
+[; ;../app/buttons.c: 43:         case BTN_BACK: return !PORTCbits.RC1;
 [e :U 3257 ]
 [e ) -> -> ! != -> . . _PORTCbits 0 1 `i -> 0 `i `i `uc ]
 [e $UE 3251  ]
-"45
-[; ;../app/buttons.c: 45:         default: return 0;
+"44
+[; ;../app/buttons.c: 44:         default: return 0;
 [e :U 3258 ]
 [e ) -> -> 0 `i `uc ]
 [e $UE 3251  ]
-"46
-[; ;../app/buttons.c: 46:     }
+"45
+[; ;../app/buttons.c: 45:     }
 }
 [e $U 3252  ]
 [e :U 3253 ]
@@ -3139,241 +3205,321 @@ Version 4.0 HI-TECH Software Intermediate Code
  , $ -> . `E36 3 `ui 3257
  3258 ]
 [e :U 3252 ]
-"47
-[; ;../app/buttons.c: 47: }
+"46
+[; ;../app/buttons.c: 46: }
 [e :UE 3251 ]
 }
-"53
-[; ;../app/buttons.c: 53: void buttons_init(void) {
+"52
+[; ;../app/buttons.c: 52: void buttons_init(void) {
 [v _buttons_init `(v ~T0 @X0 1 ef ]
 {
 [e :U _buttons_init ]
 [f ]
-"54
-[; ;../app/buttons.c: 54:     uint8_t i;
+"53
+[; ;../app/buttons.c: 53:     uint8_t i;
 [v _i `uc ~T0 @X0 1 a ]
-"57
-[; ;../app/buttons.c: 57:     for (i = 0; i < BTN_COUNT; i++) {
+"56
+[; ;../app/buttons.c: 56:     for (i = 0; i < BTN_COUNT; i++) {
 {
 [e = _i -> -> 0 `i `uc ]
 [e $ < -> _i `i -> . `E36 4 `i 3260  ]
 [e $U 3261  ]
 [e :U 3260 ]
 {
-"58
-[; ;../app/buttons.c: 58:         buttons[i].current = 0;
+"57
+[; ;../app/buttons.c: 57:         buttons[i].pressed_flag = 0;
 [e = . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 0 -> -> 0 `i `uc ]
-"59
-[; ;../app/buttons.c: 59:         buttons[i].previous = 0;
+"58
+[; ;../app/buttons.c: 58:         buttons[i].state = 0;
 [e = . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 1 -> -> 0 `i `uc ]
+"59
+[; ;../app/buttons.c: 59:         buttons[i].debounce_timer = 0;
+[e = . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 2 -> -> 0 `i `us ]
 "60
-[; ;../app/buttons.c: 60:         buttons[i].stable = 0;
-[e = . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 2 -> -> 0 `i `uc ]
-"61
-[; ;../app/buttons.c: 61:         buttons[i].debounce_counter = 0;
+[; ;../app/buttons.c: 60:         buttons[i].hold_timer = 0;
 [e = . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 3 -> -> 0 `i `us ]
+"61
+[; ;../app/buttons.c: 61:         buttons[i].debouncing = 0;
+[e = . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 4 -> -> 0 `i `uc ]
 "62
-[; ;../app/buttons.c: 62:         buttons[i].hold_counter = 0;
-[e = . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 4 -> -> 0 `i `us ]
-"63
-[; ;../app/buttons.c: 63:     }
+[; ;../app/buttons.c: 62:     }
 }
 [e ++ _i -> -> 1 `i `uc ]
 [e $ < -> _i `i -> . `E36 4 `i 3260  ]
 [e :U 3261 ]
 }
-"65
-[; ;../app/buttons.c: 65:     last_update_tick = 0;
-[e = _last_update_tick -> -> -> 0 `i `l `ul ]
 "66
-[; ;../app/buttons.c: 66: }
+[; ;../app/buttons.c: 66:     IOCAPbits.IOCAP6 = 1;
+[e = . . _IOCAPbits 0 6 -> -> 1 `i `uc ]
+"67
+[; ;../app/buttons.c: 67:     IOCAPbits.IOCAP7 = 1;
+[e = . . _IOCAPbits 0 7 -> -> 1 `i `uc ]
+"68
+[; ;../app/buttons.c: 68:     IOCANbits.IOCAN6 = 1;
+[e = . . _IOCANbits 0 6 -> -> 1 `i `uc ]
+"69
+[; ;../app/buttons.c: 69:     IOCANbits.IOCAN7 = 1;
+[e = . . _IOCANbits 0 7 -> -> 1 `i `uc ]
+"72
+[; ;../app/buttons.c: 72:     IOCCPbits.IOCCP0 = 1;
+[e = . . _IOCCPbits 0 0 -> -> 1 `i `uc ]
+"73
+[; ;../app/buttons.c: 73:     IOCCPbits.IOCCP1 = 1;
+[e = . . _IOCCPbits 0 1 -> -> 1 `i `uc ]
+"74
+[; ;../app/buttons.c: 74:     IOCCNbits.IOCCN0 = 1;
+[e = . . _IOCCNbits 0 0 -> -> 1 `i `uc ]
+"75
+[; ;../app/buttons.c: 75:     IOCCNbits.IOCCN1 = 1;
+[e = . . _IOCCNbits 0 1 -> -> 1 `i `uc ]
+"78
+[; ;../app/buttons.c: 78:     IOCAF = 0;
+[e = _IOCAF -> -> 0 `i `uc ]
+"79
+[; ;../app/buttons.c: 79:     IOCCF = 0;
+[e = _IOCCF -> -> 0 `i `uc ]
+"82
+[; ;../app/buttons.c: 82:     PIR0bits.IOCIF = 0;
+[e = . . _PIR0bits 0 7 -> -> 0 `i `uc ]
+"83
+[; ;../app/buttons.c: 83:     PIE0bits.IOCIE = 1;
+[e = . . _PIE0bits 0 7 -> -> 1 `i `uc ]
+"84
+[; ;../app/buttons.c: 84: }
 [e :UE 3259 ]
 }
-"68
-[; ;../app/buttons.c: 68: void buttons_update(void) {
+"86
+[; ;../app/buttons.c: 86: void buttons_update(void) {
 [v _buttons_update `(v ~T0 @X0 1 ef ]
 {
 [e :U _buttons_update ]
 [f ]
-"69
-[; ;../app/buttons.c: 69:     uint8_t i;
+"87
+[; ;../app/buttons.c: 87:     uint8_t i;
 [v _i `uc ~T0 @X0 1 a ]
-"70
-[; ;../app/buttons.c: 70:     uint8_t raw_state;
-[v _raw_state `uc ~T0 @X0 1 a ]
-"73
-[; ;../app/buttons.c: 73:     for (i = 0; i < BTN_COUNT; i++) {
+"90
+[; ;../app/buttons.c: 90:     for (i = 0; i < BTN_COUNT; i++) {
 {
 [e = _i -> -> 0 `i `uc ]
 [e $ < -> _i `i -> . `E36 4 `i 3264  ]
 [e $U 3265  ]
 [e :U 3264 ]
 {
-"75
-[; ;../app/buttons.c: 75:         raw_state = read_button_raw((button_t)i);
-[e = _raw_state ( _read_button_raw (1 -> _i `E36 ]
-"78
-[; ;../app/buttons.c: 78:         if (raw_state != buttons[i].current) {
-[e $ ! != -> _raw_state `i -> . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 0 `i 3267  ]
+"92
+[; ;../app/buttons.c: 92:         if (buttons[i].debouncing && buttons[i].debounce_timer > 0) {
+[e $ ! && != -> . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 4 `i -> 0 `i > -> . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 2 `ui -> -> 0 `i `ui 3267  ]
 {
-"79
-[; ;../app/buttons.c: 79:             buttons[i].current = raw_state;
-[e = . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 0 _raw_state ]
-"80
-[; ;../app/buttons.c: 80:             buttons[i].debounce_counter = 0;
-[e = . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 3 -> -> 0 `i `us ]
-"81
-[; ;../app/buttons.c: 81:         }
-}
-[e $U 3268  ]
-"83
-[; ;../app/buttons.c: 83:         else {
-[e :U 3267 ]
-{
-"85
-[; ;../app/buttons.c: 85:             if (buttons[i].debounce_counter < 20) {
-[e $ ! < -> . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 3 `ui -> -> 20 `i `ui 3269  ]
-{
-"86
-[; ;../app/buttons.c: 86:                 buttons[i].debounce_counter++;
-[e ++ . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 3 -> -> 1 `i `us ]
-"89
-[; ;../app/buttons.c: 89:                 if (buttons[i].debounce_counter >= 20) {
-[e $ ! >= -> . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 3 `ui -> -> 20 `i `ui 3270  ]
-{
-"90
-[; ;../app/buttons.c: 90:                     buttons[i].previous = buttons[i].stable;
-[e = . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 1 . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 2 ]
-"91
-[; ;../app/buttons.c: 91:                     buttons[i].stable = buttons[i].current;
-[e = . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 2 . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 0 ]
-"94
-[; ;../app/buttons.c: 94:                     if (buttons[i].stable == 0) {
-[e $ ! == -> . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 2 `i -> 0 `i 3271  ]
-{
+"93
+[; ;../app/buttons.c: 93:             buttons[i].debounce_timer--;
+[e -- . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 2 -> -> 1 `i `Vus ]
 "95
-[; ;../app/buttons.c: 95:                         buttons[i].hold_counter = 0;
-[e = . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 4 -> -> 0 `i `us ]
-"96
-[; ;../app/buttons.c: 96:                     }
-}
-[e :U 3271 ]
+[; ;../app/buttons.c: 95:             if (buttons[i].debounce_timer == 0) {
+[e $ ! == -> . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 2 `ui -> -> 0 `i `ui 3268  ]
+{
 "97
-[; ;../app/buttons.c: 97:                 }
-}
-[e :U 3270 ]
-"98
-[; ;../app/buttons.c: 98:             }
-}
-[e $U 3272  ]
-"100
-[; ;../app/buttons.c: 100:             else if (buttons[i].stable == 1) {
-[e :U 3269 ]
-[e $ ! == -> . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 2 `i -> 1 `i 3273  ]
+[; ;../app/buttons.c: 97:                 uint8_t raw = read_button_raw((button_t)i);
+[v _raw `uc ~T0 @X0 1 a ]
+[e = _raw ( _read_button_raw (1 -> _i `E36 ]
+"99
+[; ;../app/buttons.c: 99:                 if (raw == 1 && buttons[i].state == 0) {
+[e $ ! && == -> _raw `i -> 1 `i == -> . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 1 `i -> 0 `i 3269  ]
 {
 "101
-[; ;../app/buttons.c: 101:                 if (buttons[i].hold_counter < 0xFFFF) {
-[e $ ! < -> . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 4 `ui -> 65535 `ui 3274  ]
-{
+[; ;../app/buttons.c: 101:                     buttons[i].state = 1;
+[e = . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 1 -> -> 1 `i `uc ]
 "102
-[; ;../app/buttons.c: 102:                     buttons[i].hold_counter++;
-[e ++ . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 4 -> -> 1 `i `us ]
+[; ;../app/buttons.c: 102:                     buttons[i].pressed_flag = 1;
+[e = . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 0 -> -> 1 `i `uc ]
 "103
-[; ;../app/buttons.c: 103:                 }
-}
-[e :U 3274 ]
+[; ;../app/buttons.c: 103:                     buttons[i].hold_timer = 0;
+[e = . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 3 -> -> 0 `i `us ]
 "104
-[; ;../app/buttons.c: 104:             }
+[; ;../app/buttons.c: 104:                 } else if (raw == 0 && buttons[i].state == 1) {
 }
-[e :U 3273 ]
-[e :U 3272 ]
-"105
-[; ;../app/buttons.c: 105:         }
+[e $U 3270  ]
+[e :U 3269 ]
+[e $ ! && == -> _raw `i -> 0 `i == -> . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 1 `i -> 1 `i 3271  ]
+{
+"106
+[; ;../app/buttons.c: 106:                     buttons[i].state = 0;
+[e = . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 1 -> -> 0 `i `uc ]
+"107
+[; ;../app/buttons.c: 107:                     buttons[i].hold_timer = 0;
+[e = . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 3 -> -> 0 `i `us ]
+"108
+[; ;../app/buttons.c: 108:                 }
+}
+[e :U 3271 ]
+[e :U 3270 ]
+"110
+[; ;../app/buttons.c: 110:                 buttons[i].debouncing = 0;
+[e = . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 4 -> -> 0 `i `uc ]
+"111
+[; ;../app/buttons.c: 111:             }
 }
 [e :U 3268 ]
-"106
-[; ;../app/buttons.c: 106:     }
+"112
+[; ;../app/buttons.c: 112:         }
+}
+[e :U 3267 ]
+"115
+[; ;../app/buttons.c: 115:         if (buttons[i].state == 1 && !buttons[i].debouncing) {
+[e $ ! && == -> . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 1 `i -> 1 `i ! != -> . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 4 `i -> 0 `i 3272  ]
+{
+"116
+[; ;../app/buttons.c: 116:             buttons[i].hold_timer++;
+[e ++ . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 3 -> -> 1 `i `Vus ]
+"119
+[; ;../app/buttons.c: 119:             if (buttons[i].hold_timer > (500 / 10)) {
+[e $ ! > -> . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 3 `ui -> / -> 500 `i -> 10 `i `ui 3273  ]
+{
+"120
+[; ;../app/buttons.c: 120:                 if ((buttons[i].hold_timer - (500 / 10)) % (100 / 10) == 0) {
+[e $ ! == % - -> . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 3 `ui -> / -> 500 `i -> 10 `i `ui -> / -> 100 `i -> 10 `i `ui -> -> 0 `i `ui 3274  ]
+{
+"121
+[; ;../app/buttons.c: 121:                     buttons[i].pressed_flag = 1;
+[e = . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 0 -> -> 1 `i `uc ]
+"122
+[; ;../app/buttons.c: 122:                 }
+}
+[e :U 3274 ]
+"123
+[; ;../app/buttons.c: 123:             }
+}
+[e :U 3273 ]
+"124
+[; ;../app/buttons.c: 124:         }
+}
+[e :U 3272 ]
+"125
+[; ;../app/buttons.c: 125:     }
 }
 [e ++ _i -> -> 1 `i `uc ]
 [e $ < -> _i `i -> . `E36 4 `i 3264  ]
 [e :U 3265 ]
 }
-"107
-[; ;../app/buttons.c: 107: }
+"126
+[; ;../app/buttons.c: 126: }
 [e :UE 3263 ]
 }
-"109
-[; ;../app/buttons.c: 109: uint8_t button_pressed(button_t btn) {
+"128
+[; ;../app/buttons.c: 128: uint8_t button_pressed(button_t btn) {
 [v _button_pressed `(uc ~T0 @X0 1 ef1`E36 ]
 {
 [e :U _button_pressed ]
 [v _btn `E36 ~T0 @X0 1 r1 ]
 [f ]
-"110
-[; ;../app/buttons.c: 110:     if (btn >= BTN_COUNT) return 0;
+"129
+[; ;../app/buttons.c: 129:     if (btn >= BTN_COUNT) return 0;
 [e $ ! >= -> _btn `ui -> . `E36 4 `ui 3276  ]
 [e ) -> -> 0 `i `uc ]
 [e $UE 3275  ]
 [e :U 3276 ]
-"113
-[; ;../app/buttons.c: 113:     if (buttons[btn].stable == 1 && buttons[btn].previous == 0) {
-[e $ ! && == -> . *U + &U _buttons * -> _btn `ux -> -> # *U &U _buttons `ui `ux 2 `i -> 1 `i == -> . *U + &U _buttons * -> _btn `ux -> -> # *U &U _buttons `ui `ux 1 `i -> 0 `i 3277  ]
+"132
+[; ;../app/buttons.c: 132:     if (buttons[btn].pressed_flag) {
+[e $ ! != -> . *U + &U _buttons * -> _btn `ux -> -> # *U &U _buttons `ui `ux 0 `i -> 0 `i 3277  ]
 {
-"114
-[; ;../app/buttons.c: 114:         return 1;
+"133
+[; ;../app/buttons.c: 133:         buttons[btn].pressed_flag = 0;
+[e = . *U + &U _buttons * -> _btn `ux -> -> # *U &U _buttons `ui `ux 0 -> -> 0 `i `uc ]
+"134
+[; ;../app/buttons.c: 134:         return 1;
 [e ) -> -> 1 `i `uc ]
 [e $UE 3275  ]
-"115
-[; ;../app/buttons.c: 115:     }
+"135
+[; ;../app/buttons.c: 135:     }
 }
 [e :U 3277 ]
-"117
-[; ;../app/buttons.c: 117:     return 0;
+"137
+[; ;../app/buttons.c: 137:     return 0;
 [e ) -> -> 0 `i `uc ]
 [e $UE 3275  ]
-"118
-[; ;../app/buttons.c: 118: }
+"138
+[; ;../app/buttons.c: 138: }
 [e :UE 3275 ]
 }
-"120
-[; ;../app/buttons.c: 120: uint8_t button_held(button_t btn) {
+"140
+[; ;../app/buttons.c: 140: uint8_t button_held(button_t btn) {
 [v _button_held `(uc ~T0 @X0 1 ef1`E36 ]
 {
 [e :U _button_held ]
 [v _btn `E36 ~T0 @X0 1 r1 ]
 [f ]
-"121
-[; ;../app/buttons.c: 121:     if (btn >= BTN_COUNT) return 0;
+"141
+[; ;../app/buttons.c: 141:     if (btn >= BTN_COUNT) return 0;
 [e $ ! >= -> _btn `ui -> . `E36 4 `ui 3279  ]
 [e ) -> -> 0 `i `uc ]
 [e $UE 3278  ]
 [e :U 3279 ]
-"123
-[; ;../app/buttons.c: 123:     return (buttons[btn].stable == 1 &&
-[e ) -> -> && == -> . *U + &U _buttons * -> _btn `ux -> -> # *U &U _buttons `ui `ux 2 `i -> 1 `i > -> . *U + &U _buttons * -> _btn `ux -> -> # *U &U _buttons `ui `ux 4 `ui -> / -> 500 `i -> 10 `i `ui `i `uc ]
+"143
+[; ;../app/buttons.c: 143:     return (buttons[btn].state == 1 &&
+[e ) -> -> && == -> . *U + &U _buttons * -> _btn `ux -> -> # *U &U _buttons `ui `ux 1 `i -> 1 `i > -> . *U + &U _buttons * -> _btn `ux -> -> # *U &U _buttons `ui `ux 3 `ui -> / -> 500 `i -> 10 `i `ui `i `uc ]
 [e $UE 3278  ]
-"125
-[; ;../app/buttons.c: 125: }
+"145
+[; ;../app/buttons.c: 145: }
 [e :UE 3278 ]
 }
-"127
-[; ;../app/buttons.c: 127: uint8_t button_get_raw(button_t btn) {
+"147
+[; ;../app/buttons.c: 147: uint8_t button_get_raw(button_t btn) {
 [v _button_get_raw `(uc ~T0 @X0 1 ef1`E36 ]
 {
 [e :U _button_get_raw ]
 [v _btn `E36 ~T0 @X0 1 r1 ]
 [f ]
-"128
-[; ;../app/buttons.c: 128:     if (btn >= BTN_COUNT) return 0;
+"148
+[; ;../app/buttons.c: 148:     if (btn >= BTN_COUNT) return 0;
 [e $ ! >= -> _btn `ui -> . `E36 4 `ui 3281  ]
 [e ) -> -> 0 `i `uc ]
 [e $UE 3280  ]
 [e :U 3281 ]
-"129
-[; ;../app/buttons.c: 129:     return read_button_raw(btn);
+"149
+[; ;../app/buttons.c: 149:     return read_button_raw(btn);
 [e ) ( _read_button_raw (1 _btn ]
 [e $UE 3280  ]
-"130
-[; ;../app/buttons.c: 130: }
+"150
+[; ;../app/buttons.c: 150: }
 [e :UE 3280 ]
+}
+"155
+[; ;../app/buttons.c: 155: void buttons_ioc_callback(void) {
+[v _buttons_ioc_callback `(v ~T0 @X0 1 ef ]
+{
+[e :U _buttons_ioc_callback ]
+[f ]
+"156
+[; ;../app/buttons.c: 156:     uint8_t i;
+[v _i `uc ~T0 @X0 1 a ]
+"159
+[; ;../app/buttons.c: 159:     for (i = 0; i < BTN_COUNT; i++) {
+{
+[e = _i -> -> 0 `i `uc ]
+[e $ < -> _i `i -> . `E36 4 `i 3283  ]
+[e $U 3284  ]
+[e :U 3283 ]
+{
+"160
+[; ;../app/buttons.c: 160:         if (!buttons[i].debouncing) {
+[e $ ! ! != -> . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 4 `i -> 0 `i 3286  ]
+{
+"161
+[; ;../app/buttons.c: 161:             buttons[i].debouncing = 1;
+[e = . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 4 -> -> 1 `i `uc ]
+"162
+[; ;../app/buttons.c: 162:             buttons[i].debounce_timer = 50 / 10;
+[e = . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 2 -> / -> 50 `i -> 10 `i `us ]
+"163
+[; ;../app/buttons.c: 163:         }
+}
+[e :U 3286 ]
+"164
+[; ;../app/buttons.c: 164:     }
+}
+[e ++ _i -> -> 1 `i `uc ]
+[e $ < -> _i `i -> . `E36 4 `i 3283  ]
+[e :U 3284 ]
+}
+"165
+[; ;../app/buttons.c: 165: }
+[e :UE 3282 ]
 }

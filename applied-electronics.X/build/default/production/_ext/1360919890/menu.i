@@ -189,7 +189,7 @@ typedef struct {
 void menu_init(void);
 
 
-void menu_update(void);
+uint8_t menu_update(void);
 
 
 void menu_display(void);
@@ -225,6 +225,9 @@ uint8_t button_held(button_t btn);
 
 
 uint8_t button_get_raw(button_t btn);
+
+
+void buttons_ioc_callback(void);
 # 8 "../app/menu.c" 2
 # 1 "../app/../drivers/lcd.h" 1
 
@@ -37150,6 +37153,7 @@ static dl_cfg_t dl_config;
 static uint8_t edit_delta_t = 1;
 static uint16_t blink_counter = 0;
 static uint8_t blink_state = 0;
+static uint8_t force_refresh = 0;
 
 
 
@@ -37339,6 +37343,39 @@ static void display_datetime_submenu(void) {
 }
 
 
+static void display_datalogger_index(void) {
+    dl_cfg_t cfg;
+    app_err_t err;
+    sensor_data_t data;
+    char line1[16 + 1];
+    char line2[16 + 1];
+
+    err = dl_get_config(&cfg);
+    if (err != APP_OK) {
+        snprintf(line1, sizeof(line1), "DL Config Err");
+        snprintf(line2, sizeof(line2), "Err Code:%d", err);
+    } else {
+        snprintf(line1, sizeof(line1), "DL Idx:%d", cfg.data_count);
+        err = dl_read(cfg.data_count - 1, (sensor_data_t*)&data);
+        if (err != APP_OK) {
+            snprintf(line2, sizeof(line2), "DL Read Err:%d", err);
+        } else {
+            int32_t temp = data.t_c_x100 / 100;
+            int32_t temp_dec = data.t_c_x100 % 100;
+            uint32_t rh = data.rh_x100 / 100;
+            uint32_t rh_dec = data.rh_x100 % 100;
+            snprintf(line2, sizeof(line2), "T:%ld.%02ldC RH:%lu.%02lu%%",
+                     temp, temp_dec, rh, rh_dec);
+        }
+    }
+
+    Lcd_Set_Cursor(0, 0);
+    Lcd_Write_String(line1);
+    Lcd_Set_Cursor(1, 0);
+    Lcd_Write_String(line2);
+}
+
+
 static void display_bmp280_data(void) {
     char line1[16 + 1];
     char line2[16 + 1];
@@ -37495,7 +37532,7 @@ static void handle_main_menu(void) {
 
 
     ctx.scroll_counter++;
-    if (ctx.scroll_counter > 300) {
+    if (ctx.scroll_counter > 100) {
         ctx.scroll_counter = 0;
 
         const char* current_text = main_menu_items[ctx.main_index];
@@ -37589,7 +37626,7 @@ static void handle_datetime_edit(void) {
 
 
     blink_counter++;
-    if (blink_counter > 250) {
+    if (blink_counter > 25) {
         blink_counter = 0;
         blink_state = !blink_state;
     }
@@ -37598,8 +37635,12 @@ static void handle_datetime_edit(void) {
 
 static void handle_display_state(void) {
 
+    force_refresh = 1;
+
+
     if (button_pressed(BTN_BACK)) {
         ctx.state = MENU_STATE_MAIN;
+        force_refresh = 0;
     }
 }
 
@@ -37664,7 +37705,7 @@ static void handle_datalogger_edit(void) {
 
 
         blink_counter++;
-        if (blink_counter > 250) {
+        if (blink_counter > 25) {
             blink_counter = 0;
             blink_state = !blink_state;
         }
@@ -37694,6 +37735,16 @@ static void handle_datalogger_edit(void) {
 
 
 static void handle_clear_eeprom(void) {
+
+    force_refresh = 1;
+
+
+    if (button_pressed(BTN_BACK)) {
+        ctx.state = MENU_STATE_MAIN;
+        force_refresh = 0;
+        return;
+    }
+
     if (ctx.state == MENU_STATE_DISPLAY) {
 
         if (button_pressed(BTN_ENTER)) {
@@ -37701,22 +37752,20 @@ static void handle_clear_eeprom(void) {
             ctx.state = MENU_STATE_EDIT_VALUE;
 
 
-
-            for (uint16_t addr = 0; addr < 4096; addr++) {
-                eeprom_write_record(addr, 0xFF);
+            app_err_t err = dl_reset_config();
+            if (err != APP_OK) {
+                Lcd_Clear();
+                Lcd_Set_Cursor(0, 0);
+                Lcd_Write_String("DL Reset ERROR");
+                Lcd_Set_Cursor(1, 0);
+                char buffer[16];
+                sprintf(buffer, "Err Code:%d", err);
+                Lcd_Write_String(buffer);
+                while(1);
             }
 
-
-            dl_reset_config();
-
-
-            _delay((unsigned long)((1000)*(64000000UL/4000.0)));
             ctx.state = MENU_STATE_MAIN;
-        }
-
-
-        if (button_pressed(BTN_BACK)) {
-            ctx.state = MENU_STATE_MAIN;
+            force_refresh = 0;
         }
     }
 }
@@ -37738,9 +37787,11 @@ void menu_init(void) {
     Lcd_Clear();
 }
 
-void menu_update(void) {
-
-    buttons_update();
+uint8_t menu_update(void) {
+    uint8_t old_state = ctx.state;
+    uint8_t old_index = ctx.main_index;
+    uint8_t old_submenu_index = ctx.submenu_index;
+    uint8_t old_blink = blink_state;
 
 
     switch (ctx.state) {
@@ -37774,8 +37825,23 @@ void menu_update(void) {
 
         default:
             ctx.state = MENU_STATE_MAIN;
+            return 1;
             break;
     }
+
+
+    uint8_t needs_refresh = (old_state != ctx.state ||
+                             old_index != ctx.main_index ||
+                             old_submenu_index != ctx.submenu_index ||
+                             old_blink != blink_state ||
+                             force_refresh);
+
+
+    if (force_refresh && needs_refresh) {
+        force_refresh = 0;
+    }
+
+    return needs_refresh;
 }
 
 void menu_display(void) {
@@ -37796,7 +37862,7 @@ void menu_display(void) {
 
         case MENU_STATE_DISPLAY:
             if (ctx.current_submenu == SUBMENU_BMP280) {
-                display_bmp280_data();
+                display_datalogger_index();
             } else if (ctx.current_submenu == SUBMENU_SHT30) {
                 display_sht30_data();
             } else if (ctx.current_submenu == SUBMENU_CLEAR_EEPROM) {

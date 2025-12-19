@@ -166,6 +166,9 @@ uint8_t button_held(button_t btn);
 
 
 uint8_t button_get_raw(button_t btn);
+
+
+void buttons_ioc_callback(void);
 # 8 "../app/app_menu.c" 2
 # 1 "../app/menu.h" 1
 # 22 "../app/menu.h"
@@ -230,7 +233,7 @@ typedef struct {
 void menu_init(void);
 
 
-void menu_update(void);
+uint8_t menu_update(void);
 
 
 void menu_display(void);
@@ -36821,8 +36824,8 @@ void app_init(void) {
 
 void app_loop(void) {
 
-    menu_update();
+    if (menu_update()) {
 
-
-    menu_display();
+        menu_display();
+    }
 }

@@ -266,7 +266,7 @@ void test_dl_setup(void)
     Lcd_Set_Cursor(0, 0);
     Lcd_Write_String("1.3 Set period");
     Lcd_Set_Cursor(1, 0);
-    Lcd_Write_String("5 minutes");
+    Lcd_Write_String("1 minutes");
     __delay_ms(1000);
 
     err = dl_set_sample_period_min(1);
@@ -645,8 +645,6 @@ void app_main_loop(void) {
     static uint16_t last_config_update_tick = 0;
     static uint16_t last_sensor_tick = 0;
     static bool period_locked = false;
-    
-    test_dl_setup();
 
     // Boucle infinie
     while (1) {
@@ -669,21 +667,24 @@ void app_main_loop(void) {
             err = dl_get_config(&current_cfg);
             if (err != APP_OK) {
                 // gérer erreur
+                Lcd_Clear();
+                Lcd_Set_Cursor(0, 0);
+                Lcd_Write_String("DL GetCfg Err");
+                while(1);  // Bloquer l'exécution
             } else {
                 uint16_t period_s = (uint16_t)current_cfg.sample_period_min * 60u;
                 if (period_s > 0u) {
                     g_sensor_period_ticks = period_s;
-                    period_locked = true;
                 }
-                // Temporary thing
-                g_sensor_period_ticks = 10;
+                if (current_cfg.running) {
+                    period_locked = true;  // Verrouiller la période si le datalogger est en cours d'exécution
+                }
             }
         }
         
         // TÂCHE PÉRIODIQUE : Acquisition des capteurs
         if (g_sensor_period_ticks > 0u &&
             (uint16_t)(g_tick_counter - last_sensor_tick) >= g_sensor_period_ticks) {
-
             last_sensor_tick = g_tick_counter;
             
                 
@@ -711,20 +712,6 @@ void app_main_loop(void) {
                     Lcd_Write_String("SHT Read Err");
                     while(1);  // Bloquer l'exécution
                 }
-
-                // Lcd_Clear();
-                // Lcd_Set_Cursor(0, 0);
-                // Lcd_Write_String("T:");
-                // char buffer[16];
-                // sprintf(buffer, "%.2fC ", sensor_data.t_c_x100 / 100.0);
-                // Lcd_Write_String(buffer);
-                // Lcd_Write_String("RH:");
-                // sprintf(buffer, "%.2f%% ", sensor_data.rh_x100 / 100.0);
-                // Lcd_Write_String(buffer);
-                // Lcd_Set_Cursor(1, 0);
-                // Lcd_Write_String("P:");
-                // sprintf(buffer, "%.2fhPa", sensor_data.p_pa / 100.0);
-                // Lcd_Write_String(buffer);
 
                 err = dl_get_config(&current_cfg);
                 if (err != APP_OK) {
@@ -772,20 +759,11 @@ void app_main_loop(void) {
                         sprintf(buffer, "%d", err);
                         Lcd_Write_String(buffer);
                         while(1);  // Bloquer l'exécution
-                    } else {
-                        Lcd_Clear();
-                        Lcd_Set_Cursor(0, 0);
-                        char buffer[16];
-                        sprintf(buffer, "Idx:%u", current_cfg.data_count - 1);
-                        Lcd_Write_String(buffer);
-                        Lcd_Set_Cursor(1, 0);
-                        sprintf(buffer, "T:%.2fC", verify_data.t_c_x100 / 100.0);
-                        Lcd_Write_String(buffer);
                     }
             }
         }
         
         // TÂCHE CONTINUE : Gestion du menu
-        //app_loop();
+        app_loop();
     }
 }

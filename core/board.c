@@ -78,6 +78,13 @@ void board_configure_pins(void) {
     TRISC = 0b10010011;  // RC7 (RX1), RC4 (SDI), RC0, RC1 en entrée
                          // RC6 (TX1), RC5 (SDO), RC3 (SCK), RC2 (LED) en sortie
     
+    // Configuration des pull-ups pour les boutons
+    WPUA = 0b11000000;  // Pull-up sur RA7 (BTN_DOWN) et RA6 (BTN_UP)
+    WPUC = 0b00000011;  // Pull-up sur RC1 (BTN_BACK) et RC0 (BTN_ENTER)
+    
+    // Activer les pull-ups faibles
+    WPUE = 0x00;        // Pas de weak pull-up enable global nécessaire pour PORTA/C
+    
     // États initiaux
     PORTA = 0x00;
     PORTB = 0x00;

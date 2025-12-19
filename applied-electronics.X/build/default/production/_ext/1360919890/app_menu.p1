@@ -9,8 +9,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;../app/menu.h: 86: void menu_display(void);
 [v _menu_display `(v ~T0 @X0 0 ef ]
 "83
-[; ;../app/menu.h: 83: void menu_update(void);
-[v _menu_update `(v ~T0 @X0 0 ef ]
+[; ;../app/menu.h: 83: uint8_t menu_update(void);
+[v _menu_update `(uc ~T0 @X0 0 ef ]
 "272 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 272: __asm("CIOCON equ 03700h");
 [; <" CIOCON equ 03700h ;# ">
@@ -3079,11 +3079,16 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U _app_loop ]
 [f ]
 "34
-[; ;../app/app_menu.c: 34:     menu_update();
-[e ( _menu_update ..  ]
-"37
-[; ;../app/app_menu.c: 37:     menu_display();
+[; ;../app/app_menu.c: 34:     if (menu_update()) {
+[e $ ! != -> ( _menu_update ..  `i -> 0 `i 3253  ]
+{
+"36
+[; ;../app/app_menu.c: 36:         menu_display();
 [e ( _menu_display ..  ]
+"37
+[; ;../app/app_menu.c: 37:     }
+}
+[e :U 3253 ]
 "38
 [; ;../app/app_menu.c: 38: }
 [e :UE 3252 ]

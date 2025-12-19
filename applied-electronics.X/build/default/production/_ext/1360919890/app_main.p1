@@ -117,6 +117,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 "16 ../app/../modules/sht30.h
 [; ;../app/../modules/sht30.h: 16: app_err_t sht30_read(sht30_data_t* data);
 [v _sht30_read `(E22799 ~T0 @X0 0 ef1`*S3252 ]
+"14 ../app/app_menu.h
+[; ;../app/app_menu.h: 14: void app_loop(void);
+[v _app_loop `(v ~T0 @X0 0 ef ]
 "272 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 272: __asm("CIOCON equ 03700h");
 [; <" CIOCON equ 03700h ;# ">
@@ -3685,7 +3688,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;../app/app_main.c: 268:     Lcd_Set_Cursor(1, 0);
 [e ( _Lcd_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
 "269
-[; ;../app/app_main.c: 269:     Lcd_Write_String("5 minutes");
+[; ;../app/app_main.c: 269:     Lcd_Write_String("1 minutes");
 [e ( _Lcd_Write_String (1 :s 26C ]
 "270
 [; ;../app/app_main.c: 270:     _delay((unsigned long)((1000)*(64000000UL/4000.0)));
@@ -4669,385 +4672,422 @@ Version 4.0 HI-TECH Software Intermediate Code
 [i F23266
 -> -> 0 `i `a
 ]
-"649
-[; ;../app/app_main.c: 649:     test_dl_setup();
-[e ( _test_dl_setup ..  ]
-"652
-[; ;../app/app_main.c: 652:     while (1) {
+"650
+[; ;../app/app_main.c: 650:     while (1) {
 [e :U 3377 ]
 {
-"654
-[; ;../app/app_main.c: 654:         if (g_uart2_rx_flag) {
+"652
+[; ;../app/app_main.c: 652:         if (g_uart2_rx_flag) {
 [e $ ! != -> _g_uart2_rx_flag `i -> 0 `i 3379  ]
 {
-"655
-[; ;../app/app_main.c: 655:             g_uart2_rx_flag = 0;
+"653
+[; ;../app/app_main.c: 653:             g_uart2_rx_flag = 0;
 [e = _g_uart2_rx_flag -> -> 0 `i `uc ]
-"656
-[; ;../app/app_main.c: 656:             bluetooth_handle_rx(g_uart2_rx_char);
+"654
+[; ;../app/app_main.c: 654:             bluetooth_handle_rx(g_uart2_rx_char);
 [e ( _bluetooth_handle_rx (1 _g_uart2_rx_char ]
-"657
-[; ;../app/app_main.c: 657:         }
+"655
+[; ;../app/app_main.c: 655:         }
 }
 [e :U 3379 ]
-"660
-[; ;../app/app_main.c: 660:         if (g_timer0_flag) {
+"658
+[; ;../app/app_main.c: 658:         if (g_timer0_flag) {
 [e $ ! != -> _g_timer0_flag `i -> 0 `i 3380  ]
 {
-"661
-[; ;../app/app_main.c: 661:             g_timer0_flag = 0;
+"659
+[; ;../app/app_main.c: 659:             g_timer0_flag = 0;
 [e = _g_timer0_flag -> -> 0 `i `uc ]
-"662
-[; ;../app/app_main.c: 662:             g_tick_counter++;
+"660
+[; ;../app/app_main.c: 660:             g_tick_counter++;
 [e ++ _g_tick_counter -> -> 1 `i `us ]
-"663
-[; ;../app/app_main.c: 663:         }
+"661
+[; ;../app/app_main.c: 661:         }
 }
 [e :U 3380 ]
-"666
-[; ;../app/app_main.c: 666:         if (!period_locked && (uint16_t)(g_tick_counter - last_config_update_tick) >= 10) {
+"664
+[; ;../app/app_main.c: 664:         if (!period_locked && (uint16_t)(g_tick_counter - last_config_update_tick) >= 10) {
 [e $ ! && ! != -> F23266 `i -> 0 `i >= -> -> - -> _g_tick_counter `ui -> F23264 `ui `us `ui -> -> 10 `i `ui 3381  ]
 {
-"667
-[; ;../app/app_main.c: 667:             last_config_update_tick = g_tick_counter;
+"665
+[; ;../app/app_main.c: 665:             last_config_update_tick = g_tick_counter;
 [e = F23264 _g_tick_counter ]
-"669
-[; ;../app/app_main.c: 669:             err = dl_get_config(&current_cfg);
+"667
+[; ;../app/app_main.c: 667:             err = dl_get_config(&current_cfg);
 [e = _err ( _dl_get_config (1 &U _current_cfg ]
-"670
-[; ;../app/app_main.c: 670:             if (err != APP_OK) {
+"668
+[; ;../app/app_main.c: 668:             if (err != APP_OK) {
 [e $ ! != -> _err `ui -> . `E22799 0 `ui 3382  ]
 {
+"670
+[; ;../app/app_main.c: 670:                 Lcd_Clear();
+[e ( _Lcd_Clear ..  ]
+"671
+[; ;../app/app_main.c: 671:                 Lcd_Set_Cursor(0, 0);
+[e ( _Lcd_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
 "672
-[; ;../app/app_main.c: 672:             } else {
+[; ;../app/app_main.c: 672:                 Lcd_Write_String("DL GetCfg Err");
+[e ( _Lcd_Write_String (1 :s 79C ]
+"673
+[; ;../app/app_main.c: 673:                 while(1);
+[e :U 3384 ]
+[e :U 3383 ]
+[e $U 3384  ]
+[e :U 3385 ]
+"674
+[; ;../app/app_main.c: 674:             } else {
 }
-[e $U 3383  ]
+[e $U 3386  ]
 [e :U 3382 ]
 {
-"673
-[; ;../app/app_main.c: 673:                 uint16_t period_s = (uint16_t)current_cfg.sample_period_min * 60u;
+"675
+[; ;../app/app_main.c: 675:                 uint16_t period_s = (uint16_t)current_cfg.sample_period_min * 60u;
 [v _period_s `us ~T0 @X0 1 a ]
 [e = _period_s -> * -> -> . _current_cfg 0 `us `ui -> 60 `ui `us ]
-"674
-[; ;../app/app_main.c: 674:                 if (period_s > 0u) {
-[e $ ! > -> _period_s `ui -> 0 `ui 3384  ]
-{
-"675
-[; ;../app/app_main.c: 675:                     g_sensor_period_ticks = period_s;
-[e = _g_sensor_period_ticks _period_s ]
 "676
-[; ;../app/app_main.c: 676:                     period_locked = 1;
-[e = F23266 -> -> 1 `i `a ]
+[; ;../app/app_main.c: 676:                 if (period_s > 0u) {
+[e $ ! > -> _period_s `ui -> 0 `ui 3387  ]
+{
 "677
-[; ;../app/app_main.c: 677:                 }
-}
-[e :U 3384 ]
-"679
-[; ;../app/app_main.c: 679:                 g_sensor_period_ticks = 10;
-[e = _g_sensor_period_ticks -> -> 10 `i `us ]
-"680
-[; ;../app/app_main.c: 680:             }
-}
-[e :U 3383 ]
-"681
-[; ;../app/app_main.c: 681:         }
-}
-[e :U 3381 ]
-"684
-[; ;../app/app_main.c: 684:         if (g_sensor_period_ticks > 0u &&
-[e $ ! && > -> _g_sensor_period_ticks `ui -> 0 `ui >= -> -> - -> _g_tick_counter `ui -> F23265 `ui `us `ui -> _g_sensor_period_ticks `ui 3385  ]
-"685
-[; ;../app/app_main.c: 685:             (uint16_t)(g_tick_counter - last_sensor_tick) >= g_sensor_period_ticks) {
-{
-"687
-[; ;../app/app_main.c: 687:             last_sensor_tick = g_tick_counter;
-[e = F23265 _g_tick_counter ]
-"691
-[; ;../app/app_main.c: 691:                 bmp280_data_t bmp_data;
-[v _bmp_data `S3251 ~T0 @X0 1 a ]
-"692
-[; ;../app/app_main.c: 692:                 sht30_data_t sht_data;
-[v _sht_data `S3252 ~T0 @X0 1 a ]
-"694
-[; ;../app/app_main.c: 694:                 err = bmp280_read(&bmp_data);
-[e = _err ( _bmp280_read (1 &U _bmp_data ]
-"695
-[; ;../app/app_main.c: 695:                 if (err == APP_OK) {
-[e $ ! == -> _err `ui -> . `E22799 0 `ui 3386  ]
-{
-"696
-[; ;../app/app_main.c: 696:                     sensor_data.p_pa = bmp_data.pressure_pa;
-[e = . _sensor_data 2 . _bmp_data 0 ]
-"697
-[; ;../app/app_main.c: 697:                     sensor_data.t_c_x100 = bmp_data.temp_c_x100;
-[e = . _sensor_data 0 . _bmp_data 1 ]
-"698
-[; ;../app/app_main.c: 698:                 } else {
-}
-[e $U 3387  ]
-[e :U 3386 ]
-{
-"699
-[; ;../app/app_main.c: 699:                     Lcd_Clear();
-[e ( _Lcd_Clear ..  ]
-"700
-[; ;../app/app_main.c: 700:                     Lcd_Set_Cursor(0, 0);
-[e ( _Lcd_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
-"701
-[; ;../app/app_main.c: 701:                     Lcd_Write_String("BMP Read Err");
-[e ( _Lcd_Write_String (1 :s 79C ]
-"702
-[; ;../app/app_main.c: 702:                     while(1);
-[e :U 3389 ]
-[e :U 3388 ]
-[e $U 3389  ]
-[e :U 3390 ]
-"703
-[; ;../app/app_main.c: 703:                 }
+[; ;../app/app_main.c: 677:                     g_sensor_period_ticks = period_s;
+[e = _g_sensor_period_ticks _period_s ]
+"678
+[; ;../app/app_main.c: 678:                 }
 }
 [e :U 3387 ]
-"705
-[; ;../app/app_main.c: 705:                 err = sht30_read(&sht_data);
-[e = _err ( _sht30_read (1 &U _sht_data ]
-"706
-[; ;../app/app_main.c: 706:                 if (err == APP_OK) {
-[e $ ! == -> _err `ui -> . `E22799 0 `ui 3391  ]
+"679
+[; ;../app/app_main.c: 679:                 if (current_cfg.running) {
+[e $ ! != -> . _current_cfg 3 `i -> 0 `i 3388  ]
 {
-"707
-[; ;../app/app_main.c: 707:                     sensor_data.rh_x100 = sht_data.rh_x100;
-[e = . _sensor_data 1 . _sht_data 0 ]
-"708
-[; ;../app/app_main.c: 708:                 } else {
-}
-[e $U 3392  ]
-[e :U 3391 ]
-{
-"709
-[; ;../app/app_main.c: 709:                     Lcd_Clear();
+"680
+[; ;../app/app_main.c: 680:                     period_locked = 1;
+[e = F23266 -> -> 1 `i `a ]
+"681
+[; ;../app/app_main.c: 681:                     Lcd_Clear();
 [e ( _Lcd_Clear ..  ]
-"710
-[; ;../app/app_main.c: 710:                     Lcd_Set_Cursor(0, 0);
+"682
+[; ;../app/app_main.c: 682:                     Lcd_Set_Cursor(0, 0);
 [e ( _Lcd_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
-"711
-[; ;../app/app_main.c: 711:                     Lcd_Write_String("SHT Read Err");
+"683
+[; ;../app/app_main.c: 683:                     Lcd_Write_String("Logging Active");
 [e ( _Lcd_Write_String (1 :s 80C ]
-"712
-[; ;../app/app_main.c: 712:                     while(1);
-[e :U 3394 ]
-[e :U 3393 ]
-[e $U 3394  ]
-[e :U 3395 ]
-"713
-[; ;../app/app_main.c: 713:                 }
-}
-[e :U 3392 ]
-"729
-[; ;../app/app_main.c: 729:                 err = dl_get_config(&current_cfg);
-[e = _err ( _dl_get_config (1 &U _current_cfg ]
-"730
-[; ;../app/app_main.c: 730:                 if (err != APP_OK) {
-[e $ ! != -> _err `ui -> . `E22799 0 `ui 3396  ]
-{
-"732
-[; ;../app/app_main.c: 732:                     continue;
-[e $U 3376  ]
-"733
-[; ;../app/app_main.c: 733:                 } else if (current_cfg.running) {
-}
-[e $U 3397  ]
-[e :U 3396 ]
-[e $ ! != -> . _current_cfg 3 `i -> 0 `i 3398  ]
-{
-"735
-[; ;../app/app_main.c: 735:                     err = dl_push_record(&sensor_data);
-[e = _err ( _dl_push_record (1 -> &U _sensor_data `*CS3253 ]
-"736
-[; ;../app/app_main.c: 736:                     if (err == APP_EFULL) {
-[e $ ! == -> _err `ui -> . `E22799 6 `ui 3399  ]
-{
-"737
-[; ;../app/app_main.c: 737:                         Lcd_Clear();
-[e ( _Lcd_Clear ..  ]
-"738
-[; ;../app/app_main.c: 738:                         Lcd_Set_Cursor(0, 0);
-[e ( _Lcd_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
-"739
-[; ;../app/app_main.c: 739:                         Lcd_Write_String("DL Write Err");
-[e ( _Lcd_Write_String (1 :s 81C ]
-"740
-[; ;../app/app_main.c: 740:                         Lcd_Set_Cursor(1, 0);
+"684
+[; ;../app/app_main.c: 684:                     Lcd_Set_Cursor(1, 0);
 [e ( _Lcd_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
-"741
-[; ;../app/app_main.c: 741:                         Lcd_Write_String("Memory Full");
+"685
+[; ;../app/app_main.c: 685:                     char buffer[16];
+[v _buffer `uc ~T0 @X0 -> 16 `i a ]
+"686
+[; ;../app/app_main.c: 686:                     sprintf(buffer, "Period:%us", period_s);
+[e ( _sprintf (1 , (. , &U _buffer :s 81C -> _period_s `ui ]
+"687
+[; ;../app/app_main.c: 687:                     Lcd_Write_String(buffer);
+[e ( _Lcd_Write_String (1 -> &U _buffer `*Cuc ]
+"689
+[; ;../app/app_main.c: 689:                     _delay((unsigned long)((500)*(64000000UL/4000.0))); _delay((unsigned long)((500)*(64000000UL/4000.0))); _delay((unsigned long)((500)*(64000000UL/4000.0))); _delay((unsigned long)((500)*(64000000UL/4000.0))); _delay((unsigned long)((500)*(64000000UL/4000.0))); _delay((unsigned long)((500)*(64000000UL/4000.0)));
+[e ( __delay (1 -> * -> -> 500 `i `d / -> -> 64000000 `ul `d .4000.0 `ul ]
+[e ( __delay (1 -> * -> -> 500 `i `d / -> -> 64000000 `ul `d .4000.0 `ul ]
+[e ( __delay (1 -> * -> -> 500 `i `d / -> -> 64000000 `ul `d .4000.0 `ul ]
+[e ( __delay (1 -> * -> -> 500 `i `d / -> -> 64000000 `ul `d .4000.0 `ul ]
+[e ( __delay (1 -> * -> -> 500 `i `d / -> -> 64000000 `ul `d .4000.0 `ul ]
+[e ( __delay (1 -> * -> -> 500 `i `d / -> -> 64000000 `ul `d .4000.0 `ul ]
+"691
+[; ;../app/app_main.c: 691:                 }
+}
+[e :U 3388 ]
+"692
+[; ;../app/app_main.c: 692:             }
+}
+[e :U 3386 ]
+"693
+[; ;../app/app_main.c: 693:         }
+}
+[e :U 3381 ]
+"696
+[; ;../app/app_main.c: 696:         if (g_sensor_period_ticks > 0u &&
+[e $ ! && > -> _g_sensor_period_ticks `ui -> 0 `ui >= -> -> - -> _g_tick_counter `ui -> F23265 `ui `us `ui -> _g_sensor_period_ticks `ui 3389  ]
+"697
+[; ;../app/app_main.c: 697:             (uint16_t)(g_tick_counter - last_sensor_tick) >= g_sensor_period_ticks) {
+{
+"699
+[; ;../app/app_main.c: 699:                 Lcd_Clear();
+[e ( _Lcd_Clear ..  ]
+"700
+[; ;../app/app_main.c: 700:                 Lcd_Set_Cursor(0, 0);
+[e ( _Lcd_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
+"701
+[; ;../app/app_main.c: 701:                 Lcd_Write_String("Acquiring...");
 [e ( _Lcd_Write_String (1 :s 82C ]
-"742
-[; ;../app/app_main.c: 742:                         while(1);
-[e :U 3401 ]
-[e :U 3400 ]
-[e $U 3401  ]
-[e :U 3402 ]
-"743
-[; ;../app/app_main.c: 743:                     } else if (err != APP_OK){
-}
-[e $U 3403  ]
-[e :U 3399 ]
-[e $ ! != -> _err `ui -> . `E22799 0 `ui 3404  ]
+"702
+[; ;../app/app_main.c: 702:                 _delay((unsigned long)((500)*(64000000UL/4000.0))); _delay((unsigned long)((500)*(64000000UL/4000.0))); _delay((unsigned long)((500)*(64000000UL/4000.0))); _delay((unsigned long)((500)*(64000000UL/4000.0))); _delay((unsigned long)((500)*(64000000UL/4000.0))); _delay((unsigned long)((500)*(64000000UL/4000.0)));
+[e ( __delay (1 -> * -> -> 500 `i `d / -> -> 64000000 `ul `d .4000.0 `ul ]
+[e ( __delay (1 -> * -> -> 500 `i `d / -> -> 64000000 `ul `d .4000.0 `ul ]
+[e ( __delay (1 -> * -> -> 500 `i `d / -> -> 64000000 `ul `d .4000.0 `ul ]
+[e ( __delay (1 -> * -> -> 500 `i `d / -> -> 64000000 `ul `d .4000.0 `ul ]
+[e ( __delay (1 -> * -> -> 500 `i `d / -> -> 64000000 `ul `d .4000.0 `ul ]
+[e ( __delay (1 -> * -> -> 500 `i `d / -> -> 64000000 `ul `d .4000.0 `ul ]
+"704
+[; ;../app/app_main.c: 704:             last_sensor_tick = g_tick_counter;
+[e = F23265 _g_tick_counter ]
+"708
+[; ;../app/app_main.c: 708:                 bmp280_data_t bmp_data;
+[v _bmp_data `S3251 ~T0 @X0 1 a ]
+"709
+[; ;../app/app_main.c: 709:                 sht30_data_t sht_data;
+[v _sht_data `S3252 ~T0 @X0 1 a ]
+"711
+[; ;../app/app_main.c: 711:                 err = bmp280_read(&bmp_data);
+[e = _err ( _bmp280_read (1 &U _bmp_data ]
+"712
+[; ;../app/app_main.c: 712:                 if (err == APP_OK) {
+[e $ ! == -> _err `ui -> . `E22799 0 `ui 3390  ]
 {
-"744
-[; ;../app/app_main.c: 744:                         Lcd_Clear();
+"713
+[; ;../app/app_main.c: 713:                     sensor_data.p_pa = bmp_data.pressure_pa;
+[e = . _sensor_data 2 . _bmp_data 0 ]
+"714
+[; ;../app/app_main.c: 714:                     sensor_data.t_c_x100 = bmp_data.temp_c_x100;
+[e = . _sensor_data 0 . _bmp_data 1 ]
+"715
+[; ;../app/app_main.c: 715:                 } else {
+}
+[e $U 3391  ]
+[e :U 3390 ]
+{
+"716
+[; ;../app/app_main.c: 716:                     Lcd_Clear();
 [e ( _Lcd_Clear ..  ]
-"745
-[; ;../app/app_main.c: 745:                         Lcd_Set_Cursor(0, 0);
+"717
+[; ;../app/app_main.c: 717:                     Lcd_Set_Cursor(0, 0);
 [e ( _Lcd_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
-"746
-[; ;../app/app_main.c: 746:                         Lcd_Write_String("DL Push Err");
+"718
+[; ;../app/app_main.c: 718:                     Lcd_Write_String("BMP Read Err");
 [e ( _Lcd_Write_String (1 :s 83C ]
-"747
-[; ;../app/app_main.c: 747:                         Lcd_Set_Cursor(1, 0);
-[e ( _Lcd_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
-"748
-[; ;../app/app_main.c: 748:                         Lcd_Write_String("Code:");
+"719
+[; ;../app/app_main.c: 719:                     while(1);
+[e :U 3393 ]
+[e :U 3392 ]
+[e $U 3393  ]
+[e :U 3394 ]
+"720
+[; ;../app/app_main.c: 720:                 }
+}
+[e :U 3391 ]
+"722
+[; ;../app/app_main.c: 722:                 err = sht30_read(&sht_data);
+[e = _err ( _sht30_read (1 &U _sht_data ]
+"723
+[; ;../app/app_main.c: 723:                 if (err == APP_OK) {
+[e $ ! == -> _err `ui -> . `E22799 0 `ui 3395  ]
+{
+"724
+[; ;../app/app_main.c: 724:                     sensor_data.rh_x100 = sht_data.rh_x100;
+[e = . _sensor_data 1 . _sht_data 0 ]
+"725
+[; ;../app/app_main.c: 725:                 } else {
+}
+[e $U 3396  ]
+[e :U 3395 ]
+{
+"726
+[; ;../app/app_main.c: 726:                     Lcd_Clear();
+[e ( _Lcd_Clear ..  ]
+"727
+[; ;../app/app_main.c: 727:                     Lcd_Set_Cursor(0, 0);
+[e ( _Lcd_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
+"728
+[; ;../app/app_main.c: 728:                     Lcd_Write_String("SHT Read Err");
 [e ( _Lcd_Write_String (1 :s 84C ]
-"749
-[; ;../app/app_main.c: 749:                         char buffer[16];
-[v _buffer `uc ~T0 @X0 -> 16 `i a ]
-"750
-[; ;../app/app_main.c: 750:                         sprintf(buffer, "%d", err);
-[e ( _sprintf (1 , (. , &U _buffer :s 85C -> _err `ui ]
-"751
-[; ;../app/app_main.c: 751:                         Lcd_Write_String(buffer);
-[e ( _Lcd_Write_String (1 -> &U _buffer `*Cuc ]
-"752
-[; ;../app/app_main.c: 752:                         while(1);
-[e :U 3406 ]
-[e :U 3405 ]
-[e $U 3406  ]
-[e :U 3407 ]
-"753
-[; ;../app/app_main.c: 753:                     }
-}
-[e :U 3404 ]
-[e :U 3403 ]
-"756
-[; ;../app/app_main.c: 756:                     err = dl_get_config(&current_cfg);
-[e = _err ( _dl_get_config (1 &U _current_cfg ]
-"757
-[; ;../app/app_main.c: 757:                     if (err != APP_OK) {
-[e $ ! != -> _err `ui -> . `E22799 0 `ui 3408  ]
-{
-"759
-[; ;../app/app_main.c: 759:                         continue;
-[e $U 3376  ]
-"760
-[; ;../app/app_main.c: 760:                     }
-}
-[e :U 3408 ]
-"762
-[; ;../app/app_main.c: 762:                     sensor_data_t verify_data;
-[v _verify_data `S3253 ~T0 @X0 1 a ]
-"763
-[; ;../app/app_main.c: 763:                     err = dl_read(current_cfg.data_count - 1, &verify_data);
-[e = _err ( _dl_read (2 , -> - -> . _current_cfg 1 `i -> 1 `i `us &U _verify_data ]
-"765
-[; ;../app/app_main.c: 765:                     if (err != APP_OK) {
-[e $ ! != -> _err `ui -> . `E22799 0 `ui 3409  ]
-{
-"766
-[; ;../app/app_main.c: 766:                         Lcd_Clear();
-[e ( _Lcd_Clear ..  ]
-"767
-[; ;../app/app_main.c: 767:                         Lcd_Set_Cursor(0, 0);
-[e ( _Lcd_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
-"768
-[; ;../app/app_main.c: 768:                         Lcd_Write_String("DL Read Err");
-[e ( _Lcd_Write_String (1 :s 86C ]
-"769
-[; ;../app/app_main.c: 769:                         Lcd_Set_Cursor(1, 0);
-[e ( _Lcd_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
-"770
-[; ;../app/app_main.c: 770:                         Lcd_Write_String("Code:");
-[e ( _Lcd_Write_String (1 :s 87C ]
-"771
-[; ;../app/app_main.c: 771:                         char buffer[16];
-[v _buffer `uc ~T0 @X0 -> 16 `i a ]
-"772
-[; ;../app/app_main.c: 772:                         sprintf(buffer, "%d", err);
-[e ( _sprintf (1 , (. , &U _buffer :s 88C -> _err `ui ]
-"773
-[; ;../app/app_main.c: 773:                         Lcd_Write_String(buffer);
-[e ( _Lcd_Write_String (1 -> &U _buffer `*Cuc ]
-"774
-[; ;../app/app_main.c: 774:                         while(1);
-[e :U 3411 ]
-[e :U 3410 ]
-[e $U 3411  ]
-[e :U 3412 ]
-"775
-[; ;../app/app_main.c: 775:                     } else {
-}
-[e $U 3413  ]
-[e :U 3409 ]
-{
-"776
-[; ;../app/app_main.c: 776:                         Lcd_Clear();
-[e ( _Lcd_Clear ..  ]
-"777
-[; ;../app/app_main.c: 777:                         Lcd_Set_Cursor(0, 0);
-[e ( _Lcd_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
-"778
-[; ;../app/app_main.c: 778:                         char buffer[16];
-[v _buffer `uc ~T0 @X0 -> 16 `i a ]
-"779
-[; ;../app/app_main.c: 779:                         sprintf(buffer, "Idx:%u", current_cfg.data_count - 1);
-[e ( _sprintf (1 , (. , &U _buffer :s 89C - -> . _current_cfg 1 `i -> 1 `i ]
-"780
-[; ;../app/app_main.c: 780:                         Lcd_Write_String(buffer);
-[e ( _Lcd_Write_String (1 -> &U _buffer `*Cuc ]
-"781
-[; ;../app/app_main.c: 781:                         Lcd_Set_Cursor(1, 0);
-[e ( _Lcd_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
-"782
-[; ;../app/app_main.c: 782:                         sprintf(buffer, "T:%.2fC", verify_data.t_c_x100 / 100.0);
-[e ( _sprintf (1 , (. , &U _buffer :s 90C / -> -> . _verify_data 0 `i `d .100.0 ]
-"783
-[; ;../app/app_main.c: 783:                         Lcd_Write_String(buffer);
-[e ( _Lcd_Write_String (1 -> &U _buffer `*Cuc ]
-"784
-[; ;../app/app_main.c: 784:                     }
-}
-[e :U 3413 ]
-"785
-[; ;../app/app_main.c: 785:             }
-}
+"729
+[; ;../app/app_main.c: 729:                     while(1);
 [e :U 3398 ]
 [e :U 3397 ]
-"786
-[; ;../app/app_main.c: 786:         }
+[e $U 3398  ]
+[e :U 3399 ]
+"730
+[; ;../app/app_main.c: 730:                 }
 }
-[e :U 3385 ]
+[e :U 3396 ]
+"746
+[; ;../app/app_main.c: 746:                 err = dl_get_config(&current_cfg);
+[e = _err ( _dl_get_config (1 &U _current_cfg ]
+"747
+[; ;../app/app_main.c: 747:                 if (err != APP_OK) {
+[e $ ! != -> _err `ui -> . `E22799 0 `ui 3400  ]
+{
+"749
+[; ;../app/app_main.c: 749:                     continue;
+[e $U 3376  ]
+"750
+[; ;../app/app_main.c: 750:                 } else if (current_cfg.running) {
+}
+[e $U 3401  ]
+[e :U 3400 ]
+[e $ ! != -> . _current_cfg 3 `i -> 0 `i 3402  ]
+{
+"752
+[; ;../app/app_main.c: 752:                     err = dl_push_record(&sensor_data);
+[e = _err ( _dl_push_record (1 -> &U _sensor_data `*CS3253 ]
+"753
+[; ;../app/app_main.c: 753:                     if (err == APP_EFULL) {
+[e $ ! == -> _err `ui -> . `E22799 6 `ui 3403  ]
+{
+"754
+[; ;../app/app_main.c: 754:                         Lcd_Clear();
+[e ( _Lcd_Clear ..  ]
+"755
+[; ;../app/app_main.c: 755:                         Lcd_Set_Cursor(0, 0);
+[e ( _Lcd_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
+"756
+[; ;../app/app_main.c: 756:                         Lcd_Write_String("DL Write Err");
+[e ( _Lcd_Write_String (1 :s 85C ]
+"757
+[; ;../app/app_main.c: 757:                         Lcd_Set_Cursor(1, 0);
+[e ( _Lcd_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+"758
+[; ;../app/app_main.c: 758:                         Lcd_Write_String("Memory Full");
+[e ( _Lcd_Write_String (1 :s 86C ]
+"759
+[; ;../app/app_main.c: 759:                         while(1);
+[e :U 3405 ]
+[e :U 3404 ]
+[e $U 3405  ]
+[e :U 3406 ]
+"760
+[; ;../app/app_main.c: 760:                     } else if (err != APP_OK){
+}
+[e $U 3407  ]
+[e :U 3403 ]
+[e $ ! != -> _err `ui -> . `E22799 0 `ui 3408  ]
+{
+"761
+[; ;../app/app_main.c: 761:                         Lcd_Clear();
+[e ( _Lcd_Clear ..  ]
+"762
+[; ;../app/app_main.c: 762:                         Lcd_Set_Cursor(0, 0);
+[e ( _Lcd_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
+"763
+[; ;../app/app_main.c: 763:                         Lcd_Write_String("DL Push Err");
+[e ( _Lcd_Write_String (1 :s 87C ]
+"764
+[; ;../app/app_main.c: 764:                         Lcd_Set_Cursor(1, 0);
+[e ( _Lcd_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+"765
+[; ;../app/app_main.c: 765:                         Lcd_Write_String("Code:");
+[e ( _Lcd_Write_String (1 :s 88C ]
+"766
+[; ;../app/app_main.c: 766:                         char buffer[16];
+[v _buffer `uc ~T0 @X0 -> 16 `i a ]
+"767
+[; ;../app/app_main.c: 767:                         sprintf(buffer, "%d", err);
+[e ( _sprintf (1 , (. , &U _buffer :s 89C -> _err `ui ]
+"768
+[; ;../app/app_main.c: 768:                         Lcd_Write_String(buffer);
+[e ( _Lcd_Write_String (1 -> &U _buffer `*Cuc ]
+"769
+[; ;../app/app_main.c: 769:                         while(1);
+[e :U 3410 ]
+[e :U 3409 ]
+[e $U 3410  ]
+[e :U 3411 ]
+"770
+[; ;../app/app_main.c: 770:                     }
+}
+[e :U 3408 ]
+[e :U 3407 ]
+"773
+[; ;../app/app_main.c: 773:                     err = dl_get_config(&current_cfg);
+[e = _err ( _dl_get_config (1 &U _current_cfg ]
+"774
+[; ;../app/app_main.c: 774:                     if (err != APP_OK) {
+[e $ ! != -> _err `ui -> . `E22799 0 `ui 3412  ]
+{
+"776
+[; ;../app/app_main.c: 776:                         continue;
+[e $U 3376  ]
+"777
+[; ;../app/app_main.c: 777:                     }
+}
+[e :U 3412 ]
+"779
+[; ;../app/app_main.c: 779:                     sensor_data_t verify_data;
+[v _verify_data `S3253 ~T0 @X0 1 a ]
+"780
+[; ;../app/app_main.c: 780:                     err = dl_read(current_cfg.data_count - 1, &verify_data);
+[e = _err ( _dl_read (2 , -> - -> . _current_cfg 1 `i -> 1 `i `us &U _verify_data ]
+"782
+[; ;../app/app_main.c: 782:                     if (err != APP_OK) {
+[e $ ! != -> _err `ui -> . `E22799 0 `ui 3413  ]
+{
+"783
+[; ;../app/app_main.c: 783:                         Lcd_Clear();
+[e ( _Lcd_Clear ..  ]
+"784
+[; ;../app/app_main.c: 784:                         Lcd_Set_Cursor(0, 0);
+[e ( _Lcd_Set_Cursor (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
+"785
+[; ;../app/app_main.c: 785:                         Lcd_Write_String("DL Read Err");
+[e ( _Lcd_Write_String (1 :s 90C ]
+"786
+[; ;../app/app_main.c: 786:                         Lcd_Set_Cursor(1, 0);
+[e ( _Lcd_Set_Cursor (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+"787
+[; ;../app/app_main.c: 787:                         Lcd_Write_String("Code:");
+[e ( _Lcd_Write_String (1 :s 91C ]
+"788
+[; ;../app/app_main.c: 788:                         char buffer[16];
+[v _buffer `uc ~T0 @X0 -> 16 `i a ]
+"789
+[; ;../app/app_main.c: 789:                         sprintf(buffer, "%d", err);
+[e ( _sprintf (1 , (. , &U _buffer :s 92C -> _err `ui ]
 "790
-[; ;../app/app_main.c: 790:     }
+[; ;../app/app_main.c: 790:                         Lcd_Write_String(buffer);
+[e ( _Lcd_Write_String (1 -> &U _buffer `*Cuc ]
+"791
+[; ;../app/app_main.c: 791:                         while(1);
+[e :U 3415 ]
+[e :U 3414 ]
+[e $U 3415  ]
+[e :U 3416 ]
+"792
+[; ;../app/app_main.c: 792:                     }
+}
+[e :U 3413 ]
+"793
+[; ;../app/app_main.c: 793:             }
+}
+[e :U 3402 ]
+[e :U 3401 ]
+"794
+[; ;../app/app_main.c: 794:         }
+}
+[e :U 3389 ]
+"797
+[; ;../app/app_main.c: 797:         app_loop();
+[e ( _app_loop ..  ]
+"798
+[; ;../app/app_main.c: 798:     }
 }
 [e :U 3376 ]
 [e $U 3377  ]
 [e :U 3378 ]
-"791
-[; ;../app/app_main.c: 791: }
+"799
+[; ;../app/app_main.c: 799: }
 [e :UE 3375 ]
 }
 [p f _sprintf 9512064 ]
-[a 89C 73 100 120 58 37 117 0 ]
-[a 26C 53 32 109 105 110 117 116 101 115 0 ]
+[a 81C 80 101 114 105 111 100 58 37 117 115 0 ]
+[a 26C 49 32 109 105 110 117 116 101 115 0 ]
 [a 6C 85 65 82 84 50 32 73 110 105 116 32 69 114 114 0 ]
 [a 5C 85 65 82 84 49 32 73 110 105 116 32 69 114 114 0 ]
 [a 9C 66 77 80 50 56 48 32 73 110 105 116 32 69 114 114 0 ]
 [a 11C 83 72 84 51 48 32 73 110 105 116 32 69 114 114 0 ]
-[a 83C 68 76 32 80 117 115 104 32 69 114 114 0 ]
+[a 87C 68 76 32 80 117 115 104 32 69 114 114 0 ]
 [a 12C 68 76 32 67 111 110 102 105 103 32 69 114 114 0 ]
-[a 81C 68 76 32 87 114 105 116 101 32 69 114 114 0 ]
-[a 80C 83 72 84 32 82 101 97 100 32 69 114 114 0 ]
-[a 79C 66 77 80 32 82 101 97 100 32 69 114 114 0 ]
-[a 86C 68 76 32 82 101 97 100 32 69 114 114 0 ]
+[a 79C 68 76 32 71 101 116 67 102 103 32 69 114 114 0 ]
+[a 85C 68 76 32 87 114 105 116 101 32 69 114 114 0 ]
+[a 84C 83 72 84 32 82 101 97 100 32 69 114 114 0 ]
+[a 83C 66 77 80 32 82 101 97 100 32 69 114 114 0 ]
+[a 90C 68 76 32 82 101 97 100 32 69 114 114 0 ]
 [a 13C 66 84 32 73 110 105 116 32 69 114 114 111 114 0 ]
 [a 4C 83 80 73 32 73 110 105 116 32 69 114 114 111 114 0 ]
 [a 7C 82 84 67 32 73 110 105 116 32 69 114 114 111 114 0 ]
@@ -5058,12 +5098,13 @@ Version 4.0 HI-TECH Software Intermediate Code
 [a 1C 87 101 97 116 104 101 114 32 83 116 97 116 105 111 110 0 ]
 [a 74C 82 58 37 100 32 67 58 37 100 32 80 58 37 117 109 105 110 0 ]
 [a 28C 80 101 114 105 111 100 32 115 101 116 58 32 49 109 105 110 0 ]
-[a 82C 77 101 109 111 114 121 32 70 117 108 108 0 ]
+[a 86C 77 101 109 111 114 121 32 70 117 108 108 0 ]
 [a 36C 49 46 54 32 70 105 110 97 108 32 99 104 101 99 107 0 ]
 [a 66C 52 46 50 32 84 114 121 32 108 111 103 0 ]
 [a 39C 82 101 97 100 121 32 116 111 32 108 111 103 0 ]
 [a 15C 49 46 49 32 82 101 115 101 116 32 99 111 110 102 105 103 0 ]
 [a 30C 49 46 52 32 67 104 101 99 107 32 99 111 110 102 105 103 0 ]
+[a 80C 76 111 103 103 105 110 103 32 65 99 116 105 118 101 0 ]
 [a 72C 52 46 51 32 70 105 110 97 108 32 115 116 97 116 101 0 ]
 [a 25C 49 46 51 32 83 101 116 32 112 101 114 105 111 100 0 ]
 [a 8C 66 77 80 50 56 48 32 78 111 116 32 70 111 117 110 100 0 ]
@@ -5080,8 +5121,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [a 48C 69 82 82 58 32 37 100 0 ]
 [a 64C 69 82 82 58 32 37 100 0 ]
 [a 73C 69 82 82 58 32 37 100 0 ]
-[a 85C 37 100 0 ]
-[a 88C 37 100 0 ]
+[a 89C 37 100 0 ]
+[a 92C 37 100 0 ]
 [a 50C 84 111 116 97 108 58 32 37 100 32 114 101 99 0 ]
 [a 47C 80 58 37 46 49 102 32 104 80 97 0 ]
 [a 59C 37 46 49 102 32 104 80 97 0 ]
@@ -5097,16 +5138,16 @@ Version 4.0 HI-TECH Software Intermediate Code
 [a 29C 79 75 0 ]
 [a 69C 69 78 79 84 82 85 78 78 73 78 71 0 ]
 [a 21C 65 80 80 95 69 78 79 84 67 79 78 70 73 71 0 ]
-[a 90C 84 58 37 46 50 102 67 0 ]
 [a 56C 91 37 100 93 32 84 58 32 37 46 50 102 67 0 ]
 [a 58C 91 37 100 93 32 80 114 101 115 115 117 114 101 58 0 ]
-[a 84C 67 111 100 101 58 0 ]
-[a 87C 67 111 100 101 58 0 ]
+[a 88C 67 111 100 101 58 0 ]
+[a 91C 67 111 100 101 58 0 ]
 [a 20C 69 114 114 111 114 32 100 101 116 101 99 116 101 100 58 0 ]
 [a 68C 69 114 114 111 114 32 100 101 116 101 99 116 101 100 58 0 ]
 [a 41C 82 101 99 111 114 100 32 37 100 47 53 0 ]
 [a 2C 73 110 105 116 105 97 108 105 122 105 110 103 46 46 46 0 ]
 [a 76C 83 116 97 114 116 105 110 103 46 46 46 0 ]
+[a 82C 65 99 113 117 105 114 105 110 103 46 46 46 0 ]
 [a 54C 82 101 97 100 105 110 103 46 46 46 0 ]
 [a 78C 42 42 42 32 83 85 67 67 69 83 83 32 42 42 42 0 ]
 [a 19C 112 101 114 105 111 100 32 40 109 117 115 116 32 101 114 114 41 0 ]

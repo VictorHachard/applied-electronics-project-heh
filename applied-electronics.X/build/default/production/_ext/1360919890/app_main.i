@@ -37243,7 +37243,7 @@ void test_dl_setup(void)
     Lcd_Set_Cursor(0, 0);
     Lcd_Write_String("1.3 Set period");
     Lcd_Set_Cursor(1, 0);
-    Lcd_Write_String("5 minutes");
+    Lcd_Write_String("1 minutes");
     _delay((unsigned long)((1000)*(64000000UL/4000.0)));
 
     err = dl_set_sample_period_min(1);
@@ -37611,8 +37611,6 @@ void app_main_loop(void) {
     static uint16_t last_sensor_tick = 0;
     static _Bool period_locked = 0;
 
-    test_dl_setup();
-
 
     while (1) {
 
@@ -37634,20 +37632,39 @@ void app_main_loop(void) {
             err = dl_get_config(&current_cfg);
             if (err != APP_OK) {
 
+                Lcd_Clear();
+                Lcd_Set_Cursor(0, 0);
+                Lcd_Write_String("DL GetCfg Err");
+                while(1);
             } else {
                 uint16_t period_s = (uint16_t)current_cfg.sample_period_min * 60u;
                 if (period_s > 0u) {
                     g_sensor_period_ticks = period_s;
-                    period_locked = 1;
                 }
+                if (current_cfg.running) {
+                    period_locked = 1;
+                    Lcd_Clear();
+                    Lcd_Set_Cursor(0, 0);
+                    Lcd_Write_String("Logging Active");
+                    Lcd_Set_Cursor(1, 0);
+                    char buffer[16];
+                    sprintf(buffer, "Period:%us", period_s);
+                    Lcd_Write_String(buffer);
 
-                g_sensor_period_ticks = 10;
+                    _delay((unsigned long)((500)*(64000000UL/4000.0))); _delay((unsigned long)((500)*(64000000UL/4000.0))); _delay((unsigned long)((500)*(64000000UL/4000.0))); _delay((unsigned long)((500)*(64000000UL/4000.0))); _delay((unsigned long)((500)*(64000000UL/4000.0))); _delay((unsigned long)((500)*(64000000UL/4000.0)));
+
+                }
             }
         }
 
 
         if (g_sensor_period_ticks > 0u &&
             (uint16_t)(g_tick_counter - last_sensor_tick) >= g_sensor_period_ticks) {
+
+                Lcd_Clear();
+                Lcd_Set_Cursor(0, 0);
+                Lcd_Write_String("Acquiring...");
+                _delay((unsigned long)((500)*(64000000UL/4000.0))); _delay((unsigned long)((500)*(64000000UL/4000.0))); _delay((unsigned long)((500)*(64000000UL/4000.0))); _delay((unsigned long)((500)*(64000000UL/4000.0))); _delay((unsigned long)((500)*(64000000UL/4000.0))); _delay((unsigned long)((500)*(64000000UL/4000.0)));
 
             last_sensor_tick = g_tick_counter;
 
@@ -37676,7 +37693,7 @@ void app_main_loop(void) {
                     Lcd_Write_String("SHT Read Err");
                     while(1);
                 }
-# 729 "../app/app_main.c"
+# 746 "../app/app_main.c"
                 err = dl_get_config(&current_cfg);
                 if (err != APP_OK) {
 
@@ -37723,20 +37740,11 @@ void app_main_loop(void) {
                         sprintf(buffer, "%d", err);
                         Lcd_Write_String(buffer);
                         while(1);
-                    } else {
-                        Lcd_Clear();
-                        Lcd_Set_Cursor(0, 0);
-                        char buffer[16];
-                        sprintf(buffer, "Idx:%u", current_cfg.data_count - 1);
-                        Lcd_Write_String(buffer);
-                        Lcd_Set_Cursor(1, 0);
-                        sprintf(buffer, "T:%.2fC", verify_data.t_c_x100 / 100.0);
-                        Lcd_Write_String(buffer);
                     }
             }
         }
 
 
-
+        app_loop();
     }
 }

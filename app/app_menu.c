@@ -1,6 +1,6 @@
 ﻿// ===============================================
 // File:   app_menu.c
-// Desc:   Source file for app_menu.c
+// Desc:   Application menu avec navigation
 // ===============================================
 
 #include "app_menu.h"
@@ -16,10 +16,10 @@
 void app_init(void) {
     // Initialiser le système de boutons
     buttons_init();
-    
+
     // Initialiser le menu
     menu_init();
-    
+
     // Afficher le menu initial
     menu_display();
 }
@@ -30,9 +30,9 @@ void app_init(void) {
 // Boucle de traitement du menu (à appeler régulièrement)
 // ===============================================
 void app_loop(void) {
-    // Mettre à jour les boutons et le menu
-    menu_update();
-    
-    // Rafraîchir l'affichage
-    menu_display();
+    // Mettre à jour la logique du menu et vérifier si rafraîchissement nécessaire
+    if (menu_update()) {
+        // Rafraîchir l'affichage uniquement si un changement a eu lieu
+        menu_display();
+    }
 }

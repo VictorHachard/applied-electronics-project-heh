@@ -20,6 +20,15 @@ Version 4.0 HI-TECH Software Intermediate Code
 "70535
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 70535: extern volatile unsigned char TRISC __attribute__((address(0x3FC4)));
 [v _TRISC `Vuc ~T0 @X0 0 e@16324 ]
+"29683
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 29683: extern volatile unsigned char WPUA __attribute__((address(0x3A41)));
+[v _WPUA `Vuc ~T0 @X0 0 e@14913 ]
+"30891
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 30891: extern volatile unsigned char WPUC __attribute__((address(0x3A61)));
+[v _WPUC `Vuc ~T0 @X0 0 e@14945 ]
+"31541
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 31541: extern volatile unsigned char WPUE __attribute__((address(0x3A81)));
+[v _WPUE `Vuc ~T0 @X0 0 e@14977 ]
 "70597
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 70597: extern volatile unsigned char PORTA __attribute__((address(0x3FCA)));
 [v _PORTA `Vuc ~T0 @X0 0 e@16330 ]
@@ -3147,77 +3156,86 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;../core/board.c: 78:     TRISC = 0b10010011;
 [e = _TRISC -> -> 147 `i `uc ]
 "82
-[; ;../core/board.c: 82:     PORTA = 0x00;
-[e = _PORTA -> -> 0 `i `uc ]
+[; ;../core/board.c: 82:     WPUA = 0b11000000;
+[e = _WPUA -> -> 192 `i `uc ]
 "83
-[; ;../core/board.c: 83:     PORTB = 0x00;
-[e = _PORTB -> -> 0 `i `uc ]
-"84
-[; ;../core/board.c: 84:     PORTC = 0x00;
-[e = _PORTC -> -> 0 `i `uc ]
+[; ;../core/board.c: 83:     WPUC = 0b00000011;
+[e = _WPUC -> -> 3 `i `uc ]
 "86
-[; ;../core/board.c: 86:     LATBbits.LATB3 = 1;
+[; ;../core/board.c: 86:     WPUE = 0x00;
+[e = _WPUE -> -> 0 `i `uc ]
+"89
+[; ;../core/board.c: 89:     PORTA = 0x00;
+[e = _PORTA -> -> 0 `i `uc ]
+"90
+[; ;../core/board.c: 90:     PORTB = 0x00;
+[e = _PORTB -> -> 0 `i `uc ]
+"91
+[; ;../core/board.c: 91:     PORTC = 0x00;
+[e = _PORTC -> -> 0 `i `uc ]
+"93
+[; ;../core/board.c: 93:     LATBbits.LATB3 = 1;
 [e = . . _LATBbits 0 3 -> -> 1 `i `uc ]
-"87
-[; ;../core/board.c: 87: }
+"94
+[; ;../core/board.c: 94: }
 [e :UE 3250 ]
 }
-"101
-[; ;../core/board.c: 101: void board_configure_pps(void) {
+"108
+[; ;../core/board.c: 108: void board_configure_pps(void) {
 [v _board_configure_pps `(v ~T0 @X0 1 ef ]
 {
 [e :U _board_configure_pps ]
 [f ]
-"103
-[; ;../core/board.c: 103:     U1RXPPS = 0b00010111;
+"110
+[; ;../core/board.c: 110:     U1RXPPS = 0b00010111;
 [e = _U1RXPPS -> -> 23 `i `uc ]
-"104
-[; ;../core/board.c: 104:     RC6PPS = 0b00010011;
-[e = _RC6PPS -> -> 19 `i `uc ]
-"107
-[; ;../core/board.c: 107:     U2RXPPS = 0b00001111;
-[e = _U2RXPPS -> -> 15 `i `uc ]
-"108
-[; ;../core/board.c: 108:     RB6PPS = 0b00010110;
-[e = _RB6PPS -> -> 22 `i `uc ]
 "111
-[; ;../core/board.c: 111:     SPI1SDIPPS = 0b00010100;
-[e = _SPI1SDIPPS -> -> 20 `i `uc ]
-"112
-[; ;../core/board.c: 112:     RC5PPS = 0b00011111;
-[e = _RC5PPS -> -> 31 `i `uc ]
-"113
-[; ;../core/board.c: 113:     RC3PPS = 0b00011110;
-[e = _RC3PPS -> -> 30 `i `uc ]
-"116
-[; ;../core/board.c: 116:     I2C2SCLPPS = 0b00001001;
-[e = _I2C2SCLPPS -> -> 9 `i `uc ]
-"117
-[; ;../core/board.c: 117:     I2C2SDAPPS = 0b00001010;
-[e = _I2C2SDAPPS -> -> 10 `i `uc ]
+[; ;../core/board.c: 111:     RC6PPS = 0b00010011;
+[e = _RC6PPS -> -> 19 `i `uc ]
+"114
+[; ;../core/board.c: 114:     U2RXPPS = 0b00001111;
+[e = _U2RXPPS -> -> 15 `i `uc ]
+"115
+[; ;../core/board.c: 115:     RB6PPS = 0b00010110;
+[e = _RB6PPS -> -> 22 `i `uc ]
 "118
-[; ;../core/board.c: 118:     RB1PPS = 0b00100011;
-[e = _RB1PPS -> -> 35 `i `uc ]
+[; ;../core/board.c: 118:     SPI1SDIPPS = 0b00010100;
+[e = _SPI1SDIPPS -> -> 20 `i `uc ]
 "119
-[; ;../core/board.c: 119:     RB2PPS = 0b00100100;
-[e = _RB2PPS -> -> 36 `i `uc ]
+[; ;../core/board.c: 119:     RC5PPS = 0b00011111;
+[e = _RC5PPS -> -> 31 `i `uc ]
 "120
-[; ;../core/board.c: 120: }
+[; ;../core/board.c: 120:     RC3PPS = 0b00011110;
+[e = _RC3PPS -> -> 30 `i `uc ]
+"123
+[; ;../core/board.c: 123:     I2C2SCLPPS = 0b00001001;
+[e = _I2C2SCLPPS -> -> 9 `i `uc ]
+"124
+[; ;../core/board.c: 124:     I2C2SDAPPS = 0b00001010;
+[e = _I2C2SDAPPS -> -> 10 `i `uc ]
+"125
+[; ;../core/board.c: 125:     RB1PPS = 0b00100011;
+[e = _RB1PPS -> -> 35 `i `uc ]
+"126
+[; ;../core/board.c: 126:     RB2PPS = 0b00100100;
+[e = _RB2PPS -> -> 36 `i `uc ]
+"127
+[; ;../core/board.c: 127: }
 [e :UE 3251 ]
 }
-"127
-[; ;../core/board.c: 127: void board_init(void) {
+"134
+[; ;../core/board.c: 134: void board_init(void) {
 [v _board_init `(v ~T0 @X0 1 ef ]
 {
 [e :U _board_init ]
 [f ]
-"128
-[; ;../core/board.c: 128:     board_configure_pins();
+"135
+[; ;../core/board.c: 135:     board_configure_pins();
 [e ( _board_configure_pins ..  ]
-"129
-[; ;../core/board.c: 129:     board_configure_pps();
+"136
+[; ;../core/board.c: 136:     board_configure_pps();
 [e ( _board_configure_pps ..  ]
-"130
-[; ;../core/board.c: 130: }
+"137
+[; ;../core/board.c: 137: }
 [e :UE 3252 ]
 }

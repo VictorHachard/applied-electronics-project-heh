@@ -79,8 +79,8 @@ typedef struct {
 // Initialisation du menu
 void menu_init(void);
 
-// Mise à jour du menu (à appeler dans la boucle principale)
-void menu_update(void);
+// Mise à jour du menu (retourne 1 si rafraîchissement nécessaire)
+uint8_t menu_update(void);
 
 // Rafraîchissement de l'affichage
 void menu_display(void);

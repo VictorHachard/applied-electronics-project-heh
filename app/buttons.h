@@ -39,4 +39,7 @@ uint8_t button_held(button_t btn);
 // Obtient l'état brut d'un bouton
 uint8_t button_get_raw(button_t btn);
 
+// Callback ISR (appelé depuis isr.c lors d'une interruption IOC)
+void buttons_ioc_callback(void);
+
 #endif // BUTTONS_H

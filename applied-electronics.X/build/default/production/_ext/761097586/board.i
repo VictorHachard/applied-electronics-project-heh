@@ -36674,13 +36674,20 @@ void board_configure_pins(void) {
 
 
 
+    WPUA = 0b11000000;
+    WPUC = 0b00000011;
+
+
+    WPUE = 0x00;
+
+
     PORTA = 0x00;
     PORTB = 0x00;
     PORTC = 0x00;
 
     LATBbits.LATB3 = 1;
 }
-# 101 "../core/board.c"
+# 108 "../core/board.c"
 void board_configure_pps(void) {
 
     U1RXPPS = 0b00010111;

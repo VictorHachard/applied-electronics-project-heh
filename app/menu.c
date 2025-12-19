@@ -17,8 +17,8 @@
 // ===============================================
 // CONSTANTES PRIVÉES
 // ===============================================
-#define SCROLL_DELAY        300   // Délai entre chaque scroll (ms)
-#define BLINK_DELAY         250   // Délai pour clignotement en édition
+#define SCROLL_DELAY        100   // Délai entre chaque scroll (ms)
+#define BLINK_DELAY         25   // Délai pour clignotement en édition
 
 // Textes du menu principal
 static const char* main_menu_items[] = {
@@ -42,6 +42,7 @@ static dl_cfg_t dl_config;
 static uint8_t edit_delta_t = 1;  // Delta t en minutes (1-255)
 static uint16_t blink_counter = 0;
 static uint8_t blink_state = 0;
+static uint8_t force_refresh = 0;  // Flag pour forcer le rafraîchissement
 
 // ===============================================
 // FONCTIONS UTILITAIRES PRIVÉES
@@ -228,6 +229,39 @@ static void display_datetime_submenu(void) {
         Lcd_Set_Cursor(cursor_row, cursor_pos);
         Lcd_Write_String("__");
     }
+}
+
+// Affiche le indx et les valeur en indx - 1 du datalogger
+static void display_datalogger_index(void) {
+    dl_cfg_t cfg;
+    app_err_t err;
+    sensor_data_t data;
+    char line1[LCD_WIDTH + 1];
+    char line2[LCD_WIDTH + 1];
+    
+    err = dl_get_config(&cfg);
+    if (err != APP_OK) {
+        snprintf(line1, sizeof(line1), "DL Config Err");
+        snprintf(line2, sizeof(line2), "Err Code:%d", err);
+    } else {
+        snprintf(line1, sizeof(line1), "DL Idx:%d", cfg.data_count);
+        err = dl_read(cfg.data_count - 1, (sensor_data_t*)&data);
+        if (err != APP_OK) {
+            snprintf(line2, sizeof(line2), "DL Read Err:%d", err);
+        } else {
+            int32_t temp = data.t_c_x100 / 100;
+            int32_t temp_dec = data.t_c_x100 % 100;
+            uint32_t rh = data.rh_x100 / 100;
+            uint32_t rh_dec = data.rh_x100 % 100;
+            snprintf(line2, sizeof(line2), "T:%ld.%02ldC RH:%lu.%02lu%%", 
+                     temp, temp_dec, rh, rh_dec);
+        }
+    }
+    
+    Lcd_Set_Cursor(0, 0);
+    Lcd_Write_String(line1);
+    Lcd_Set_Cursor(1, 0);
+    Lcd_Write_String(line2);
 }
 
 // Affiche les données du BMP280
@@ -489,9 +523,13 @@ static void handle_datetime_edit(void) {
 
 // Gère l'affichage des capteurs
 static void handle_display_state(void) {
+    // Forcer le rafraîchissement pour mettre à jour les données des capteurs
+    force_refresh = 1;
+    
     // Retour au menu principal
     if (button_pressed(BTN_BACK)) {
         ctx.state = MENU_STATE_MAIN;
+        force_refresh = 0;
     }
 }
 
@@ -586,29 +624,37 @@ static void handle_datalogger_edit(void) {
 
 // Gère le menu Clear EEPROM
 static void handle_clear_eeprom(void) {
+    // Forcer le rafraîchissement pour afficher correctement
+    force_refresh = 1;
+    
+    // Annuler (disponible dans tous les états)
+    if (button_pressed(BTN_BACK)) {
+        ctx.state = MENU_STATE_MAIN;
+        force_refresh = 0;
+        return;
+    }
+    
     if (ctx.state == MENU_STATE_DISPLAY) {
         // Confirmation
         if (button_pressed(BTN_ENTER)) {
             // Lancer l'effacement
             ctx.state = MENU_STATE_EDIT_VALUE;
             
-            // Effacer l'EEPROM (écrire des 0xFF sur toute la mémoire)
-            // Note: Ceci est une implémentation simple, peut être lent
-            for (uint16_t addr = 0; addr < 4096; addr++) {
-                eeprom_write_record(addr, 0xFF);
+            // Réinitialiser la config du datalogger
+            app_err_t err = dl_reset_config();
+            if (err != APP_OK) {
+                Lcd_Clear();
+                Lcd_Set_Cursor(0, 0);
+                Lcd_Write_String("DL Reset ERROR");
+                Lcd_Set_Cursor(1, 0);
+                char buffer[16];
+                sprintf(buffer, "Err Code:%d", err);
+                Lcd_Write_String(buffer);
+                while(1);  // Bloquer l'exécution
             }
             
-            // Réinitialiser la config du datalogger
-            dl_reset_config();
-            
-            // Retour au menu principal après un délai
-            __delay_ms(1000);
             ctx.state = MENU_STATE_MAIN;
-        }
-        
-        // Annuler
-        if (button_pressed(BTN_BACK)) {
-            ctx.state = MENU_STATE_MAIN;
+            force_refresh = 0;
         }
     }
 }
@@ -630,9 +676,11 @@ void menu_init(void) {
     Lcd_Clear();
 }
 
-void menu_update(void) {
-    // Mettre à jour les boutons
-    buttons_update();
+uint8_t menu_update(void) {
+    uint8_t old_state = ctx.state;
+    uint8_t old_index = ctx.main_index;
+    uint8_t old_submenu_index = ctx.submenu_index;
+    uint8_t old_blink = blink_state;
     
     // Machine à états
     switch (ctx.state) {
@@ -666,8 +714,23 @@ void menu_update(void) {
             
         default:
             ctx.state = MENU_STATE_MAIN;
+            return 1;
             break;
     }
+    
+    // Retourner 1 si quelque chose a changé ou si rafraîchissement forcé
+    uint8_t needs_refresh = (old_state != ctx.state || 
+                             old_index != ctx.main_index || 
+                             old_submenu_index != ctx.submenu_index ||
+                             old_blink != blink_state ||
+                             force_refresh);
+    
+    // Réinitialiser le flag après utilisation
+    if (force_refresh && needs_refresh) {
+        force_refresh = 0;
+    }
+    
+    return needs_refresh;
 }
 
 void menu_display(void) {
@@ -688,7 +751,7 @@ void menu_display(void) {
             
         case MENU_STATE_DISPLAY:
             if (ctx.current_submenu == SUBMENU_BMP280) {
-                display_bmp280_data();
+                display_datalogger_index();
             } else if (ctx.current_submenu == SUBMENU_SHT30) {
                 display_sht30_data();
             } else if (ctx.current_submenu == SUBMENU_CLEAR_EEPROM) {

@@ -36671,13 +36671,17 @@ unsigned char __t3rd16on(void);
 
 
 
+extern void buttons_ioc_callback(void);
+extern void buttons_update(void);
+
+
 
 
 volatile uint8_t g_timer0_flag = 0;
 volatile uint8_t g_uart1_rx_flag = 0;
 volatile uint8_t g_uart2_rx_flag = 0;
 volatile char g_uart2_rx_char = 0;
-# 29 "../core/isr.c"
+# 33 "../core/isr.c"
 void isr_init(void) {
 
     INTCON0bits.GIE = 0;
@@ -36702,6 +36706,24 @@ void isr_init(void) {
     T0CON0bits.T0EN = 1;
 
 
+    T1CONbits.TMR1ON = 0;
+    T1CONbits.RD16 = 1;
+    T1CON = (T1CON & 0xCF) | 0x30;
+    T1CLK = 0b0001;
+
+
+
+
+
+    TMR1H = 0xB1;
+    TMR1L = 0xE0;
+
+    PIR4bits.TMR1IF = 0;
+    PIE4bits.TMR1IE = 1;
+
+    T1CONbits.TMR1ON = 1;
+
+
     PIR7bits.U2RXIF = 0;
     PIE7bits.U2RXIE = 1;
 
@@ -36722,15 +36744,44 @@ void __attribute__((picinterrupt(("")))) isr_handler(void) {
         PIR3bits.TMR0IF = 0;
 
 
-        uint16_t reload = TMR0 + 3036;
-        TMR0H = (reload >> 8) & 0xFF;
-        TMR0L = reload & 0xFF;
+        TMR0H = 0x0B;
+        TMR0L = 0xDC;
 
         g_timer0_flag = 1;
     }
-# 91 "../core/isr.c"
+
+
+
+
+    if (PIR4bits.TMR1IF) {
+        PIR4bits.TMR1IF = 0;
+
+
+        TMR1H = 0xB1;
+        TMR1L = 0xE0;
+
+
+        buttons_update();
+    }
+
+
+
+
     if (PIR7bits.U2RXIF && PIE7bits.U2RXIE) {
         g_uart2_rx_char = U2RXB;
         g_uart2_rx_flag = 1;
+    }
+
+
+
+
+    if (PIR0bits.IOCIF) {
+
+        IOCAF = 0;
+        IOCCF = 0;
+        PIR0bits.IOCIF = 0;
+
+
+        buttons_ioc_callback();
     }
 }
