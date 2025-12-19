@@ -236,7 +236,7 @@ app_err_t dl_set_running(rtc_time_t *start_time) {
 }
 
 app_err_t dl_get_config(dl_cfg_t *cfg) {
-    return cache_get(cfg);  // ✅ Utilise le cache !
+    return cache_get(cfg);
 }
 
 /* ---------------------------------------------------------------------------
@@ -287,7 +287,6 @@ app_err_t dl_push_record(const sensor_data_t *rec) {
     app_err_t err;
     dl_cfg_t cfg;
 
-    // ✅ Utilise le cache au lieu de relire l'EEPROM
     err = cache_get(&cfg);
     if (err != APP_OK) return err;
 
@@ -316,7 +315,6 @@ app_err_t dl_push_record(const sensor_data_t *rec) {
     err = eeprom_write_record(base + 2u, r.p8);
     if (err != APP_OK) return err;
 
-    // ✅ Incrémenter le compteur (cache + EEPROM)
     err = cache_update_field(DL_EE_DATA_COUNT, cfg.data_count + 1);
     if (err != APP_OK) return err;
 
@@ -329,7 +327,6 @@ app_err_t dl_read(uint16_t index, sensor_data_t *rec) {
     app_err_t err;
     dl_cfg_t cfg;
 
-    // ✅ Utilise le cache
     err = cache_get(&cfg);
     if (err != APP_OK) return err;
 
