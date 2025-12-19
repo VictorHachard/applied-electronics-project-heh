@@ -149,14 +149,18 @@ typedef struct {
 
 
 typedef enum {
-  APP_OK = 0,
-  APP_EBUS,
-  APP_EDEV,
-  APP_EPARAM,
-  APP_ENOENT,
-  APP_ENCONF,
-  APP_EIO,
-  APP_EFULL
+    APP_OK = 0,
+    APP_ERR = 1,
+    APP_EPARAM = 2,
+    APP_EBUS = 3,
+    APP_EDEV = 4,
+    APP_EIO = 5,
+    APP_EFULL = 6,
+    APP_ENOENT = 7,
+    APP_ENCONF = 8,
+    APP_ERR_PARAM = 9,
+    APP_ENOTCONFIG = 10,
+    APP_ENOTRUNNING = 11
 } app_err_t;
 # 13 "../drivers/i2c_bus.h" 2
 
@@ -36736,14 +36740,14 @@ app_err_t i2c2_write(uint8_t addr8w, const uint8_t *buf, uint8_t n) {
     I2C2CON0bits.S = 1;
 
 
-    timeout = 1000u;
+    timeout = 10000u;
     while (I2C2PIRbits.SCIF == 0) {
         if (--timeout == 0) return APP_EBUS;
     }
     I2C2PIRbits.SCIF = 0;
 
 
-    timeout = 1000u;
+    timeout = 10000u;
     while (I2C2STAT1bits.TXBE == 0) {
         if (--timeout == 0) return APP_EBUS;
     }
@@ -36758,7 +36762,7 @@ app_err_t i2c2_write(uint8_t addr8w, const uint8_t *buf, uint8_t n) {
     for (i = 1; i < n; i++) {
         I2C2TXB = buf[i];
 
-        timeout = 1000u;
+        timeout = 10000u;
         while (I2C2STAT1bits.TXBE == 0) {
             if (--timeout == 0) return APP_EBUS;
         }
@@ -36770,7 +36774,7 @@ app_err_t i2c2_write(uint8_t addr8w, const uint8_t *buf, uint8_t n) {
     }
 
 
-    timeout = 1000u;
+    timeout = 10000u;
     while (I2C2PIRbits.PCIF == 0) {
         if (--timeout == 0) return APP_EBUS;
     }
@@ -36803,14 +36807,14 @@ app_err_t i2c2_write_read(uint8_t addr8w, const uint8_t *w, uint8_t wn,
 
     I2C2CON0bits.S = 1;
 
-    timeout = 1000u;
+    timeout = 10000u;
     while (I2C2PIRbits.SCIF == 0) {
         if (--timeout == 0) return APP_EBUS;
     }
     I2C2PIRbits.SCIF = 0;
 
 
-    timeout = 1000u;
+    timeout = 10000u;
     while (I2C2STAT1bits.TXBE == 0) {
         if (--timeout == 0) return APP_EBUS;
     }
@@ -36824,7 +36828,7 @@ app_err_t i2c2_write_read(uint8_t addr8w, const uint8_t *w, uint8_t wn,
     for (i = 1; i < wn; i++) {
         I2C2TXB = w[i];
 
-        timeout = 1000u;
+        timeout = 10000u;
         while (I2C2STAT1bits.TXBE == 0) {
             if (--timeout == 0) return APP_EBUS;
         }
@@ -36835,7 +36839,7 @@ app_err_t i2c2_write_read(uint8_t addr8w, const uint8_t *w, uint8_t wn,
     }
 
 
-    timeout = 1000u;
+    timeout = 10000u;
     while (I2C2PIRbits.PCIF == 0) {
         if (--timeout == 0) return APP_EBUS;
     }
@@ -36850,7 +36854,7 @@ app_err_t i2c2_write_read(uint8_t addr8w, const uint8_t *w, uint8_t wn,
 
     I2C2CON0bits.S = 1;
 
-    timeout = 1000u;
+    timeout = 10000u;
     while (I2C2PIRbits.SCIF == 0) {
         if (--timeout == 0) return APP_EBUS;
     }
@@ -36866,7 +36870,7 @@ app_err_t i2c2_write_read(uint8_t addr8w, const uint8_t *w, uint8_t wn,
 
 
     for (i = 0; i < rn; i++) {
-        timeout = 1000u;
+        timeout = 10000u;
         while (I2C2STAT1bits.RXBF == 0) {
             if (--timeout == 0) return APP_EBUS;
         }
@@ -36874,7 +36878,7 @@ app_err_t i2c2_write_read(uint8_t addr8w, const uint8_t *w, uint8_t wn,
     }
 
 
-    timeout = 1000u;
+    timeout = 10000u;
     while (I2C2PIRbits.PCIF == 0) {
         if (--timeout == 0) return APP_EBUS;
     }

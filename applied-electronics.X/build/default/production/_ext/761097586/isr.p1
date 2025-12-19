@@ -100,8 +100,36 @@ Version 4.0 HI-TECH Software Intermediate Code
 "25404
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 25404: extern volatile PIE3bits_t PIE3bits __attribute__((address(0x3993)));
 [v _PIE3bits `VS1062 ~T0 @X0 0 e@14739 ]
+"26404
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 26404:     struct {
+[s S1101 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S1101 . I2C2RXIF I2C2TXIF I2C2IF I2C2EIF U2RXIF U2TXIF U2EIF U2IF ]
+"26403
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 26403: typedef union {
+[u S1100 `S1101 1 ]
+[n S1100 . . ]
+"26415
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 26415: extern volatile PIR7bits_t PIR7bits __attribute__((address(0x39A7)));
+[v _PIR7bits `VS1100 ~T0 @X0 0 e@14759 ]
+"25705
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 25705:     struct {
+[s S1075 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S1075 . I2C2RXIE I2C2TXIE I2C2IE I2C2EIE U2RXIE U2TXIE U2EIE U2IE ]
+"25704
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 25704: typedef union {
+[u S1074 `S1075 1 ]
+[n S1074 . . ]
+"25716
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 25716: extern volatile PIE7bits_t PIE7bits __attribute__((address(0x3997)));
+[v _PIE7bits `VS1074 ~T0 @X0 0 e@14743 ]
 [t ~ __interrupt . k ]
 [t T2 __interrupt ]
+"69422
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 69422: extern volatile unsigned char TMR0 __attribute__((address(0x3FB6)));
+[v _TMR0 `Vuc ~T0 @X0 0 e@16310 ]
+"45587
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 45587: extern volatile unsigned char U2RXB __attribute__((address(0x3DD0)));
+[v _U2RXB `Vuc ~T0 @X0 0 e@15824 ]
 "272 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 272: __asm("CIOCON equ 03700h");
 [; <" CIOCON equ 03700h ;# ">
@@ -3162,72 +3190,88 @@ Version 4.0 HI-TECH Software Intermediate Code
 [i _g_uart2_rx_flag
 -> -> 0 `i `uc
 ]
-"28
-[; ;../core/isr.c: 28: void isr_init(void) {
+"18
+[; ;../core/isr.c: 18: volatile char g_uart2_rx_char = 0;
+[v _g_uart2_rx_char `Vuc ~T0 @X0 1 e ]
+[i _g_uart2_rx_char
+-> -> 0 `i `uc
+]
+"29
+[; ;../core/isr.c: 29: void isr_init(void) {
 [v _isr_init `(v ~T0 @X0 1 ef ]
 {
 [e :U _isr_init ]
 [f ]
-"30
-[; ;../core/isr.c: 30:     INTCON0bits.GIE = 0;
+"31
+[; ;../core/isr.c: 31:     INTCON0bits.GIE = 0;
 [e = . . _INTCON0bits 0 6 -> -> 0 `i `uc ]
-"33
-[; ;../core/isr.c: 33:     T0CON0bits.T0EN = 0;
-[e = . . _T0CON0bits 1 4 -> -> 0 `i `uc ]
 "34
-[; ;../core/isr.c: 34:     T0CON0bits.T016BIT = 1;
-[e = . . _T0CON0bits 2 4 -> -> 1 `i `uc ]
+[; ;../core/isr.c: 34:     T0CON0bits.T0EN = 0;
+[e = . . _T0CON0bits 1 4 -> -> 0 `i `uc ]
 "35
-[; ;../core/isr.c: 35:     T0CON1bits.T0CS = 0b010;
-[e = . . _T0CON1bits 2 2 -> -> 2 `i `uc ]
+[; ;../core/isr.c: 35:     T0CON0bits.T016BIT = 1;
+[e = . . _T0CON0bits 2 4 -> -> 1 `i `uc ]
 "36
-[; ;../core/isr.c: 36:     T0CON1bits.T0ASYNC = 1;
-[e = . . _T0CON1bits 1 4 -> -> 1 `i `uc ]
+[; ;../core/isr.c: 36:     T0CON1bits.T0CS = 0b010;
+[e = . . _T0CON1bits 2 2 -> -> 2 `i `uc ]
 "37
-[; ;../core/isr.c: 37:     T0CON1bits.T0CKPS = 0b1000;
+[; ;../core/isr.c: 37:     T0CON1bits.T0ASYNC = 1;
+[e = . . _T0CON1bits 1 4 -> -> 1 `i `uc ]
+"38
+[; ;../core/isr.c: 38:     T0CON1bits.T0CKPS = 0b1000;
 [e = . . _T0CON1bits 2 0 -> -> 8 `i `uc ]
-"43
-[; ;../core/isr.c: 43:     TMR0H = 0x0B;
-[e = _TMR0H -> -> 11 `i `uc ]
 "44
-[; ;../core/isr.c: 44:     TMR0L = 0xDC;
+[; ;../core/isr.c: 44:     TMR0H = 0x0B;
+[e = _TMR0H -> -> 11 `i `uc ]
+"45
+[; ;../core/isr.c: 45:     TMR0L = 0xDC;
 [e = _TMR0L -> -> 220 `i `uc ]
-"46
-[; ;../core/isr.c: 46:     PIR3bits.TMR0IF = 0;
-[e = . . _PIR3bits 0 7 -> -> 0 `i `uc ]
 "47
-[; ;../core/isr.c: 47:     PIE3bits.TMR0IE = 1;
+[; ;../core/isr.c: 47:     PIR3bits.TMR0IF = 0;
+[e = . . _PIR3bits 0 7 -> -> 0 `i `uc ]
+"48
+[; ;../core/isr.c: 48:     PIE3bits.TMR0IE = 1;
 [e = . . _PIE3bits 0 7 -> -> 1 `i `uc ]
-"49
-[; ;../core/isr.c: 49:     T0CON0bits.T0EN = 1;
+"50
+[; ;../core/isr.c: 50:     T0CON0bits.T0EN = 1;
 [e = . . _T0CON0bits 1 4 -> -> 1 `i `uc ]
-"52
-[; ;../core/isr.c: 52:     INTCON0bits.GIE = 1;
+"53
+[; ;../core/isr.c: 53:     PIR7bits.U2RXIF = 0;
+[e = . . _PIR7bits 0 4 -> -> 0 `i `uc ]
+"54
+[; ;../core/isr.c: 54:     PIE7bits.U2RXIE = 1;
+[e = . . _PIE7bits 0 4 -> -> 1 `i `uc ]
+"57
+[; ;../core/isr.c: 57:     INTCON0bits.GIE = 1;
 [e = . . _INTCON0bits 0 6 -> -> 1 `i `uc ]
-"59
-[; ;../core/isr.c: 59: }
+"58
+[; ;../core/isr.c: 58: }
 [e :UE 3250 ]
 }
 [v $root$_isr_handler `(v ~T0 @X0 0 e ]
-"66
-[; ;../core/isr.c: 66: void __attribute__((picinterrupt(("")))) isr_handler(void) {
+"65
+[; ;../core/isr.c: 65: void __attribute__((picinterrupt(("")))) isr_handler(void) {
 [v _isr_handler `(v ~T2 @X0 1 ef ]
 {
 [e :U _isr_handler ]
 [f ]
-"70
-[; ;../core/isr.c: 70:     if (PIR3bits.TMR0IF) {
+"69
+[; ;../core/isr.c: 69:     if (PIR3bits.TMR0IF) {
 [e $ ! != -> . . _PIR3bits 0 7 `i -> 0 `i 3252  ]
 {
-"71
-[; ;../core/isr.c: 71:         PIR3bits.TMR0IF = 0;
+"70
+[; ;../core/isr.c: 70:         PIR3bits.TMR0IF = 0;
 [e = . . _PIR3bits 0 7 -> -> 0 `i `uc ]
+"73
+[; ;../core/isr.c: 73:         uint16_t reload = TMR0 + 3036;
+[v _reload `us ~T0 @X0 1 a ]
+[e = _reload -> + -> _TMR0 `i -> 3036 `i `us ]
 "74
-[; ;../core/isr.c: 74:         TMR0H = 0x0B;
-[e = _TMR0H -> -> 11 `i `uc ]
+[; ;../core/isr.c: 74:         TMR0H = (reload >> 8) & 0xFF;
+[e = _TMR0H -> & >> -> _reload `ui -> 8 `i -> -> 255 `i `ui `uc ]
 "75
-[; ;../core/isr.c: 75:         TMR0L = 0xDC;
-[e = _TMR0L -> -> 220 `i `uc ]
+[; ;../core/isr.c: 75:         TMR0L = reload & 0xFF;
+[e = _TMR0L -> & -> _reload `ui -> -> 255 `i `ui `uc ]
 "77
 [; ;../core/isr.c: 77:         g_timer0_flag = 1;
 [e = _g_timer0_flag -> -> 1 `i `uc ]
@@ -3235,6 +3279,20 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;../core/isr.c: 78:     }
 }
 [e :U 3252 ]
+"91
+[; ;../core/isr.c: 91:     if (PIR7bits.U2RXIF && PIE7bits.U2RXIE) {
+[e $ ! && != -> . . _PIR7bits 0 4 `i -> 0 `i != -> . . _PIE7bits 0 4 `i -> 0 `i 3253  ]
+{
+"92
+[; ;../core/isr.c: 92:         g_uart2_rx_char = U2RXB;
+[e = _g_uart2_rx_char -> _U2RXB `uc ]
+"93
+[; ;../core/isr.c: 93:         g_uart2_rx_flag = 1;
+[e = _g_uart2_rx_flag -> -> 1 `i `uc ]
+"94
+[; ;../core/isr.c: 94:     }
+}
+[e :U 3253 ]
 "95
 [; ;../core/isr.c: 95: }
 [e :UE 3251 ]

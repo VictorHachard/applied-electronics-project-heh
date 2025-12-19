@@ -1,8 +1,8 @@
 Version 4.0 HI-TECH Software Intermediate Code
 "23 ../drivers/i2c_bus.c
 [; ;../drivers/i2c_bus.c: 23: app_err_t i2c_bus_init(void) {
-[c E55 0 1 2 3 4 5 6 7 .. ]
-[n E55 . APP_OK APP_EBUS APP_EDEV APP_EPARAM APP_ENOENT APP_ENCONF APP_EIO APP_EFULL  ]
+[c E55 0 1 2 3 4 5 6 7 8 9 10 11 .. ]
+[n E55 . APP_OK APP_ERR APP_EPARAM APP_EBUS APP_EDEV APP_EIO APP_EFULL APP_ENOENT APP_ENCONF APP_ERR_PARAM APP_ENOTCONFIG APP_ENOTRUNNING  ]
 "43777 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 43777: extern volatile unsigned char I2C2CON0 __attribute__((address(0x3D5D)));
 [v _I2C2CON0 `Vuc ~T0 @X0 0 e@15709 ]
@@ -3178,8 +3178,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;../drivers/i2c_bus.c: 64:     I2C2CON0bits.S = 1;
 [e = . . _I2C2CON0bits 0 3 -> -> 1 `i `uc ]
 "67
-[; ;../drivers/i2c_bus.c: 67:     timeout = 1000u;
-[e = _timeout -> -> 1000 `ui `us ]
+[; ;../drivers/i2c_bus.c: 67:     timeout = 10000u;
+[e = _timeout -> -> 10000 `ui `us ]
 "68
 [; ;../drivers/i2c_bus.c: 68:     while (I2C2PIRbits.SCIF == 0) {
 [e $U 3257  ]
@@ -3188,7 +3188,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 "69
 [; ;../drivers/i2c_bus.c: 69:         if (--timeout == 0) return APP_EBUS;
 [e $ ! == -> =- _timeout -> -> 1 `i `us `ui -> -> 0 `i `ui 3260  ]
-[e ) . `E55 1 ]
+[e ) . `E55 3 ]
 [e $UE 3255  ]
 [e :U 3260 ]
 "70
@@ -3203,8 +3203,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;../drivers/i2c_bus.c: 71:     I2C2PIRbits.SCIF = 0;
 [e = . . _I2C2PIRbits 0 0 -> -> 0 `i `uc ]
 "74
-[; ;../drivers/i2c_bus.c: 74:     timeout = 1000u;
-[e = _timeout -> -> 1000 `ui `us ]
+[; ;../drivers/i2c_bus.c: 74:     timeout = 10000u;
+[e = _timeout -> -> 10000 `ui `us ]
 "75
 [; ;../drivers/i2c_bus.c: 75:     while (I2C2STAT1bits.TXBE == 0) {
 [e $U 3261  ]
@@ -3213,7 +3213,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 "76
 [; ;../drivers/i2c_bus.c: 76:         if (--timeout == 0) return APP_EBUS;
 [e $ ! == -> =- _timeout -> -> 1 `i `us `ui -> -> 0 `i `ui 3264  ]
-[e ) . `E55 1 ]
+[e ) . `E55 3 ]
 [e $UE 3255  ]
 [e :U 3264 ]
 "77
@@ -3230,7 +3230,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "82
 [; ;../drivers/i2c_bus.c: 82:         return APP_EDEV;
-[e ) . `E55 2 ]
+[e ) . `E55 4 ]
 [e $UE 3255  ]
 "83
 [; ;../drivers/i2c_bus.c: 83:     }
@@ -3247,8 +3247,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;../drivers/i2c_bus.c: 87:         I2C2TXB = buf[i];
 [e = _I2C2TXB *U + _buf * -> _i `ux -> -> # *U _buf `ui `ux ]
 "89
-[; ;../drivers/i2c_bus.c: 89:         timeout = 1000u;
-[e = _timeout -> -> 1000 `ui `us ]
+[; ;../drivers/i2c_bus.c: 89:         timeout = 10000u;
+[e = _timeout -> -> 10000 `ui `us ]
 "90
 [; ;../drivers/i2c_bus.c: 90:         while (I2C2STAT1bits.TXBE == 0) {
 [e $U 3270  ]
@@ -3257,7 +3257,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 "91
 [; ;../drivers/i2c_bus.c: 91:             if (--timeout == 0) return APP_EBUS;
 [e $ ! == -> =- _timeout -> -> 1 `i `us `ui -> -> 0 `i `ui 3273  ]
-[e ) . `E55 1 ]
+[e ) . `E55 3 ]
 [e $UE 3255  ]
 [e :U 3273 ]
 "92
@@ -3274,7 +3274,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "96
 [; ;../drivers/i2c_bus.c: 96:             return APP_EBUS;
-[e ) . `E55 1 ]
+[e ) . `E55 3 ]
 [e $UE 3255  ]
 "97
 [; ;../drivers/i2c_bus.c: 97:         }
@@ -3289,8 +3289,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 3267 ]
 }
 "101
-[; ;../drivers/i2c_bus.c: 101:     timeout = 1000u;
-[e = _timeout -> -> 1000 `ui `us ]
+[; ;../drivers/i2c_bus.c: 101:     timeout = 10000u;
+[e = _timeout -> -> 10000 `ui `us ]
 "102
 [; ;../drivers/i2c_bus.c: 102:     while (I2C2PIRbits.PCIF == 0) {
 [e $U 3275  ]
@@ -3299,7 +3299,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 "103
 [; ;../drivers/i2c_bus.c: 103:         if (--timeout == 0) return APP_EBUS;
 [e $ ! == -> =- _timeout -> -> 1 `i `us `ui -> -> 0 `i `ui 3278  ]
-[e ) . `E55 1 ]
+[e ) . `E55 3 ]
 [e $UE 3255  ]
 [e :U 3278 ]
 "104
@@ -3381,8 +3381,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;../drivers/i2c_bus.c: 149:     I2C2CON0bits.S = 1;
 [e = . . _I2C2CON0bits 0 3 -> -> 1 `i `uc ]
 "151
-[; ;../drivers/i2c_bus.c: 151:     timeout = 1000u;
-[e = _timeout -> -> 1000 `ui `us ]
+[; ;../drivers/i2c_bus.c: 151:     timeout = 10000u;
+[e = _timeout -> -> 10000 `ui `us ]
 "152
 [; ;../drivers/i2c_bus.c: 152:     while (I2C2PIRbits.SCIF == 0) {
 [e $U 3282  ]
@@ -3391,7 +3391,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 "153
 [; ;../drivers/i2c_bus.c: 153:         if (--timeout == 0) return APP_EBUS;
 [e $ ! == -> =- _timeout -> -> 1 `i `us `ui -> -> 0 `i `ui 3285  ]
-[e ) . `E55 1 ]
+[e ) . `E55 3 ]
 [e $UE 3279  ]
 [e :U 3285 ]
 "154
@@ -3406,8 +3406,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;../drivers/i2c_bus.c: 155:     I2C2PIRbits.SCIF = 0;
 [e = . . _I2C2PIRbits 0 0 -> -> 0 `i `uc ]
 "158
-[; ;../drivers/i2c_bus.c: 158:     timeout = 1000u;
-[e = _timeout -> -> 1000 `ui `us ]
+[; ;../drivers/i2c_bus.c: 158:     timeout = 10000u;
+[e = _timeout -> -> 10000 `ui `us ]
 "159
 [; ;../drivers/i2c_bus.c: 159:     while (I2C2STAT1bits.TXBE == 0) {
 [e $U 3286  ]
@@ -3416,7 +3416,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 "160
 [; ;../drivers/i2c_bus.c: 160:         if (--timeout == 0) return APP_EBUS;
 [e $ ! == -> =- _timeout -> -> 1 `i `us `ui -> -> 0 `i `ui 3289  ]
-[e ) . `E55 1 ]
+[e ) . `E55 3 ]
 [e $UE 3279  ]
 [e :U 3289 ]
 "161
@@ -3433,7 +3433,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "165
 [; ;../drivers/i2c_bus.c: 165:         return APP_EDEV;
-[e ) . `E55 2 ]
+[e ) . `E55 4 ]
 [e $UE 3279  ]
 "166
 [; ;../drivers/i2c_bus.c: 166:     }
@@ -3450,8 +3450,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;../drivers/i2c_bus.c: 170:         I2C2TXB = w[i];
 [e = _I2C2TXB *U + _w * -> _i `ux -> -> # *U _w `ui `ux ]
 "172
-[; ;../drivers/i2c_bus.c: 172:         timeout = 1000u;
-[e = _timeout -> -> 1000 `ui `us ]
+[; ;../drivers/i2c_bus.c: 172:         timeout = 10000u;
+[e = _timeout -> -> 10000 `ui `us ]
 "173
 [; ;../drivers/i2c_bus.c: 173:         while (I2C2STAT1bits.TXBE == 0) {
 [e $U 3295  ]
@@ -3460,7 +3460,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 "174
 [; ;../drivers/i2c_bus.c: 174:             if (--timeout == 0) return APP_EBUS;
 [e $ ! == -> =- _timeout -> -> 1 `i `us `ui -> -> 0 `i `ui 3298  ]
-[e ) . `E55 1 ]
+[e ) . `E55 3 ]
 [e $UE 3279  ]
 [e :U 3298 ]
 "175
@@ -3477,7 +3477,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "178
 [; ;../drivers/i2c_bus.c: 178:             return APP_EBUS;
-[e ) . `E55 1 ]
+[e ) . `E55 3 ]
 [e $UE 3279  ]
 "179
 [; ;../drivers/i2c_bus.c: 179:         }
@@ -3492,8 +3492,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 3292 ]
 }
 "183
-[; ;../drivers/i2c_bus.c: 183:     timeout = 1000u;
-[e = _timeout -> -> 1000 `ui `us ]
+[; ;../drivers/i2c_bus.c: 183:     timeout = 10000u;
+[e = _timeout -> -> 10000 `ui `us ]
 "184
 [; ;../drivers/i2c_bus.c: 184:     while (I2C2PIRbits.PCIF == 0) {
 [e $U 3300  ]
@@ -3502,7 +3502,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 "185
 [; ;../drivers/i2c_bus.c: 185:         if (--timeout == 0) return APP_EBUS;
 [e $ ! == -> =- _timeout -> -> 1 `i `us `ui -> -> 0 `i `ui 3303  ]
-[e ) . `E55 1 ]
+[e ) . `E55 3 ]
 [e $UE 3279  ]
 [e :U 3303 ]
 "186
@@ -3526,8 +3526,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;../drivers/i2c_bus.c: 196:     I2C2CON0bits.S = 1;
 [e = . . _I2C2CON0bits 0 3 -> -> 1 `i `uc ]
 "198
-[; ;../drivers/i2c_bus.c: 198:     timeout = 1000u;
-[e = _timeout -> -> 1000 `ui `us ]
+[; ;../drivers/i2c_bus.c: 198:     timeout = 10000u;
+[e = _timeout -> -> 10000 `ui `us ]
 "199
 [; ;../drivers/i2c_bus.c: 199:     while (I2C2PIRbits.SCIF == 0) {
 [e $U 3304  ]
@@ -3536,7 +3536,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 "200
 [; ;../drivers/i2c_bus.c: 200:         if (--timeout == 0) return APP_EBUS;
 [e $ ! == -> =- _timeout -> -> 1 `i `us `ui -> -> 0 `i `ui 3307  ]
-[e ) . `E55 1 ]
+[e ) . `E55 3 ]
 [e $UE 3279  ]
 [e :U 3307 ]
 "201
@@ -3556,7 +3556,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "206
 [; ;../drivers/i2c_bus.c: 206:         return APP_EDEV;
-[e ) . `E55 2 ]
+[e ) . `E55 4 ]
 [e $UE 3279  ]
 "207
 [; ;../drivers/i2c_bus.c: 207:     }
@@ -3573,8 +3573,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 3309 ]
 {
 "214
-[; ;../drivers/i2c_bus.c: 214:         timeout = 1000u;
-[e = _timeout -> -> 1000 `ui `us ]
+[; ;../drivers/i2c_bus.c: 214:         timeout = 10000u;
+[e = _timeout -> -> 10000 `ui `us ]
 "215
 [; ;../drivers/i2c_bus.c: 215:         while (I2C2STAT1bits.RXBF == 0) {
 [e $U 3313  ]
@@ -3583,7 +3583,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 "216
 [; ;../drivers/i2c_bus.c: 216:             if (--timeout == 0) return APP_EBUS;
 [e $ ! == -> =- _timeout -> -> 1 `i `us `ui -> -> 0 `i `ui 3316  ]
-[e ) . `E55 1 ]
+[e ) . `E55 3 ]
 [e $UE 3279  ]
 [e :U 3316 ]
 "217
@@ -3606,8 +3606,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 3310 ]
 }
 "222
-[; ;../drivers/i2c_bus.c: 222:     timeout = 1000u;
-[e = _timeout -> -> 1000 `ui `us ]
+[; ;../drivers/i2c_bus.c: 222:     timeout = 10000u;
+[e = _timeout -> -> 10000 `ui `us ]
 "223
 [; ;../drivers/i2c_bus.c: 223:     while (I2C2PIRbits.PCIF == 0) {
 [e $U 3317  ]
@@ -3616,7 +3616,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 "224
 [; ;../drivers/i2c_bus.c: 224:         if (--timeout == 0) return APP_EBUS;
 [e $ ! == -> =- _timeout -> -> 1 `i `us `ui -> -> 0 `i `ui 3320  ]
-[e ) . `E55 1 ]
+[e ) . `E55 3 ]
 [e $UE 3279  ]
 [e :U 3320 ]
 "225

@@ -1,4 +1,4 @@
-# 1 "../app/menu.c"
+# 1 "../app/buttons.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 295 "<built-in>" 3
@@ -6,13 +6,13 @@
 # 1 "<built-in>" 2
 # 1 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include/language_support.h" 1 3
 # 2 "<built-in>" 2
-# 1 "../app/menu.c" 2
+# 1 "../app/buttons.c" 2
 
 
 
 
 
-# 1 "../app/menu.h" 1
+# 1 "../app/buttons.h" 1
 
 
 
@@ -126,76 +126,9 @@ typedef int32_t int_fast32_t;
 typedef uint16_t uint_fast16_t;
 typedef uint32_t uint_fast32_t;
 # 149 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/stdint.h" 2 3
-# 10 "../app/menu.h" 2
-# 22 "../app/menu.h"
-typedef enum {
-    MENU_STATE_MAIN,
-    MENU_STATE_SUBMENU,
-    MENU_STATE_DISPLAY,
-    MENU_STATE_EDIT_SELECT,
-    MENU_STATE_EDIT_VALUE
-} menu_state_t;
+# 10 "../app/buttons.h" 2
 
 
-typedef enum {
-    SUBMENU_DATETIME = 0,
-    SUBMENU_BMP280,
-    SUBMENU_SHT30,
-    SUBMENU_DATALOGGER,
-    SUBMENU_CLEAR_EEPROM
-} submenu_type_t;
-
-
-typedef enum {
-    FIELD_DAY = 0,
-    FIELD_MONTH,
-    FIELD_YEAR,
-    FIELD_HOUR,
-    FIELD_MINUTE,
-    FIELD_SECOND,
-    FIELD_COUNT
-} datetime_field_t;
-
-
-typedef enum {
-    FIELD_DL_DELTA_T = 0,
-    FIELD_DL_START_STOP,
-    FIELD_DL_COUNT
-} datalogger_field_t;
-
-
-
-
-
-
-typedef struct {
-    menu_state_t state;
-    uint8_t main_index;
-    uint8_t submenu_index;
-    submenu_type_t current_submenu;
-    uint8_t scroll_offset;
-    uint16_t scroll_counter;
-    uint8_t editing;
-    datetime_field_t edit_field;
-    datalogger_field_t dl_edit_field;
-    uint8_t edit_cursor;
-} menu_context_t;
-
-
-
-
-
-
-void menu_init(void);
-
-
-void menu_update(void);
-
-
-void menu_display(void);
-# 7 "../app/menu.c" 2
-# 1 "../app/buttons.h" 1
-# 12 "../app/buttons.h"
 typedef enum {
     BTN_UP = 0,
     BTN_DOWN,
@@ -225,13 +158,9 @@ uint8_t button_held(button_t btn);
 
 
 uint8_t button_get_raw(button_t btn);
-# 8 "../app/menu.c" 2
-# 1 "../app/../drivers/lcd.h" 1
-
-
-
-# 1 "../app/../drivers/../core/board.h" 1
-# 14 "../app/../drivers/../core/board.h"
+# 7 "../app/buttons.c" 2
+# 1 "../app/../core/board.h" 1
+# 14 "../app/../core/board.h"
 # 1 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include/xc.h" 1 3
 # 18 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include/xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -36764,8 +36693,8 @@ __attribute__((__unsupported__("The READTIMER" "0" "() macro is not available wi
 unsigned char __t1rd16on(void);
 unsigned char __t3rd16on(void);
 # 34 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include/xc.h" 2 3
-# 15 "../app/../drivers/../core/board.h" 2
-# 28 "../app/../drivers/../core/board.h"
+# 15 "../app/../core/board.h" 2
+# 28 "../app/../core/board.h"
 void board_init(void);
 
 
@@ -36773,1046 +36702,116 @@ void board_configure_pins(void);
 
 
 void board_configure_pps(void);
-# 5 "../app/../drivers/lcd.h" 2
-
-
-void Lcd_Port(char data);
-void Lcd_Cmd(char cmd);
-
-
-void Lcd_Clear(void);
-void Lcd_Set_Cursor(char row, char column);
-void Lcd_Init(void);
-void Lcd_Write_Char(char data);
-void Lcd_Write_String(const char *str);
-void Lcd_Shift_Right(void);
-void Lcd_Shift_Left(void);
-# 9 "../app/menu.c" 2
-# 1 "../app/../modules/rtc_ds1307.h" 1
-# 10 "../app/../modules/rtc_ds1307.h"
-# 1 "../app/../modules/../core/types.h" 1
-# 16 "../app/../modules/../core/types.h"
+# 8 "../app/buttons.c" 2
+# 20 "../app/buttons.c"
 typedef struct {
-  uint8_t hour, min;
-  uint8_t day, month;
-} rtc_time_t;
-# 34 "../app/../modules/../core/types.h"
-typedef struct {
-  int32_t pressure_pa;
-  int16_t temp_c_x100;
-} bmp280_data_t;
-# 52 "../app/../modules/../core/types.h"
-typedef struct {
-  uint16_t rh_x100;
-  int16_t temp_c_x100;
-} sht30_data_t;
-# 68 "../app/../modules/../core/types.h"
-typedef struct {
-  int16_t t_c_x100;
-  uint16_t rh_x100;
-  int32_t p_pa;
-} sensor_data_t;
+    uint8_t current;
+    uint8_t previous;
+    uint8_t stable;
+    uint16_t debounce_counter;
+    uint16_t hold_counter;
+} button_info_t;
 
 
 
 
-typedef enum {
-    APP_OK = 0,
-    APP_ERR = 1,
-    APP_EPARAM = 2,
-    APP_EBUS = 3,
-    APP_EDEV = 4,
-    APP_EIO = 5,
-    APP_EFULL = 6,
-    APP_ENOENT = 7,
-    APP_ENCONF = 8,
-    APP_ERR_PARAM = 9,
-    APP_ENOTCONFIG = 10,
-    APP_ENOTRUNNING = 11
-} app_err_t;
-# 11 "../app/../modules/rtc_ds1307.h" 2
-# 29 "../app/../modules/rtc_ds1307.h"
-app_err_t rtc_init(void);
+static button_info_t buttons[BTN_COUNT];
+static uint32_t last_update_tick = 0;
 
 
-app_err_t rtc_set_time(const rtc_time_t* time);
 
 
-app_err_t rtc_get_time(rtc_time_t* time);
-# 10 "../app/menu.c" 2
-# 1 "../app/../modules/bmp280.h" 1
-# 13 "../app/../modules/bmp280.h"
-app_err_t bmp280_init(void);
 
 
-app_err_t bmp280_read(bmp280_data_t* data);
-# 11 "../app/menu.c" 2
-# 1 "../app/../modules/sht30.h" 1
-# 13 "../app/../modules/sht30.h"
-app_err_t sht30_init(void);
-
-
-app_err_t sht30_read(sht30_data_t* data);
-# 12 "../app/menu.c" 2
-# 1 "../app/../modules/datalogger.h" 1
-# 10 "../app/../modules/datalogger.h"
-# 1 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/stdbool.h" 1 3
-# 11 "../app/../modules/datalogger.h" 2
-
-
-
-
-typedef struct {
-  uint8_t sample_period_min;
-  uint8_t data_count;
-  rtc_time_t start_time;
-  _Bool running;
-} dl_cfg_t;
-
-app_err_t dl_reset_config(void);
-
-app_err_t dl_set_sample_period_min(uint8_t period_s);
-
-app_err_t dl_set_running(rtc_time_t *start_time);
-
-app_err_t dl_stop(void);
-
-app_err_t dl_get_config(dl_cfg_t *cfg);
-# 60 "../app/../modules/datalogger.h"
-typedef struct {
-  uint8_t t8;
-  uint8_t rh8;
-  uint8_t p8;
-} sensor_reduced_t;
-
-
-app_err_t sensor_reduce(const sensor_data_t* in, sensor_reduced_t* out);
-
-
-
-
-
-
-
-void sensor_dereduce(const sensor_reduced_t* in, sensor_data_t* out);
-
-
-
-app_err_t dl_push_record(const sensor_data_t *rec);
-
-app_err_t dl_read(uint16_t index, sensor_data_t *rec);
-# 13 "../app/menu.c" 2
-# 1 "../app/../modules/eeprom_m93c66.h" 1
-# 12 "../app/../modules/eeprom_m93c66.h"
-void eeprom_init(void);
-
-app_err_t eeprom_write_record(uint16_t addr, uint8_t val);
-
-app_err_t eeprom_read_record(uint16_t addr, uint8_t *val);
-# 14 "../app/menu.c" 2
-# 1 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/stdio.h" 1 3
-# 24 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/stdio.h" 3
-# 1 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/bits/alltypes.h" 1 3
-# 12 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/bits/alltypes.h" 3
-typedef void * va_list[1];
-
-
-
-
-typedef void * __isoc_va_list[1];
-# 143 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/bits/alltypes.h" 3
-typedef __int24 ssize_t;
-# 255 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/bits/alltypes.h" 3
-typedef long long off_t;
-# 409 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/bits/alltypes.h" 3
-typedef struct _IO_FILE FILE;
-# 25 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/stdio.h" 2 3
-# 52 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/stdio.h" 3
-typedef union _G_fpos64_t {
- char __opaque[16];
- double __align;
-} fpos_t;
-
-extern FILE *const stdin;
-extern FILE *const stdout;
-extern FILE *const stderr;
-
-
-
-
-
-FILE *fopen(const char *restrict, const char *restrict);
-FILE *freopen(const char *restrict, const char *restrict, FILE *restrict);
-int fclose(FILE *);
-
-int remove(const char *);
-int rename(const char *, const char *);
-
-int feof(FILE *);
-int ferror(FILE *);
-int fflush(FILE *);
-void clearerr(FILE *);
-
-int fseek(FILE *, long, int);
-long ftell(FILE *);
-void rewind(FILE *);
-
-int fgetpos(FILE *restrict, fpos_t *restrict);
-int fsetpos(FILE *, const fpos_t *);
-
-size_t fread(void *restrict, size_t, size_t, FILE *restrict);
-size_t fwrite(const void *restrict, size_t, size_t, FILE *restrict);
-
-int fgetc(FILE *);
-int getc(FILE *);
-int getchar(void);
-
-
-
-
-
-int ungetc(int, FILE *);
-int getch(void);
-
-int fputc(int, FILE *);
-int putc(int, FILE *);
-int putchar(int);
-
-
-
-
-
-void putch(char);
-
-char *fgets(char *restrict, int, FILE *restrict);
-
-char *gets(char *);
-
-
-int fputs(const char *restrict, FILE *restrict);
-int puts(const char *);
-
-__attribute__((__format__(__printf__, 1, 2)))
-int printf(const char *restrict, ...);
-__attribute__((__format__(__printf__, 2, 3)))
-int fprintf(FILE *restrict, const char *restrict, ...);
-__attribute__((__format__(__printf__, 2, 3)))
-int sprintf(char *restrict, const char *restrict, ...);
-__attribute__((__format__(__printf__, 3, 4)))
-int snprintf(char *restrict, size_t, const char *restrict, ...);
-
-__attribute__((__format__(__printf__, 1, 0)))
-int vprintf(const char *restrict, __isoc_va_list);
-int vfprintf(FILE *restrict, const char *restrict, __isoc_va_list);
-__attribute__((__format__(__printf__, 2, 0)))
-int vsprintf(char *restrict, const char *restrict, __isoc_va_list);
-__attribute__((__format__(__printf__, 3, 0)))
-int vsnprintf(char *restrict, size_t, const char *restrict, __isoc_va_list);
-
-__attribute__((__format__(__scanf__, 1, 2)))
-int scanf(const char *restrict, ...);
-__attribute__((__format__(__scanf__, 2, 3)))
-int fscanf(FILE *restrict, const char *restrict, ...);
-__attribute__((__format__(__scanf__, 2, 3)))
-int sscanf(const char *restrict, const char *restrict, ...);
-
-__attribute__((__format__(__scanf__, 1, 0)))
-int vscanf(const char *restrict, __isoc_va_list);
-int vfscanf(FILE *restrict, const char *restrict, __isoc_va_list);
-__attribute__((__format__(__scanf__, 2, 0)))
-int vsscanf(const char *restrict, const char *restrict, __isoc_va_list);
-
-void perror(const char *);
-
-int setvbuf(FILE *restrict, char *restrict, int, size_t);
-void setbuf(FILE *restrict, char *restrict);
-
-char *tmpnam(char *);
-FILE *tmpfile(void);
-
-
-
-
-FILE *fmemopen(void *restrict, size_t, const char *restrict);
-FILE *open_memstream(char **, size_t *);
-FILE *fdopen(int, const char *);
-FILE *popen(const char *, const char *);
-int pclose(FILE *);
-int fileno(FILE *);
-int fseeko(FILE *, off_t, int);
-off_t ftello(FILE *);
-int dprintf(int, const char *restrict, ...);
-int vdprintf(int, const char *restrict, __isoc_va_list);
-void flockfile(FILE *);
-int ftrylockfile(FILE *);
-void funlockfile(FILE *);
-int getc_unlocked(FILE *);
-int getchar_unlocked(void);
-int putc_unlocked(int, FILE *);
-int putchar_unlocked(int);
-ssize_t getdelim(char **restrict, size_t *restrict, int, FILE *restrict);
-ssize_t getline(char **restrict, size_t *restrict, FILE *restrict);
-int renameat(int, const char *, int, const char *);
-char *ctermid(char *);
-
-
-
-
-
-
-
-char *tempnam(const char *, const char *);
-# 15 "../app/menu.c" 2
-# 1 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/string.h" 1 3
-# 25 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/string.h" 3
-# 1 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/bits/alltypes.h" 1 3
-# 421 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/bits/alltypes.h" 3
-typedef struct __locale_struct * locale_t;
-# 26 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/string.h" 2 3
-
-void *memcpy (void *restrict, const void *restrict, size_t);
-void *memmove (void *, const void *, size_t);
-void *memset (void *, int, size_t);
-int memcmp (const void *, const void *, size_t);
-void *memchr (const void *, int, size_t);
-
-char *strcpy (char *restrict, const char *restrict);
-char *strncpy (char *restrict, const char *restrict, size_t);
-
-char *strcat (char *restrict, const char *restrict);
-char *strncat (char *restrict, const char *restrict, size_t);
-
-int strcmp (const char *, const char *);
-int strncmp (const char *, const char *, size_t);
-
-int strcoll (const char *, const char *);
-size_t strxfrm (char *restrict, const char *restrict, size_t);
-
-char *strchr (const char *, int);
-char *strrchr (const char *, int);
-
-size_t strcspn (const char *, const char *);
-size_t strspn (const char *, const char *);
-char *strpbrk (const char *, const char *);
-char *strstr (const char *, const char *);
-char *strtok (char *restrict, const char *restrict);
-
-size_t strlen (const char *);
-
-char *strerror (int);
-
-
-
-
-char *strtok_r (char *restrict, const char *restrict, char **restrict);
-int strerror_r (int, char *, size_t);
-char *stpcpy(char *restrict, const char *restrict);
-char *stpncpy(char *restrict, const char *restrict, size_t);
-size_t strnlen (const char *, size_t);
-char *strdup (const char *);
-char *strndup (const char *, size_t);
-char *strsignal(int);
-char *strerror_l (int, locale_t);
-int strcoll_l (const char *, const char *, locale_t);
-size_t strxfrm_l (char *restrict, const char *restrict, size_t, locale_t);
-
-
-
-
-void *memccpy (void *restrict, const void *restrict, int, size_t);
-# 16 "../app/menu.c" 2
-
-
-
-
-
-
-
-
-static const char* main_menu_items[] = {
-    "1.Date & Heure",
-    "2.Pression & Temp",
-    "3.Humidite & Temp",
-    "4.Datalogger Cfg",
-    "5.Clear EEPROM"
-};
-
-
-
-
-
-static menu_context_t ctx;
-static rtc_time_t current_time;
-static rtc_time_t edit_time;
-static bmp280_data_t bmp_data;
-static sht30_data_t sht_data;
-static dl_cfg_t dl_config;
-static uint8_t edit_delta_t = 1;
-static uint16_t blink_counter = 0;
-static uint8_t blink_state = 0;
-
-
-
-
-
-
-static uint8_t clamp(uint8_t value, uint8_t min, uint8_t max) {
-    if (value < min) return min;
-    if (value > max) return max;
-    return value;
-}
-
-
-static uint8_t get_field_max(datetime_field_t field) {
-    switch (field) {
-        case FIELD_DAY: return 31;
-        case FIELD_MONTH: return 12;
-        case FIELD_YEAR: return 99;
-        case FIELD_HOUR: return 23;
-        case FIELD_MINUTE: return 59;
-        case FIELD_SECOND: return 59;
+static uint8_t read_button_raw(button_t btn) {
+    switch (btn) {
+        case BTN_UP: return !PORTAbits.RA7;
+        case BTN_DOWN: return !PORTAbits.RA6;
+        case BTN_ENTER: return !PORTCbits.RC0;
+        case BTN_BACK: return !PORTCbits.RC1;
         default: return 0;
     }
 }
 
 
-static uint8_t get_field_min(datetime_field_t field) {
-    switch (field) {
-        case FIELD_DAY:
-        case FIELD_MONTH: return 1;
-        default: return 0;
-    }
-}
-
-
-static uint8_t get_field_value(datetime_field_t field) {
-    switch (field) {
-        case FIELD_DAY: return edit_time.day;
-        case FIELD_MONTH: return edit_time.month;
-        case FIELD_YEAR: return 25;
-        case FIELD_HOUR: return edit_time.hour;
-        case FIELD_MINUTE: return edit_time.min;
-        case FIELD_SECOND: return 0;
-        default: return 0;
-    }
-}
-
-static void set_field_value(datetime_field_t field, uint8_t value) {
-    switch (field) {
-        case FIELD_DAY: edit_time.day = value; break;
-        case FIELD_MONTH: edit_time.month = value; break;
-        case FIELD_YEAR: break;
-        case FIELD_HOUR: edit_time.hour = value; break;
-        case FIELD_MINUTE: edit_time.min = value; break;
-        case FIELD_SECOND: break;
-    }
-}
 
 
 
-
-
-
-static void display_menu_line(uint8_t row, const char* text, uint8_t selected, uint8_t scroll_offset) {
-    char buffer[16 + 1];
-    char display_buf[16 + 1];
-    uint8_t prefix_len = 0;
-    uint8_t text_start = 0;
+void buttons_init(void) {
     uint8_t i;
 
-    Lcd_Set_Cursor(row, 0);
 
-
-    if (selected) {
-        Lcd_Write_Char('>');
-    } else {
-        Lcd_Write_Char(' ');
+    for (i = 0; i < BTN_COUNT; i++) {
+        buttons[i].current = 0;
+        buttons[i].previous = 0;
+        buttons[i].stable = 0;
+        buttons[i].debounce_counter = 0;
+        buttons[i].hold_counter = 0;
     }
 
-
-    for (i = 0; text[i] != '\0' && text[i] != '.'; i++) {
-        if (text[i] >= '0' && text[i] <= '9') {
-            prefix_len = i + 2;
-        } else {
-            break;
-        }
-    }
-
-
-    if (prefix_len > 0 && text[prefix_len - 1] == '.') {
-
-        for (i = 0; i < prefix_len; i++) {
-            Lcd_Write_Char(text[i]);
-        }
-        text_start = prefix_len;
-    }
-
-
-    uint8_t available_space = 16 - 1 - prefix_len;
-    uint8_t text_len = strlen(&text[text_start]);
-
-
-    if (text_len > available_space) {
-        uint8_t max_offset = text_len - available_space;
-        if (scroll_offset > max_offset) {
-            scroll_offset = max_offset;
-        }
-
-        strncpy(display_buf, &text[text_start + scroll_offset], available_space);
-        display_buf[available_space] = '\0';
-    } else {
-        strncpy(display_buf, &text[text_start], available_space);
-        display_buf[text_len] = '\0';
-    }
-
-
-    Lcd_Write_String(display_buf);
-
-
-    for (i = strlen(display_buf) + 1 + prefix_len; i < 16; i++) {
-        Lcd_Write_Char(' ');
-    }
+    last_update_tick = 0;
 }
 
-
-static void display_main_menu(void) {
-    uint8_t current_item = ctx.main_index;
-    uint8_t next_item = (current_item + 1) % 5;
-
-    display_menu_line(0, main_menu_items[current_item], 1, ctx.scroll_offset);
-    display_menu_line(1, main_menu_items[next_item], 0, 0);
-}
+void buttons_update(void) {
+    uint8_t i;
+    uint8_t raw_state;
 
 
-static void display_datetime_submenu(void) {
-    char line1[16 + 1];
-    char line2[16 + 1];
+    for (i = 0; i < BTN_COUNT; i++) {
+
+        raw_state = read_button_raw((button_t)i);
 
 
-    rtc_get_time(&current_time);
-
-    if (ctx.state == MENU_STATE_EDIT_SELECT || ctx.state == MENU_STATE_EDIT_VALUE) {
-
-        snprintf(line1, sizeof(line1), "Date:%02d/%02d/2025",
-                 edit_time.day, edit_time.month);
-        snprintf(line2, sizeof(line2), "Heure:%02d:%02d:00",
-                 edit_time.hour, edit_time.min);
-    } else {
-
-        const char* options[] = {"Date", "Heure"};
-        display_menu_line(0, options[ctx.submenu_index], 1, 0);
-
-        if (ctx.submenu_index == 0) {
-            snprintf(line2, sizeof(line2), " %02d/%02d/2025",
-                     current_time.day, current_time.month);
-        } else {
-            snprintf(line2, sizeof(line2), " %02d:%02d:00",
-                     current_time.hour, current_time.min);
+        if (raw_state != buttons[i].current) {
+            buttons[i].current = raw_state;
+            buttons[i].debounce_counter = 0;
         }
 
-        Lcd_Set_Cursor(1, 0);
-        Lcd_Write_String(line2);
-        return;
-    }
+        else {
 
-    Lcd_Set_Cursor(0, 0);
-    Lcd_Write_String(line1);
-    Lcd_Set_Cursor(1, 0);
-    Lcd_Write_String(line2);
+            if (buttons[i].debounce_counter < 20) {
+                buttons[i].debounce_counter++;
 
 
-    if (ctx.state == MENU_STATE_EDIT_VALUE && blink_state) {
-        uint8_t cursor_pos = 0;
-        uint8_t cursor_row = 0;
-
-        switch (ctx.edit_field) {
-            case FIELD_DAY: cursor_row = 0; cursor_pos = 5; break;
-            case FIELD_MONTH: cursor_row = 0; cursor_pos = 8; break;
-            case FIELD_HOUR: cursor_row = 1; cursor_pos = 6; break;
-            case FIELD_MINUTE: cursor_row = 1; cursor_pos = 9; break;
-            default: break;
-        }
-
-        Lcd_Set_Cursor(cursor_row, cursor_pos);
-        Lcd_Write_String("__");
-    }
-}
+                if (buttons[i].debounce_counter >= 20) {
+                    buttons[i].previous = buttons[i].stable;
+                    buttons[i].stable = buttons[i].current;
 
 
-static void display_bmp280_data(void) {
-    char line1[16 + 1];
-    char line2[16 + 1];
-
-    if (bmp280_read(&bmp_data) == APP_OK) {
-
-        int32_t temp = bmp_data.temp_c_x100 / 100;
-        int32_t temp_dec = bmp_data.temp_c_x100 % 100;
-        int32_t press = bmp_data.pressure_pa / 100;
-
-        snprintf(line1, sizeof(line1), "Pres:%ld hPa", press);
-        snprintf(line2, sizeof(line2), "Temp:%ld.%02ld C", temp, temp_dec);
-    } else {
-        snprintf(line1, sizeof(line1), "Pres: ERROR");
-        snprintf(line2, sizeof(line2), "Temp: ERROR");
-    }
-
-    Lcd_Set_Cursor(0, 0);
-    Lcd_Write_String(line1);
-    Lcd_Set_Cursor(1, 0);
-    Lcd_Write_String(line2);
-}
-
-
-static void display_sht30_data(void) {
-    char line1[16 + 1];
-    char line2[16 + 1];
-
-    if (sht30_read(&sht_data) == APP_OK) {
-
-        uint16_t rh = sht_data.rh_x100 / 100;
-        uint16_t rh_dec = sht_data.rh_x100 % 100;
-        int16_t temp = sht_data.temp_c_x100 / 100;
-        int16_t temp_dec = sht_data.temp_c_x100 % 100;
-
-        snprintf(line1, sizeof(line1), "RH:%d.%02d %%", rh, rh_dec);
-        snprintf(line2, sizeof(line2), "Temp:%d.%02d C", temp, temp_dec);
-    } else {
-        snprintf(line1, sizeof(line1), "RH: ERROR");
-        snprintf(line2, sizeof(line2), "Temp: ERROR");
-    }
-
-    Lcd_Set_Cursor(0, 0);
-    Lcd_Write_String(line1);
-    Lcd_Set_Cursor(1, 0);
-    Lcd_Write_String(line2);
-}
-
-
-static void display_datalogger_submenu(void) {
-    char line1[16 + 1];
-    char line2[16 + 1];
-
-
-    dl_get_config(&dl_config);
-
-    if (ctx.state == MENU_STATE_EDIT_VALUE) {
-
-        if (ctx.dl_edit_field == FIELD_DL_DELTA_T) {
-            snprintf(line1, sizeof(line1), "Delta t:%d min", edit_delta_t);
-            snprintf(line2, sizeof(line2), "UP/DOWN modifier");
-
-
-            if (blink_state) {
-                Lcd_Set_Cursor(0, 8);
-                Lcd_Write_String("___");
+                    if (buttons[i].stable == 0) {
+                        buttons[i].hold_counter = 0;
+                    }
+                }
             }
-        } else {
 
-            const char* status = dl_config.running ? "RUNNING" : "STOPPED";
-            snprintf(line1, sizeof(line1), "Status:%s", status);
-            snprintf(line2, sizeof(line2), "ENTER:toggle");
-        }
-    } else {
-
-        const char* options[] = {"Delta t", "Start/Stop"};
-        display_menu_line(0, options[ctx.submenu_index], 1, 0);
-
-        if (ctx.submenu_index == 0) {
-            snprintf(line2, sizeof(line2), " %d min", dl_config.sample_period_min);
-        } else {
-            const char* status = dl_config.running ? "RUNNING" : "STOPPED";
-            snprintf(line2, sizeof(line2), " %s", status);
-        }
-
-        Lcd_Set_Cursor(1, 0);
-        Lcd_Write_String(line2);
-        return;
-    }
-
-    Lcd_Set_Cursor(0, 0);
-    Lcd_Write_String(line1);
-    Lcd_Set_Cursor(1, 0);
-    Lcd_Write_String(line2);
-}
-
-
-static void display_clear_eeprom(void) {
-    char line1[16 + 1];
-    char line2[16 + 1];
-
-    if (ctx.state == MENU_STATE_EDIT_VALUE) {
-
-        snprintf(line1, sizeof(line1), "Clearing...");
-        snprintf(line2, sizeof(line2), "Please wait");
-    } else {
-        snprintf(line1, sizeof(line1), "Clear EEPROM?");
-        snprintf(line2, sizeof(line2), "ENTER:Yes BACK:No");
-    }
-
-    Lcd_Set_Cursor(0, 0);
-    Lcd_Write_String(line1);
-    Lcd_Set_Cursor(1, 0);
-    Lcd_Write_String(line2);
-}
-
-
-
-
-
-
-static void handle_main_menu(void) {
-
-    if (button_pressed(BTN_DOWN)) {
-        ctx.main_index = (ctx.main_index + 1) % 5;
-        ctx.scroll_offset = 0;
-        ctx.scroll_counter = 0;
-    }
-
-    if (button_pressed(BTN_UP)) {
-        if (ctx.main_index == 0) {
-            ctx.main_index = 5 - 1;
-        } else {
-            ctx.main_index--;
-        }
-        ctx.scroll_offset = 0;
-        ctx.scroll_counter = 0;
-    }
-
-
-    if (button_pressed(BTN_ENTER)) {
-        ctx.current_submenu = (submenu_type_t)ctx.main_index;
-        ctx.submenu_index = 0;
-        ctx.scroll_offset = 0;
-        ctx.scroll_counter = 0;
-
-        if (ctx.current_submenu == SUBMENU_DATETIME ||
-            ctx.current_submenu == SUBMENU_DATALOGGER) {
-            ctx.state = MENU_STATE_SUBMENU;
-        } else {
-            ctx.state = MENU_STATE_DISPLAY;
-        }
-    }
-
-
-    ctx.scroll_counter++;
-    if (ctx.scroll_counter > 300) {
-        ctx.scroll_counter = 0;
-
-        const char* current_text = main_menu_items[ctx.main_index];
-        uint8_t text_len = strlen(current_text);
-        uint8_t prefix_len = 2;
-
-        if (text_len - prefix_len > 16 - 1 - prefix_len) {
-            ctx.scroll_offset++;
-            if (ctx.scroll_offset > text_len - (16 - 1)) {
-                ctx.scroll_offset = 0;
+            else if (buttons[i].stable == 1) {
+                if (buttons[i].hold_counter < 0xFFFF) {
+                    buttons[i].hold_counter++;
+                }
             }
         }
     }
 }
 
+uint8_t button_pressed(button_t btn) {
+    if (btn >= BTN_COUNT) return 0;
 
-static void handle_datetime_submenu(void) {
 
-    if (button_pressed(BTN_DOWN)) {
-        ctx.submenu_index = (ctx.submenu_index + 1) % 2;
+    if (buttons[btn].stable == 1 && buttons[btn].previous == 0) {
+        return 1;
     }
 
-    if (button_pressed(BTN_UP)) {
-        ctx.submenu_index = (ctx.submenu_index == 0) ? 1 : 0;
-    }
-
-
-    if (button_pressed(BTN_ENTER)) {
-        rtc_get_time(&edit_time);
-        ctx.edit_field = (ctx.submenu_index == 0) ? FIELD_DAY : FIELD_HOUR;
-        ctx.state = MENU_STATE_EDIT_VALUE;
-        blink_counter = 0;
-        blink_state = 1;
-    }
-
-
-    if (button_pressed(BTN_BACK)) {
-        ctx.state = MENU_STATE_MAIN;
-    }
+    return 0;
 }
 
+uint8_t button_held(button_t btn) {
+    if (btn >= BTN_COUNT) return 0;
 
-static void handle_datetime_edit(void) {
-    uint8_t value = get_field_value(ctx.edit_field);
-    uint8_t min_val = get_field_min(ctx.edit_field);
-    uint8_t max_val = get_field_max(ctx.edit_field);
-
-
-    if (button_pressed(BTN_UP)) {
-        value++;
-        if (value > max_val) value = min_val;
-        set_field_value(ctx.edit_field, value);
-    }
-
-
-    if (button_pressed(BTN_DOWN)) {
-        if (value <= min_val) {
-            value = max_val;
-        } else {
-            value--;
-        }
-        set_field_value(ctx.edit_field, value);
-    }
-
-
-    if (button_pressed(BTN_ENTER)) {
-
-        if (ctx.submenu_index == 0) {
-            if (ctx.edit_field == FIELD_DAY) {
-                ctx.edit_field = FIELD_MONTH;
-            } else {
-
-                rtc_set_time(&edit_time);
-                ctx.state = MENU_STATE_SUBMENU;
-            }
-        } else {
-            if (ctx.edit_field == FIELD_HOUR) {
-                ctx.edit_field = FIELD_MINUTE;
-            } else {
-
-                rtc_set_time(&edit_time);
-                ctx.state = MENU_STATE_SUBMENU;
-            }
-        }
-    }
-
-
-    if (button_pressed(BTN_BACK)) {
-        ctx.state = MENU_STATE_SUBMENU;
-    }
-
-
-    blink_counter++;
-    if (blink_counter > 250) {
-        blink_counter = 0;
-        blink_state = !blink_state;
-    }
+    return (buttons[btn].stable == 1 &&
+            buttons[btn].hold_counter > (500 / 10));
 }
 
-
-static void handle_display_state(void) {
-
-    if (button_pressed(BTN_BACK)) {
-        ctx.state = MENU_STATE_MAIN;
-    }
-}
-
-
-static void handle_datalogger_submenu(void) {
-
-    if (button_pressed(BTN_DOWN)) {
-        ctx.submenu_index = (ctx.submenu_index + 1) % 2;
-    }
-
-    if (button_pressed(BTN_UP)) {
-        ctx.submenu_index = (ctx.submenu_index == 0) ? 1 : 0;
-    }
-
-
-    if (button_pressed(BTN_ENTER)) {
-        dl_get_config(&dl_config);
-
-        if (ctx.submenu_index == 0) {
-
-            edit_delta_t = dl_config.sample_period_min;
-            if (edit_delta_t == 0) edit_delta_t = 1;
-            ctx.dl_edit_field = FIELD_DL_DELTA_T;
-        } else {
-
-            ctx.dl_edit_field = FIELD_DL_START_STOP;
-        }
-
-        ctx.state = MENU_STATE_EDIT_VALUE;
-        blink_counter = 0;
-        blink_state = 1;
-    }
-
-
-    if (button_pressed(BTN_BACK)) {
-        ctx.state = MENU_STATE_MAIN;
-    }
-}
-
-
-static void handle_datalogger_edit(void) {
-    if (ctx.dl_edit_field == FIELD_DL_DELTA_T) {
-
-        if (button_pressed(BTN_UP)) {
-            edit_delta_t++;
-            if (edit_delta_t > 255) edit_delta_t = 1;
-        }
-
-        if (button_pressed(BTN_DOWN)) {
-            if (edit_delta_t <= 1) {
-                edit_delta_t = 255;
-            } else {
-                edit_delta_t--;
-            }
-        }
-
-
-        if (button_pressed(BTN_ENTER)) {
-            dl_set_sample_period_min(edit_delta_t);
-            ctx.state = MENU_STATE_SUBMENU;
-        }
-
-
-        blink_counter++;
-        if (blink_counter > 250) {
-            blink_counter = 0;
-            blink_state = !blink_state;
-        }
-    } else {
-
-        if (button_pressed(BTN_ENTER)) {
-            dl_get_config(&dl_config);
-
-            if (dl_config.running) {
-
-                dl_stop();
-            } else {
-
-                rtc_get_time(&current_time);
-                dl_set_running(&current_time);
-            }
-
-            ctx.state = MENU_STATE_SUBMENU;
-        }
-    }
-
-
-    if (button_pressed(BTN_BACK)) {
-        ctx.state = MENU_STATE_SUBMENU;
-    }
-}
-
-
-static void handle_clear_eeprom(void) {
-    if (ctx.state == MENU_STATE_DISPLAY) {
-
-        if (button_pressed(BTN_ENTER)) {
-
-            ctx.state = MENU_STATE_EDIT_VALUE;
-
-
-
-            for (uint16_t addr = 0; addr < 4096; addr++) {
-                eeprom_write_record(addr, 0xFF);
-            }
-
-
-            dl_reset_config();
-
-
-            _delay((unsigned long)((1000)*(64000000UL/4000.0)));
-            ctx.state = MENU_STATE_MAIN;
-        }
-
-
-        if (button_pressed(BTN_BACK)) {
-            ctx.state = MENU_STATE_MAIN;
-        }
-    }
-}
-
-
-
-
-
-void menu_init(void) {
-    ctx.state = MENU_STATE_MAIN;
-    ctx.main_index = 0;
-    ctx.submenu_index = 0;
-    ctx.scroll_offset = 0;
-    ctx.scroll_counter = 0;
-    ctx.editing = 0;
-    ctx.edit_field = FIELD_DAY;
-    ctx.edit_cursor = 0;
-
-    Lcd_Clear();
-}
-
-void menu_update(void) {
-
-    buttons_update();
-
-
-    switch (ctx.state) {
-        case MENU_STATE_MAIN:
-            handle_main_menu();
-            break;
-
-        case MENU_STATE_SUBMENU:
-            if (ctx.current_submenu == SUBMENU_DATETIME) {
-                handle_datetime_submenu();
-            } else if (ctx.current_submenu == SUBMENU_DATALOGGER) {
-                handle_datalogger_submenu();
-            }
-            break;
-
-        case MENU_STATE_DISPLAY:
-            if (ctx.current_submenu == SUBMENU_CLEAR_EEPROM) {
-                handle_clear_eeprom();
-            } else {
-                handle_display_state();
-            }
-            break;
-
-        case MENU_STATE_EDIT_VALUE:
-            if (ctx.current_submenu == SUBMENU_DATETIME) {
-                handle_datetime_edit();
-            } else if (ctx.current_submenu == SUBMENU_DATALOGGER) {
-                handle_datalogger_edit();
-            }
-            break;
-
-        default:
-            ctx.state = MENU_STATE_MAIN;
-            break;
-    }
-}
-
-void menu_display(void) {
-    Lcd_Clear();
-
-    switch (ctx.state) {
-        case MENU_STATE_MAIN:
-            display_main_menu();
-            break;
-
-        case MENU_STATE_SUBMENU:
-            if (ctx.current_submenu == SUBMENU_DATETIME) {
-                display_datetime_submenu();
-            } else if (ctx.current_submenu == SUBMENU_DATALOGGER) {
-                display_datalogger_submenu();
-            }
-            break;
-
-        case MENU_STATE_DISPLAY:
-            if (ctx.current_submenu == SUBMENU_BMP280) {
-                display_bmp280_data();
-            } else if (ctx.current_submenu == SUBMENU_SHT30) {
-                display_sht30_data();
-            } else if (ctx.current_submenu == SUBMENU_CLEAR_EEPROM) {
-                display_clear_eeprom();
-            }
-            break;
-
-        case MENU_STATE_EDIT_VALUE:
-            if (ctx.current_submenu == SUBMENU_DATETIME) {
-                display_datetime_submenu();
-            } else if (ctx.current_submenu == SUBMENU_DATALOGGER) {
-                display_datalogger_submenu();
-            }
-            break;
-
-        default:
-            break;
-    }
+uint8_t button_get_raw(button_t btn) {
+    if (btn >= BTN_COUNT) return 0;
+    return read_button_raw(btn);
 }

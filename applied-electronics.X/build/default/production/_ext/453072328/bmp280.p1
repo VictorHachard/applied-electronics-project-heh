@@ -1,20 +1,20 @@
 Version 4.0 HI-TECH Software Intermediate Code
-"44 ../modules/bmp280.c
-[; ;../modules/bmp280.c: 44: app_err_t bmp280_init(void)
-[c E55 0 1 2 3 4 5 6 7 .. ]
-[n E55 . APP_OK APP_EBUS APP_EDEV APP_EPARAM APP_ENOENT APP_ENCONF APP_EIO APP_EFULL  ]
-"18 ../modules/../drivers/i2c_bus.h
-[; ;../modules/../drivers/i2c_bus.h: 18: app_err_t i2c2_write(uint8_t addr8w, const uint8_t *buf, uint8_t n);
-[v _i2c2_write `(E55 ~T0 @X0 0 ef3`uc`*Cuc`uc ]
-"21
+"45 ../modules/bmp280.c
+[; ;../modules/bmp280.c: 45: app_err_t bmp280_init(void)
+[c E55 0 1 2 3 4 5 6 7 8 9 10 11 .. ]
+[n E55 . APP_OK APP_ERR APP_EPARAM APP_EBUS APP_EDEV APP_EIO APP_EFULL APP_ENOENT APP_ENCONF APP_ERR_PARAM APP_ENOTCONFIG APP_ENOTRUNNING  ]
+"21 ../modules/../drivers/i2c_bus.h
 [; ;../modules/../drivers/i2c_bus.h: 21: app_err_t i2c2_write_read(uint8_t addr8w, const uint8_t *w, uint8_t wn,
 [v _i2c2_write_read `(E55 ~T0 @X0 0 ef6`uc`*Cuc`uc`uc`*uc`uc ]
-[v F249 `(v ~T0 @X0 1 tf1`ul ]
+"18
+[; ;../modules/../drivers/i2c_bus.h: 18: app_err_t i2c2_write(uint8_t addr8w, const uint8_t *buf, uint8_t n);
+[v _i2c2_write `(E55 ~T0 @X0 0 ef3`uc`*Cuc`uc ]
+[v F253 `(v ~T0 @X0 1 tf1`ul ]
 "20 C:\Program Files\Microchip\xc8\v3.10\pic\include/builtins.h
-[v __delay `JF249 ~T0 @X0 0 e ]
+[v __delay `JF253 ~T0 @X0 0 e ]
 [p i __delay ]
-"29 ../modules/bmp280.c
-[; ;../modules/bmp280.c: 29: typedef struct {
+"30 ../modules/bmp280.c
+[; ;../modules/bmp280.c: 30: typedef struct {
 [s S3256 `us 1 `s 1 `s 1 `us 1 `s 1 `s 1 `s 1 `s 1 `s 1 `s 1 `s 1 `s 1 ]
 [n S3256 . dig_T1 dig_T2 dig_T3 dig_P1 dig_P2 dig_P3 dig_P4 dig_P5 dig_P6 dig_P7 dig_P8 dig_P9 ]
 "34 ../modules/../core/types.h
@@ -3063,458 +3063,492 @@ Version 4.0 HI-TECH Software Intermediate Code
 "72326
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 72326: __asm("TOSU equ 03FFFh");
 [; <" TOSU equ 03FFFh ;# ">
-"44 ../modules/bmp280.c
-[; ;../modules/bmp280.c: 44: app_err_t bmp280_init(void)
+"45 ../modules/bmp280.c
+[; ;../modules/bmp280.c: 45: app_err_t bmp280_init(void)
 [v _bmp280_init `(E55 ~T0 @X0 1 ef ]
-"45
-[; ;../modules/bmp280.c: 45: {
+"46
+[; ;../modules/bmp280.c: 46: {
 {
 [e :U _bmp280_init ]
 [f ]
-"46
-[; ;../modules/bmp280.c: 46:     app_err_t err;
-[v _err `E55 ~T0 @X0 1 a ]
 "47
-[; ;../modules/bmp280.c: 47:     uint8_t buf[2];
+[; ;../modules/bmp280.c: 47:     app_err_t err;
+[v _err `E55 ~T0 @X0 1 a ]
+"48
+[; ;../modules/bmp280.c: 48:     uint8_t buf[2];
 [v _buf `uc ~T0 @X0 -> 2 `i a ]
-"58
-[; ;../modules/bmp280.c: 58:     buf[0] = 0xF4;
-[e = *U + &U _buf * -> -> -> 0 `i `ui `ux -> -> # *U &U _buf `ui `ux -> -> 244 `i `uc ]
-"59
-[; ;../modules/bmp280.c: 59:     buf[1] = 0x25;
-[e = *U + &U _buf * -> -> -> 1 `i `ui `ux -> -> # *U &U _buf `ui `ux -> -> 37 `i `uc ]
-"61
-[; ;../modules/bmp280.c: 61:     err = i2c2_write(0xEC, buf, 2);
-[e = _err ( _i2c2_write (3 , , -> -> 236 `i `uc -> &U _buf `*Cuc -> -> 2 `i `uc ]
-"62
-[; ;../modules/bmp280.c: 62:     if (err != APP_OK) return err;
+"50
+[; ;../modules/bmp280.c: 50:     uint8_t chip_id;
+[v _chip_id `uc ~T0 @X0 1 a ]
+"53
+[; ;../modules/bmp280.c: 53:     uint8_t reg_id = 0xD0;
+[v _reg_id `uc ~T0 @X0 1 a ]
+[e = _reg_id -> -> 208 `i `uc ]
+"54
+[; ;../modules/bmp280.c: 54:     err = i2c2_write_read(0xEC, &reg_id, 1, 0xED, &chip_id, 1);
+[e = _err ( _i2c2_write_read (4 , , , , , -> -> 236 `i `uc -> &U _reg_id `*Cuc -> -> 1 `i `uc -> -> 237 `i `uc &U _chip_id -> -> 1 `i `uc ]
+"55
+[; ;../modules/bmp280.c: 55:     if (err != APP_OK) {
 [e $ ! != -> _err `ui -> . `E55 0 `ui 3258  ]
-[e ) _err ]
+{
+"57
+[; ;../modules/bmp280.c: 57:         return APP_EDEV;
+[e ) . `E55 4 ]
 [e $UE 3257  ]
+"58
+[; ;../modules/bmp280.c: 58:     }
+}
 [e :U 3258 ]
-"70
-[; ;../modules/bmp280.c: 70:     buf[0] = 0xF5;
-[e = *U + &U _buf * -> -> -> 0 `i `ui `ux -> -> # *U &U _buf `ui `ux -> -> 245 `i `uc ]
-"71
-[; ;../modules/bmp280.c: 71:     buf[1] = 0x00;
-[e = *U + &U _buf * -> -> -> 1 `i `ui `ux -> -> # *U &U _buf `ui `ux -> -> 0 `i `uc ]
-"73
-[; ;../modules/bmp280.c: 73:     err = i2c2_write(0xEC, buf, 2);
+"61
+[; ;../modules/bmp280.c: 61:     if (chip_id != 0x58) {
+[e $ ! != -> _chip_id `i -> 88 `i 3259  ]
+{
+"63
+[; ;../modules/bmp280.c: 63:         return APP_EDEV;
+[e ) . `E55 4 ]
+[e $UE 3257  ]
+"64
+[; ;../modules/bmp280.c: 64:     }
+}
+[e :U 3259 ]
+"75
+[; ;../modules/bmp280.c: 75:     buf[0] = 0xF4;
+[e = *U + &U _buf * -> -> -> 0 `i `ui `ux -> -> # *U &U _buf `ui `ux -> -> 244 `i `uc ]
+"76
+[; ;../modules/bmp280.c: 76:     buf[1] = 0x25;
+[e = *U + &U _buf * -> -> -> 1 `i `ui `ux -> -> # *U &U _buf `ui `ux -> -> 37 `i `uc ]
+"78
+[; ;../modules/bmp280.c: 78:     err = i2c2_write(0xEC, buf, 2);
 [e = _err ( _i2c2_write (3 , , -> -> 236 `i `uc -> &U _buf `*Cuc -> -> 2 `i `uc ]
-"74
-[; ;../modules/bmp280.c: 74:     if (err != APP_OK) return err;
-[e $ ! != -> _err `ui -> . `E55 0 `ui 3259  ]
+"79
+[; ;../modules/bmp280.c: 79:     if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 3260  ]
 [e ) _err ]
 [e $UE 3257  ]
-[e :U 3259 ]
-"76
-[; ;../modules/bmp280.c: 76:     return APP_OK;
+[e :U 3260 ]
+"87
+[; ;../modules/bmp280.c: 87:     buf[0] = 0xF5;
+[e = *U + &U _buf * -> -> -> 0 `i `ui `ux -> -> # *U &U _buf `ui `ux -> -> 245 `i `uc ]
+"88
+[; ;../modules/bmp280.c: 88:     buf[1] = 0x00;
+[e = *U + &U _buf * -> -> -> 1 `i `ui `ux -> -> # *U &U _buf `ui `ux -> -> 0 `i `uc ]
+"90
+[; ;../modules/bmp280.c: 90:     err = i2c2_write(0xEC, buf, 2);
+[e = _err ( _i2c2_write (3 , , -> -> 236 `i `uc -> &U _buf `*Cuc -> -> 2 `i `uc ]
+"91
+[; ;../modules/bmp280.c: 91:     if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 3261  ]
+[e ) _err ]
+[e $UE 3257  ]
+[e :U 3261 ]
+"93
+[; ;../modules/bmp280.c: 93:     return APP_OK;
 [e ) . `E55 0 ]
 [e $UE 3257  ]
-"77
-[; ;../modules/bmp280.c: 77: }
+"94
+[; ;../modules/bmp280.c: 94: }
 [e :UE 3257 ]
 }
-"79
-[; ;../modules/bmp280.c: 79: app_err_t bmp280_read_raw(int32_t *rawTemp, int32_t *rawPress)
+"96
+[; ;../modules/bmp280.c: 96: app_err_t bmp280_read_raw(int32_t *rawTemp, int32_t *rawPress)
 [v _bmp280_read_raw `(E55 ~T0 @X0 1 ef2`*l`*l ]
-"80
-[; ;../modules/bmp280.c: 80: {
+"97
+[; ;../modules/bmp280.c: 97: {
 {
 [e :U _bmp280_read_raw ]
-"79
-[; ;../modules/bmp280.c: 79: app_err_t bmp280_read_raw(int32_t *rawTemp, int32_t *rawPress)
+"96
+[; ;../modules/bmp280.c: 96: app_err_t bmp280_read_raw(int32_t *rawTemp, int32_t *rawPress)
 [v _rawTemp `*l ~T0 @X0 1 r1 ]
 [v _rawPress `*l ~T0 @X0 1 r2 ]
-"80
-[; ;../modules/bmp280.c: 80: {
+"97
+[; ;../modules/bmp280.c: 97: {
 [f ]
-"81
-[; ;../modules/bmp280.c: 81:     app_err_t err;
+"98
+[; ;../modules/bmp280.c: 98:     app_err_t err;
 [v _err `E55 ~T0 @X0 1 a ]
-"82
-[; ;../modules/bmp280.c: 82:     uint8_t wbuf[2];
+"99
+[; ;../modules/bmp280.c: 99:     uint8_t wbuf[2];
 [v _wbuf `uc ~T0 @X0 -> 2 `i a ]
-"83
-[; ;../modules/bmp280.c: 83:     uint8_t reg;
+"100
+[; ;../modules/bmp280.c: 100:     uint8_t reg;
 [v _reg `uc ~T0 @X0 1 a ]
-"84
-[; ;../modules/bmp280.c: 84:     uint8_t rbuf[6];
+"101
+[; ;../modules/bmp280.c: 101:     uint8_t rbuf[6];
 [v _rbuf `uc ~T0 @X0 -> 6 `i a ]
-"88
-[; ;../modules/bmp280.c: 88:     bmp280_init();
+"105
+[; ;../modules/bmp280.c: 105:     bmp280_init();
 [e ( _bmp280_init ..  ]
-"91
-[; ;../modules/bmp280.c: 91:     reg = 0xF3;
+"108
+[; ;../modules/bmp280.c: 108:     reg = 0xF3;
 [e = _reg -> -> 243 `i `uc ]
-"92
-[; ;../modules/bmp280.c: 92:     uint16_t to = 50;
+"109
+[; ;../modules/bmp280.c: 109:     uint16_t to = 50;
 [v _to `us ~T0 @X0 1 a ]
 [e = _to -> -> 50 `i `us ]
-"93
-[; ;../modules/bmp280.c: 93:     uint8_t status = 0xFF;
+"110
+[; ;../modules/bmp280.c: 110:     uint8_t status = 0xFF;
 [v _status `uc ~T0 @X0 1 a ]
 [e = _status -> -> 255 `i `uc ]
-"95
-[; ;../modules/bmp280.c: 95:     while (to--)
-[e $U 3261  ]
-[e :U 3262 ]
-"96
-[; ;../modules/bmp280.c: 96:     {
-{
-"98
-[; ;../modules/bmp280.c: 98:         err = i2c2_write_read(0xEC, &reg, 1, 0xED, &status, 1);
-[e = _err ( _i2c2_write_read (4 , , , , , -> -> 236 `i `uc -> &U _reg `*Cuc -> -> 1 `i `uc -> -> 237 `i `uc &U _status -> -> 1 `i `uc ]
-"99
-[; ;../modules/bmp280.c: 99:         if (err != APP_OK) return err;
-[e $ ! != -> _err `ui -> . `E55 0 `ui 3264  ]
-[e ) _err ]
-[e $UE 3260  ]
-[e :U 3264 ]
-"102
-[; ;../modules/bmp280.c: 102:         if ((status & 0x08) == 0) break;
-[e $ ! == & -> _status `i -> 8 `i -> 0 `i 3265  ]
+"112
+[; ;../modules/bmp280.c: 112:     while (to--)
 [e $U 3263  ]
-[e :U 3265 ]
-"104
-[; ;../modules/bmp280.c: 104:         _delay((unsigned long)((1)*(64000000UL/4000.0)));
-[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 64000000 `ul `d .4000.0 `ul ]
-"105
-[; ;../modules/bmp280.c: 105:     }
-}
-[e :U 3261 ]
-"95
-[; ;../modules/bmp280.c: 95:     while (to--)
-[e $ != -> -- _to -> -> 1 `i `us `ui -> -> 0 `i `ui 3262  ]
-[e :U 3263 ]
-"107
-[; ;../modules/bmp280.c: 107:     if ((status & 0x08) != 0)
-[e $ ! != & -> _status `i -> 8 `i -> 0 `i 3266  ]
-"108
-[; ;../modules/bmp280.c: 108:     {
+[e :U 3264 ]
+"113
+[; ;../modules/bmp280.c: 113:     {
 {
-"110
-[; ;../modules/bmp280.c: 110:         return APP_EBUS;
-[e ) . `E55 1 ]
-[e $UE 3260  ]
-"111
-[; ;../modules/bmp280.c: 111:     }
-}
-[e :U 3266 ]
-"114
-[; ;../modules/bmp280.c: 114:     reg = 0xF7;
-[e = _reg -> -> 247 `i `uc ]
 "115
-[; ;../modules/bmp280.c: 115:     err = i2c2_write_read(0xEC, &reg, 1, 0xED, rbuf, 6);
-[e = _err ( _i2c2_write_read (4 , , , , , -> -> 236 `i `uc -> &U _reg `*Cuc -> -> 1 `i `uc -> -> 237 `i `uc &U _rbuf -> -> 6 `i `uc ]
+[; ;../modules/bmp280.c: 115:         err = i2c2_write_read(0xEC, &reg, 1, 0xED, &status, 1);
+[e = _err ( _i2c2_write_read (4 , , , , , -> -> 236 `i `uc -> &U _reg `*Cuc -> -> 1 `i `uc -> -> 237 `i `uc &U _status -> -> 1 `i `uc ]
 "116
-[; ;../modules/bmp280.c: 116:     if (err != APP_OK) return err;
-[e $ ! != -> _err `ui -> . `E55 0 `ui 3267  ]
+[; ;../modules/bmp280.c: 116:         if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 3266  ]
 [e ) _err ]
-[e $UE 3260  ]
+[e $UE 3262  ]
+[e :U 3266 ]
+"119
+[; ;../modules/bmp280.c: 119:         if ((status & 0x08) == 0) break;
+[e $ ! == & -> _status `i -> 8 `i -> 0 `i 3267  ]
+[e $U 3265  ]
 [e :U 3267 ]
-"120
-[; ;../modules/bmp280.c: 120:     *rawPress = ((int32_t)rbuf[0] << 12) |
-[e = *U _rawPress | | << -> *U + &U _rbuf * -> -> -> 0 `i `ui `ux -> -> # *U &U _rbuf `ui `ux `l -> 12 `i << -> *U + &U _rbuf * -> -> -> 1 `i `ui `ux -> -> # *U &U _rbuf `ui `ux `l -> 4 `i & -> >> -> *U + &U _rbuf * -> -> -> 2 `i `ui `ux -> -> # *U &U _rbuf `ui `ux `i -> 4 `i `l -> -> 15 `i `l ]
-"125
-[; ;../modules/bmp280.c: 125:     *rawTemp = ((int32_t)rbuf[3] << 12) |
-[e = *U _rawTemp | | << -> *U + &U _rbuf * -> -> -> 3 `i `ui `ux -> -> # *U &U _rbuf `ui `ux `l -> 12 `i << -> *U + &U _rbuf * -> -> -> 4 `i `ui `ux -> -> # *U &U _rbuf `ui `ux `l -> 4 `i & -> >> -> *U + &U _rbuf * -> -> -> 5 `i `ui `ux -> -> # *U &U _rbuf `ui `ux `i -> 4 `i `l -> -> 15 `i `l ]
-"129
-[; ;../modules/bmp280.c: 129:     return APP_OK;
-[e ) . `E55 0 ]
-[e $UE 3260  ]
-"130
-[; ;../modules/bmp280.c: 130: }
-[e :UE 3260 ]
+"121
+[; ;../modules/bmp280.c: 121:         _delay((unsigned long)((1)*(64000000UL/4000.0)));
+[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 64000000 `ul `d .4000.0 `ul ]
+"122
+[; ;../modules/bmp280.c: 122:     }
 }
+[e :U 3263 ]
+"112
+[; ;../modules/bmp280.c: 112:     while (to--)
+[e $ != -> -- _to -> -> 1 `i `us `ui -> -> 0 `i `ui 3264  ]
+[e :U 3265 ]
+"124
+[; ;../modules/bmp280.c: 124:     if ((status & 0x08) != 0)
+[e $ ! != & -> _status `i -> 8 `i -> 0 `i 3268  ]
+"125
+[; ;../modules/bmp280.c: 125:     {
+{
+"127
+[; ;../modules/bmp280.c: 127:         return APP_EBUS;
+[e ) . `E55 3 ]
+[e $UE 3262  ]
+"128
+[; ;../modules/bmp280.c: 128:     }
+}
+[e :U 3268 ]
+"131
+[; ;../modules/bmp280.c: 131:     reg = 0xF7;
+[e = _reg -> -> 247 `i `uc ]
+"132
+[; ;../modules/bmp280.c: 132:     err = i2c2_write_read(0xEC, &reg, 1, 0xED, rbuf, 6);
+[e = _err ( _i2c2_write_read (4 , , , , , -> -> 236 `i `uc -> &U _reg `*Cuc -> -> 1 `i `uc -> -> 237 `i `uc &U _rbuf -> -> 6 `i `uc ]
 "133
-[; ;../modules/bmp280.c: 133: int32_t bmp280_compensate_T_int32(int32_t adc_T, bmp280_calib_t *calib, int32_t *t_fine)
+[; ;../modules/bmp280.c: 133:     if (err != APP_OK) return err;
+[e $ ! != -> _err `ui -> . `E55 0 `ui 3269  ]
+[e ) _err ]
+[e $UE 3262  ]
+[e :U 3269 ]
+"137
+[; ;../modules/bmp280.c: 137:     *rawPress = ((int32_t)rbuf[0] << 12) |
+[e = *U _rawPress | | << -> *U + &U _rbuf * -> -> -> 0 `i `ui `ux -> -> # *U &U _rbuf `ui `ux `l -> 12 `i << -> *U + &U _rbuf * -> -> -> 1 `i `ui `ux -> -> # *U &U _rbuf `ui `ux `l -> 4 `i & -> >> -> *U + &U _rbuf * -> -> -> 2 `i `ui `ux -> -> # *U &U _rbuf `ui `ux `i -> 4 `i `l -> -> 15 `i `l ]
+"142
+[; ;../modules/bmp280.c: 142:     *rawTemp = ((int32_t)rbuf[3] << 12) |
+[e = *U _rawTemp | | << -> *U + &U _rbuf * -> -> -> 3 `i `ui `ux -> -> # *U &U _rbuf `ui `ux `l -> 12 `i << -> *U + &U _rbuf * -> -> -> 4 `i `ui `ux -> -> # *U &U _rbuf `ui `ux `l -> 4 `i & -> >> -> *U + &U _rbuf * -> -> -> 5 `i `ui `ux -> -> # *U &U _rbuf `ui `ux `i -> 4 `i `l -> -> 15 `i `l ]
+"146
+[; ;../modules/bmp280.c: 146:     return APP_OK;
+[e ) . `E55 0 ]
+[e $UE 3262  ]
+"147
+[; ;../modules/bmp280.c: 147: }
+[e :UE 3262 ]
+}
+"150
+[; ;../modules/bmp280.c: 150: int32_t bmp280_compensate_T_int32(int32_t adc_T, bmp280_calib_t *calib, int32_t *t_fine)
 [v _bmp280_compensate_T_int32 `(l ~T0 @X0 1 ef3`l`*S3256`*l ]
-"134
-[; ;../modules/bmp280.c: 134: {
+"151
+[; ;../modules/bmp280.c: 151: {
 {
 [e :U _bmp280_compensate_T_int32 ]
-"133
-[; ;../modules/bmp280.c: 133: int32_t bmp280_compensate_T_int32(int32_t adc_T, bmp280_calib_t *calib, int32_t *t_fine)
+"150
+[; ;../modules/bmp280.c: 150: int32_t bmp280_compensate_T_int32(int32_t adc_T, bmp280_calib_t *calib, int32_t *t_fine)
 [v _adc_T `l ~T0 @X0 1 r1 ]
 [v _calib `*S3256 ~T0 @X0 1 r2 ]
 [v _t_fine `*l ~T0 @X0 1 r3 ]
-"134
-[; ;../modules/bmp280.c: 134: {
+"151
+[; ;../modules/bmp280.c: 151: {
 [f ]
-"135
-[; ;../modules/bmp280.c: 135:     int32_t var1, var2, T;
+"152
+[; ;../modules/bmp280.c: 152:     int32_t var1, var2, T;
 [v _var1 `l ~T0 @X0 1 a ]
 [v _var2 `l ~T0 @X0 1 a ]
 [v _T `l ~T0 @X0 1 a ]
-"137
-[; ;../modules/bmp280.c: 137:     var1 = ((((adc_T >> 3) - ((int32_t)calib->dig_T1 << 1))) * ((int32_t)calib->dig_T2)) >> 11;
+"154
+[; ;../modules/bmp280.c: 154:     var1 = ((((adc_T >> 3) - ((int32_t)calib->dig_T1 << 1))) * ((int32_t)calib->dig_T2)) >> 11;
 [e = _var1 >> * - >> _adc_T -> 3 `i << -> . *U _calib 0 `l -> 1 `i -> . *U _calib 1 `l -> 11 `i ]
-"138
-[; ;../modules/bmp280.c: 138:     var2 = (((((adc_T >> 4) - ((int32_t)calib->dig_T1)) * ((adc_T >> 4) - ((int32_t)calib->dig_T1))) >> 12) * ((int32_t)calib->dig_T3)) >> 14;
+"155
+[; ;../modules/bmp280.c: 155:     var2 = (((((adc_T >> 4) - ((int32_t)calib->dig_T1)) * ((adc_T >> 4) - ((int32_t)calib->dig_T1))) >> 12) * ((int32_t)calib->dig_T3)) >> 14;
 [e = _var2 >> * >> * - >> _adc_T -> 4 `i -> . *U _calib 0 `l - >> _adc_T -> 4 `i -> . *U _calib 0 `l -> 12 `i -> . *U _calib 2 `l -> 14 `i ]
-"140
-[; ;../modules/bmp280.c: 140:     *t_fine = var1 + var2;
+"157
+[; ;../modules/bmp280.c: 157:     *t_fine = var1 + var2;
 [e = *U _t_fine + _var1 _var2 ]
-"141
-[; ;../modules/bmp280.c: 141:     T = (*t_fine * 5 + 128) >> 8;
+"158
+[; ;../modules/bmp280.c: 158:     T = (*t_fine * 5 + 128) >> 8;
 [e = _T >> + * *U _t_fine -> -> 5 `i `l -> -> 128 `i `l -> 8 `i ]
-"143
-[; ;../modules/bmp280.c: 143:     return T;
+"160
+[; ;../modules/bmp280.c: 160:     return T;
 [e ) _T ]
-[e $UE 3268  ]
-"144
-[; ;../modules/bmp280.c: 144: }
-[e :UE 3268 ]
+[e $UE 3270  ]
+"161
+[; ;../modules/bmp280.c: 161: }
+[e :UE 3270 ]
 }
-"148
-[; ;../modules/bmp280.c: 148: uint32_t bmp280_compensate_P_int32(int32_t adc_P, bmp280_calib_t *calib, int32_t *t_fine)
+"165
+[; ;../modules/bmp280.c: 165: uint32_t bmp280_compensate_P_int32(int32_t adc_P, bmp280_calib_t *calib, int32_t *t_fine)
 [v _bmp280_compensate_P_int32 `(ul ~T0 @X0 1 ef3`l`*S3256`*l ]
-"149
-[; ;../modules/bmp280.c: 149: {
+"166
+[; ;../modules/bmp280.c: 166: {
 {
 [e :U _bmp280_compensate_P_int32 ]
-"148
-[; ;../modules/bmp280.c: 148: uint32_t bmp280_compensate_P_int32(int32_t adc_P, bmp280_calib_t *calib, int32_t *t_fine)
+"165
+[; ;../modules/bmp280.c: 165: uint32_t bmp280_compensate_P_int32(int32_t adc_P, bmp280_calib_t *calib, int32_t *t_fine)
 [v _adc_P `l ~T0 @X0 1 r1 ]
 [v _calib `*S3256 ~T0 @X0 1 r2 ]
 [v _t_fine `*l ~T0 @X0 1 r3 ]
-"149
-[; ;../modules/bmp280.c: 149: {
+"166
+[; ;../modules/bmp280.c: 166: {
 [f ]
-"150
-[; ;../modules/bmp280.c: 150:     int32_t var1, var2;
+"167
+[; ;../modules/bmp280.c: 167:     int32_t var1, var2;
 [v _var1 `l ~T0 @X0 1 a ]
 [v _var2 `l ~T0 @X0 1 a ]
-"151
-[; ;../modules/bmp280.c: 151:     uint32_t p;
-[v _p `ul ~T0 @X0 1 a ]
-"153
-[; ;../modules/bmp280.c: 153:     var1 = (*t_fine >> 1) - (int32_t)64000;
-[e = _var1 - >> *U _t_fine -> 1 `i -> 64000 `l ]
-"154
-[; ;../modules/bmp280.c: 154:     var2 = (((var1 >> 2) * (var1 >> 2)) >> 11) * (int32_t)calib->dig_P6;
-[e = _var2 * >> * >> _var1 -> 2 `i >> _var1 -> 2 `i -> 11 `i -> . *U _calib 8 `l ]
-"155
-[; ;../modules/bmp280.c: 155:     var2 = var2 + ((var1 * (int32_t)calib->dig_P5) << 1);
-[e = _var2 + _var2 << * _var1 -> . *U _calib 7 `l -> 1 `i ]
-"156
-[; ;../modules/bmp280.c: 156:     var2 = (var2 >> 2) + ((int32_t)calib->dig_P4 << 16);
-[e = _var2 + >> _var2 -> 2 `i << -> . *U _calib 6 `l -> 16 `i ]
-"157
-[; ;../modules/bmp280.c: 157:     var1 = (((calib->dig_P3 * (((var1 >> 2) * (var1 >> 2)) >> 13)) >> 3)
-[e = _var1 >> + >> * -> . *U _calib 5 `l >> * >> _var1 -> 2 `i >> _var1 -> 2 `i -> 13 `i -> 3 `i >> * -> . *U _calib 4 `l _var1 -> 1 `i -> 18 `i ]
-"159
-[; ;../modules/bmp280.c: 159:     var1 = ((32768 + var1) * (int32_t)calib->dig_P1) >> 15;
-[e = _var1 >> * + -> 32768 `l _var1 -> . *U _calib 3 `l -> 15 `i ]
-"161
-[; ;../modules/bmp280.c: 161:     if (var1 == 0) {
-[e $ ! == _var1 -> -> 0 `i `l 3270  ]
-{
-"162
-[; ;../modules/bmp280.c: 162:         return 0;
-[e ) -> -> -> 0 `i `l `ul ]
-[e $UE 3269  ]
-"163
-[; ;../modules/bmp280.c: 163:     }
-}
-[e :U 3270 ]
-"165
-[; ;../modules/bmp280.c: 165:     p = ((uint32_t)((int32_t)1048576 - adc_P) - (var2 >> 12)) * 3125;
-[e = _p * - -> - -> 1048576 `l _adc_P `ul -> >> _var2 -> 12 `i `ul -> -> -> 3125 `i `l `ul ]
-"167
-[; ;../modules/bmp280.c: 167:     if (p < 0x80000000) {
-[e $ ! < _p -> 2147483648 `ul 3271  ]
-{
 "168
-[; ;../modules/bmp280.c: 168:         p = (p << 1) / (uint32_t)var1;
-[e = _p / << _p -> 1 `i -> _var1 `ul ]
-"169
-[; ;../modules/bmp280.c: 169:     } else {
-}
-[e $U 3272  ]
-[e :U 3271 ]
-{
+[; ;../modules/bmp280.c: 168:     uint32_t p;
+[v _p `ul ~T0 @X0 1 a ]
 "170
-[; ;../modules/bmp280.c: 170:         p = (p / (uint32_t)var1) * 2;
-[e = _p * / _p -> _var1 `ul -> -> -> 2 `i `l `ul ]
+[; ;../modules/bmp280.c: 170:     var1 = (*t_fine >> 1) - (int32_t)64000;
+[e = _var1 - >> *U _t_fine -> 1 `i -> 64000 `l ]
 "171
-[; ;../modules/bmp280.c: 171:     }
+[; ;../modules/bmp280.c: 171:     var2 = (((var1 >> 2) * (var1 >> 2)) >> 11) * (int32_t)calib->dig_P6;
+[e = _var2 * >> * >> _var1 -> 2 `i >> _var1 -> 2 `i -> 11 `i -> . *U _calib 8 `l ]
+"172
+[; ;../modules/bmp280.c: 172:     var2 = var2 + ((var1 * (int32_t)calib->dig_P5) << 1);
+[e = _var2 + _var2 << * _var1 -> . *U _calib 7 `l -> 1 `i ]
+"173
+[; ;../modules/bmp280.c: 173:     var2 = (var2 >> 2) + ((int32_t)calib->dig_P4 << 16);
+[e = _var2 + >> _var2 -> 2 `i << -> . *U _calib 6 `l -> 16 `i ]
+"174
+[; ;../modules/bmp280.c: 174:     var1 = (((calib->dig_P3 * (((var1 >> 2) * (var1 >> 2)) >> 13)) >> 3)
+[e = _var1 >> + >> * -> . *U _calib 5 `l >> * >> _var1 -> 2 `i >> _var1 -> 2 `i -> 13 `i -> 3 `i >> * -> . *U _calib 4 `l _var1 -> 1 `i -> 18 `i ]
+"176
+[; ;../modules/bmp280.c: 176:     var1 = ((32768 + var1) * (int32_t)calib->dig_P1) >> 15;
+[e = _var1 >> * + -> 32768 `l _var1 -> . *U _calib 3 `l -> 15 `i ]
+"178
+[; ;../modules/bmp280.c: 178:     if (var1 == 0) {
+[e $ ! == _var1 -> -> 0 `i `l 3272  ]
+{
+"179
+[; ;../modules/bmp280.c: 179:         return 0;
+[e ) -> -> -> 0 `i `l `ul ]
+[e $UE 3271  ]
+"180
+[; ;../modules/bmp280.c: 180:     }
 }
 [e :U 3272 ]
-"173
-[; ;../modules/bmp280.c: 173:     var1 = ((int32_t)calib->dig_P9 * (int32_t)(((p >> 3) * (p >> 3)) >> 13)) >> 12;
-[e = _var1 >> * -> . *U _calib 11 `l -> >> * >> _p -> 3 `i >> _p -> 3 `i -> 13 `i `l -> 12 `i ]
-"174
-[; ;../modules/bmp280.c: 174:     var2 = (((int32_t)(p >> 2)) * (int32_t)calib->dig_P8) >> 13;
-[e = _var2 >> * -> >> _p -> 2 `i `l -> . *U _calib 10 `l -> 13 `i ]
-"176
-[; ;../modules/bmp280.c: 176:     p = (uint32_t)((int32_t)p + ((var1 + var2 + calib->dig_P7) >> 4));
-[e = _p -> + -> _p `l >> + + _var1 _var2 -> . *U _calib 9 `l -> 4 `i `ul ]
-"178
-[; ;../modules/bmp280.c: 178:     return p;
-[e ) _p ]
-[e $UE 3269  ]
-"179
-[; ;../modules/bmp280.c: 179: }
-[e :UE 3269 ]
-}
 "182
-[; ;../modules/bmp280.c: 182: app_err_t bmp280_read_calibration(bmp280_calib_t *cal)
+[; ;../modules/bmp280.c: 182:     p = ((uint32_t)((int32_t)1048576 - adc_P) - (var2 >> 12)) * 3125;
+[e = _p * - -> - -> 1048576 `l _adc_P `ul -> >> _var2 -> 12 `i `ul -> -> -> 3125 `i `l `ul ]
+"184
+[; ;../modules/bmp280.c: 184:     if (p < 0x80000000) {
+[e $ ! < _p -> 2147483648 `ul 3273  ]
+{
+"185
+[; ;../modules/bmp280.c: 185:         p = (p << 1) / (uint32_t)var1;
+[e = _p / << _p -> 1 `i -> _var1 `ul ]
+"186
+[; ;../modules/bmp280.c: 186:     } else {
+}
+[e $U 3274  ]
+[e :U 3273 ]
+{
+"187
+[; ;../modules/bmp280.c: 187:         p = (p / (uint32_t)var1) * 2;
+[e = _p * / _p -> _var1 `ul -> -> -> 2 `i `l `ul ]
+"188
+[; ;../modules/bmp280.c: 188:     }
+}
+[e :U 3274 ]
+"190
+[; ;../modules/bmp280.c: 190:     var1 = ((int32_t)calib->dig_P9 * (int32_t)(((p >> 3) * (p >> 3)) >> 13)) >> 12;
+[e = _var1 >> * -> . *U _calib 11 `l -> >> * >> _p -> 3 `i >> _p -> 3 `i -> 13 `i `l -> 12 `i ]
+"191
+[; ;../modules/bmp280.c: 191:     var2 = (((int32_t)(p >> 2)) * (int32_t)calib->dig_P8) >> 13;
+[e = _var2 >> * -> >> _p -> 2 `i `l -> . *U _calib 10 `l -> 13 `i ]
+"193
+[; ;../modules/bmp280.c: 193:     p = (uint32_t)((int32_t)p + ((var1 + var2 + calib->dig_P7) >> 4));
+[e = _p -> + -> _p `l >> + + _var1 _var2 -> . *U _calib 9 `l -> 4 `i `ul ]
+"195
+[; ;../modules/bmp280.c: 195:     return p;
+[e ) _p ]
+[e $UE 3271  ]
+"196
+[; ;../modules/bmp280.c: 196: }
+[e :UE 3271 ]
+}
+"199
+[; ;../modules/bmp280.c: 199: app_err_t bmp280_read_calibration(bmp280_calib_t *cal)
 [v _bmp280_read_calibration `(E55 ~T0 @X0 1 ef1`*S3256 ]
-"183
-[; ;../modules/bmp280.c: 183: {
+"200
+[; ;../modules/bmp280.c: 200: {
 {
 [e :U _bmp280_read_calibration ]
-"182
-[; ;../modules/bmp280.c: 182: app_err_t bmp280_read_calibration(bmp280_calib_t *cal)
+"199
+[; ;../modules/bmp280.c: 199: app_err_t bmp280_read_calibration(bmp280_calib_t *cal)
 [v _cal `*S3256 ~T0 @X0 1 r1 ]
-"183
-[; ;../modules/bmp280.c: 183: {
+"200
+[; ;../modules/bmp280.c: 200: {
 [f ]
-"184
-[; ;../modules/bmp280.c: 184:     app_err_t err;
+"201
+[; ;../modules/bmp280.c: 201:     app_err_t err;
 [v _err `E55 ~T0 @X0 1 a ]
-"185
-[; ;../modules/bmp280.c: 185:     uint8_t reg = 0x88;
+"202
+[; ;../modules/bmp280.c: 202:     uint8_t reg = 0x88;
 [v _reg `uc ~T0 @X0 1 a ]
 [e = _reg -> -> 136 `i `uc ]
-"186
-[; ;../modules/bmp280.c: 186:     uint8_t buf[24];
-[v _buf `uc ~T0 @X0 -> 24 `i a ]
-"189
-[; ;../modules/bmp280.c: 189:     err = i2c2_write_read(0xEC, &reg, 1, 0xED, buf, 24);
-[e = _err ( _i2c2_write_read (4 , , , , , -> -> 236 `i `uc -> &U _reg `*Cuc -> -> 1 `i `uc -> -> 237 `i `uc &U _buf -> -> 24 `i `uc ]
-"190
-[; ;../modules/bmp280.c: 190:     if (err != APP_OK)
-[e $ ! != -> _err `ui -> . `E55 0 `ui 3274  ]
-"191
-[; ;../modules/bmp280.c: 191:         return err;
-[e ) _err ]
-[e $UE 3273  ]
-[e :U 3274 ]
-"194
-[; ;../modules/bmp280.c: 194:     cal->dig_T1 = (uint16_t)(buf[1] << 8 | buf[0]);
-[e = . *U _cal 0 -> | << -> *U + &U _buf * -> -> -> 1 `i `ui `ux -> -> # *U &U _buf `ui `ux `i -> 8 `i -> *U + &U _buf * -> -> -> 0 `i `ui `ux -> -> # *U &U _buf `ui `ux `i `us ]
-"195
-[; ;../modules/bmp280.c: 195:     cal->dig_T2 = (int16_t)(buf[3] << 8 | buf[2]);
-[e = . *U _cal 1 -> | << -> *U + &U _buf * -> -> -> 3 `i `ui `ux -> -> # *U &U _buf `ui `ux `i -> 8 `i -> *U + &U _buf * -> -> -> 2 `i `ui `ux -> -> # *U &U _buf `ui `ux `i `s ]
-"196
-[; ;../modules/bmp280.c: 196:     cal->dig_T3 = (int16_t)(buf[5] << 8 | buf[4]);
-[e = . *U _cal 2 -> | << -> *U + &U _buf * -> -> -> 5 `i `ui `ux -> -> # *U &U _buf `ui `ux `i -> 8 `i -> *U + &U _buf * -> -> -> 4 `i `ui `ux -> -> # *U &U _buf `ui `ux `i `s ]
-"198
-[; ;../modules/bmp280.c: 198:     cal->dig_P1 = (uint16_t)(buf[7] << 8 | buf[6]);
-[e = . *U _cal 3 -> | << -> *U + &U _buf * -> -> -> 7 `i `ui `ux -> -> # *U &U _buf `ui `ux `i -> 8 `i -> *U + &U _buf * -> -> -> 6 `i `ui `ux -> -> # *U &U _buf `ui `ux `i `us ]
-"199
-[; ;../modules/bmp280.c: 199:     cal->dig_P2 = (int16_t)(buf[9] << 8 | buf[8]);
-[e = . *U _cal 4 -> | << -> *U + &U _buf * -> -> -> 9 `i `ui `ux -> -> # *U &U _buf `ui `ux `i -> 8 `i -> *U + &U _buf * -> -> -> 8 `i `ui `ux -> -> # *U &U _buf `ui `ux `i `s ]
-"200
-[; ;../modules/bmp280.c: 200:     cal->dig_P3 = (int16_t)(buf[11] << 8 | buf[10]);
-[e = . *U _cal 5 -> | << -> *U + &U _buf * -> -> -> 11 `i `ui `ux -> -> # *U &U _buf `ui `ux `i -> 8 `i -> *U + &U _buf * -> -> -> 10 `i `ui `ux -> -> # *U &U _buf `ui `ux `i `s ]
-"201
-[; ;../modules/bmp280.c: 201:     cal->dig_P4 = (int16_t)(buf[13] << 8 | buf[12]);
-[e = . *U _cal 6 -> | << -> *U + &U _buf * -> -> -> 13 `i `ui `ux -> -> # *U &U _buf `ui `ux `i -> 8 `i -> *U + &U _buf * -> -> -> 12 `i `ui `ux -> -> # *U &U _buf `ui `ux `i `s ]
-"202
-[; ;../modules/bmp280.c: 202:     cal->dig_P5 = (int16_t)(buf[15] << 8 | buf[14]);
-[e = . *U _cal 7 -> | << -> *U + &U _buf * -> -> -> 15 `i `ui `ux -> -> # *U &U _buf `ui `ux `i -> 8 `i -> *U + &U _buf * -> -> -> 14 `i `ui `ux -> -> # *U &U _buf `ui `ux `i `s ]
 "203
-[; ;../modules/bmp280.c: 203:     cal->dig_P6 = (int16_t)(buf[17] << 8 | buf[16]);
-[e = . *U _cal 8 -> | << -> *U + &U _buf * -> -> -> 17 `i `ui `ux -> -> # *U &U _buf `ui `ux `i -> 8 `i -> *U + &U _buf * -> -> -> 16 `i `ui `ux -> -> # *U &U _buf `ui `ux `i `s ]
-"204
-[; ;../modules/bmp280.c: 204:     cal->dig_P7 = (int16_t)(buf[19] << 8 | buf[18]);
-[e = . *U _cal 9 -> | << -> *U + &U _buf * -> -> -> 19 `i `ui `ux -> -> # *U &U _buf `ui `ux `i -> 8 `i -> *U + &U _buf * -> -> -> 18 `i `ui `ux -> -> # *U &U _buf `ui `ux `i `s ]
-"205
-[; ;../modules/bmp280.c: 205:     cal->dig_P8 = (int16_t)(buf[21] << 8 | buf[20]);
-[e = . *U _cal 10 -> | << -> *U + &U _buf * -> -> -> 21 `i `ui `ux -> -> # *U &U _buf `ui `ux `i -> 8 `i -> *U + &U _buf * -> -> -> 20 `i `ui `ux -> -> # *U &U _buf `ui `ux `i `s ]
+[; ;../modules/bmp280.c: 203:     uint8_t buf[24];
+[v _buf `uc ~T0 @X0 -> 24 `i a ]
 "206
-[; ;../modules/bmp280.c: 206:     cal->dig_P9 = (int16_t)(buf[23] << 8 | buf[22]);
-[e = . *U _cal 11 -> | << -> *U + &U _buf * -> -> -> 23 `i `ui `ux -> -> # *U &U _buf `ui `ux `i -> 8 `i -> *U + &U _buf * -> -> -> 22 `i `ui `ux -> -> # *U &U _buf `ui `ux `i `s ]
-"208
-[; ;../modules/bmp280.c: 208:     return APP_OK;
-[e ) . `E55 0 ]
-[e $UE 3273  ]
-"209
-[; ;../modules/bmp280.c: 209: }
-[e :UE 3273 ]
-}
-"212
-[; ;../modules/bmp280.c: 212: app_err_t bmp280_read(bmp280_data_t* data)
-[v _bmp280_read `(E55 ~T0 @X0 1 ef1`*S2 ]
-"213
-[; ;../modules/bmp280.c: 213: {
-{
-[e :U _bmp280_read ]
-"212
-[; ;../modules/bmp280.c: 212: app_err_t bmp280_read(bmp280_data_t* data)
-[v _data `*S2 ~T0 @X0 1 r1 ]
-"213
-[; ;../modules/bmp280.c: 213: {
-[f ]
-"214
-[; ;../modules/bmp280.c: 214:     app_err_t err;
-[v _err `E55 ~T0 @X0 1 a ]
-"216
-[; ;../modules/bmp280.c: 216:     err = bmp280_init();
-[e = _err ( _bmp280_init ..  ]
-"217
-[; ;../modules/bmp280.c: 217:     if (err != APP_OK)
+[; ;../modules/bmp280.c: 206:     err = i2c2_write_read(0xEC, &reg, 1, 0xED, buf, 24);
+[e = _err ( _i2c2_write_read (4 , , , , , -> -> 236 `i `uc -> &U _reg `*Cuc -> -> 1 `i `uc -> -> 237 `i `uc &U _buf -> -> 24 `i `uc ]
+"207
+[; ;../modules/bmp280.c: 207:     if (err != APP_OK)
 [e $ ! != -> _err `ui -> . `E55 0 `ui 3276  ]
-"218
-[; ;../modules/bmp280.c: 218:         return err;
+"208
+[; ;../modules/bmp280.c: 208:         return err;
 [e ) _err ]
 [e $UE 3275  ]
 [e :U 3276 ]
+"211
+[; ;../modules/bmp280.c: 211:     cal->dig_T1 = (uint16_t)(buf[1] << 8 | buf[0]);
+[e = . *U _cal 0 -> | << -> *U + &U _buf * -> -> -> 1 `i `ui `ux -> -> # *U &U _buf `ui `ux `i -> 8 `i -> *U + &U _buf * -> -> -> 0 `i `ui `ux -> -> # *U &U _buf `ui `ux `i `us ]
+"212
+[; ;../modules/bmp280.c: 212:     cal->dig_T2 = (int16_t)(buf[3] << 8 | buf[2]);
+[e = . *U _cal 1 -> | << -> *U + &U _buf * -> -> -> 3 `i `ui `ux -> -> # *U &U _buf `ui `ux `i -> 8 `i -> *U + &U _buf * -> -> -> 2 `i `ui `ux -> -> # *U &U _buf `ui `ux `i `s ]
+"213
+[; ;../modules/bmp280.c: 213:     cal->dig_T3 = (int16_t)(buf[5] << 8 | buf[4]);
+[e = . *U _cal 2 -> | << -> *U + &U _buf * -> -> -> 5 `i `ui `ux -> -> # *U &U _buf `ui `ux `i -> 8 `i -> *U + &U _buf * -> -> -> 4 `i `ui `ux -> -> # *U &U _buf `ui `ux `i `s ]
+"215
+[; ;../modules/bmp280.c: 215:     cal->dig_P1 = (uint16_t)(buf[7] << 8 | buf[6]);
+[e = . *U _cal 3 -> | << -> *U + &U _buf * -> -> -> 7 `i `ui `ux -> -> # *U &U _buf `ui `ux `i -> 8 `i -> *U + &U _buf * -> -> -> 6 `i `ui `ux -> -> # *U &U _buf `ui `ux `i `us ]
+"216
+[; ;../modules/bmp280.c: 216:     cal->dig_P2 = (int16_t)(buf[9] << 8 | buf[8]);
+[e = . *U _cal 4 -> | << -> *U + &U _buf * -> -> -> 9 `i `ui `ux -> -> # *U &U _buf `ui `ux `i -> 8 `i -> *U + &U _buf * -> -> -> 8 `i `ui `ux -> -> # *U &U _buf `ui `ux `i `s ]
+"217
+[; ;../modules/bmp280.c: 217:     cal->dig_P3 = (int16_t)(buf[11] << 8 | buf[10]);
+[e = . *U _cal 5 -> | << -> *U + &U _buf * -> -> -> 11 `i `ui `ux -> -> # *U &U _buf `ui `ux `i -> 8 `i -> *U + &U _buf * -> -> -> 10 `i `ui `ux -> -> # *U &U _buf `ui `ux `i `s ]
+"218
+[; ;../modules/bmp280.c: 218:     cal->dig_P4 = (int16_t)(buf[13] << 8 | buf[12]);
+[e = . *U _cal 6 -> | << -> *U + &U _buf * -> -> -> 13 `i `ui `ux -> -> # *U &U _buf `ui `ux `i -> 8 `i -> *U + &U _buf * -> -> -> 12 `i `ui `ux -> -> # *U &U _buf `ui `ux `i `s ]
+"219
+[; ;../modules/bmp280.c: 219:     cal->dig_P5 = (int16_t)(buf[15] << 8 | buf[14]);
+[e = . *U _cal 7 -> | << -> *U + &U _buf * -> -> -> 15 `i `ui `ux -> -> # *U &U _buf `ui `ux `i -> 8 `i -> *U + &U _buf * -> -> -> 14 `i `ui `ux -> -> # *U &U _buf `ui `ux `i `s ]
 "220
-[; ;../modules/bmp280.c: 220:     int32_t rawT, rawP;
-[v _rawT `l ~T0 @X0 1 a ]
-[v _rawP `l ~T0 @X0 1 a ]
+[; ;../modules/bmp280.c: 220:     cal->dig_P6 = (int16_t)(buf[17] << 8 | buf[16]);
+[e = . *U _cal 8 -> | << -> *U + &U _buf * -> -> -> 17 `i `ui `ux -> -> # *U &U _buf `ui `ux `i -> 8 `i -> *U + &U _buf * -> -> -> 16 `i `ui `ux -> -> # *U &U _buf `ui `ux `i `s ]
 "221
-[; ;../modules/bmp280.c: 221:     int32_t t_fine;
-[v _t_fine `l ~T0 @X0 1 a ]
+[; ;../modules/bmp280.c: 221:     cal->dig_P7 = (int16_t)(buf[19] << 8 | buf[18]);
+[e = . *U _cal 9 -> | << -> *U + &U _buf * -> -> -> 19 `i `ui `ux -> -> # *U &U _buf `ui `ux `i -> 8 `i -> *U + &U _buf * -> -> -> 18 `i `ui `ux -> -> # *U &U _buf `ui `ux `i `s ]
 "222
-[; ;../modules/bmp280.c: 222:     bmp280_calib_t cal;
-[v _cal `S3256 ~T0 @X0 1 a ]
+[; ;../modules/bmp280.c: 222:     cal->dig_P8 = (int16_t)(buf[21] << 8 | buf[20]);
+[e = . *U _cal 10 -> | << -> *U + &U _buf * -> -> -> 21 `i `ui `ux -> -> # *U &U _buf `ui `ux `i -> 8 `i -> *U + &U _buf * -> -> -> 20 `i `ui `ux -> -> # *U &U _buf `ui `ux `i `s ]
+"223
+[; ;../modules/bmp280.c: 223:     cal->dig_P9 = (int16_t)(buf[23] << 8 | buf[22]);
+[e = . *U _cal 11 -> | << -> *U + &U _buf * -> -> -> 23 `i `ui `ux -> -> # *U &U _buf `ui `ux `i -> 8 `i -> *U + &U _buf * -> -> -> 22 `i `ui `ux -> -> # *U &U _buf `ui `ux `i `s ]
 "225
-[; ;../modules/bmp280.c: 225:     err = bmp280_read_raw(&rawT, &rawP);
-[e = _err ( _bmp280_read_raw (2 , &U _rawT &U _rawP ]
-"226
-[; ;../modules/bmp280.c: 226:     if (err != APP_OK)
-[e $ ! != -> _err `ui -> . `E55 0 `ui 3277  ]
-"227
-[; ;../modules/bmp280.c: 227:         return err;
-[e ) _err ]
-[e $UE 3275  ]
-[e :U 3277 ]
-"230
-[; ;../modules/bmp280.c: 230:     err = bmp280_read_calibration(&cal);
-[e = _err ( _bmp280_read_calibration (1 &U _cal ]
-"231
-[; ;../modules/bmp280.c: 231:     if (err != APP_OK)
-[e $ ! != -> _err `ui -> . `E55 0 `ui 3278  ]
-"232
-[; ;../modules/bmp280.c: 232:         return err;
-[e ) _err ]
-[e $UE 3275  ]
-[e :U 3278 ]
-"235
-[; ;../modules/bmp280.c: 235:     int32_t T = bmp280_compensate_T_int32(rawT, &cal, &t_fine);
-[v _T `l ~T0 @X0 1 a ]
-[e = _T ( _bmp280_compensate_T_int32 (3 , , _rawT &U _cal &U _t_fine ]
-"236
-[; ;../modules/bmp280.c: 236:     data->temp_c_x100 = T;
-[e = . *U _data 1 -> _T `s ]
-"239
-[; ;../modules/bmp280.c: 239:     int32_t P = bmp280_compensate_P_int32(rawP, &cal, &t_fine);
-[v _P `l ~T0 @X0 1 a ]
-[e = _P -> ( _bmp280_compensate_P_int32 (3 , , _rawP &U _cal &U _t_fine `l ]
-"240
-[; ;../modules/bmp280.c: 240:     data->pressure_pa = (int32_t)P;
-[e = . *U _data 0 _P ]
-"242
-[; ;../modules/bmp280.c: 242:     return APP_OK;
+[; ;../modules/bmp280.c: 225:     return APP_OK;
 [e ) . `E55 0 ]
 [e $UE 3275  ]
-"243
-[; ;../modules/bmp280.c: 243: }
+"226
+[; ;../modules/bmp280.c: 226: }
 [e :UE 3275 ]
+}
+"229
+[; ;../modules/bmp280.c: 229: app_err_t bmp280_read(bmp280_data_t* data)
+[v _bmp280_read `(E55 ~T0 @X0 1 ef1`*S2 ]
+"230
+[; ;../modules/bmp280.c: 230: {
+{
+[e :U _bmp280_read ]
+"229
+[; ;../modules/bmp280.c: 229: app_err_t bmp280_read(bmp280_data_t* data)
+[v _data `*S2 ~T0 @X0 1 r1 ]
+"230
+[; ;../modules/bmp280.c: 230: {
+[f ]
+"231
+[; ;../modules/bmp280.c: 231:     app_err_t err;
+[v _err `E55 ~T0 @X0 1 a ]
+"233
+[; ;../modules/bmp280.c: 233:     err = bmp280_init();
+[e = _err ( _bmp280_init ..  ]
+"234
+[; ;../modules/bmp280.c: 234:     if (err != APP_OK)
+[e $ ! != -> _err `ui -> . `E55 0 `ui 3278  ]
+"235
+[; ;../modules/bmp280.c: 235:         return err;
+[e ) _err ]
+[e $UE 3277  ]
+[e :U 3278 ]
+"237
+[; ;../modules/bmp280.c: 237:     int32_t rawT, rawP;
+[v _rawT `l ~T0 @X0 1 a ]
+[v _rawP `l ~T0 @X0 1 a ]
+"238
+[; ;../modules/bmp280.c: 238:     int32_t t_fine;
+[v _t_fine `l ~T0 @X0 1 a ]
+"239
+[; ;../modules/bmp280.c: 239:     bmp280_calib_t cal;
+[v _cal `S3256 ~T0 @X0 1 a ]
+"242
+[; ;../modules/bmp280.c: 242:     err = bmp280_read_raw(&rawT, &rawP);
+[e = _err ( _bmp280_read_raw (2 , &U _rawT &U _rawP ]
+"243
+[; ;../modules/bmp280.c: 243:     if (err != APP_OK)
+[e $ ! != -> _err `ui -> . `E55 0 `ui 3279  ]
+"244
+[; ;../modules/bmp280.c: 244:         return err;
+[e ) _err ]
+[e $UE 3277  ]
+[e :U 3279 ]
+"247
+[; ;../modules/bmp280.c: 247:     err = bmp280_read_calibration(&cal);
+[e = _err ( _bmp280_read_calibration (1 &U _cal ]
+"248
+[; ;../modules/bmp280.c: 248:     if (err != APP_OK)
+[e $ ! != -> _err `ui -> . `E55 0 `ui 3280  ]
+"249
+[; ;../modules/bmp280.c: 249:         return err;
+[e ) _err ]
+[e $UE 3277  ]
+[e :U 3280 ]
+"252
+[; ;../modules/bmp280.c: 252:     int32_t T = bmp280_compensate_T_int32(rawT, &cal, &t_fine);
+[v _T `l ~T0 @X0 1 a ]
+[e = _T ( _bmp280_compensate_T_int32 (3 , , _rawT &U _cal &U _t_fine ]
+"253
+[; ;../modules/bmp280.c: 253:     data->temp_c_x100 = T;
+[e = . *U _data 1 -> _T `s ]
+"256
+[; ;../modules/bmp280.c: 256:     int32_t P = bmp280_compensate_P_int32(rawP, &cal, &t_fine);
+[v _P `l ~T0 @X0 1 a ]
+[e = _P -> ( _bmp280_compensate_P_int32 (3 , , _rawP &U _cal &U _t_fine `l ]
+"257
+[; ;../modules/bmp280.c: 257:     data->pressure_pa = (int32_t)P;
+[e = . *U _data 0 _P ]
+"259
+[; ;../modules/bmp280.c: 259:     return APP_OK;
+[e ) . `E55 0 ]
+[e $UE 3277  ]
+"260
+[; ;../modules/bmp280.c: 260: }
+[e :UE 3277 ]
 }

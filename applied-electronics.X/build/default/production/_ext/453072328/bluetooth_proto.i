@@ -21,6 +21,8 @@
 
 
 
+# 1 "../modules/../core/types.h" 1
+# 10 "../modules/../core/types.h"
 # 1 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/stdint.h" 1 3
 
 
@@ -126,9 +128,12 @@ typedef int32_t int_fast32_t;
 typedef uint16_t uint_fast16_t;
 typedef uint32_t uint_fast32_t;
 # 149 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/stdint.h" 2 3
-# 10 "../modules/bluetooth_proto.h" 2
-# 1 "../modules/../core/types.h" 1
-# 16 "../modules/../core/types.h"
+# 11 "../modules/../core/types.h" 2
+
+
+
+
+
 typedef struct {
   uint8_t hour, min;
   uint8_t day, month;
@@ -154,24 +159,205 @@ typedef struct {
 
 
 typedef enum {
-  APP_OK = 0,
-  APP_EBUS,
-  APP_EDEV,
-  APP_EPARAM,
-  APP_ENOENT,
-  APP_ENCONF,
-  APP_EIO,
-  APP_EFULL
+    APP_OK = 0,
+    APP_ERR = 1,
+    APP_EPARAM = 2,
+    APP_EBUS = 3,
+    APP_EDEV = 4,
+    APP_EIO = 5,
+    APP_EFULL = 6,
+    APP_ENOENT = 7,
+    APP_ENCONF = 8,
+    APP_ERR_PARAM = 9,
+    APP_ENOTCONFIG = 10,
+    APP_ENOTRUNNING = 11
 } app_err_t;
-# 11 "../modules/bluetooth_proto.h" 2
+# 10 "../modules/bluetooth_proto.h" 2
 
 
 app_err_t bluetooth_init(void);
 
 
-app_err_t bluetooth_send_sensor_data(const sensor_data_t* data);
+
+void bluetooth_handle_rx(char cmd);
 # 7 "../modules/bluetooth_proto.c" 2
+# 1 "../modules/datalogger.h" 1
+# 10 "../modules/datalogger.h"
+# 1 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/stdbool.h" 1 3
+# 11 "../modules/datalogger.h" 2
+
+
+
+
+typedef struct {
+  uint8_t sample_period_min;
+  uint8_t data_count;
+  rtc_time_t start_time;
+  _Bool running;
+} dl_cfg_t;
+
+app_err_t dl_reset_config(void);
+
+app_err_t dl_set_sample_period_min(uint8_t period_s);
+
+app_err_t dl_set_running(rtc_time_t *start_time);
+
+app_err_t dl_stop(void);
+
+app_err_t dl_get_config(dl_cfg_t *cfg);
+# 60 "../modules/datalogger.h"
+typedef struct {
+  uint8_t t8;
+  uint8_t rh8;
+  uint8_t p8;
+} sensor_reduced_t;
+
+
+app_err_t sensor_reduce(const sensor_data_t* in, sensor_reduced_t* out);
+
+
+
+
+
+
+
+void sensor_dereduce(const sensor_reduced_t* in, sensor_data_t* out);
+
+
+
+app_err_t dl_push_record(const sensor_data_t *rec);
+
+app_err_t dl_read(uint16_t index, sensor_data_t *rec);
+# 8 "../modules/bluetooth_proto.c" 2
+# 1 "../modules/../drivers/uart_bt.h" 1
+# 13 "../modules/../drivers/uart_bt.h"
+app_err_t uart_bt_init(uint32_t baud);
+
+
+void uart_bt_putc(char c);
+
+
+void uart_bt_puts(const char* s);
+# 9 "../modules/bluetooth_proto.c" 2
+
+
+
+
+
+
+static void puti_bt(int32_t val) {
+    char buf[12];
+    uint8_t i = 0, neg = 0;
+
+    if (val < 0) { neg = 1; val = -val; }
+    if (val == 0) { uart_bt_putc('0'); return; }
+
+    while (val > 0) {
+        buf[i++] = '0' + (val % 10);
+        val /= 10;
+    }
+    if (neg) uart_bt_putc('-');
+    while (i > 0) uart_bt_putc(buf[--i]);
+}
+
+
+static void put2d_bt(uint8_t val) {
+    uart_bt_putc('0' + val / 10);
+    uart_bt_putc('0' + val % 10);
+}
+
+
+
+
+
+static uint8_t g_idx = 0;
+
+
+
+
+
+void bluetooth_handle_rx(char cmd) {
+    dl_cfg_t cfg;
+    sensor_data_t data;
+
+    switch (cmd) {
+
+
+
+        case 'C':
+        case 'c':
+            if (dl_get_config(&cfg) == APP_OK) {
+                put2d_bt(cfg.start_time.hour);
+                put2d_bt(cfg.start_time.min);
+                uart_bt_putc(';');
+                put2d_bt(cfg.start_time.day);
+                put2d_bt(cfg.start_time.month);
+                uart_bt_putc(';');
+                puti_bt(cfg.sample_period_min);
+                uart_bt_puts("\r\n");
+            } else {
+                uart_bt_puts("ERR\r\n");
+            }
+            break;
+
+
+
+        case 'N':
+        case 'n':
+            if (dl_get_config(&cfg) == APP_OK) {
+                puti_bt(cfg.data_count);
+                uart_bt_puts("\r\n");
+            } else {
+                uart_bt_puts("0\r\n");
+            }
+            break;
+
+
+
+        case 'R':
+        case 'r':
+            g_idx = 0;
+            uart_bt_puts("OK\r\n");
+            break;
+
+
+
+        case 'A':
+        case 'a':
+            if (dl_get_config(&cfg) != APP_OK || cfg.data_count == 0) {
+                uart_bt_puts("ERR\r\n");
+                break;
+            }
+            if (g_idx >= cfg.data_count) {
+                g_idx = 0;
+            }
+            if (dl_read(g_idx, &data) == APP_OK) {
+                puti_bt(g_idx);
+                uart_bt_putc(';');
+                puti_bt(data.t_c_x100);
+                uart_bt_putc(';');
+                puti_bt(data.rh_x100);
+                uart_bt_putc(';');
+                puti_bt(data.p_pa);
+                uart_bt_puts("\r\n");
+                g_idx++;
+            } else {
+                uart_bt_puts("ERR\r\n");
+            }
+            break;
+
+
+        default:
+            uart_bt_puts("ERR\r\n");
+            break;
+    }
+}
+
+
+
+
 
 app_err_t bluetooth_init(void) {
+    g_idx = 0;
     return APP_OK;
 }

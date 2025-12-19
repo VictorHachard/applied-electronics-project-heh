@@ -1,87 +1,46 @@
 Version 4.0 HI-TECH Software Intermediate Code
-"70687 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 70687:     struct {
-[s S3136 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S3136 . RB0 RB1 RB2 RB3 RB4 RB5 RB6 RB7 ]
-"70697
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 70697:     struct {
-[s S3137 :3 `uc 1 :1 `uc 1 ]
-[n S3137 . . CCP2_PA2 ]
-"70686
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 70686: typedef union {
-[u S3135 `S3136 1 `S3137 1 ]
-[n S3135 . . . ]
-"70702
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 70702: extern volatile PORTBbits_t PORTBbits __attribute__((address(0x3FCB)));
-[v _PORTBbits `VS3135 ~T0 @X0 0 e@16331 ]
-"43171
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 43171: extern volatile unsigned char SPI1TWIDTH __attribute__((address(0x3D18)));
-[v _SPI1TWIDTH `Vuc ~T0 @X0 0 e@15640 ]
-"42803
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 42803: extern volatile unsigned char SPI1TCNTL __attribute__((address(0x3D12)));
-[v _SPI1TCNTL `Vuc ~T0 @X0 0 e@15634 ]
-"42823
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 42823: extern volatile unsigned char SPI1TCNTH __attribute__((address(0x3D13)));
-[v _SPI1TCNTH `Vuc ~T0 @X0 0 e@15635 ]
-"43017
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 43017:     struct {
-[s S1853 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S1853 . RXR TXR SSET . SSFLT BUSY ]
-"43025
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 43025:     struct {
-[s S1854 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S1854 . SPI1RXR SPI1TXR SPI1SSET . SPI1SSFLT SPI1BUSY ]
-"43016
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 43016: typedef union {
-[u S1852 `S1853 1 `S1854 1 ]
-[n S1852 . . . ]
-"43034
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 43034: extern volatile SPI1CON2bits_t SPI1CON2bits __attribute__((address(0x3D16)));
-[v _SPI1CON2bits `VS1852 ~T0 @X0 0 e@15638 ]
-"42849
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 42849:     struct {
-[s S1847 :1 `uc 1 :1 `uc 1 :1 `uc 1 :4 `uc 1 :1 `uc 1 ]
-[n S1847 . BMODE MST LSBF . EN ]
-"42856
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 42856:     struct {
-[s S1848 :1 `uc 1 :1 `uc 1 :1 `uc 1 :4 `uc 1 :1 `uc 1 ]
-[n S1848 . SPI1BMODE SPI1MST SPI1LSBF . SPI1SPIEN ]
-"42848
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 42848: typedef union {
-[u S1846 `S1847 1 `S1848 1 ]
-[n S1846 . . . ]
-"42864
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 42864: extern volatile SPI1CON0bits_t SPI1CON0bits __attribute__((address(0x3D14)));
-[v _SPI1CON0bits `VS1846 ~T0 @X0 0 e@15636 ]
-"42726
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 42726: extern volatile unsigned char SPI1TXB __attribute__((address(0x3D11)));
-[v _SPI1TXB `Vuc ~T0 @X0 0 e@15633 ]
-"43095
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 43095:     struct {
-[s S1856 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S1856 . RXBF . CLRBF RXRE . TXBE . TXWE ]
-"43105
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 43105:     struct {
-[s S1857 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S1857 . SPI1RXBF . SPI1CLRBF SPI1RXRE . SPI1TXBE . SPI1TXWE ]
-"43094
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 43094: typedef union {
-[u S1855 `S1856 1 `S1857 1 ]
-[n S1855 . . . ]
-"43116
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 43116: extern volatile SPI1STATUSbits_t SPI1STATUSbits __attribute__((address(0x3D17)));
-[v _SPI1STATUSbits `VS1855 ~T0 @X0 0 e@15639 ]
-[v F245 `(v ~T0 @X0 1 tf1`ul ]
-"20 C:\Program Files\Microchip\xc8\v3.10\pic\include/builtins.h
-[v __delay `JF245 ~T0 @X0 0 e ]
-[p i __delay ]
-"44 ../modules/eeprom_m93c66.c
-[; ;../modules/eeprom_m93c66.c: 44: app_err_t eeprom_write_record(uint16_t addr, uint8_t val)
-[c E55 0 1 2 3 4 5 6 7 8 9 10 11 .. ]
-[n E55 . APP_OK APP_ERR APP_EPARAM APP_EBUS APP_EDEV APP_EIO APP_EFULL APP_ENOENT APP_ENCONF APP_ERR_PARAM APP_ENOTCONFIG APP_ENOTRUNNING  ]
-"42656 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 42656: extern volatile unsigned char SPI1RXB __attribute__((address(0x3D10)));
-[v _SPI1RXB `Vuc ~T0 @X0 0 e@15632 ]
+"20 ../app/buttons.c
+[; ;../app/buttons.c: 20: typedef struct {
+[s S3250 `uc 1 `uc 1 `uc 1 `us 1 `us 1 ]
+[n S3250 . current previous stable debounce_counter hold_counter ]
+"39
+[; ;../app/buttons.c: 39: static uint8_t read_button_raw(button_t btn) {
+[c E36 0 1 2 3 4 .. ]
+[n E36 . BTN_UP BTN_DOWN BTN_ENTER BTN_BACK BTN_COUNT  ]
+"70603 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 70603:     struct {
+[s S3129 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S3129 . RA0 RA1 RA2 RA3 RA4 RA5 RA6 RA7 ]
+"70613
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 70613:     struct {
+[s S3130 :1 `uc 1 :4 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S3130 . ULPWUIN . LVDIN . RJPU ]
+"70602
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 70602: typedef union {
+[u S3128 `S3129 1 `S3130 1 ]
+[n S3128 . . . ]
+"70621
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 70621: extern volatile PORTAbits_t PORTAbits __attribute__((address(0x3FCA)));
+[v _PORTAbits `VS3128 ~T0 @X0 0 e@16330 ]
+"70758
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 70758:     struct {
+[s S3135 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S3135 . RC0 RC1 RC2 RC3 RC4 RC5 RC6 RC7 ]
+"70768
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 70768:     struct {
+[s S3136 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S3136 . . CCP2 PA1 ]
+"70773
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 70773:     struct {
+[s S3137 :1 `uc 1 :1 `uc 1 ]
+[n S3137 . . PA2 ]
+"70757
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 70757: typedef union {
+[u S3134 `S3135 1 `S3136 1 `S3137 1 ]
+[n S3134 . . . . ]
+"70778
+[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 70778: extern volatile PORTCbits_t PORTCbits __attribute__((address(0x3FCC)));
+[v _PORTCbits `VS3134 ~T0 @X0 0 e@16332 ]
 "272 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 272: __asm("CIOCON equ 03700h");
 [; <" CIOCON equ 03700h ;# ">
@@ -3124,259 +3083,297 @@ Version 4.0 HI-TECH Software Intermediate Code
 "72326
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 72326: __asm("TOSU equ 03FFFh");
 [; <" TOSU equ 03FFFh ;# ">
-"19 ../modules/eeprom_m93c66.c
-[; ;../modules/eeprom_m93c66.c: 19: void eeprom_init(void)
-[v _eeprom_init `(v ~T0 @X0 1 ef ]
-"20
-[; ;../modules/eeprom_m93c66.c: 20: {
-{
-[e :U _eeprom_init ]
-[f ]
-"21
-[; ;../modules/eeprom_m93c66.c: 21:     PORTBbits.RB3 = 1;
-[e = . . _PORTBbits 0 3 -> -> 1 `i `uc ]
-"23
-[; ;../modules/eeprom_m93c66.c: 23:     SPI1TWIDTH = 4;
-[e = _SPI1TWIDTH -> -> 4 `i `uc ]
-"24
-[; ;../modules/eeprom_m93c66.c: 24:     SPI1TCNTL = 1;
-[e = _SPI1TCNTL -> -> 1 `i `uc ]
-"25
-[; ;../modules/eeprom_m93c66.c: 25:     SPI1TCNTH = 0;
-[e = _SPI1TCNTH -> -> 0 `i `uc ]
-"26
-[; ;../modules/eeprom_m93c66.c: 26:     SPI1CON2bits.TXR = 1;
-[e = . . _SPI1CON2bits 0 1 -> -> 1 `i `uc ]
-"27
-[; ;../modules/eeprom_m93c66.c: 27:     SPI1CON0bits.EN = 1;
-[e = . . _SPI1CON0bits 0 4 -> -> 1 `i `uc ]
-"29
-[; ;../modules/eeprom_m93c66.c: 29:     SPI1TXB = 0b10011000;
-[e = _SPI1TXB -> -> 152 `i `uc ]
-"30
-[; ;../modules/eeprom_m93c66.c: 30:     while (SPI1STATUSbits.TXBE == 0);
-[e $U 3255  ]
-[e :U 3256 ]
-[e :U 3255 ]
-[e $ == -> . . _SPI1STATUSbits 0 5 `i -> 0 `i 3256  ]
-[e :U 3257 ]
-"31
-[; ;../modules/eeprom_m93c66.c: 31:     SPI1TXB = 0b00001111;
-[e = _SPI1TXB -> -> 15 `i `uc ]
+"31 ../app/buttons.c
+[; ;../app/buttons.c: 31: static button_info_t buttons[BTN_COUNT];
+[v _buttons `S3250 ~T0 @X0 -> 4 `i s ]
 "32
-[; ;../modules/eeprom_m93c66.c: 32:     while (SPI1STATUSbits.TXBE == 0);
-[e $U 3258  ]
-[e :U 3259 ]
-[e :U 3258 ]
-[e $ == -> . . _SPI1STATUSbits 0 5 `i -> 0 `i 3259  ]
-[e :U 3260 ]
-"34
-[; ;../modules/eeprom_m93c66.c: 34:     SPI1CON2bits.TXR = 0;
-[e = . . _SPI1CON2bits 0 1 -> -> 0 `i `uc ]
-"35
-[; ;../modules/eeprom_m93c66.c: 35:     SPI1CON0bits.EN = 0;
-[e = . . _SPI1CON0bits 0 4 -> -> 0 `i `uc ]
-"36
-[; ;../modules/eeprom_m93c66.c: 36:     PORTBbits.RB3 = 0;
-[e = . . _PORTBbits 0 3 -> -> 0 `i `uc ]
-"38
-[; ;../modules/eeprom_m93c66.c: 38:     _delay((unsigned long)((5)*(64000000UL/4000.0)));
-[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 64000000 `ul `d .4000.0 `ul ]
+[; ;../app/buttons.c: 32: static uint32_t last_update_tick = 0;
+[v _last_update_tick `ul ~T0 @X0 1 s ]
+[i _last_update_tick
+-> -> -> 0 `i `l `ul
+]
 "39
-[; ;../modules/eeprom_m93c66.c: 39: }
-[e :UE 3254 ]
-}
-"44
-[; ;../modules/eeprom_m93c66.c: 44: app_err_t eeprom_write_record(uint16_t addr, uint8_t val)
-[v _eeprom_write_record `(E55 ~T0 @X0 1 ef2`us`uc ]
-"45
-[; ;../modules/eeprom_m93c66.c: 45: {
+[; ;../app/buttons.c: 39: static uint8_t read_button_raw(button_t btn) {
+[v _read_button_raw `(uc ~T0 @X0 1 sf1`E36 ]
 {
-[e :U _eeprom_write_record ]
-"44
-[; ;../modules/eeprom_m93c66.c: 44: app_err_t eeprom_write_record(uint16_t addr, uint8_t val)
-[v _addr `us ~T0 @X0 1 r1 ]
-[v _val `uc ~T0 @X0 1 r2 ]
-"45
-[; ;../modules/eeprom_m93c66.c: 45: {
+[e :U _read_button_raw ]
+[v _btn `E36 ~T0 @X0 1 r1 ]
 [f ]
+"40
+[; ;../app/buttons.c: 40:     switch (btn) {
+[e $U 3253  ]
+{
+"41
+[; ;../app/buttons.c: 41:         case BTN_UP: return !PORTAbits.RA7;
+[e :U 3254 ]
+[e ) -> -> ! != -> . . _PORTAbits 0 7 `i -> 0 `i `i `uc ]
+[e $UE 3251  ]
+"42
+[; ;../app/buttons.c: 42:         case BTN_DOWN: return !PORTAbits.RA6;
+[e :U 3255 ]
+[e ) -> -> ! != -> . . _PORTAbits 0 6 `i -> 0 `i `i `uc ]
+[e $UE 3251  ]
+"43
+[; ;../app/buttons.c: 43:         case BTN_ENTER: return !PORTCbits.RC0;
+[e :U 3256 ]
+[e ) -> -> ! != -> . . _PORTCbits 0 0 `i -> 0 `i `i `uc ]
+[e $UE 3251  ]
+"44
+[; ;../app/buttons.c: 44:         case BTN_BACK: return !PORTCbits.RC1;
+[e :U 3257 ]
+[e ) -> -> ! != -> . . _PORTCbits 0 1 `i -> 0 `i `i `uc ]
+[e $UE 3251  ]
+"45
+[; ;../app/buttons.c: 45:         default: return 0;
+[e :U 3258 ]
+[e ) -> -> 0 `i `uc ]
+[e $UE 3251  ]
 "46
-[; ;../modules/eeprom_m93c66.c: 46:     uint8_t b1 = (0b101 << 5) | ((addr >> 4) & 0x1F);
-[v _b1 `uc ~T0 @X0 1 a ]
-[e = _b1 -> | -> << -> 5 `i -> 5 `i `ui & >> -> _addr `ui -> 4 `i -> -> 31 `i `ui `uc ]
-"47
-[; ;../modules/eeprom_m93c66.c: 47:     uint8_t b2 = ((addr & 0x0F) << 4) | ((val >> 4) & 0x0F);
-[v _b2 `uc ~T0 @X0 1 a ]
-[e = _b2 -> | << & -> _addr `ui -> -> 15 `i `ui -> 4 `i -> & >> -> _val `i -> 4 `i -> 15 `i `ui `uc ]
-"48
-[; ;../modules/eeprom_m93c66.c: 48:     uint8_t b3 = ((val & 0x0F) << 4) | 0x0F;
-[v _b3 `uc ~T0 @X0 1 a ]
-[e = _b3 -> | << & -> _val `i -> 15 `i -> 4 `i -> 15 `i `uc ]
-"50
-[; ;../modules/eeprom_m93c66.c: 50:     eeprom_init();
-[e ( _eeprom_init ..  ]
-"52
-[; ;../modules/eeprom_m93c66.c: 52:     PORTBbits.RB3 = 1;
-[e = . . _PORTBbits 0 3 -> -> 1 `i `uc ]
-"54
-[; ;../modules/eeprom_m93c66.c: 54:     SPI1TWIDTH = 4;
-[e = _SPI1TWIDTH -> -> 4 `i `uc ]
-"55
-[; ;../modules/eeprom_m93c66.c: 55:     SPI1TCNTL = 2;
-[e = _SPI1TCNTL -> -> 2 `i `uc ]
-"56
-[; ;../modules/eeprom_m93c66.c: 56:     SPI1TCNTH = 0;
-[e = _SPI1TCNTH -> -> 0 `i `uc ]
-"57
-[; ;../modules/eeprom_m93c66.c: 57:     SPI1CON2bits.TXR = 1;
-[e = . . _SPI1CON2bits 0 1 -> -> 1 `i `uc ]
-"58
-[; ;../modules/eeprom_m93c66.c: 58:     SPI1CON0bits.EN = 1;
-[e = . . _SPI1CON0bits 0 4 -> -> 1 `i `uc ]
-"60
-[; ;../modules/eeprom_m93c66.c: 60:     SPI1TXB = b1; while (SPI1STATUSbits.TXBE == 0);
-[e = _SPI1TXB _b1 ]
-[e $U 3262  ]
-[e :U 3263 ]
-[e :U 3262 ]
-[e $ == -> . . _SPI1STATUSbits 0 5 `i -> 0 `i 3263  ]
-[e :U 3264 ]
-"61
-[; ;../modules/eeprom_m93c66.c: 61:     SPI1TXB = b2; while (SPI1STATUSbits.TXBE == 0);
-[e = _SPI1TXB _b2 ]
-[e $U 3265  ]
-[e :U 3266 ]
-[e :U 3265 ]
-[e $ == -> . . _SPI1STATUSbits 0 5 `i -> 0 `i 3266  ]
-[e :U 3267 ]
-"62
-[; ;../modules/eeprom_m93c66.c: 62:     SPI1TXB = b3; while (SPI1STATUSbits.TXBE == 0);
-[e = _SPI1TXB _b3 ]
-[e $U 3268  ]
-[e :U 3269 ]
-[e :U 3268 ]
-[e $ == -> . . _SPI1STATUSbits 0 5 `i -> 0 `i 3269  ]
-[e :U 3270 ]
-"64
-[; ;../modules/eeprom_m93c66.c: 64:     SPI1CON2bits.TXR = 0;
-[e = . . _SPI1CON2bits 0 1 -> -> 0 `i `uc ]
-"65
-[; ;../modules/eeprom_m93c66.c: 65:     SPI1CON0bits.EN = 0;
-[e = . . _SPI1CON0bits 0 4 -> -> 0 `i `uc ]
-"66
-[; ;../modules/eeprom_m93c66.c: 66:     PORTBbits.RB3 = 0;
-[e = . . _PORTBbits 0 3 -> -> 0 `i `uc ]
-"68
-[; ;../modules/eeprom_m93c66.c: 68:     _delay((unsigned long)((5)*(64000000UL/4000.0)));
-[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 64000000 `ul `d .4000.0 `ul ]
-"70
-[; ;../modules/eeprom_m93c66.c: 70:     return APP_OK;
-[e ) . `E55 0 ]
-[e $UE 3261  ]
-"71
-[; ;../modules/eeprom_m93c66.c: 71: }
-[e :UE 3261 ]
+[; ;../app/buttons.c: 46:     }
 }
-"76
-[; ;../modules/eeprom_m93c66.c: 76: app_err_t eeprom_read_record(uint16_t addr, uint8_t *val)
-[v _eeprom_read_record `(E55 ~T0 @X0 1 ef2`us`*uc ]
-"77
-[; ;../modules/eeprom_m93c66.c: 77: {
+[e $U 3252  ]
+[e :U 3253 ]
+[e [\ -> _btn `ui , $ -> . `E36 0 `ui 3254
+ , $ -> . `E36 1 `ui 3255
+ , $ -> . `E36 2 `ui 3256
+ , $ -> . `E36 3 `ui 3257
+ 3258 ]
+[e :U 3252 ]
+"47
+[; ;../app/buttons.c: 47: }
+[e :UE 3251 ]
+}
+"53
+[; ;../app/buttons.c: 53: void buttons_init(void) {
+[v _buttons_init `(v ~T0 @X0 1 ef ]
 {
-[e :U _eeprom_read_record ]
-"76
-[; ;../modules/eeprom_m93c66.c: 76: app_err_t eeprom_read_record(uint16_t addr, uint8_t *val)
-[v _addr `us ~T0 @X0 1 r1 ]
-[v _val `*uc ~T0 @X0 1 r2 ]
-"77
-[; ;../modules/eeprom_m93c66.c: 77: {
+[e :U _buttons_init ]
 [f ]
+"54
+[; ;../app/buttons.c: 54:     uint8_t i;
+[v _i `uc ~T0 @X0 1 a ]
+"57
+[; ;../app/buttons.c: 57:     for (i = 0; i < BTN_COUNT; i++) {
+{
+[e = _i -> -> 0 `i `uc ]
+[e $ < -> _i `i -> . `E36 4 `i 3260  ]
+[e $U 3261  ]
+[e :U 3260 ]
+{
+"58
+[; ;../app/buttons.c: 58:         buttons[i].current = 0;
+[e = . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 0 -> -> 0 `i `uc ]
+"59
+[; ;../app/buttons.c: 59:         buttons[i].previous = 0;
+[e = . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 1 -> -> 0 `i `uc ]
+"60
+[; ;../app/buttons.c: 60:         buttons[i].stable = 0;
+[e = . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 2 -> -> 0 `i `uc ]
+"61
+[; ;../app/buttons.c: 61:         buttons[i].debounce_counter = 0;
+[e = . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 3 -> -> 0 `i `us ]
+"62
+[; ;../app/buttons.c: 62:         buttons[i].hold_counter = 0;
+[e = . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 4 -> -> 0 `i `us ]
+"63
+[; ;../app/buttons.c: 63:     }
+}
+[e ++ _i -> -> 1 `i `uc ]
+[e $ < -> _i `i -> . `E36 4 `i 3260  ]
+[e :U 3261 ]
+}
+"65
+[; ;../app/buttons.c: 65:     last_update_tick = 0;
+[e = _last_update_tick -> -> -> 0 `i `l `ul ]
+"66
+[; ;../app/buttons.c: 66: }
+[e :UE 3259 ]
+}
+"68
+[; ;../app/buttons.c: 68: void buttons_update(void) {
+[v _buttons_update `(v ~T0 @X0 1 ef ]
+{
+[e :U _buttons_update ]
+[f ]
+"69
+[; ;../app/buttons.c: 69:     uint8_t i;
+[v _i `uc ~T0 @X0 1 a ]
+"70
+[; ;../app/buttons.c: 70:     uint8_t raw_state;
+[v _raw_state `uc ~T0 @X0 1 a ]
+"73
+[; ;../app/buttons.c: 73:     for (i = 0; i < BTN_COUNT; i++) {
+{
+[e = _i -> -> 0 `i `uc ]
+[e $ < -> _i `i -> . `E36 4 `i 3264  ]
+[e $U 3265  ]
+[e :U 3264 ]
+{
+"75
+[; ;../app/buttons.c: 75:         raw_state = read_button_raw((button_t)i);
+[e = _raw_state ( _read_button_raw (1 -> _i `E36 ]
 "78
-[; ;../modules/eeprom_m93c66.c: 78:     if (!val) return APP_ERR_PARAM;
-[e $ ! ! != _val -> -> 0 `i `*uc 3272  ]
-[e ) . `E55 9 ]
-[e $UE 3271  ]
-[e :U 3272 ]
+[; ;../app/buttons.c: 78:         if (raw_state != buttons[i].current) {
+[e $ ! != -> _raw_state `i -> . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 0 `i 3267  ]
+{
+"79
+[; ;../app/buttons.c: 79:             buttons[i].current = raw_state;
+[e = . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 0 _raw_state ]
 "80
-[; ;../modules/eeprom_m93c66.c: 80:     uint8_t b1 = (0b110 << 5) | ((addr >> 4) & 0x1F);
-[v _b1 `uc ~T0 @X0 1 a ]
-[e = _b1 -> | -> << -> 6 `i -> 5 `i `ui & >> -> _addr `ui -> 4 `i -> -> 31 `i `ui `uc ]
+[; ;../app/buttons.c: 80:             buttons[i].debounce_counter = 0;
+[e = . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 3 -> -> 0 `i `us ]
 "81
-[; ;../modules/eeprom_m93c66.c: 81:     uint8_t b2 = ((addr & 0x0F) << 4) | 0x0F;
-[v _b2 `uc ~T0 @X0 1 a ]
-[e = _b2 -> | << & -> _addr `ui -> -> 15 `i `ui -> 4 `i -> -> 15 `i `ui `uc ]
-"82
-[; ;../modules/eeprom_m93c66.c: 82:     uint8_t v2, v3;
-[v _v2 `uc ~T0 @X0 1 a ]
-[v _v3 `uc ~T0 @X0 1 a ]
-"84
-[; ;../modules/eeprom_m93c66.c: 84:     PORTBbits.RB3 = 1;
-[e = . . _PORTBbits 0 3 -> -> 1 `i `uc ]
+[; ;../app/buttons.c: 81:         }
+}
+[e $U 3268  ]
+"83
+[; ;../app/buttons.c: 83:         else {
+[e :U 3267 ]
+{
+"85
+[; ;../app/buttons.c: 85:             if (buttons[i].debounce_counter < 20) {
+[e $ ! < -> . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 3 `ui -> -> 20 `i `ui 3269  ]
+{
 "86
-[; ;../modules/eeprom_m93c66.c: 86:     SPI1TWIDTH = 0;
-[e = _SPI1TWIDTH -> -> 0 `i `uc ]
-"87
-[; ;../modules/eeprom_m93c66.c: 87:     SPI1TCNTL = 3;
-[e = _SPI1TCNTL -> -> 3 `i `uc ]
-"88
-[; ;../modules/eeprom_m93c66.c: 88:     SPI1TCNTH = 0;
-[e = _SPI1TCNTH -> -> 0 `i `uc ]
+[; ;../app/buttons.c: 86:                 buttons[i].debounce_counter++;
+[e ++ . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 3 -> -> 1 `i `us ]
 "89
-[; ;../modules/eeprom_m93c66.c: 89:     SPI1CON2bits.TXR = 1;
-[e = . . _SPI1CON2bits 0 1 -> -> 1 `i `uc ]
+[; ;../app/buttons.c: 89:                 if (buttons[i].debounce_counter >= 20) {
+[e $ ! >= -> . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 3 `ui -> -> 20 `i `ui 3270  ]
+{
 "90
-[; ;../modules/eeprom_m93c66.c: 90:     SPI1CON2bits.RXR = 1;
-[e = . . _SPI1CON2bits 0 0 -> -> 1 `i `uc ]
+[; ;../app/buttons.c: 90:                     buttons[i].previous = buttons[i].stable;
+[e = . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 1 . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 2 ]
 "91
-[; ;../modules/eeprom_m93c66.c: 91:     SPI1CON0bits.EN = 1;
-[e = . . _SPI1CON0bits 0 4 -> -> 1 `i `uc ]
-"93
-[; ;../modules/eeprom_m93c66.c: 93:     SPI1TXB = b1; while (SPI1STATUSbits.TXBE == 0); (void)SPI1RXB;
-[e = _SPI1TXB _b1 ]
-[e $U 3273  ]
-[e :U 3274 ]
-[e :U 3273 ]
-[e $ == -> . . _SPI1STATUSbits 0 5 `i -> 0 `i 3274  ]
-[e :U 3275 ]
-[e _SPI1RXB ]
+[; ;../app/buttons.c: 91:                     buttons[i].stable = buttons[i].current;
+[e = . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 2 . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 0 ]
 "94
-[; ;../modules/eeprom_m93c66.c: 94:     SPI1TXB = b2; while (SPI1STATUSbits.TXBE == 0); v2 = SPI1RXB;
-[e = _SPI1TXB _b2 ]
-[e $U 3276  ]
-[e :U 3277 ]
-[e :U 3276 ]
-[e $ == -> . . _SPI1STATUSbits 0 5 `i -> 0 `i 3277  ]
-[e :U 3278 ]
-[e = _v2 _SPI1RXB ]
+[; ;../app/buttons.c: 94:                     if (buttons[i].stable == 0) {
+[e $ ! == -> . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 2 `i -> 0 `i 3271  ]
+{
 "95
-[; ;../modules/eeprom_m93c66.c: 95:     SPI1TXB = 0xFF; while (SPI1STATUSbits.TXBE == 0); v3 = SPI1RXB;
-[e = _SPI1TXB -> -> 255 `i `uc ]
-[e $U 3279  ]
-[e :U 3280 ]
-[e :U 3279 ]
-[e $ == -> . . _SPI1STATUSbits 0 5 `i -> 0 `i 3280  ]
-[e :U 3281 ]
-[e = _v3 _SPI1RXB ]
+[; ;../app/buttons.c: 95:                         buttons[i].hold_counter = 0;
+[e = . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 4 -> -> 0 `i `us ]
+"96
+[; ;../app/buttons.c: 96:                     }
+}
+[e :U 3271 ]
 "97
-[; ;../modules/eeprom_m93c66.c: 97:     SPI1CON2bits.RXR = 0;
-[e = . . _SPI1CON2bits 0 0 -> -> 0 `i `uc ]
+[; ;../app/buttons.c: 97:                 }
+}
+[e :U 3270 ]
 "98
-[; ;../modules/eeprom_m93c66.c: 98:     SPI1CON2bits.TXR = 0;
-[e = . . _SPI1CON2bits 0 1 -> -> 0 `i `uc ]
-"99
-[; ;../modules/eeprom_m93c66.c: 99:     SPI1CON0bits.EN = 0;
-[e = . . _SPI1CON0bits 0 4 -> -> 0 `i `uc ]
+[; ;../app/buttons.c: 98:             }
+}
+[e $U 3272  ]
 "100
-[; ;../modules/eeprom_m93c66.c: 100:     PORTBbits.RB3 = 0;
-[e = . . _PORTBbits 0 3 -> -> 0 `i `uc ]
+[; ;../app/buttons.c: 100:             else if (buttons[i].stable == 1) {
+[e :U 3269 ]
+[e $ ! == -> . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 2 `i -> 1 `i 3273  ]
+{
+"101
+[; ;../app/buttons.c: 101:                 if (buttons[i].hold_counter < 0xFFFF) {
+[e $ ! < -> . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 4 `ui -> 65535 `ui 3274  ]
+{
 "102
-[; ;../modules/eeprom_m93c66.c: 102:     *val = (uint8_t)(((v2 & 0x0F) << 4) | ((v3 >> 4) & 0x0F));
-[e = *U _val -> | << & -> _v2 `i -> 15 `i -> 4 `i & >> -> _v3 `i -> 4 `i -> 15 `i `uc ]
+[; ;../app/buttons.c: 102:                     buttons[i].hold_counter++;
+[e ++ . *U + &U _buttons * -> _i `ux -> -> # *U &U _buttons `ui `ux 4 -> -> 1 `i `us ]
 "103
-[; ;../modules/eeprom_m93c66.c: 103:     return APP_OK;
-[e ) . `E55 0 ]
-[e $UE 3271  ]
+[; ;../app/buttons.c: 103:                 }
+}
+[e :U 3274 ]
 "104
-[; ;../modules/eeprom_m93c66.c: 104: }
-[e :UE 3271 ]
+[; ;../app/buttons.c: 104:             }
+}
+[e :U 3273 ]
+[e :U 3272 ]
+"105
+[; ;../app/buttons.c: 105:         }
+}
+[e :U 3268 ]
+"106
+[; ;../app/buttons.c: 106:     }
+}
+[e ++ _i -> -> 1 `i `uc ]
+[e $ < -> _i `i -> . `E36 4 `i 3264  ]
+[e :U 3265 ]
+}
+"107
+[; ;../app/buttons.c: 107: }
+[e :UE 3263 ]
+}
+"109
+[; ;../app/buttons.c: 109: uint8_t button_pressed(button_t btn) {
+[v _button_pressed `(uc ~T0 @X0 1 ef1`E36 ]
+{
+[e :U _button_pressed ]
+[v _btn `E36 ~T0 @X0 1 r1 ]
+[f ]
+"110
+[; ;../app/buttons.c: 110:     if (btn >= BTN_COUNT) return 0;
+[e $ ! >= -> _btn `ui -> . `E36 4 `ui 3276  ]
+[e ) -> -> 0 `i `uc ]
+[e $UE 3275  ]
+[e :U 3276 ]
+"113
+[; ;../app/buttons.c: 113:     if (buttons[btn].stable == 1 && buttons[btn].previous == 0) {
+[e $ ! && == -> . *U + &U _buttons * -> _btn `ux -> -> # *U &U _buttons `ui `ux 2 `i -> 1 `i == -> . *U + &U _buttons * -> _btn `ux -> -> # *U &U _buttons `ui `ux 1 `i -> 0 `i 3277  ]
+{
+"114
+[; ;../app/buttons.c: 114:         return 1;
+[e ) -> -> 1 `i `uc ]
+[e $UE 3275  ]
+"115
+[; ;../app/buttons.c: 115:     }
+}
+[e :U 3277 ]
+"117
+[; ;../app/buttons.c: 117:     return 0;
+[e ) -> -> 0 `i `uc ]
+[e $UE 3275  ]
+"118
+[; ;../app/buttons.c: 118: }
+[e :UE 3275 ]
+}
+"120
+[; ;../app/buttons.c: 120: uint8_t button_held(button_t btn) {
+[v _button_held `(uc ~T0 @X0 1 ef1`E36 ]
+{
+[e :U _button_held ]
+[v _btn `E36 ~T0 @X0 1 r1 ]
+[f ]
+"121
+[; ;../app/buttons.c: 121:     if (btn >= BTN_COUNT) return 0;
+[e $ ! >= -> _btn `ui -> . `E36 4 `ui 3279  ]
+[e ) -> -> 0 `i `uc ]
+[e $UE 3278  ]
+[e :U 3279 ]
+"123
+[; ;../app/buttons.c: 123:     return (buttons[btn].stable == 1 &&
+[e ) -> -> && == -> . *U + &U _buttons * -> _btn `ux -> -> # *U &U _buttons `ui `ux 2 `i -> 1 `i > -> . *U + &U _buttons * -> _btn `ux -> -> # *U &U _buttons `ui `ux 4 `ui -> / -> 500 `i -> 10 `i `ui `i `uc ]
+[e $UE 3278  ]
+"125
+[; ;../app/buttons.c: 125: }
+[e :UE 3278 ]
+}
+"127
+[; ;../app/buttons.c: 127: uint8_t button_get_raw(button_t btn) {
+[v _button_get_raw `(uc ~T0 @X0 1 ef1`E36 ]
+{
+[e :U _button_get_raw ]
+[v _btn `E36 ~T0 @X0 1 r1 ]
+[f ]
+"128
+[; ;../app/buttons.c: 128:     if (btn >= BTN_COUNT) return 0;
+[e $ ! >= -> _btn `ui -> . `E36 4 `ui 3281  ]
+[e ) -> -> 0 `i `uc ]
+[e $UE 3280  ]
+[e :U 3281 ]
+"129
+[; ;../app/buttons.c: 129:     return read_button_raw(btn);
+[e ) ( _read_button_raw (1 _btn ]
+[e $UE 3280  ]
+"130
+[; ;../app/buttons.c: 130: }
+[e :UE 3280 ]
 }

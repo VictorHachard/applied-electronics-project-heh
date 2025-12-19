@@ -181,7 +181,9 @@ typedef enum {
 typedef enum {
     SUBMENU_DATETIME = 0,
     SUBMENU_BMP280,
-    SUBMENU_SHT30
+    SUBMENU_SHT30,
+    SUBMENU_DATALOGGER,
+    SUBMENU_CLEAR_EEPROM
 } submenu_type_t;
 
 
@@ -194,6 +196,13 @@ typedef enum {
     FIELD_SECOND,
     FIELD_COUNT
 } datetime_field_t;
+
+
+typedef enum {
+    FIELD_DL_DELTA_T = 0,
+    FIELD_DL_START_STOP,
+    FIELD_DL_COUNT
+} datalogger_field_t;
 
 
 
@@ -209,6 +218,7 @@ typedef struct {
     uint16_t scroll_counter;
     uint8_t editing;
     datetime_field_t edit_field;
+    datalogger_field_t dl_edit_field;
     uint8_t edit_cursor;
 } menu_context_t;
 

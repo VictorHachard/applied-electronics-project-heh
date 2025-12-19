@@ -154,14 +154,18 @@ typedef struct {
 
 
 typedef enum {
-  APP_OK = 0,
-  APP_EBUS,
-  APP_EDEV,
-  APP_EPARAM,
-  APP_ENOENT,
-  APP_ENCONF,
-  APP_EIO,
-  APP_EFULL
+    APP_OK = 0,
+    APP_ERR = 1,
+    APP_EPARAM = 2,
+    APP_EBUS = 3,
+    APP_EDEV = 4,
+    APP_EIO = 5,
+    APP_EFULL = 6,
+    APP_ENOENT = 7,
+    APP_ENCONF = 8,
+    APP_ERR_PARAM = 9,
+    APP_ENOTCONFIG = 10,
+    APP_ENOTRUNNING = 11
 } app_err_t;
 # 11 "../modules/eeprom_m93c66.h" 2
 
@@ -170,8 +174,6 @@ void eeprom_init(void);
 app_err_t eeprom_write_record(uint16_t addr, uint8_t val);
 
 app_err_t eeprom_read_record(uint16_t addr, uint8_t *val);
-
-app_err_t eeprom_chip_erase(void);
 # 7 "../modules/eeprom_m93c66.c" 2
 # 1 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include/xc.h" 1 3
 # 18 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include/xc.h" 3
@@ -36706,173 +36708,16 @@ unsigned char __t1rd16on(void);
 unsigned char __t3rd16on(void);
 # 34 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include/xc.h" 2 3
 # 8 "../modules/eeprom_m93c66.c" 2
-# 1 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/stdio.h" 1 3
-# 24 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/stdio.h" 3
-# 1 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/bits/alltypes.h" 1 3
-# 12 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/bits/alltypes.h" 3
-typedef void * va_list[1];
-
-
-
-
-typedef void * __isoc_va_list[1];
-# 143 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/bits/alltypes.h" 3
-typedef __int24 ssize_t;
-# 255 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/bits/alltypes.h" 3
-typedef long long off_t;
-# 409 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/bits/alltypes.h" 3
-typedef struct _IO_FILE FILE;
-# 25 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/stdio.h" 2 3
-# 52 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/stdio.h" 3
-typedef union _G_fpos64_t {
- char __opaque[16];
- double __align;
-} fpos_t;
-
-extern FILE *const stdin;
-extern FILE *const stdout;
-extern FILE *const stderr;
-
-
-
-
-
-FILE *fopen(const char *restrict, const char *restrict);
-FILE *freopen(const char *restrict, const char *restrict, FILE *restrict);
-int fclose(FILE *);
-
-int remove(const char *);
-int rename(const char *, const char *);
-
-int feof(FILE *);
-int ferror(FILE *);
-int fflush(FILE *);
-void clearerr(FILE *);
-
-int fseek(FILE *, long, int);
-long ftell(FILE *);
-void rewind(FILE *);
-
-int fgetpos(FILE *restrict, fpos_t *restrict);
-int fsetpos(FILE *, const fpos_t *);
-
-size_t fread(void *restrict, size_t, size_t, FILE *restrict);
-size_t fwrite(const void *restrict, size_t, size_t, FILE *restrict);
-
-int fgetc(FILE *);
-int getc(FILE *);
-int getchar(void);
-
-
-
-
-
-int ungetc(int, FILE *);
-int getch(void);
-
-int fputc(int, FILE *);
-int putc(int, FILE *);
-int putchar(int);
-
-
-
-
-
-void putch(char);
-
-char *fgets(char *restrict, int, FILE *restrict);
-
-char *gets(char *);
-
-
-int fputs(const char *restrict, FILE *restrict);
-int puts(const char *);
-
-__attribute__((__format__(__printf__, 1, 2)))
-int printf(const char *restrict, ...);
-__attribute__((__format__(__printf__, 2, 3)))
-int fprintf(FILE *restrict, const char *restrict, ...);
-__attribute__((__format__(__printf__, 2, 3)))
-int sprintf(char *restrict, const char *restrict, ...);
-__attribute__((__format__(__printf__, 3, 4)))
-int snprintf(char *restrict, size_t, const char *restrict, ...);
-
-__attribute__((__format__(__printf__, 1, 0)))
-int vprintf(const char *restrict, __isoc_va_list);
-int vfprintf(FILE *restrict, const char *restrict, __isoc_va_list);
-__attribute__((__format__(__printf__, 2, 0)))
-int vsprintf(char *restrict, const char *restrict, __isoc_va_list);
-__attribute__((__format__(__printf__, 3, 0)))
-int vsnprintf(char *restrict, size_t, const char *restrict, __isoc_va_list);
-
-__attribute__((__format__(__scanf__, 1, 2)))
-int scanf(const char *restrict, ...);
-__attribute__((__format__(__scanf__, 2, 3)))
-int fscanf(FILE *restrict, const char *restrict, ...);
-__attribute__((__format__(__scanf__, 2, 3)))
-int sscanf(const char *restrict, const char *restrict, ...);
-
-__attribute__((__format__(__scanf__, 1, 0)))
-int vscanf(const char *restrict, __isoc_va_list);
-int vfscanf(FILE *restrict, const char *restrict, __isoc_va_list);
-__attribute__((__format__(__scanf__, 2, 0)))
-int vsscanf(const char *restrict, const char *restrict, __isoc_va_list);
-
-void perror(const char *);
-
-int setvbuf(FILE *restrict, char *restrict, int, size_t);
-void setbuf(FILE *restrict, char *restrict);
-
-char *tmpnam(char *);
-FILE *tmpfile(void);
-
-
-
-
-FILE *fmemopen(void *restrict, size_t, const char *restrict);
-FILE *open_memstream(char **, size_t *);
-FILE *fdopen(int, const char *);
-FILE *popen(const char *, const char *);
-int pclose(FILE *);
-int fileno(FILE *);
-int fseeko(FILE *, off_t, int);
-off_t ftello(FILE *);
-int dprintf(int, const char *restrict, ...);
-int vdprintf(int, const char *restrict, __isoc_va_list);
-void flockfile(FILE *);
-int ftrylockfile(FILE *);
-void funlockfile(FILE *);
-int getc_unlocked(FILE *);
-int getchar_unlocked(void);
-int putc_unlocked(int, FILE *);
-int putchar_unlocked(int);
-ssize_t getdelim(char **restrict, size_t *restrict, int, FILE *restrict);
-ssize_t getline(char **restrict, size_t *restrict, FILE *restrict);
-int renameat(int, const char *, int, const char *);
-char *ctermid(char *);
-
-
-
-
-
-
-
-char *tempnam(const char *, const char *);
-# 9 "../modules/eeprom_m93c66.c" 2
-
-
-
-
-
-
-
-
+# 19 "../modules/eeprom_m93c66.c"
 void eeprom_init(void)
 {
+    PORTBbits.RB3 = 1;
+
     SPI1TWIDTH = 4;
     SPI1TCNTL = 1;
     SPI1TCNTH = 0;
     SPI1CON2bits.TXR = 1;
+    SPI1CON0bits.EN = 1;
 
     SPI1TXB = 0b10011000;
     while (SPI1STATUSbits.TXBE == 0);
@@ -36880,81 +36725,73 @@ void eeprom_init(void)
     while (SPI1STATUSbits.TXBE == 0);
 
     SPI1CON2bits.TXR = 0;
+    SPI1CON0bits.EN = 0;
+    PORTBbits.RB3 = 0;
+
     _delay((unsigned long)((5)*(64000000UL/4000.0)));
 }
 
 
+
+
 app_err_t eeprom_write_record(uint16_t addr, uint8_t val)
 {
-    uint8_t dataFort, dataFaible;
-    uint8_t adresseFort, adresseFaible;
-    uint8_t com1, com2, com3;
+    uint8_t b1 = (0b101 << 5) | ((addr >> 4) & 0x1F);
+    uint8_t b2 = ((addr & 0x0F) << 4) | ((val >> 4) & 0x0F);
+    uint8_t b3 = ((val & 0x0F) << 4) | 0x0F;
 
-    adresseFort = (uint8_t)(addr >> 4);
-    adresseFaible = (uint8_t)(addr & 0x0F);
-    dataFort = (uint8_t)(val >> 4);
-    dataFaible = (uint8_t)(val & 0x0F);
+    eeprom_init();
 
-    com1 = (uint8_t)((0b1010u << 4) | adresseFort);
-    com2 = (uint8_t)((adresseFaible << 4) | dataFort);
-    com3 = (uint8_t)((dataFaible << 4) | 0x0F);
+    PORTBbits.RB3 = 1;
 
     SPI1TWIDTH = 4;
     SPI1TCNTL = 2;
     SPI1TCNTH = 0;
     SPI1CON2bits.TXR = 1;
+    SPI1CON0bits.EN = 1;
 
-    SPI1TXB = com1; while (SPI1STATUSbits.TXBE == 0);
-    SPI1TXB = com2; while (SPI1STATUSbits.TXBE == 0);
-    SPI1TXB = com3; while (SPI1STATUSbits.TXBE == 0);
+    SPI1TXB = b1; while (SPI1STATUSbits.TXBE == 0);
+    SPI1TXB = b2; while (SPI1STATUSbits.TXBE == 0);
+    SPI1TXB = b3; while (SPI1STATUSbits.TXBE == 0);
 
     SPI1CON2bits.TXR = 0;
+    SPI1CON0bits.EN = 0;
+    PORTBbits.RB3 = 0;
 
-    PORTBbits.RB5 = !PORTBbits.RB5;
-
-    _delay((unsigned long)((10)*(64000000UL/4000.0)));
+    _delay((unsigned long)((5)*(64000000UL/4000.0)));
 
     return APP_OK;
 }
 
 
+
+
 app_err_t eeprom_read_record(uint16_t addr, uint8_t *val)
 {
-    uint8_t com1, com2;
-    uint8_t valEEPROM1, valEEPROM2, valEEPROM3;
-    uint8_t adresseFort, adresseFaible;
-    uint8_t adresse8;
-    uint8_t res;
+    if (!val) return APP_ERR_PARAM;
 
-    adresse8 = (uint8_t)(addr & 0xFF);
-    adresseFort = (uint8_t)(adresse8 >> 4);
-    adresseFaible = (uint8_t)(adresse8 & 0x0F);
+    uint8_t b1 = (0b110 << 5) | ((addr >> 4) & 0x1F);
+    uint8_t b2 = ((addr & 0x0F) << 4) | 0x0F;
+    uint8_t v2, v3;
 
-    com1 = (uint8_t)((0b1100u << 4) | adresseFort);
-    com2 = (uint8_t)((adresseFaible << 4) | 0x0F);
+    PORTBbits.RB3 = 1;
 
     SPI1TWIDTH = 0;
     SPI1TCNTL = 3;
     SPI1TCNTH = 0;
     SPI1CON2bits.TXR = 1;
     SPI1CON2bits.RXR = 1;
+    SPI1CON0bits.EN = 1;
 
-    SPI1TXB = com1; while (SPI1STATUSbits.TXBE == 0);
-    valEEPROM1 = SPI1RXB;
-
-    SPI1TXB = com2; while (SPI1STATUSbits.TXBE == 0);
-    valEEPROM2 = SPI1RXB;
-
-    SPI1TXB = 0xFF; while (SPI1STATUSbits.TXBE == 0);
-    valEEPROM3 = SPI1RXB;
+    SPI1TXB = b1; while (SPI1STATUSbits.TXBE == 0); (void)SPI1RXB;
+    SPI1TXB = b2; while (SPI1STATUSbits.TXBE == 0); v2 = SPI1RXB;
+    SPI1TXB = 0xFF; while (SPI1STATUSbits.TXBE == 0); v3 = SPI1RXB;
 
     SPI1CON2bits.RXR = 0;
     SPI1CON2bits.TXR = 0;
-    _delay((unsigned long)((5)*(64000000UL/4000.0)));
+    SPI1CON0bits.EN = 0;
+    PORTBbits.RB3 = 0;
 
-
-    res = (uint8_t)((valEEPROM2 << 4) | (valEEPROM3 >> 4));
-    *val = res;
-
+    *val = (uint8_t)(((v2 & 0x0F) << 4) | ((v3 >> 4) & 0x0F));
     return APP_OK;
 }

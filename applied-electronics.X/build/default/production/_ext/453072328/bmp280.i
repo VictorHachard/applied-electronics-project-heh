@@ -154,14 +154,18 @@ typedef struct {
 
 
 typedef enum {
-  APP_OK = 0,
-  APP_EBUS,
-  APP_EDEV,
-  APP_EPARAM,
-  APP_ENOENT,
-  APP_ENCONF,
-  APP_EIO,
-  APP_EFULL
+    APP_OK = 0,
+    APP_ERR = 1,
+    APP_EPARAM = 2,
+    APP_EBUS = 3,
+    APP_EDEV = 4,
+    APP_EIO = 5,
+    APP_EFULL = 6,
+    APP_ENOENT = 7,
+    APP_ENCONF = 8,
+    APP_ERR_PARAM = 9,
+    APP_ENOTCONFIG = 10,
+    APP_ENOTRUNNING = 11
 } app_err_t;
 # 11 "../modules/bmp280.h" 2
 
@@ -182,12 +186,8 @@ app_err_t i2c2_write(uint8_t addr8w, const uint8_t *buf, uint8_t n);
 app_err_t i2c2_write_read(uint8_t addr8w, const uint8_t *w, uint8_t wn,
                           uint8_t addr8r, uint8_t *r, uint8_t rn);
 # 8 "../modules/bmp280.c" 2
-# 1 "../modules/../drivers/lcd.h" 1
-
-
-
-# 1 "../modules/../drivers/../core/board.h" 1
-# 14 "../modules/../drivers/../core/board.h"
+# 1 "../modules/../core/board.h" 1
+# 14 "../modules/../core/board.h"
 # 1 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include/xc.h" 1 3
 # 18 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include/xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -36720,8 +36720,8 @@ __attribute__((__unsupported__("The READTIMER" "0" "() macro is not available wi
 unsigned char __t1rd16on(void);
 unsigned char __t3rd16on(void);
 # 34 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include/xc.h" 2 3
-# 15 "../modules/../drivers/../core/board.h" 2
-# 28 "../modules/../drivers/../core/board.h"
+# 15 "../modules/../core/board.h" 2
+# 28 "../modules/../core/board.h"
 void board_init(void);
 
 
@@ -36729,20 +36729,6 @@ void board_configure_pins(void);
 
 
 void board_configure_pps(void);
-# 5 "../modules/../drivers/lcd.h" 2
-
-
-void Lcd_Port(char data);
-void Lcd_Cmd(char cmd);
-
-
-void Lcd_Clear(void);
-void Lcd_Set_Cursor(char row, char column);
-void Lcd_Init(void);
-void Lcd_Write_Char(char data);
-void Lcd_Write_String(const char *str);
-void Lcd_Shift_Right(void);
-void Lcd_Shift_Left(void);
 # 9 "../modules/bmp280.c" 2
 
 # 1 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include\\c99/stdio.h" 1 3
@@ -36898,7 +36884,7 @@ char *ctermid(char *);
 
 char *tempnam(const char *, const char *);
 # 11 "../modules/bmp280.c" 2
-# 29 "../modules/bmp280.c"
+# 30 "../modules/bmp280.c"
 typedef struct {
     uint16_t dig_T1;
     int16_t dig_T2;
@@ -36918,7 +36904,23 @@ app_err_t bmp280_init(void)
 {
     app_err_t err;
     uint8_t buf[2];
-# 58 "../modules/bmp280.c"
+
+    uint8_t chip_id;
+
+
+    uint8_t reg_id = 0xD0;
+    err = i2c2_write_read(0xEC, &reg_id, 1, 0xED, &chip_id, 1);
+    if (err != APP_OK) {
+
+        return APP_EDEV;
+    }
+
+
+    if (chip_id != 0x58) {
+
+        return APP_EDEV;
+    }
+# 75 "../modules/bmp280.c"
     buf[0] = 0xF4;
     buf[1] = 0x25;
 

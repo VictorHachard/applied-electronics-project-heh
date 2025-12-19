@@ -1,80 +1,22 @@
 Version 4.0 HI-TECH Software Intermediate Code
 "38 ../modules/sht30.c
 [; ;../modules/sht30.c: 38: app_err_t sht30_init(void)
-[c E55 0 1 2 3 4 5 6 7 .. ]
-[n E55 . APP_OK APP_EBUS APP_EDEV APP_EPARAM APP_ENOENT APP_ENCONF APP_EIO APP_EFULL  ]
+[c E55 0 1 2 3 4 5 6 7 8 9 10 11 .. ]
+[n E55 . APP_OK APP_ERR APP_EPARAM APP_EBUS APP_EDEV APP_EIO APP_EFULL APP_ENOENT APP_ENCONF APP_ERR_PARAM APP_ENOTCONFIG APP_ENOTRUNNING  ]
+"21 ../modules/../drivers/i2c_bus.h
+[; ;../modules/../drivers/i2c_bus.h: 21: app_err_t i2c2_write_read(uint8_t addr8w, const uint8_t *w, uint8_t wn,
+[v _i2c2_write_read `(E55 ~T0 @X0 0 ef6`uc`*Cuc`uc`uc`*uc`uc ]
 "52 ../modules/../core/types.h
 [; ;../modules/../core/types.h: 52: typedef struct {
 [s S3 `us 1 `s 1 ]
 [n S3 . rh_x100 temp_c_x100 ]
-"43783 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 43783:     struct {
-[s S1895 :3 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S1895 . MODE MDR CSTR S RSEN EN ]
-"43791
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 43791:     struct {
-[s S1896 :1 `uc 1 :1 `uc 1 :1 `uc 1 :4 `uc 1 :1 `uc 1 ]
-[n S1896 . MODE0 MODE1 MODE2 . I2CEN ]
-"43782
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 43782: typedef union {
-[u S1894 `S1895 1 `S1896 1 ]
-[n S1894 . . . ]
-"43799
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 43799: extern volatile I2C2CON0bits_t I2C2CON0bits __attribute__((address(0x3D5D)));
-[v _I2C2CON0bits `VS1894 ~T0 @X0 0 e@15709 ]
-"43585
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 43585: extern volatile unsigned char I2C2CNT __attribute__((address(0x3D56)));
-[v _I2C2CNT `Vuc ~T0 @X0 0 e@15702 ]
-"43675
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 43675: extern volatile unsigned char I2C2ADB1 __attribute__((address(0x3D58)));
-[v _I2C2ADB1 `Vuc ~T0 @X0 0 e@15704 ]
-"43565
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 43565: extern volatile unsigned char I2C2TXB __attribute__((address(0x3D55)));
-[v _I2C2TXB `Vuc ~T0 @X0 0 e@15701 ]
-"44220
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 44220:     struct {
-[s S1913 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S1913 . SCIF RSCIF PCIF ADRIF WRIF . ACKTIF CNTIF ]
-"44230
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 44230:     struct {
-[s S1914 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S1914 . SC2IF RSC2IF PC2IF ADR2IF WR2IF . ACKT2IF CNT2IF ]
-"44219
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 44219: typedef union {
-[u S1912 `S1913 1 `S1914 1 ]
-[n S1912 . . . ]
-"44241
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 44241: extern volatile I2C2PIRbits_t I2C2PIRbits __attribute__((address(0x3D63)));
-[v _I2C2PIRbits `VS1912 ~T0 @X0 0 e@15715 ]
-"44173
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 44173:     struct {
-[s S1911 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S1911 . RXBF . CLRBF RXRE . TXBE . TXWE ]
-"44172
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 44172: typedef union {
-[u S1910 `S1911 1 ]
-[n S1910 . . ]
-"44184
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 44184: extern volatile I2C2STAT1bits_t I2C2STAT1bits __attribute__((address(0x3D62)));
-[v _I2C2STAT1bits `VS1910 ~T0 @X0 0 e@15714 ]
-[v F237 `(v ~T0 @X0 1 tf1`ul ]
+"18 ../modules/../drivers/i2c_bus.h
+[; ;../modules/../drivers/i2c_bus.h: 18: app_err_t i2c2_write(uint8_t addr8w, const uint8_t *buf, uint8_t n);
+[v _i2c2_write `(E55 ~T0 @X0 0 ef3`uc`*Cuc`uc ]
+[v F253 `(v ~T0 @X0 1 tf1`ul ]
 "20 C:\Program Files\Microchip\xc8\v3.10\pic\include/builtins.h
-[v __delay `JF237 ~T0 @X0 0 e ]
+[v __delay `JF253 ~T0 @X0 0 e ]
 [p i __delay ]
-"43860 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 43860:     struct {
-[s S1898 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S1898 . CSD TXU RXO . ACKT ACKSTAT ACKDT ACKCNT ]
-"43859
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 43859: typedef union {
-[u S1897 `S1898 1 ]
-[n S1897 . . ]
-"43871
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 43871: extern volatile I2C2CON1bits_t I2C2CON1bits __attribute__((address(0x3D5E)));
-[v _I2C2CON1bits `VS1897 ~T0 @X0 0 e@15710 ]
-"43545
-[; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 43545: extern volatile unsigned char I2C2RXB __attribute__((address(0x3D54)));
-[v _I2C2RXB `Vuc ~T0 @X0 0 e@15700 ]
 "272 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 272: __asm("CIOCON equ 03700h");
 [; <" CIOCON equ 03700h ;# ">
@@ -3189,281 +3131,192 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 [e :U _sht30_init ]
 [f ]
+"40
+[; ;../modules/sht30.c: 40:     app_err_t err;
+[v _err `E55 ~T0 @X0 1 a ]
+[v F22828 `uc ~T0 @X0 -> 2 `i s ]
+[i F22828
+:U ..
 "41
-[; ;../modules/sht30.c: 41:     return APP_OK;
+[; ;../modules/sht30.c: 41:     uint8_t status_cmd[2] = {0xF3, 0x2D};
+-> -> 243 `i `uc
+-> -> 45 `i `uc
+..
+]
+[v _status_cmd `uc ~T0 @X0 -> 2 `i a ]
+[e = _status_cmd F22828 ]
+"42
+[; ;../modules/sht30.c: 42:     uint8_t status_buf[3];
+[v _status_buf `uc ~T0 @X0 -> 3 `i a ]
+"46
+[; ;../modules/sht30.c: 46:     err = i2c2_write_read(0x88, status_cmd, 2,
+[e = _err ( _i2c2_write_read (4 , , , , , -> -> 136 `i `uc -> &U _status_cmd `*Cuc -> -> 2 `i `uc -> -> 137 `i `uc &U _status_buf -> -> 3 `i `uc ]
+"48
+[; ;../modules/sht30.c: 48:     if (err != APP_OK) {
+[e $ ! != -> _err `ui -> . `E55 0 `ui 3263  ]
+{
+"50
+[; ;../modules/sht30.c: 50:         return APP_EDEV;
+[e ) . `E55 4 ]
+[e $UE 3262  ]
+"51
+[; ;../modules/sht30.c: 51:     }
+}
+[e :U 3263 ]
+"54
+[; ;../modules/sht30.c: 54:     return APP_OK;
 [e ) . `E55 0 ]
 [e $UE 3262  ]
-"42
-[; ;../modules/sht30.c: 42: }
+"55
+[; ;../modules/sht30.c: 55: }
 [e :UE 3262 ]
 }
-"44
-[; ;../modules/sht30.c: 44: app_err_t sht30_read(sht30_data_t *data)
+"57
+[; ;../modules/sht30.c: 57: app_err_t sht30_read(sht30_data_t *data)
 [v _sht30_read `(E55 ~T0 @X0 1 ef1`*S3 ]
-"45
-[; ;../modules/sht30.c: 45: {
+"58
+[; ;../modules/sht30.c: 58: {
 {
 [e :U _sht30_read ]
-"44
-[; ;../modules/sht30.c: 44: app_err_t sht30_read(sht30_data_t *data)
+"57
+[; ;../modules/sht30.c: 57: app_err_t sht30_read(sht30_data_t *data)
 [v _data `*S3 ~T0 @X0 1 r1 ]
-"45
-[; ;../modules/sht30.c: 45: {
+"58
+[; ;../modules/sht30.c: 58: {
 [f ]
-"46
-[; ;../modules/sht30.c: 46:     if (data == 0) {
-[e $ ! == _data -> -> 0 `i `*S3 3264  ]
-{
-"47
-[; ;../modules/sht30.c: 47:         return APP_EPARAM;
-[e ) . `E55 3 ]
-[e $UE 3263  ]
-"48
-[; ;../modules/sht30.c: 48:     }
-}
-[e :U 3264 ]
-"50
-[; ;../modules/sht30.c: 50:     uint16_t raw_temperature = 0;
-[v _raw_temperature `us ~T0 @X0 1 a ]
-[e = _raw_temperature -> -> 0 `i `us ]
-"51
-[; ;../modules/sht30.c: 51:     uint16_t raw_humidity = 0;
-[v _raw_humidity `us ~T0 @X0 1 a ]
-[e = _raw_humidity -> -> 0 `i `us ]
-"53
-[; ;../modules/sht30.c: 53:     uint8_t b1, b2, b3;
-[v _b1 `uc ~T0 @X0 1 a ]
-[v _b2 `uc ~T0 @X0 1 a ]
-[v _b3 `uc ~T0 @X0 1 a ]
-"54
-[; ;../modules/sht30.c: 54:     uint8_t b4, b5, b6;
-[v _b4 `uc ~T0 @X0 1 a ]
-[v _b5 `uc ~T0 @X0 1 a ]
-[v _b6 `uc ~T0 @X0 1 a ]
 "59
-[; ;../modules/sht30.c: 59:     I2C2CON0bits.RSEN = 0;
-[e = . . _I2C2CON0bits 0 4 -> -> 0 `i `uc ]
+[; ;../modules/sht30.c: 59:     if (data == 0) {
+[e $ ! == _data -> -> 0 `i `*S3 3265  ]
+{
 "60
-[; ;../modules/sht30.c: 60:     I2C2CNT = 2;
-[e = _I2C2CNT -> -> 2 `i `uc ]
+[; ;../modules/sht30.c: 60:         return APP_EPARAM;
+[e ) . `E55 2 ]
+[e $UE 3264  ]
 "61
-[; ;../modules/sht30.c: 61:     I2C2ADB1 = 0x88;
-[e = _I2C2ADB1 -> -> 136 `i `uc ]
-"63
-[; ;../modules/sht30.c: 63:     I2C2TXB = 0x24;
-[e = _I2C2TXB -> -> 36 `i `uc ]
-"65
-[; ;../modules/sht30.c: 65:     I2C2CON0bits.S = 1;
-[e = . . _I2C2CON0bits 0 3 -> -> 1 `i `uc ]
-"66
-[; ;../modules/sht30.c: 66:     while (!I2C2PIRbits.SCIF);
-[e $U 3265  ]
-[e :U 3266 ]
+[; ;../modules/sht30.c: 61:     }
+}
 [e :U 3265 ]
-[e $ ! != -> . . _I2C2PIRbits 0 0 `i -> 0 `i 3266  ]
-[e :U 3267 ]
-"67
-[; ;../modules/sht30.c: 67:     I2C2PIRbits.SCIF = 0;
-[e = . . _I2C2PIRbits 0 0 -> -> 0 `i `uc ]
+"63
+[; ;../modules/sht30.c: 63:     app_err_t err;
+[v _err `E55 ~T0 @X0 1 a ]
+[v F22834 `uc ~T0 @X0 -> 2 `i s ]
+[i F22834
+:U ..
+"64
+[; ;../modules/sht30.c: 64:     uint8_t cmd[2] = {0x24, 0x00};
+-> -> 36 `i `uc
+-> -> 0 `i `uc
+..
+]
+[v _cmd `uc ~T0 @X0 -> 2 `i a ]
+[e = _cmd F22834 ]
+"65
+[; ;../modules/sht30.c: 65:     uint8_t rbuf[6];
+[v _rbuf `uc ~T0 @X0 -> 6 `i a ]
+"68
+[; ;../modules/sht30.c: 68:     err = i2c2_write(0x88, cmd, 2);
+[e = _err ( _i2c2_write (3 , , -> -> 136 `i `uc -> &U _cmd `*Cuc -> -> 2 `i `uc ]
 "69
-[; ;../modules/sht30.c: 69:     while (!I2C2STAT1bits.TXBE);
-[e $U 3268  ]
-[e :U 3269 ]
-[e :U 3268 ]
-[e $ ! != -> . . _I2C2STAT1bits 0 5 `i -> 0 `i 3269  ]
-[e :U 3270 ]
+[; ;../modules/sht30.c: 69:     if (err != APP_OK) {
+[e $ ! != -> _err `ui -> . `E55 0 `ui 3266  ]
+{
 "70
-[; ;../modules/sht30.c: 70:     I2C2TXB = 0x00;
-[e = _I2C2TXB -> -> 0 `i `uc ]
-"73
-[; ;../modules/sht30.c: 73:     while (!I2C2PIRbits.PCIF);
-[e $U 3271  ]
-[e :U 3272 ]
-[e :U 3271 ]
-[e $ ! != -> . . _I2C2PIRbits 0 2 `i -> 0 `i 3272  ]
-[e :U 3273 ]
+[; ;../modules/sht30.c: 70:         return err;
+[e ) _err ]
+[e $UE 3264  ]
+"71
+[; ;../modules/sht30.c: 71:     }
+}
+[e :U 3266 ]
 "74
-[; ;../modules/sht30.c: 74:     I2C2PIRbits.PCIF = 0;
-[e = . . _I2C2PIRbits 0 2 -> -> 0 `i `uc ]
-"77
-[; ;../modules/sht30.c: 77:     _delay((unsigned long)((15)*(64000000UL/4000.0)));
+[; ;../modules/sht30.c: 74:     _delay((unsigned long)((15)*(64000000UL/4000.0)));
 [e ( __delay (1 -> * -> -> 15 `i `d / -> -> 64000000 `ul `d .4000.0 `ul ]
+"78
+[; ;../modules/sht30.c: 78:     err = i2c2_write_read(0x88, ((void*)0), 0,
+[e = _err ( _i2c2_write_read (4 , , , , , -> -> 136 `i `uc -> -> -> 0 `i `*v `*Cuc -> -> 0 `i `uc -> -> 137 `i `uc &U _rbuf -> -> 6 `i `uc ]
+"80
+[; ;../modules/sht30.c: 80:     if (err != APP_OK) {
+[e $ ! != -> _err `ui -> . `E55 0 `ui 3267  ]
+{
+"81
+[; ;../modules/sht30.c: 81:         return err;
+[e ) _err ]
+[e $UE 3264  ]
 "82
-[; ;../modules/sht30.c: 82:     I2C2CNT = 6;
-[e = _I2C2CNT -> -> 6 `i `uc ]
-"83
-[; ;../modules/sht30.c: 83:     I2C2ADB1 = 0x89;
-[e = _I2C2ADB1 -> -> 137 `i `uc ]
+[; ;../modules/sht30.c: 82:     }
+}
+[e :U 3267 ]
+[v F22837 `uc ~T0 @X0 -> 2 `i s ]
+[i F22837
+:U ..
 "85
-[; ;../modules/sht30.c: 85:     I2C2CON0bits.S = 1;
-[e = . . _I2C2CON0bits 0 3 -> -> 1 `i `uc ]
+[; ;../modules/sht30.c: 85:     uint8_t t_data[2] = {rbuf[0], rbuf[1]};
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+..
+]
+[v _t_data `uc ~T0 @X0 -> 2 `i a ]
+[e = _t_data F22837 ]
+[e ; = *U + &U _t_data * -> -> -> 0 `i `ui `ux -> -> # *U &U _t_data `ui `ux *U + &U _rbuf * -> -> -> 0 `i `ui `ux -> -> # *U &U _rbuf `ui `ux = *U + &U _t_data * -> -> -> 1 `i `ui `ux -> -> # *U &U _t_data `ui `ux *U + &U _rbuf * -> -> -> 1 `i `ui `ux -> -> # *U &U _rbuf `ui `ux ]
+[v F22839 `uc ~T0 @X0 -> 2 `i s ]
+[i F22839
+:U ..
 "86
-[; ;../modules/sht30.c: 86:     while (!I2C2PIRbits.SCIF);
-[e $U 3274  ]
-[e :U 3275 ]
-[e :U 3274 ]
-[e $ ! != -> . . _I2C2PIRbits 0 0 `i -> 0 `i 3275  ]
-[e :U 3276 ]
-"87
-[; ;../modules/sht30.c: 87:     I2C2PIRbits.SCIF = 0;
-[e = . . _I2C2PIRbits 0 0 -> -> 0 `i `uc ]
+[; ;../modules/sht30.c: 86:     uint8_t rh_data[2] = {rbuf[3], rbuf[4]};
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+..
+]
+[v _rh_data `uc ~T0 @X0 -> 2 `i a ]
+[e = _rh_data F22839 ]
+[e ; = *U + &U _rh_data * -> -> -> 0 `i `ui `ux -> -> # *U &U _rh_data `ui `ux *U + &U _rbuf * -> -> -> 3 `i `ui `ux -> -> # *U &U _rbuf `ui `ux = *U + &U _rh_data * -> -> -> 1 `i `ui `ux -> -> # *U &U _rh_data `ui `ux *U + &U _rbuf * -> -> -> 4 `i `ui `ux -> -> # *U &U _rbuf `ui `ux ]
+"88
+[; ;../modules/sht30.c: 88:     if (sht30_crc8(t_data, 2) != rbuf[2]) {
+[e $ ! != -> ( _sht30_crc8 (2 , -> &U _t_data `*Cuc -> -> 2 `i `uc `i -> *U + &U _rbuf * -> -> -> 2 `i `ui `ux -> -> # *U &U _rbuf `ui `ux `i 3268  ]
+{
+"89
+[; ;../modules/sht30.c: 89:         return APP_EIO;
+[e ) . `E55 5 ]
+[e $UE 3264  ]
 "90
-[; ;../modules/sht30.c: 90:     I2C2CON1bits.ACKCNT = 0;
-[e = . . _I2C2CON1bits 0 7 -> -> 0 `i `uc ]
+[; ;../modules/sht30.c: 90:     }
+}
+[e :U 3268 ]
+"91
+[; ;../modules/sht30.c: 91:     if (sht30_crc8(rh_data, 2) != rbuf[5]) {
+[e $ ! != -> ( _sht30_crc8 (2 , -> &U _rh_data `*Cuc -> -> 2 `i `uc `i -> *U + &U _rbuf * -> -> -> 5 `i `ui `ux -> -> # *U &U _rbuf `ui `ux `i 3269  ]
+{
 "92
-[; ;../modules/sht30.c: 92:     while (!I2C2STAT1bits.RXBF);
-[e $U 3277  ]
-[e :U 3278 ]
-[e :U 3277 ]
-[e $ ! != -> . . _I2C2STAT1bits 0 0 `i -> 0 `i 3278  ]
-[e :U 3279 ]
+[; ;../modules/sht30.c: 92:         return APP_EIO;
+[e ) . `E55 5 ]
+[e $UE 3264  ]
 "93
-[; ;../modules/sht30.c: 93:     b1 = I2C2RXB;
-[e = _b1 _I2C2RXB ]
-"95
-[; ;../modules/sht30.c: 95:     while (!I2C2STAT1bits.RXBF);
-[e $U 3280  ]
-[e :U 3281 ]
-[e :U 3280 ]
-[e $ ! != -> . . _I2C2STAT1bits 0 0 `i -> 0 `i 3281  ]
-[e :U 3282 ]
+[; ;../modules/sht30.c: 93:     }
+}
+[e :U 3269 ]
 "96
-[; ;../modules/sht30.c: 96:     b2 = I2C2RXB;
-[e = _b2 _I2C2RXB ]
-"98
-[; ;../modules/sht30.c: 98:     while (!I2C2STAT1bits.RXBF);
-[e $U 3283  ]
-[e :U 3284 ]
-[e :U 3283 ]
-[e $ ! != -> . . _I2C2STAT1bits 0 0 `i -> 0 `i 3284  ]
-[e :U 3285 ]
-"99
-[; ;../modules/sht30.c: 99:     b3 = I2C2RXB;
-[e = _b3 _I2C2RXB ]
+[; ;../modules/sht30.c: 96:     uint16_t raw_temperature = ((uint16_t)rbuf[0] << 8) | rbuf[1];
+[v _raw_temperature `us ~T0 @X0 1 a ]
+[e = _raw_temperature -> | << -> -> *U + &U _rbuf * -> -> -> 0 `i `ui `ux -> -> # *U &U _rbuf `ui `ux `us `ui -> 8 `i -> *U + &U _rbuf * -> -> -> 1 `i `ui `ux -> -> # *U &U _rbuf `ui `ux `ui `us ]
+"97
+[; ;../modules/sht30.c: 97:     uint16_t raw_humidity = ((uint16_t)rbuf[3] << 8) | rbuf[4];
+[v _raw_humidity `us ~T0 @X0 1 a ]
+[e = _raw_humidity -> | << -> -> *U + &U _rbuf * -> -> -> 3 `i `ui `ux -> -> # *U &U _rbuf `ui `ux `us `ui -> 8 `i -> *U + &U _rbuf * -> -> -> 4 `i `ui `ux -> -> # *U &U _rbuf `ui `ux `ui `us ]
 "101
-[; ;../modules/sht30.c: 101:     while (!I2C2STAT1bits.RXBF);
-[e $U 3286  ]
-[e :U 3287 ]
-[e :U 3286 ]
-[e $ ! != -> . . _I2C2STAT1bits 0 0 `i -> 0 `i 3287  ]
-[e :U 3288 ]
-"102
-[; ;../modules/sht30.c: 102:     b4 = I2C2RXB;
-[e = _b4 _I2C2RXB ]
-"104
-[; ;../modules/sht30.c: 104:     while (!I2C2STAT1bits.RXBF);
-[e $U 3289  ]
-[e :U 3290 ]
-[e :U 3289 ]
-[e $ ! != -> . . _I2C2STAT1bits 0 0 `i -> 0 `i 3290  ]
-[e :U 3291 ]
-"105
-[; ;../modules/sht30.c: 105:     b5 = I2C2RXB;
-[e = _b5 _I2C2RXB ]
-"107
-[; ;../modules/sht30.c: 107:     I2C2CON1bits.ACKCNT = 1;
-[e = . . _I2C2CON1bits 0 7 -> -> 1 `i `uc ]
-"108
-[; ;../modules/sht30.c: 108:     while (!I2C2STAT1bits.RXBF);
-[e $U 3292  ]
-[e :U 3293 ]
-[e :U 3292 ]
-[e $ ! != -> . . _I2C2STAT1bits 0 0 `i -> 0 `i 3293  ]
-[e :U 3294 ]
-"109
-[; ;../modules/sht30.c: 109:     b6 = I2C2RXB;
-[e = _b6 _I2C2RXB ]
-"111
-[; ;../modules/sht30.c: 111:     while (!I2C2PIRbits.PCIF);
-[e $U 3295  ]
-[e :U 3296 ]
-[e :U 3295 ]
-[e $ ! != -> . . _I2C2PIRbits 0 2 `i -> 0 `i 3296  ]
-[e :U 3297 ]
-"112
-[; ;../modules/sht30.c: 112:     I2C2PIRbits.PCIF = 0;
-[e = . . _I2C2PIRbits 0 2 -> -> 0 `i `uc ]
-"118
-[; ;../modules/sht30.c: 118:     {
-{
-[v F22818 `uc ~T0 @X0 -> 2 `i s ]
-[i F22818
-:U ..
-"119
-[; ;../modules/sht30.c: 119:         uint8_t t2[2] = { b1, b2 };
--> -> 0 `i `uc
--> -> 0 `i `uc
-..
-]
-[v _t2 `uc ~T0 @X0 -> 2 `i a ]
-[e = _t2 F22818 ]
-[e ; = *U + &U _t2 * -> -> -> 0 `i `ui `ux -> -> # *U &U _t2 `ui `ux _b1 = *U + &U _t2 * -> -> -> 1 `i `ui `ux -> -> # *U &U _t2 `ui `ux _b2 ]
-[v F22820 `uc ~T0 @X0 -> 2 `i s ]
-[i F22820
-:U ..
-"120
-[; ;../modules/sht30.c: 120:         uint8_t rh2[2] = { b4, b5 };
--> -> 0 `i `uc
--> -> 0 `i `uc
-..
-]
-[v _rh2 `uc ~T0 @X0 -> 2 `i a ]
-[e = _rh2 F22820 ]
-[e ; = *U + &U _rh2 * -> -> -> 0 `i `ui `ux -> -> # *U &U _rh2 `ui `ux _b4 = *U + &U _rh2 * -> -> -> 1 `i `ui `ux -> -> # *U &U _rh2 `ui `ux _b5 ]
-"122
-[; ;../modules/sht30.c: 122:         if (sht30_crc8(t2, 2) != b3) {
-[e $ ! != -> ( _sht30_crc8 (2 , -> &U _t2 `*Cuc -> -> 2 `i `uc `i -> _b3 `i 3298  ]
-{
-"123
-[; ;../modules/sht30.c: 123:             return APP_EIO;
-[e ) . `E55 6 ]
-[e $UE 3263  ]
-"124
-[; ;../modules/sht30.c: 124:         }
-}
-[e :U 3298 ]
-"125
-[; ;../modules/sht30.c: 125:         if (sht30_crc8(rh2, 2) != b6) {
-[e $ ! != -> ( _sht30_crc8 (2 , -> &U _rh2 `*Cuc -> -> 2 `i `uc `i -> _b6 `i 3299  ]
-{
-"126
-[; ;../modules/sht30.c: 126:             return APP_EIO;
-[e ) . `E55 6 ]
-[e $UE 3263  ]
-"127
-[; ;../modules/sht30.c: 127:         }
-}
-[e :U 3299 ]
-"128
-[; ;../modules/sht30.c: 128:     }
-}
-"137
-[; ;../modules/sht30.c: 137:     raw_temperature = ((uint16_t)b1 << 8) | b2;
-[e = _raw_temperature -> | << -> -> _b1 `us `ui -> 8 `i -> _b2 `ui `us ]
-"138
-[; ;../modules/sht30.c: 138:     raw_humidity = ((uint16_t)b4 << 8) | b5;
-[e = _raw_humidity -> | << -> -> _b4 `us `ui -> 8 `i -> _b5 `ui `us ]
-"140
-[; ;../modules/sht30.c: 140:     {
-{
-"141
-[; ;../modules/sht30.c: 141:         int32_t temp_c_x100 =
+[; ;../modules/sht30.c: 101:     int32_t temp_c_x100 = -4500L + ((17500L * (int32_t)raw_temperature) / 65535L);
 [v _temp_c_x100 `l ~T0 @X0 1 a ]
 [e = _temp_c_x100 + -U -> 4500 `l / * -> 17500 `l -> _raw_temperature `l -> 65535 `l ]
-"143
-[; ;../modules/sht30.c: 143:         data->temp_c_x100 = (int16_t)temp_c_x100;
+"102
+[; ;../modules/sht30.c: 102:     data->temp_c_x100 = (int16_t)temp_c_x100;
 [e = . *U _data 1 -> _temp_c_x100 `s ]
-"144
-[; ;../modules/sht30.c: 144:     }
-}
-"146
-[; ;../modules/sht30.c: 146:     data->rh_x100 = (uint16_t)((10000UL * (uint32_t)raw_humidity) / 65535UL);
+"106
+[; ;../modules/sht30.c: 106:     data->rh_x100 = (uint16_t)((10000UL * (uint32_t)raw_humidity) / 65535UL);
 [e = . *U _data 0 -> / * -> 10000 `ul -> _raw_humidity `ul -> 65535 `ul `us ]
-"148
-[; ;../modules/sht30.c: 148:     return APP_OK;
+"108
+[; ;../modules/sht30.c: 108:     return APP_OK;
 [e ) . `E55 0 ]
-[e $UE 3263  ]
-"149
-[; ;../modules/sht30.c: 149: }
-[e :UE 3263 ]
+[e $UE 3264  ]
+"109
+[; ;../modules/sht30.c: 109: }
+[e :UE 3264 ]
 }

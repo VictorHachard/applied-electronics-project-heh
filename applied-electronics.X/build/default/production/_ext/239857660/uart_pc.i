@@ -154,14 +154,18 @@ typedef struct {
 
 
 typedef enum {
-  APP_OK = 0,
-  APP_EBUS,
-  APP_EDEV,
-  APP_EPARAM,
-  APP_ENOENT,
-  APP_ENCONF,
-  APP_EIO,
-  APP_EFULL
+    APP_OK = 0,
+    APP_ERR = 1,
+    APP_EPARAM = 2,
+    APP_EBUS = 3,
+    APP_EDEV = 4,
+    APP_EIO = 5,
+    APP_EFULL = 6,
+    APP_ENOENT = 7,
+    APP_ENCONF = 8,
+    APP_ERR_PARAM = 9,
+    APP_ENOTCONFIG = 10,
+    APP_ENOTRUNNING = 11
 } app_err_t;
 # 11 "../drivers/uart_pc.h" 2
 

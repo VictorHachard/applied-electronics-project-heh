@@ -1,19 +1,366 @@
 Version 4.0 HI-TECH Software Intermediate Code
-"8 ../modules/bluetooth_proto.c
-[; ;../modules/bluetooth_proto.c: 8: app_err_t bluetooth_init(void) {
+"16 ../modules/../drivers/uart_bt.h
+[; ;../modules/../drivers/uart_bt.h: 16: void uart_bt_putc(char c);
+[v _uart_bt_putc `(v ~T0 @X0 0 ef1`uc ]
+"16 ../modules/../core/types.h
+[; ;../modules/../core/types.h: 16: typedef struct {
+[s S1 `uc 1 `uc 1 `uc 1 `uc 1 ]
+[n S1 . hour min day month ]
+"15 ../modules/datalogger.h
+[; ;../modules/datalogger.h: 15: typedef struct {
+[s S5 `uc 1 `uc 1 `S1 1 `a 1 ]
+[n S5 . sample_period_min data_count start_time running ]
+"68 ../modules/../core/types.h
+[; ;../modules/../core/types.h: 68: typedef struct {
+[s S4 `s 1 `us 1 `l 1 ]
+[n S4 . t_c_x100 rh_x100 p_pa ]
+"56 ../modules/bluetooth_proto.c
+[; ;../modules/bluetooth_proto.c: 56:             if (dl_get_config(&cfg) == APP_OK) {
 [c E55 0 1 2 3 4 5 6 7 8 9 10 11 .. ]
 [n E55 . APP_OK APP_ERR APP_EPARAM APP_EBUS APP_EDEV APP_EIO APP_EFULL APP_ENOENT APP_ENCONF APP_ERR_PARAM APP_ENOTCONFIG APP_ENOTRUNNING  ]
-"8 ../modules/bluetooth_proto.c
-[; ;../modules/bluetooth_proto.c: 8: app_err_t bluetooth_init(void) {
+"30 ../modules/datalogger.h
+[; ;../modules/datalogger.h: 30: app_err_t dl_get_config(dl_cfg_t *cfg);
+[v _dl_get_config `(E55 ~T0 @X0 0 ef1`*S5 ]
+"19 ../modules/../drivers/uart_bt.h
+[; ;../modules/../drivers/uart_bt.h: 19: void uart_bt_puts(const char* s);
+[v _uart_bt_puts `(v ~T0 @X0 0 ef1`*Cuc ]
+"81 ../modules/datalogger.h
+[; ;../modules/datalogger.h: 81: app_err_t dl_read(uint16_t index, sensor_data_t *rec);
+[v _dl_read `(E55 ~T0 @X0 0 ef2`us`*S4 ]
+"15 ../modules/bluetooth_proto.c
+[; ;../modules/bluetooth_proto.c: 15: static void puti_bt(int32_t val) {
+[v _puti_bt `(v ~T0 @X0 1 sf1`l ]
+{
+[e :U _puti_bt ]
+[v _val `l ~T0 @X0 1 r1 ]
+[f ]
+"16
+[; ;../modules/bluetooth_proto.c: 16:     char buf[12];
+[v _buf `uc ~T0 @X0 -> 12 `i a ]
+"17
+[; ;../modules/bluetooth_proto.c: 17:     uint8_t i = 0, neg = 0;
+[v _i `uc ~T0 @X0 1 a ]
+[e = _i -> -> 0 `i `uc ]
+[v _neg `uc ~T0 @X0 1 a ]
+[e = _neg -> -> 0 `i `uc ]
+"19
+[; ;../modules/bluetooth_proto.c: 19:     if (val < 0) { neg = 1; val = -val; }
+[e $ ! < _val -> -> 0 `i `l 8  ]
+{
+[e = _neg -> -> 1 `i `uc ]
+[e = _val -U _val ]
+}
+[e :U 8 ]
+"20
+[; ;../modules/bluetooth_proto.c: 20:     if (val == 0) { uart_bt_putc('0'); return; }
+[e $ ! == _val -> -> 0 `i `l 9  ]
+{
+[e ( _uart_bt_putc (1 -> -> 48 `ui `uc ]
+[e $UE 7  ]
+}
+[e :U 9 ]
+"22
+[; ;../modules/bluetooth_proto.c: 22:     while (val > 0) {
+[e $U 10  ]
+[e :U 11 ]
+{
+"23
+[; ;../modules/bluetooth_proto.c: 23:         buf[i++] = '0' + (val % 10);
+[e = *U + &U _buf * -> ++ _i -> -> 1 `i `uc `ux -> -> # *U &U _buf `ui `ux -> + -> -> 48 `ui `l % _val -> -> 10 `i `l `uc ]
+"24
+[; ;../modules/bluetooth_proto.c: 24:         val /= 10;
+[e =/ _val -> -> 10 `i `l ]
+"25
+[; ;../modules/bluetooth_proto.c: 25:     }
+}
+[e :U 10 ]
+"22
+[; ;../modules/bluetooth_proto.c: 22:     while (val > 0) {
+[e $ > _val -> -> 0 `i `l 11  ]
+[e :U 12 ]
+"26
+[; ;../modules/bluetooth_proto.c: 26:     if (neg) uart_bt_putc('-');
+[e $ ! != -> _neg `i -> 0 `i 13  ]
+[e ( _uart_bt_putc (1 -> -> 45 `ui `uc ]
+[e :U 13 ]
+"27
+[; ;../modules/bluetooth_proto.c: 27:     while (i > 0) uart_bt_putc(buf[--i]);
+[e $U 14  ]
+[e :U 15 ]
+[e ( _uart_bt_putc (1 *U + &U _buf * -> =- _i -> -> 1 `i `uc `ux -> -> # *U &U _buf `ui `ux ]
+[e :U 14 ]
+[e $ > -> _i `i -> 0 `i 15  ]
+[e :U 16 ]
+"28
+[; ;../modules/bluetooth_proto.c: 28: }
+[e :UE 7 ]
+}
+"31
+[; ;../modules/bluetooth_proto.c: 31: static void put2d_bt(uint8_t val) {
+[v _put2d_bt `(v ~T0 @X0 1 sf1`uc ]
+{
+[e :U _put2d_bt ]
+[v _val `uc ~T0 @X0 1 r1 ]
+[f ]
+"32
+[; ;../modules/bluetooth_proto.c: 32:     uart_bt_putc('0' + val / 10);
+[e ( _uart_bt_putc (1 -> + -> 48 `ui -> / -> _val `i -> 10 `i `ui `uc ]
+"33
+[; ;../modules/bluetooth_proto.c: 33:     uart_bt_putc('0' + val % 10);
+[e ( _uart_bt_putc (1 -> + -> 48 `ui -> % -> _val `i -> 10 `i `ui `uc ]
+"34
+[; ;../modules/bluetooth_proto.c: 34: }
+[e :UE 17 ]
+}
+"40
+[; ;../modules/bluetooth_proto.c: 40: static uint8_t g_idx = 0;
+[v _g_idx `uc ~T0 @X0 1 s ]
+[i _g_idx
+-> -> 0 `i `uc
+]
+"46
+[; ;../modules/bluetooth_proto.c: 46: void bluetooth_handle_rx(char cmd) {
+[v _bluetooth_handle_rx `(v ~T0 @X0 1 ef1`uc ]
+{
+[e :U _bluetooth_handle_rx ]
+[v _cmd `uc ~T0 @X0 1 r1 ]
+[f ]
+"47
+[; ;../modules/bluetooth_proto.c: 47:     dl_cfg_t cfg;
+[v _cfg `S5 ~T0 @X0 1 a ]
+"48
+[; ;../modules/bluetooth_proto.c: 48:     sensor_data_t data;
+[v _data `S4 ~T0 @X0 1 a ]
+"50
+[; ;../modules/bluetooth_proto.c: 50:     switch (cmd) {
+[e $U 20  ]
+{
+"54
+[; ;../modules/bluetooth_proto.c: 54:         case 'C':
+[e :U 21 ]
+"55
+[; ;../modules/bluetooth_proto.c: 55:         case 'c':
+[e :U 22 ]
+"56
+[; ;../modules/bluetooth_proto.c: 56:             if (dl_get_config(&cfg) == APP_OK) {
+[e $ ! == -> ( _dl_get_config (1 &U _cfg `ui -> . `E55 0 `ui 23  ]
+{
+"57
+[; ;../modules/bluetooth_proto.c: 57:                 put2d_bt(cfg.start_time.hour);
+[e ( _put2d_bt (1 . . _cfg 2 0 ]
+"58
+[; ;../modules/bluetooth_proto.c: 58:                 put2d_bt(cfg.start_time.min);
+[e ( _put2d_bt (1 . . _cfg 2 1 ]
+"59
+[; ;../modules/bluetooth_proto.c: 59:                 uart_bt_putc(';');
+[e ( _uart_bt_putc (1 -> -> 59 `ui `uc ]
+"60
+[; ;../modules/bluetooth_proto.c: 60:                 put2d_bt(cfg.start_time.day);
+[e ( _put2d_bt (1 . . _cfg 2 2 ]
+"61
+[; ;../modules/bluetooth_proto.c: 61:                 put2d_bt(cfg.start_time.month);
+[e ( _put2d_bt (1 . . _cfg 2 3 ]
+"62
+[; ;../modules/bluetooth_proto.c: 62:                 uart_bt_putc(';');
+[e ( _uart_bt_putc (1 -> -> 59 `ui `uc ]
+"63
+[; ;../modules/bluetooth_proto.c: 63:                 puti_bt(cfg.sample_period_min);
+[e ( _puti_bt (1 -> . _cfg 0 `l ]
+"64
+[; ;../modules/bluetooth_proto.c: 64:                 uart_bt_puts("\r\n");
+[e ( _uart_bt_puts (1 :s 1C ]
+"65
+[; ;../modules/bluetooth_proto.c: 65:             } else {
+}
+[e $U 24  ]
+[e :U 23 ]
+{
+"66
+[; ;../modules/bluetooth_proto.c: 66:                 uart_bt_puts("ERR\r\n");
+[e ( _uart_bt_puts (1 :s 2C ]
+"67
+[; ;../modules/bluetooth_proto.c: 67:             }
+}
+[e :U 24 ]
+"68
+[; ;../modules/bluetooth_proto.c: 68:             break;
+[e $U 19  ]
+"72
+[; ;../modules/bluetooth_proto.c: 72:         case 'N':
+[e :U 25 ]
+"73
+[; ;../modules/bluetooth_proto.c: 73:         case 'n':
+[e :U 26 ]
+"74
+[; ;../modules/bluetooth_proto.c: 74:             if (dl_get_config(&cfg) == APP_OK) {
+[e $ ! == -> ( _dl_get_config (1 &U _cfg `ui -> . `E55 0 `ui 27  ]
+{
+"75
+[; ;../modules/bluetooth_proto.c: 75:                 puti_bt(cfg.data_count);
+[e ( _puti_bt (1 -> . _cfg 1 `l ]
+"76
+[; ;../modules/bluetooth_proto.c: 76:                 uart_bt_puts("\r\n");
+[e ( _uart_bt_puts (1 :s 3C ]
+"77
+[; ;../modules/bluetooth_proto.c: 77:             } else {
+}
+[e $U 28  ]
+[e :U 27 ]
+{
+"78
+[; ;../modules/bluetooth_proto.c: 78:                 uart_bt_puts("0\r\n");
+[e ( _uart_bt_puts (1 :s 4C ]
+"79
+[; ;../modules/bluetooth_proto.c: 79:             }
+}
+[e :U 28 ]
+"80
+[; ;../modules/bluetooth_proto.c: 80:             break;
+[e $U 19  ]
+"84
+[; ;../modules/bluetooth_proto.c: 84:         case 'R':
+[e :U 29 ]
+"85
+[; ;../modules/bluetooth_proto.c: 85:         case 'r':
+[e :U 30 ]
+"86
+[; ;../modules/bluetooth_proto.c: 86:             g_idx = 0;
+[e = _g_idx -> -> 0 `i `uc ]
+"87
+[; ;../modules/bluetooth_proto.c: 87:             uart_bt_puts("OK\r\n");
+[e ( _uart_bt_puts (1 :s 5C ]
+"88
+[; ;../modules/bluetooth_proto.c: 88:             break;
+[e $U 19  ]
+"92
+[; ;../modules/bluetooth_proto.c: 92:         case 'A':
+[e :U 31 ]
+"93
+[; ;../modules/bluetooth_proto.c: 93:         case 'a':
+[e :U 32 ]
+"94
+[; ;../modules/bluetooth_proto.c: 94:             if (dl_get_config(&cfg) != APP_OK || cfg.data_count == 0) {
+[e $ ! || != -> ( _dl_get_config (1 &U _cfg `ui -> . `E55 0 `ui == -> . _cfg 1 `i -> 0 `i 33  ]
+{
+"95
+[; ;../modules/bluetooth_proto.c: 95:                 uart_bt_puts("ERR\r\n");
+[e ( _uart_bt_puts (1 :s 6C ]
+"96
+[; ;../modules/bluetooth_proto.c: 96:                 break;
+[e $U 19  ]
+"97
+[; ;../modules/bluetooth_proto.c: 97:             }
+}
+[e :U 33 ]
+"98
+[; ;../modules/bluetooth_proto.c: 98:             if (g_idx >= cfg.data_count) {
+[e $ ! >= -> _g_idx `i -> . _cfg 1 `i 34  ]
+{
+"99
+[; ;../modules/bluetooth_proto.c: 99:                 g_idx = 0;
+[e = _g_idx -> -> 0 `i `uc ]
+"100
+[; ;../modules/bluetooth_proto.c: 100:             }
+}
+[e :U 34 ]
+"101
+[; ;../modules/bluetooth_proto.c: 101:             if (dl_read(g_idx, &data) == APP_OK) {
+[e $ ! == -> ( _dl_read (2 , -> _g_idx `us &U _data `ui -> . `E55 0 `ui 35  ]
+{
+"102
+[; ;../modules/bluetooth_proto.c: 102:                 puti_bt(g_idx);
+[e ( _puti_bt (1 -> _g_idx `l ]
+"103
+[; ;../modules/bluetooth_proto.c: 103:                 uart_bt_putc(';');
+[e ( _uart_bt_putc (1 -> -> 59 `ui `uc ]
+"104
+[; ;../modules/bluetooth_proto.c: 104:                 puti_bt(data.t_c_x100);
+[e ( _puti_bt (1 -> . _data 0 `l ]
+"105
+[; ;../modules/bluetooth_proto.c: 105:                 uart_bt_putc(';');
+[e ( _uart_bt_putc (1 -> -> 59 `ui `uc ]
+"106
+[; ;../modules/bluetooth_proto.c: 106:                 puti_bt(data.rh_x100);
+[e ( _puti_bt (1 -> . _data 1 `l ]
+"107
+[; ;../modules/bluetooth_proto.c: 107:                 uart_bt_putc(';');
+[e ( _uart_bt_putc (1 -> -> 59 `ui `uc ]
+"108
+[; ;../modules/bluetooth_proto.c: 108:                 puti_bt(data.p_pa);
+[e ( _puti_bt (1 . _data 2 ]
+"109
+[; ;../modules/bluetooth_proto.c: 109:                 uart_bt_puts("\r\n");
+[e ( _uart_bt_puts (1 :s 7C ]
+"110
+[; ;../modules/bluetooth_proto.c: 110:                 g_idx++;
+[e ++ _g_idx -> -> 1 `i `uc ]
+"111
+[; ;../modules/bluetooth_proto.c: 111:             } else {
+}
+[e $U 36  ]
+[e :U 35 ]
+{
+"112
+[; ;../modules/bluetooth_proto.c: 112:                 uart_bt_puts("ERR\r\n");
+[e ( _uart_bt_puts (1 :s 8C ]
+"113
+[; ;../modules/bluetooth_proto.c: 113:             }
+}
+[e :U 36 ]
+"114
+[; ;../modules/bluetooth_proto.c: 114:             break;
+[e $U 19  ]
+"117
+[; ;../modules/bluetooth_proto.c: 117:         default:
+[e :U 37 ]
+"118
+[; ;../modules/bluetooth_proto.c: 118:             uart_bt_puts("ERR\r\n");
+[e ( _uart_bt_puts (1 :s 9C ]
+"119
+[; ;../modules/bluetooth_proto.c: 119:             break;
+[e $U 19  ]
+"120
+[; ;../modules/bluetooth_proto.c: 120:     }
+}
+[e $U 19  ]
+[e :U 20 ]
+[e [\ _cmd , $ -> -> 67 `ui `i 21
+ , $ -> -> 99 `ui `i 22
+ , $ -> -> 78 `ui `i 25
+ , $ -> -> 110 `ui `i 26
+ , $ -> -> 82 `ui `i 29
+ , $ -> -> 114 `ui `i 30
+ , $ -> -> 65 `ui `i 31
+ , $ -> -> 97 `ui `i 32
+ 37 ]
+[e :U 19 ]
+"121
+[; ;../modules/bluetooth_proto.c: 121: }
+[e :UE 18 ]
+}
+"127
+[; ;../modules/bluetooth_proto.c: 127: app_err_t bluetooth_init(void) {
 [v _bluetooth_init `(E55 ~T0 @X0 1 ef ]
 {
 [e :U _bluetooth_init ]
 [f ]
-"9
-[; ;../modules/bluetooth_proto.c: 9:     return APP_OK;
+"128
+[; ;../modules/bluetooth_proto.c: 128:     g_idx = 0;
+[e = _g_idx -> -> 0 `i `uc ]
+"129
+[; ;../modules/bluetooth_proto.c: 129:     return APP_OK;
 [e ) . `E55 0 ]
-[e $UE 5  ]
-"10
-[; ;../modules/bluetooth_proto.c: 10: }
-[e :UE 5 ]
+[e $UE 38  ]
+"130
+[; ;../modules/bluetooth_proto.c: 130: }
+[e :UE 38 ]
 }
+[a 2C 69 82 82 13 10 0 ]
+[a 6C 69 82 82 13 10 0 ]
+[a 8C 69 82 82 13 10 0 ]
+[a 9C 69 82 82 13 10 0 ]
+[a 5C 79 75 13 10 0 ]
+[a 4C 48 13 10 0 ]
+[a 1C 13 10 0 ]
+[a 3C 13 10 0 ]
+[a 7C 13 10 0 ]

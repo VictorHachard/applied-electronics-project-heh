@@ -51,17 +51,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=../app/app_main.c ../app/app_menu.c ../core/board.c ../core/isr.c ../drivers/i2c_bus.c ../drivers/spi_bus.c ../drivers/uart_bt.c ../drivers/uart_pc.c ../drivers/lcd.c ../modules/bluetooth_proto.c ../modules/bmp280.c ../modules/datalogger.c ../modules/eeprom_m93c66.c ../modules/rtc_ds1307.c ../modules/sht30.c ../main.c ../app/buttons.c ../app/menu.c
+SOURCEFILES_QUOTED_IF_SPACED=../app/app_main.c ../app/app_menu.c ../app/buttons.c ../app/menu.c ../core/board.c ../core/isr.c ../drivers/i2c_bus.c ../drivers/spi_bus.c ../drivers/uart_bt.c ../drivers/uart_pc.c ../drivers/lcd.c ../modules/bluetooth_proto.c ../modules/bmp280.c ../modules/datalogger.c ../modules/eeprom_m93c66.c ../modules/rtc_ds1307.c ../modules/sht30.c ../main.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/_ext/1360919890/app_main.p1 ${OBJECTDIR}/_ext/1360919890/app_menu.p1 ${OBJECTDIR}/_ext/761097586/board.p1 ${OBJECTDIR}/_ext/761097586/isr.p1 ${OBJECTDIR}/_ext/239857660/i2c_bus.p1 ${OBJECTDIR}/_ext/239857660/spi_bus.p1 ${OBJECTDIR}/_ext/239857660/uart_bt.p1 ${OBJECTDIR}/_ext/239857660/uart_pc.p1 ${OBJECTDIR}/_ext/239857660/lcd.p1 ${OBJECTDIR}/_ext/453072328/bluetooth_proto.p1 ${OBJECTDIR}/_ext/453072328/bmp280.p1 ${OBJECTDIR}/_ext/453072328/datalogger.p1 ${OBJECTDIR}/_ext/453072328/eeprom_m93c66.p1 ${OBJECTDIR}/_ext/453072328/rtc_ds1307.p1 ${OBJECTDIR}/_ext/453072328/sht30.p1 ${OBJECTDIR}/_ext/1472/main.p1 ${OBJECTDIR}/_ext/1360919890/buttons.p1 ${OBJECTDIR}/_ext/1360919890/menu.p1
-POSSIBLE_DEPFILES=${OBJECTDIR}/_ext/1360919890/app_main.p1.d ${OBJECTDIR}/_ext/1360919890/app_menu.p1.d ${OBJECTDIR}/_ext/761097586/board.p1.d ${OBJECTDIR}/_ext/761097586/isr.p1.d ${OBJECTDIR}/_ext/239857660/i2c_bus.p1.d ${OBJECTDIR}/_ext/239857660/spi_bus.p1.d ${OBJECTDIR}/_ext/239857660/uart_bt.p1.d ${OBJECTDIR}/_ext/239857660/uart_pc.p1.d ${OBJECTDIR}/_ext/239857660/lcd.p1.d ${OBJECTDIR}/_ext/453072328/bluetooth_proto.p1.d ${OBJECTDIR}/_ext/453072328/bmp280.p1.d ${OBJECTDIR}/_ext/453072328/datalogger.p1.d ${OBJECTDIR}/_ext/453072328/eeprom_m93c66.p1.d ${OBJECTDIR}/_ext/453072328/rtc_ds1307.p1.d ${OBJECTDIR}/_ext/453072328/sht30.p1.d ${OBJECTDIR}/_ext/1472/main.p1.d ${OBJECTDIR}/_ext/1360919890/buttons.p1.d ${OBJECTDIR}/_ext/1360919890/menu.p1.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/_ext/1360919890/app_main.p1 ${OBJECTDIR}/_ext/1360919890/app_menu.p1 ${OBJECTDIR}/_ext/1360919890/buttons.p1 ${OBJECTDIR}/_ext/1360919890/menu.p1 ${OBJECTDIR}/_ext/761097586/board.p1 ${OBJECTDIR}/_ext/761097586/isr.p1 ${OBJECTDIR}/_ext/239857660/i2c_bus.p1 ${OBJECTDIR}/_ext/239857660/spi_bus.p1 ${OBJECTDIR}/_ext/239857660/uart_bt.p1 ${OBJECTDIR}/_ext/239857660/uart_pc.p1 ${OBJECTDIR}/_ext/239857660/lcd.p1 ${OBJECTDIR}/_ext/453072328/bluetooth_proto.p1 ${OBJECTDIR}/_ext/453072328/bmp280.p1 ${OBJECTDIR}/_ext/453072328/datalogger.p1 ${OBJECTDIR}/_ext/453072328/eeprom_m93c66.p1 ${OBJECTDIR}/_ext/453072328/rtc_ds1307.p1 ${OBJECTDIR}/_ext/453072328/sht30.p1 ${OBJECTDIR}/_ext/1472/main.p1
+POSSIBLE_DEPFILES=${OBJECTDIR}/_ext/1360919890/app_main.p1.d ${OBJECTDIR}/_ext/1360919890/app_menu.p1.d ${OBJECTDIR}/_ext/1360919890/buttons.p1.d ${OBJECTDIR}/_ext/1360919890/menu.p1.d ${OBJECTDIR}/_ext/761097586/board.p1.d ${OBJECTDIR}/_ext/761097586/isr.p1.d ${OBJECTDIR}/_ext/239857660/i2c_bus.p1.d ${OBJECTDIR}/_ext/239857660/spi_bus.p1.d ${OBJECTDIR}/_ext/239857660/uart_bt.p1.d ${OBJECTDIR}/_ext/239857660/uart_pc.p1.d ${OBJECTDIR}/_ext/239857660/lcd.p1.d ${OBJECTDIR}/_ext/453072328/bluetooth_proto.p1.d ${OBJECTDIR}/_ext/453072328/bmp280.p1.d ${OBJECTDIR}/_ext/453072328/datalogger.p1.d ${OBJECTDIR}/_ext/453072328/eeprom_m93c66.p1.d ${OBJECTDIR}/_ext/453072328/rtc_ds1307.p1.d ${OBJECTDIR}/_ext/453072328/sht30.p1.d ${OBJECTDIR}/_ext/1472/main.p1.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/_ext/1360919890/app_main.p1 ${OBJECTDIR}/_ext/1360919890/app_menu.p1 ${OBJECTDIR}/_ext/761097586/board.p1 ${OBJECTDIR}/_ext/761097586/isr.p1 ${OBJECTDIR}/_ext/239857660/i2c_bus.p1 ${OBJECTDIR}/_ext/239857660/spi_bus.p1 ${OBJECTDIR}/_ext/239857660/uart_bt.p1 ${OBJECTDIR}/_ext/239857660/uart_pc.p1 ${OBJECTDIR}/_ext/239857660/lcd.p1 ${OBJECTDIR}/_ext/453072328/bluetooth_proto.p1 ${OBJECTDIR}/_ext/453072328/bmp280.p1 ${OBJECTDIR}/_ext/453072328/datalogger.p1 ${OBJECTDIR}/_ext/453072328/eeprom_m93c66.p1 ${OBJECTDIR}/_ext/453072328/rtc_ds1307.p1 ${OBJECTDIR}/_ext/453072328/sht30.p1 ${OBJECTDIR}/_ext/1472/main.p1 ${OBJECTDIR}/_ext/1360919890/buttons.p1 ${OBJECTDIR}/_ext/1360919890/menu.p1
+OBJECTFILES=${OBJECTDIR}/_ext/1360919890/app_main.p1 ${OBJECTDIR}/_ext/1360919890/app_menu.p1 ${OBJECTDIR}/_ext/1360919890/buttons.p1 ${OBJECTDIR}/_ext/1360919890/menu.p1 ${OBJECTDIR}/_ext/761097586/board.p1 ${OBJECTDIR}/_ext/761097586/isr.p1 ${OBJECTDIR}/_ext/239857660/i2c_bus.p1 ${OBJECTDIR}/_ext/239857660/spi_bus.p1 ${OBJECTDIR}/_ext/239857660/uart_bt.p1 ${OBJECTDIR}/_ext/239857660/uart_pc.p1 ${OBJECTDIR}/_ext/239857660/lcd.p1 ${OBJECTDIR}/_ext/453072328/bluetooth_proto.p1 ${OBJECTDIR}/_ext/453072328/bmp280.p1 ${OBJECTDIR}/_ext/453072328/datalogger.p1 ${OBJECTDIR}/_ext/453072328/eeprom_m93c66.p1 ${OBJECTDIR}/_ext/453072328/rtc_ds1307.p1 ${OBJECTDIR}/_ext/453072328/sht30.p1 ${OBJECTDIR}/_ext/1472/main.p1
 
 # Source Files
-SOURCEFILES=../app/app_main.c ../app/app_menu.c ../core/board.c ../core/isr.c ../drivers/i2c_bus.c ../drivers/spi_bus.c ../drivers/uart_bt.c ../drivers/uart_pc.c ../drivers/lcd.c ../modules/bluetooth_proto.c ../modules/bmp280.c ../modules/datalogger.c ../modules/eeprom_m93c66.c ../modules/rtc_ds1307.c ../modules/sht30.c ../main.c ../app/buttons.c ../app/menu.c
+SOURCEFILES=../app/app_main.c ../app/app_menu.c ../app/buttons.c ../app/menu.c ../core/board.c ../core/isr.c ../drivers/i2c_bus.c ../drivers/spi_bus.c ../drivers/uart_bt.c ../drivers/uart_pc.c ../drivers/lcd.c ../modules/bluetooth_proto.c ../modules/bmp280.c ../modules/datalogger.c ../modules/eeprom_m93c66.c ../modules/rtc_ds1307.c ../modules/sht30.c ../main.c
 
 
 
@@ -103,6 +103,22 @@ ${OBJECTDIR}/_ext/1360919890/app_menu.p1: ../app/app_menu.c  nbproject/Makefile-
 	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -D__DEBUG=1  -mdebugger=pickit3   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/_ext/1360919890/app_menu.p1 ../app/app_menu.c 
 	@-${MV} ${OBJECTDIR}/_ext/1360919890/app_menu.d ${OBJECTDIR}/_ext/1360919890/app_menu.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/_ext/1360919890/app_menu.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	
+${OBJECTDIR}/_ext/1360919890/buttons.p1: ../app/buttons.c  nbproject/Makefile-${CND_CONF}.mk 
+	@${MKDIR} "${OBJECTDIR}/_ext/1360919890" 
+	@${RM} ${OBJECTDIR}/_ext/1360919890/buttons.p1.d 
+	@${RM} ${OBJECTDIR}/_ext/1360919890/buttons.p1 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -D__DEBUG=1  -mdebugger=pickit3   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/_ext/1360919890/buttons.p1 ../app/buttons.c 
+	@-${MV} ${OBJECTDIR}/_ext/1360919890/buttons.d ${OBJECTDIR}/_ext/1360919890/buttons.p1.d 
+	@${FIXDEPS} ${OBJECTDIR}/_ext/1360919890/buttons.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	
+${OBJECTDIR}/_ext/1360919890/menu.p1: ../app/menu.c  nbproject/Makefile-${CND_CONF}.mk 
+	@${MKDIR} "${OBJECTDIR}/_ext/1360919890" 
+	@${RM} ${OBJECTDIR}/_ext/1360919890/menu.p1.d 
+	@${RM} ${OBJECTDIR}/_ext/1360919890/menu.p1 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -D__DEBUG=1  -mdebugger=pickit3   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/_ext/1360919890/menu.p1 ../app/menu.c 
+	@-${MV} ${OBJECTDIR}/_ext/1360919890/menu.d ${OBJECTDIR}/_ext/1360919890/menu.p1.d 
+	@${FIXDEPS} ${OBJECTDIR}/_ext/1360919890/menu.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
 ${OBJECTDIR}/_ext/761097586/board.p1: ../core/board.c  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}/_ext/761097586" 
@@ -216,22 +232,6 @@ ${OBJECTDIR}/_ext/1472/main.p1: ../main.c  nbproject/Makefile-${CND_CONF}.mk
 	@-${MV} ${OBJECTDIR}/_ext/1472/main.d ${OBJECTDIR}/_ext/1472/main.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/_ext/1472/main.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
-${OBJECTDIR}/_ext/1360919890/buttons.p1: ../app/buttons.c  nbproject/Makefile-${CND_CONF}.mk 
-	@${MKDIR} "${OBJECTDIR}/_ext/1360919890" 
-	@${RM} ${OBJECTDIR}/_ext/1360919890/buttons.p1.d 
-	@${RM} ${OBJECTDIR}/_ext/1360919890/buttons.p1 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -D__DEBUG=1  -mdebugger=pickit3   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/_ext/1360919890/buttons.p1 ../app/buttons.c 
-	@-${MV} ${OBJECTDIR}/_ext/1360919890/buttons.d ${OBJECTDIR}/_ext/1360919890/buttons.p1.d 
-	@${FIXDEPS} ${OBJECTDIR}/_ext/1360919890/buttons.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
-	
-${OBJECTDIR}/_ext/1360919890/menu.p1: ../app/menu.c  nbproject/Makefile-${CND_CONF}.mk 
-	@${MKDIR} "${OBJECTDIR}/_ext/1360919890" 
-	@${RM} ${OBJECTDIR}/_ext/1360919890/menu.p1.d 
-	@${RM} ${OBJECTDIR}/_ext/1360919890/menu.p1 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -D__DEBUG=1  -mdebugger=pickit3   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/_ext/1360919890/menu.p1 ../app/menu.c 
-	@-${MV} ${OBJECTDIR}/_ext/1360919890/menu.d ${OBJECTDIR}/_ext/1360919890/menu.p1.d 
-	@${FIXDEPS} ${OBJECTDIR}/_ext/1360919890/menu.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
-	
 else
 ${OBJECTDIR}/_ext/1360919890/app_main.p1: ../app/app_main.c  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}/_ext/1360919890" 
@@ -248,6 +248,22 @@ ${OBJECTDIR}/_ext/1360919890/app_menu.p1: ../app/app_menu.c  nbproject/Makefile-
 	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/_ext/1360919890/app_menu.p1 ../app/app_menu.c 
 	@-${MV} ${OBJECTDIR}/_ext/1360919890/app_menu.d ${OBJECTDIR}/_ext/1360919890/app_menu.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/_ext/1360919890/app_menu.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	
+${OBJECTDIR}/_ext/1360919890/buttons.p1: ../app/buttons.c  nbproject/Makefile-${CND_CONF}.mk 
+	@${MKDIR} "${OBJECTDIR}/_ext/1360919890" 
+	@${RM} ${OBJECTDIR}/_ext/1360919890/buttons.p1.d 
+	@${RM} ${OBJECTDIR}/_ext/1360919890/buttons.p1 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/_ext/1360919890/buttons.p1 ../app/buttons.c 
+	@-${MV} ${OBJECTDIR}/_ext/1360919890/buttons.d ${OBJECTDIR}/_ext/1360919890/buttons.p1.d 
+	@${FIXDEPS} ${OBJECTDIR}/_ext/1360919890/buttons.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	
+${OBJECTDIR}/_ext/1360919890/menu.p1: ../app/menu.c  nbproject/Makefile-${CND_CONF}.mk 
+	@${MKDIR} "${OBJECTDIR}/_ext/1360919890" 
+	@${RM} ${OBJECTDIR}/_ext/1360919890/menu.p1.d 
+	@${RM} ${OBJECTDIR}/_ext/1360919890/menu.p1 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/_ext/1360919890/menu.p1 ../app/menu.c 
+	@-${MV} ${OBJECTDIR}/_ext/1360919890/menu.d ${OBJECTDIR}/_ext/1360919890/menu.p1.d 
+	@${FIXDEPS} ${OBJECTDIR}/_ext/1360919890/menu.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
 ${OBJECTDIR}/_ext/761097586/board.p1: ../core/board.c  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}/_ext/761097586" 
@@ -360,22 +376,6 @@ ${OBJECTDIR}/_ext/1472/main.p1: ../main.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/_ext/1472/main.p1 ../main.c 
 	@-${MV} ${OBJECTDIR}/_ext/1472/main.d ${OBJECTDIR}/_ext/1472/main.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/_ext/1472/main.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
-	
-${OBJECTDIR}/_ext/1360919890/buttons.p1: ../app/buttons.c  nbproject/Makefile-${CND_CONF}.mk 
-	@${MKDIR} "${OBJECTDIR}/_ext/1360919890" 
-	@${RM} ${OBJECTDIR}/_ext/1360919890/buttons.p1.d 
-	@${RM} ${OBJECTDIR}/_ext/1360919890/buttons.p1 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/_ext/1360919890/buttons.p1 ../app/buttons.c 
-	@-${MV} ${OBJECTDIR}/_ext/1360919890/buttons.d ${OBJECTDIR}/_ext/1360919890/buttons.p1.d 
-	@${FIXDEPS} ${OBJECTDIR}/_ext/1360919890/buttons.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
-	
-${OBJECTDIR}/_ext/1360919890/menu.p1: ../app/menu.c  nbproject/Makefile-${CND_CONF}.mk 
-	@${MKDIR} "${OBJECTDIR}/_ext/1360919890" 
-	@${RM} ${OBJECTDIR}/_ext/1360919890/menu.p1.d 
-	@${RM} ${OBJECTDIR}/_ext/1360919890/menu.p1 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mno-default-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/_ext/1360919890/menu.p1 ../app/menu.c 
-	@-${MV} ${OBJECTDIR}/_ext/1360919890/menu.d ${OBJECTDIR}/_ext/1360919890/menu.p1.d 
-	@${FIXDEPS} ${OBJECTDIR}/_ext/1360919890/menu.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
 endif
 

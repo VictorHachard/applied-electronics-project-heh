@@ -133,6 +133,7 @@ void __attribute__((picinterrupt(("")))) isr_handler(void);
 extern volatile uint8_t g_timer0_flag;
 extern volatile uint8_t g_uart1_rx_flag;
 extern volatile uint8_t g_uart2_rx_flag;
+extern volatile char g_uart2_rx_char;
 # 9 "../core/isr.c" 2
 # 1 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include/xc.h" 1 3
 # 18 "C:\\Program Files\\Microchip\\xc8\\v3.10\\pic\\include/xc.h" 3
@@ -36675,7 +36676,8 @@ unsigned char __t3rd16on(void);
 volatile uint8_t g_timer0_flag = 0;
 volatile uint8_t g_uart1_rx_flag = 0;
 volatile uint8_t g_uart2_rx_flag = 0;
-# 28 "../core/isr.c"
+volatile char g_uart2_rx_char = 0;
+# 29 "../core/isr.c"
 void isr_init(void) {
 
     INTCON0bits.GIE = 0;
@@ -36700,13 +36702,11 @@ void isr_init(void) {
     T0CON0bits.T0EN = 1;
 
 
+    PIR7bits.U2RXIF = 0;
+    PIE7bits.U2RXIE = 1;
+
+
     INTCON0bits.GIE = 1;
-
-
-
-
-
-
 }
 
 
@@ -36722,10 +36722,15 @@ void __attribute__((picinterrupt(("")))) isr_handler(void) {
         PIR3bits.TMR0IF = 0;
 
 
-        TMR0H = 0x0B;
-        TMR0L = 0xDC;
+        uint16_t reload = TMR0 + 3036;
+        TMR0H = (reload >> 8) & 0xFF;
+        TMR0L = reload & 0xFF;
 
         g_timer0_flag = 1;
     }
-# 95 "../core/isr.c"
+# 91 "../core/isr.c"
+    if (PIR7bits.U2RXIF && PIE7bits.U2RXIE) {
+        g_uart2_rx_char = U2RXB;
+        g_uart2_rx_flag = 1;
+    }
 }

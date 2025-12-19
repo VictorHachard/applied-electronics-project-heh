@@ -2,14 +2,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 "28 ../app/buttons.h
 [; ;../app/buttons.h: 28: void buttons_init(void);
 [v _buttons_init `(v ~T0 @X0 0 ef ]
-"70 ../app/menu.h
-[; ;../app/menu.h: 70: void menu_init(void);
+"80 ../app/menu.h
+[; ;../app/menu.h: 80: void menu_init(void);
 [v _menu_init `(v ~T0 @X0 0 ef ]
-"76
-[; ;../app/menu.h: 76: void menu_display(void);
+"86
+[; ;../app/menu.h: 86: void menu_display(void);
 [v _menu_display `(v ~T0 @X0 0 ef ]
-"73
-[; ;../app/menu.h: 73: void menu_update(void);
+"83
+[; ;../app/menu.h: 83: void menu_update(void);
 [v _menu_update `(v ~T0 @X0 0 ef ]
 "272 C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h
 [; ;C:/Program Files/Microchip/MPLABX/v6.20/packs/Microchip/PIC18F-K_DFP/1.13.292/xc8\pic\include\proc/pic18f26k83.h: 272: __asm("CIOCON equ 03700h");
